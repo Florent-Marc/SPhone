@@ -19,7 +19,6 @@ public class SPhone {
     @Mod.Instance(MOD_ID)
     public static SPhone INSTANCE;
 
-
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent event) {
 
