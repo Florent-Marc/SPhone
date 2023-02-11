@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.Mod;
         name = SPhone.MOD_NAME,
         version = SPhone.VERSION
 )
+
 public class SPhone {
 
     public static final String MOD_ID = "sphone";

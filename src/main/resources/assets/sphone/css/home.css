@@ -5,27 +5,58 @@
 
 #phone_case {
     background-image: url("sphone:textures/case.png")
-    left: 80%;
+    left: 82%;
     width: 330px;
-    height: 620px;
-    top: 40%;
+    height: 670px;
+    top: 37%;
 }
 
 #phone_background_one {
     background-image: url("sphone:textures/background/one.png")
-    left: 1550px;
+    left: 1590px;
     width: 300px;
-    height: 588px;
-    top: 448px;
+    height: 638px;
+    top: 414px;
+}
+
+#phone_clock {
+    height: 50px
+    left: 1610px;
+    top: 411px;
+    font-size: 13px;
 }
 
 #phone_tool_apps {
-    background-color: white;
-    left: 1582px;
+    background-color: #1B1B1B;
+    left: 1620px;
     width: 240px;
-    height: 68px;
-    top: 950px;
-    border-radius: 7px;
+    height: 66px;
+    top: 965px;
+    border-radius: 15px;
+}
+
+#phone_app_call {
+    background-image: url("sphone:textures/icons/call.png")
+    left: 1638px;
+    width: 53px;
+    height: 55px;
+    top: 971px;
+}
+
+#phone_app_messages {
+    background-image: url("sphone:textures/icons/messages.png")
+    left: 1713px;
+    width: 53px;
+    height: 55px;
+    top: 971px;
+}
+
+#phone_app_notes {
+    background-image: url("sphone:textures/icons/notes.png")
+    left: 1788px;
+    width: 53px;
+    height: 55px;
+    top: 971px;
 }
 
 #phone_task_bar {
