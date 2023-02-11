@@ -5,9 +5,9 @@ import com.google.gson.Gson;
 import java.io.*;
 
 public class PhoneSettings {
-    public int phone_number;
-    public int phone_background;
-    public int phone_ring;
+    public static int phone_number;
+    public static int phone_background;
+    public static int phone_ring;
 
     public PhoneSettings(int phone_number, int phone_background, int phone_ring) {
         this.phone_number = phone_number;

@@ -2,6 +2,7 @@ package fr.sandji.sphone.client.handlers;
 
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.sandji.sphone.client.phone.HomePage;
+import fr.sandji.sphone.client.phone.apps.settings.PhoneSettings;
 import fr.sandji.sphone.client.util.SPhoneKeys;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

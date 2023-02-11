@@ -1,13 +1,14 @@
-package fr.sandji.sphone.client.phone;
+package fr.sandji.sphone.client.phone.apps.settings;
 
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.sandji.sphone.client.phone.apps.settings.PhoneSettings;
-import net.minecraft.client.Minecraft;
+import fr.sandji.sphone.client.phone.HomePage;
+import fr.sandji.sphone.client.util.GuiUtils;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -15,18 +16,15 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class HomePage extends GuiFrame {
+public class SettingsPage extends GuiFrame {
 
-    public HomePage() {
+    public SettingsPage() {
         super(new GuiScaler.AdjustFullScreen());
         style.setBackgroundColor(Color.TRANSLUCENT);
         setCssClass("home");
 
-        PhoneSettings phone_settings = new PhoneSettings(555555, 1, 1);
-        phone_settings.loadPhoneSettings();
-
         GuiLabel phone_background = new GuiLabel("");
-        phone_background.setCssId("phone_background_one");
+        phone_background.setCssId("phone_background_gray");
         add(phone_background);
 
         GuiLabel phone_case = new GuiLabel("");
@@ -44,26 +42,25 @@ public class HomePage extends GuiFrame {
         phone_top_icons.setCssId("phone_top_icons");
         add(phone_top_icons);
 
-        GuiLabel phone_tool_app = new GuiLabel("");
-        phone_tool_app.setCssId("phone_tool_apps");
-        add(phone_tool_app);
+        GuiLabel phone_task_bar = new GuiLabel("");
+        phone_task_bar.setCssId("phone_task_bar");
+        phone_task_bar.addClickListener((x,y,bu) -> {
+            ACsGuiApi.asyncLoadThenShowGui("HomePage", HomePage::new);
+        });
+        add(phone_task_bar);
 
-        GuiLabel phone_app_call = new GuiLabel("");
-        phone_app_call.setCssId("phone_app_call");
-        add(phone_app_call);
+        ItemStack head = new ItemStack(mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem(), 1, mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getMetadata());
+        GuiUtils.drawItemImage(head, this.getScreenX() - 110, this.getScreenY() / 2 - 40, 0.0F);
 
-        GuiLabel phone_app_messages = new GuiLabel("");
-        phone_app_messages.setCssId("phone_app_messages");
-        add(phone_app_messages);
-
-        GuiLabel phone_app_notes = new GuiLabel("");
-        phone_app_notes.setCssId("phone_app_notes");
-        add(phone_app_notes);
+        GuiLabel phone_number = new GuiLabel("Votre Numéro :");
+        phone_number.setCssId("phone_number");
+        phone_number.setText("Votre Numéro : " + PhoneSettings.phone_number);
+        add(phone_number);
 
     }
 
     public List<ResourceLocation> getCssStyles() {
-        return Collections.singletonList(new ResourceLocation("sphone:css/home.css"));
+        return Collections.singletonList(new ResourceLocation("sphone:css/settings.css"));
     }
 
     @Override

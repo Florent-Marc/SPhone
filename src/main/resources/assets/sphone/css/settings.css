@@ -1,0 +1,40 @@
+.home {
+    width: 1920px;
+    height: 1080px;
+}
+
+#phone_case {
+    background-image: url("sphone:textures/case.png");
+    left: 82%;
+    width: 330px;
+    height: 670px;
+    top: 37%;
+}
+
+#phone_background_gray {
+    background-color: #404040;
+    left: 1590px;
+    width: 300px;
+    height: 638px;
+    top: 414px;
+}
+
+#phone_clock {
+    height: 50px;
+    left: 1610px;
+    top: 411px;
+    font-size: 13px;
+}
+
+#phone_task_bar {
+    background-color: #1B1B1B;
+    left: 1603px;
+    width: 200px;
+    height: 13px;
+    top: 1011px;
+    border-radius: 7px;
+}
+
+#phone_task_bar:hover {
+    background-color: #404040;
+}

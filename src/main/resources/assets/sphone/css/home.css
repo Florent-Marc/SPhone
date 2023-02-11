@@ -4,7 +4,7 @@
 }
 
 #phone_case {
-    background-image: url("sphone:textures/case.png")
+    background-image: url("sphone:textures/case.png");
     left: 82%;
     width: 330px;
     height: 670px;
@@ -12,7 +12,7 @@
 }
 
 #phone_background_one {
-    background-image: url("sphone:textures/background/one.png")
+    background-image: url("sphone:textures/background/one.png");
     left: 1590px;
     width: 300px;
     height: 638px;
@@ -20,7 +20,7 @@
 }
 
 #phone_clock {
-    height: 50px
+    height: 50px;
     left: 1610px;
     top: 411px;
     font-size: 13px;
@@ -36,7 +36,7 @@
 }
 
 #phone_app_call {
-    background-image: url("sphone:textures/icons/call.png")
+    background-image: url("sphone:textures/icons/call.png");
     left: 1638px;
     width: 53px;
     height: 55px;
@@ -44,7 +44,7 @@
 }
 
 #phone_app_messages {
-    background-image: url("sphone:textures/icons/messages.png")
+    background-image: url("sphone:textures/icons/messages.png");
     left: 1713px;
     width: 53px;
     height: 55px;
@@ -52,22 +52,9 @@
 }
 
 #phone_app_notes {
-    background-image: url("sphone:textures/icons/notes.png")
+    background-image: url("sphone:textures/icons/notes.png");
     left: 1788px;
     width: 53px;
     height: 55px;
     top: 971px;
-}
-
-#phone_task_bar {
-    background-color: #1B1B1B;
-    left: 1603px;
-    width: 200px;
-    height: 13px;
-    top: 1011px;
-    border-radius: 7px;
-}
-
-#phone_task_bar:hover {
-    background-color: #404040;
 }
