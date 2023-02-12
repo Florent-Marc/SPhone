@@ -79,3 +79,14 @@
     font-size: 20px;
     text-align: center;
 }
+
+#phone_background_three {
+    height: 40px;
+    width: 265px;
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    left: 1605px;
+    top: 730px;
+    font-size: 20px;
+    text-align: center;
+}
