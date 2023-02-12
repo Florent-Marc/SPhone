@@ -2,6 +2,7 @@ package fr.sandji.sphone.common.proxy;
 
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.sandji.sphone.SPhone;
+import fr.sandji.sphone.client.handlers.ClientEventHandler;
 import fr.sandji.sphone.client.util.SPhoneKeys;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -14,6 +15,8 @@ public class ClientProxy extends CommonProxy {
     public void preInit() {
 
         ClientRegistry.registerKeyBinding(Key_Open_Phone);
+
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "fonts/font.css"));
 
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/home.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/settings.css"));

@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -26,6 +27,13 @@ public class SettingsPage extends GuiFrame {
         super(new GuiScaler.AdjustFullScreen());
         style.setBackgroundColor(Color.TRANSLUCENT);
         setCssClass("home");
+
+        if (PhoneData.OpenOnLastApp) {
+            PhoneData.LastApp = "SettingsPage";
+        }
+
+        PhoneSettings phoneSettings = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+        phoneSettings.loadPhoneSettings();
 
         GuiLabel phone_background = new GuiLabel("");
         phone_background.setCssId("phone_background_gray");
@@ -53,7 +61,50 @@ public class SettingsPage extends GuiFrame {
         });
         add(phone_task_bar);
 
-        /*ItemStack head = new ItemStack(mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem(), 1, mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getMetadata());
+        GuiLabel app_title = new GuiLabel("Paramètres :");
+        app_title.setCssId("app_title");
+        add(app_title);
+
+        GuiLabel phone_number = new GuiLabel("Votre Numéro :");
+        phone_number.setCssId("phone_number");
+        phone_number.setText("Votre Numéro : " + PhoneData.phone_number);
+        add(phone_number);
+
+        GuiLabel phone_background_one = new GuiLabel("Fond D'écran 1");
+        if (PhoneData.phone_background == 1) {
+            phone_background_one.setText(TextFormatting.RED + "Fond D'écran 1");
+        }
+        phone_background_one.setCssId("phone_background_one");
+        phone_background_one.addClickListener((x,y,bu) -> {
+            PhoneSettings phoneBackground1 = new PhoneSettings(PhoneData.phone_number, 1, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+            phoneBackground1.savePhoneSettings(phoneBackground1);
+            ACsGuiApi.asyncLoadThenShowGui("SettingsPage", SettingsPage::new);
+        });
+        add(phone_background_one);
+
+        GuiLabel phone_background_two = new GuiLabel("Fond D'écran 2");
+        if (PhoneData.phone_background == 2) {
+            phone_background_two.setText(TextFormatting.RED + "Fond D'écran 2");
+        }
+        phone_background_two.setCssId("phone_background_two");
+        phone_background_two.addClickListener((x,y,bu) -> {
+            PhoneSettings phoneBackground2 = new PhoneSettings(PhoneData.phone_number, 2, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+            phoneBackground2.savePhoneSettings(phoneBackground2);
+            ACsGuiApi.asyncLoadThenShowGui("SettingsPage", SettingsPage::new);
+        });
+        add(phone_background_two);
+
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+    }
+
+    @Override
+    public void drawForeground(int mouseX, int mouseY, float partialTicks) {
+        super.drawForeground(mouseX, mouseY, partialTicks);
+        ItemStack head = new ItemStack(mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem(), 1, mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getMetadata());
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(this.getScreenX() - 110, this.getScreenY() / 2 - 40, 300.0F);
@@ -64,17 +115,7 @@ public class SettingsPage extends GuiFrame {
         GlStateManager.scale(100.0F, 100.0F, 100.0F);
         RenderHelper.enableGUIStandardItemLighting();
         Minecraft.getMinecraft().getRenderItem().renderItem(head, ItemCameraTransforms.TransformType.GROUND);
-        GlStateManager.popMatrix();*/
-
-        GuiLabel app_title = new GuiLabel("Paramètres :");
-        app_title.setCssId("app_title");
-        add(app_title);
-
-        GuiLabel phone_number = new GuiLabel("Votre Numéro :");
-        phone_number.setCssId("phone_number");
-        phone_number.setText("Votre Numéro : " + PhoneData.phone_number);
-        add(phone_number);
-
+        GlStateManager.popMatrix();
     }
 
     public List<ResourceLocation> getCssStyles() {

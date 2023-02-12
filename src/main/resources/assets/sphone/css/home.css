@@ -19,6 +19,14 @@
     top: 414px;
 }
 
+#phone_background_two {
+    background-color: blue;
+    left: 1590px;
+    width: 300px;
+    height: 638px;
+    top: 414px;
+}
+
 #phone_clock {
     height: 50px;
     left: 1610px;
@@ -68,7 +76,7 @@
 }
 
 #phone_app_settings {
-    background-image: url("sphone:textures/icons/news.png");
+    background-image: url("sphone:textures/icons/settings.png");
     left: 1638px;
     width: 53px;
     height: 55px;

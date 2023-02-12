@@ -4,6 +4,7 @@ import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.sandji.sphone.client.phone.apps.settings.PhoneData;
 import fr.sandji.sphone.client.phone.apps.settings.PhoneSettings;
 import fr.sandji.sphone.client.phone.apps.settings.SettingsPage;
 import net.minecraft.client.Minecraft;
@@ -23,11 +24,16 @@ public class HomePage extends GuiFrame {
         style.setBackgroundColor(Color.TRANSLUCENT);
         setCssClass("home");
 
-        PhoneSettings phoneSettings = new PhoneSettings(0, 0, 0);
+        PhoneSettings phoneSettings = new PhoneSettings(0, 0, 0, false);
         phoneSettings.loadPhoneSettings();
 
         GuiLabel phone_background = new GuiLabel("");
-        phone_background.setCssId("phone_background_one");
+        if (PhoneData.phone_background == 1) {
+            phone_background.setCssId("phone_background_one");
+        }
+        if (PhoneData.phone_background == 2) {
+            phone_background.setCssId("phone_background_two");
+        }
         add(phone_background);
 
         GuiLabel phone_case = new GuiLabel("");

@@ -47,3 +47,35 @@
     top: 450px;
     font-size: 25px;
 }
+
+#phone_number {
+    height: 60px;
+    width: 265px;
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    left: 1605px;
+    top: 550px;
+    font-size: 20px;
+}
+
+#phone_background_one {
+    height: 40px;
+    width: 265px;
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    left: 1605px;
+    top: 630px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#phone_background_two {
+    height: 40px;
+    width: 265px;
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    left: 1605px;
+    top: 680px;
+    font-size: 20px;
+    text-align: center;
+}
