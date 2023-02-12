@@ -20,7 +20,15 @@
 }
 
 #phone_background_two {
-    background-color: blue;
+    background-image: url("sphone:textures/background/two.png");
+    left: 1590px;
+    width: 300px;
+    height: 638px;
+    top: 414px;
+}
+
+#phone_background_three {
+    background-image: url("sphone:textures/background/three.png");
     left: 1590px;
     width: 300px;
     height: 638px;

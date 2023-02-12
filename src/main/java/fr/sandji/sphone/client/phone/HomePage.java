@@ -34,6 +34,9 @@ public class HomePage extends GuiFrame {
         if (PhoneData.phone_background == 2) {
             phone_background.setCssId("phone_background_two");
         }
+        if (PhoneData.phone_background == 3) {
+            phone_background.setCssId("phone_background_three");
+        }
         add(phone_background);
 
         GuiLabel phone_case = new GuiLabel("");

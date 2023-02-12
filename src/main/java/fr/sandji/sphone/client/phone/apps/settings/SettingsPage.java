@@ -94,6 +94,18 @@ public class SettingsPage extends GuiFrame {
         });
         add(phone_background_two);
 
+        GuiLabel phone_background_three = new GuiLabel("Fond D'écran 3");
+        if (PhoneData.phone_background == 3) {
+            phone_background_three.setText(TextFormatting.RED + "Fond D'écran 3");
+        }
+        phone_background_three.setCssId("phone_background_two");
+        phone_background_three.addClickListener((x,y,bu) -> {
+            PhoneSettings phoneBackground3 = new PhoneSettings(PhoneData.phone_number, 3, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+            phoneBackground3.savePhoneSettings(phoneBackground3);
+            ACsGuiApi.asyncLoadThenShowGui("SettingsPage", SettingsPage::new);
+        });
+        add(phone_background_three);
+
     }
 
     @Override
