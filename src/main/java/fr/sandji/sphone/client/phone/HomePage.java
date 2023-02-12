@@ -5,6 +5,7 @@ import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.client.phone.apps.settings.PhoneSettings;
+import fr.sandji.sphone.client.phone.apps.settings.SettingsPage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -22,8 +23,8 @@ public class HomePage extends GuiFrame {
         style.setBackgroundColor(Color.TRANSLUCENT);
         setCssClass("home");
 
-        PhoneSettings phone_settings = new PhoneSettings(555555, 1, 1);
-        phone_settings.loadPhoneSettings();
+        PhoneSettings phoneSettings = new PhoneSettings(0, 0, 0);
+        phoneSettings.loadPhoneSettings();
 
         GuiLabel phone_background = new GuiLabel("");
         phone_background.setCssId("phone_background_one");
@@ -59,6 +60,17 @@ public class HomePage extends GuiFrame {
         GuiLabel phone_app_notes = new GuiLabel("");
         phone_app_notes.setCssId("phone_app_notes");
         add(phone_app_notes);
+
+        GuiLabel phone_app_settings = new GuiLabel("");
+        phone_app_settings.setCssId("phone_app_settings");
+        phone_app_settings.addClickListener((x,y,bu) -> {
+            ACsGuiApi.asyncLoadThenShowGui("SettigsPage", SettingsPage::new);
+        });
+        add(phone_app_settings);
+
+        GuiLabel phone_app_news = new GuiLabel("");
+        phone_app_news.setCssId("phone_app_news");
+        add(phone_app_news);
 
     }
 

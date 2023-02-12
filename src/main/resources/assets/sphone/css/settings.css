@@ -12,7 +12,7 @@
 }
 
 #phone_background_gray {
-    background-color: #404040;
+    background-color: #272727;
     left: 1590px;
     width: 300px;
     height: 638px;
@@ -27,14 +27,23 @@
 }
 
 #phone_task_bar {
-    background-color: #1B1B1B;
-    left: 1603px;
+    background-color: rgba(255, 255, 255, 100);
+    left: 1638px;
     width: 200px;
     height: 13px;
-    top: 1011px;
+    top: 1025px;
     border-radius: 7px;
 }
 
 #phone_task_bar:hover {
-    background-color: #404040;
+    background-color: rgba(255, 255, 255, 200);
+}
+
+#app_title {
+    height: 100px;
+    width: 200px
+    color: white;
+    left: 1605px;
+    top: 450px;
+    font-size: 25px;
 }

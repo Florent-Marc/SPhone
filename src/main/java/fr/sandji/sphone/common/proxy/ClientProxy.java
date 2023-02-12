@@ -16,6 +16,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.registerKeyBinding(Key_Open_Phone);
 
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/home.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/settings.css"));
 
     }
 

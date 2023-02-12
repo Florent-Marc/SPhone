@@ -6,6 +6,10 @@ import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.client.phone.HomePage;
 import fr.sandji.sphone.client.util.GuiUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -49,12 +53,26 @@ public class SettingsPage extends GuiFrame {
         });
         add(phone_task_bar);
 
-        ItemStack head = new ItemStack(mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem(), 1, mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getMetadata());
-        GuiUtils.drawItemImage(head, this.getScreenX() - 110, this.getScreenY() / 2 - 40, 0.0F);
+        /*ItemStack head = new ItemStack(mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem(), 1, mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getMetadata());
+
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(this.getScreenX() - 110, this.getScreenY() / 2 - 40, 300.0F);
+        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(15.0F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.rotate(195.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(0.0F % 360.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.scale(100.0F, 100.0F, 100.0F);
+        RenderHelper.enableGUIStandardItemLighting();
+        Minecraft.getMinecraft().getRenderItem().renderItem(head, ItemCameraTransforms.TransformType.GROUND);
+        GlStateManager.popMatrix();*/
+
+        GuiLabel app_title = new GuiLabel("Paramètres :");
+        app_title.setCssId("app_title");
+        add(app_title);
 
         GuiLabel phone_number = new GuiLabel("Votre Numéro :");
         phone_number.setCssId("phone_number");
-        phone_number.setText("Votre Numéro : " + PhoneSettings.phone_number);
+        phone_number.setText("Votre Numéro : " + PhoneData.phone_number);
         add(phone_number);
 
     }
