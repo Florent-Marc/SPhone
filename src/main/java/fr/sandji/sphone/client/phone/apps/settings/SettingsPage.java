@@ -94,6 +94,7 @@ public class SettingsPage extends GuiFrame {
         GuiLabel phone_ring_page = new GuiLabel("Sonnerie ");
         phone_ring_page.setCssId("phone_ring_page");
         phone_ring_page.addClickListener((x,y,bu) -> {
+            ACsGuiApi.asyncLoadThenShowGui("RingsPage", RingsPage::new);
         });
         add(phone_ring_page);
 

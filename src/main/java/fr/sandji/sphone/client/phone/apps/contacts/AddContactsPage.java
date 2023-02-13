@@ -3,10 +3,10 @@ package fr.sandji.sphone.client.phone.apps.contacts;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
-import fr.aym.acsguis.component.panel.GuiScrollPane;
+import fr.aym.acsguis.component.textarea.GuiIntegerField;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.sandji.sphone.client.phone.HomePage;
-import fr.sandji.sphone.client.phone.apps.settings.SettingsPage;
+import fr.aym.acsguis.component.textarea.GuiTextArea;
+import fr.aym.acsguis.component.textarea.GuiTextField;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
@@ -15,9 +15,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class ContactsPage extends GuiFrame {
+public class AddContactsPage extends GuiFrame {
 
-    public ContactsPage() {
+    public AddContactsPage() {
         super(new GuiScaler.AdjustFullScreen());
         style.setBackgroundColor(Color.TRANSLUCENT);
         setCssClass("home");
@@ -46,22 +46,45 @@ public class ContactsPage extends GuiFrame {
         GuiLabel phone_task_bar = new GuiLabel("");
         phone_task_bar.setCssId("phone_task_bar");
         phone_task_bar.addClickListener((x,y,bu) -> {
-            ACsGuiApi.asyncLoadThenShowGui("HomePage", HomePage::new);
+            ACsGuiApi.asyncLoadThenShowGui("ContactsPage", ContactsPage::new);
         });
         add(phone_task_bar);
 
-        GuiLabel app_title = new GuiLabel("Contacts");
+        GuiLabel app_title = new GuiLabel("Nouveau Contact");
         app_title.setCssId("app_title");
         add(app_title);
 
-        GuiLabel add_contact = new GuiLabel("+");
-        add_contact.setCssId("add_contact");
-        add_contact.addClickListener((x,y,bu) -> {
-            ACsGuiApi.asyncLoadThenShowGui("AddContactsPage", AddContactsPage::new);
-        });
-        add(add_contact);
+        GuiTextField contact_name = new GuiTextField();
+        contact_name.setCssId("contact_name");
+        contact_name.setHintText("Prénom");
+        add(contact_name);
 
-        GuiScrollPane contacts_list = new GuiScrollPane();
+        GuiTextField contact_lastname = new GuiTextField();
+        contact_lastname.setCssId("contact_lastname");
+        contact_lastname.setHintText("Nom");
+        add(contact_lastname);
+
+        GuiIntegerField contact_number = new GuiIntegerField(0, 5559999);
+        contact_number.setCssId("contact_number");
+        contact_number.setHintText("Numéro");
+        contact_number.setText("");
+        add(contact_number);
+
+        GuiTextArea contact_notes = new GuiTextArea();
+        contact_notes.setCssId("contact_notes");
+        contact_notes.setHintText("Notes");
+        add(contact_notes);
+
+        GuiLabel contact_add = new GuiLabel("Sauvegarder");
+        contact_add.setCssId("contact_add");
+        contact_add.addClickListener((x,y,bu) -> {
+            ContactManager.loadContacts();
+            ContactManager.Contact contact = new ContactManager.Contact(contact_number.getValue(), contact_name.getText(), contact_lastname.getText(), contact_notes.getText());
+            ContactManager.addContact(contact);
+            ContactManager.saveContacts();
+            ACsGuiApi.asyncLoadThenShowGui("ContactsPage", ContactsPage::new);
+        });
+        add(contact_add);
 
     }
 
