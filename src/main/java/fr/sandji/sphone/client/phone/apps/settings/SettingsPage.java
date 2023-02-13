@@ -1,15 +1,21 @@
 package fr.sandji.sphone.client.phone.apps.settings;
 
 import fr.aym.acsguis.api.ACsGuiApi;
+import fr.aym.acsguis.component.button.GuiButton;
+import fr.aym.acsguis.component.button.GuiCheckBox;
+import fr.aym.acsguis.component.entity.GuiEntityRender;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.client.phone.HomePage;
 import fr.sandji.sphone.client.util.GuiUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -65,69 +71,52 @@ public class SettingsPage extends GuiFrame {
         app_title.setCssId("app_title");
         add(app_title);
 
+        GuiLabel player_head_back = new GuiLabel("");
+        player_head_back.setCssId("player_head_back");
+        add(player_head_back);
+
+        GuiEntityRender player_head = new GuiEntityRender(mc.player);
+        player_head.setCssId("player_head");
+        add(player_head);
+
         GuiLabel phone_number = new GuiLabel("Votre Numéro :");
         phone_number.setCssId("phone_number");
         phone_number.setText("Votre Numéro : " + PhoneData.phone_number);
         add(phone_number);
 
-        GuiLabel phone_background_one = new GuiLabel("Fond D'écran 1");
-        if (PhoneData.phone_background == 1) {
-            phone_background_one.setText(TextFormatting.RED + "Fond D'écran 1");
-        }
-        phone_background_one.setCssId("phone_background_one");
-        phone_background_one.addClickListener((x,y,bu) -> {
-            PhoneSettings phoneBackground1 = new PhoneSettings(PhoneData.phone_number, 1, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
-            phoneBackground1.savePhoneSettings(phoneBackground1);
-            ACsGuiApi.asyncLoadThenShowGui("SettingsPage", SettingsPage::new);
+        GuiLabel phone_background_page = new GuiLabel("Fond d'Écran ");
+        phone_background_page.setCssId("phone_background_page");
+        phone_background_page.addClickListener((x,y,bu) -> {
+            ACsGuiApi.asyncLoadThenShowGui("BackgroundsPage", BackgroundsPage::new);
         });
-        add(phone_background_one);
+        add(phone_background_page);
 
-        GuiLabel phone_background_two = new GuiLabel("Fond D'écran 2");
-        if (PhoneData.phone_background == 2) {
-            phone_background_two.setText(TextFormatting.RED + "Fond D'écran 2");
-        }
-        phone_background_two.setCssId("phone_background_two");
-        phone_background_two.addClickListener((x,y,bu) -> {
-            PhoneSettings phoneBackground2 = new PhoneSettings(PhoneData.phone_number, 2, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
-            phoneBackground2.savePhoneSettings(phoneBackground2);
-            ACsGuiApi.asyncLoadThenShowGui("SettingsPage", SettingsPage::new);
+        GuiLabel phone_ring_page = new GuiLabel("Sonnerie ");
+        phone_ring_page.setCssId("phone_ring_page");
+        phone_ring_page.addClickListener((x,y,bu) -> {
         });
-        add(phone_background_two);
+        add(phone_ring_page);
 
-        GuiLabel phone_background_three = new GuiLabel("Fond D'écran 3");
-        if (PhoneData.phone_background == 3) {
-            phone_background_three.setText(TextFormatting.RED + "Fond D'écran 3");
+        GuiButton phone_open_last_app = new GuiButton();
+        if (PhoneData.OpenOnLastApp) {
+            phone_open_last_app.setCssClass("switch-button-on");
+        } else if (!PhoneData.OpenOnLastApp) {
+            phone_open_last_app.setCssClass("switch-button-off");
         }
-        phone_background_three.setCssId("phone_background_two");
-        phone_background_three.addClickListener((x,y,bu) -> {
-            PhoneSettings phoneBackground3 = new PhoneSettings(PhoneData.phone_number, 3, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
-            phoneBackground3.savePhoneSettings(phoneBackground3);
-            ACsGuiApi.asyncLoadThenShowGui("SettingsPage", SettingsPage::new);
+        phone_open_last_app.addClickListener((x,y,bu) -> {
+            if (PhoneData.OpenOnLastApp) {
+                PhoneSettings phoneSettings1 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, false);
+                phoneSettings1.savePhoneSettings(phoneSettings1);
+                phone_open_last_app.setCssClass("switch-button-off");
+            }
+            else if (!PhoneData.OpenOnLastApp) {
+                PhoneSettings phoneSettings2 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, true);
+                phoneSettings2.savePhoneSettings(phoneSettings2);
+                phone_open_last_app.setCssClass("switch-button-on");
+            }
         });
-        add(phone_background_three);
+        add(phone_open_last_app);
 
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-    }
-
-    @Override
-    public void drawForeground(int mouseX, int mouseY, float partialTicks) {
-        super.drawForeground(mouseX, mouseY, partialTicks);
-        ItemStack head = new ItemStack(mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem(), 1, mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getMetadata());
-
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(this.getScreenX() - 110, this.getScreenY() / 2 - 40, 300.0F);
-        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(15.0F, 0.0F, 0.0F, 1.0F);
-        GlStateManager.rotate(195.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(0.0F % 360.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.scale(100.0F, 100.0F, 100.0F);
-        RenderHelper.enableGUIStandardItemLighting();
-        Minecraft.getMinecraft().getRenderItem().renderItem(head, ItemCameraTransforms.TransformType.GROUND);
-        GlStateManager.popMatrix();
     }
 
     public List<ResourceLocation> getCssStyles() {

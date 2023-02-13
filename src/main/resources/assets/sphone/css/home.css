@@ -45,7 +45,7 @@
 #phone_top_icons {
     background-image: url("sphone:textures/icons.png");
     height: 12px;
-    width: 53px;
+    width: 48px;
     left: 1820px;
     top: 425px;
 }
@@ -83,9 +83,17 @@
     top: 971px;
 }
 
+#phone_app_contacts {
+    background-image: url("sphone:textures/icons/contacts.png");
+    left: 1638px;
+    width: 53px;
+    height: 55px;
+    top: 470px;
+}
+
 #phone_app_settings {
     background-image: url("sphone:textures/icons/settings.png");
-    left: 1638px;
+    left: 1713px;
     width: 53px;
     height: 55px;
     top: 470px;
@@ -93,7 +101,7 @@
 
 #phone_app_news {
     background-image: url("sphone:textures/icons/news.png");
-    left: 1713px;
+    left: 1788px;
     width: 53px;
     height: 55px;
     top: 470px;

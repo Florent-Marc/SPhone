@@ -18,6 +18,8 @@ public class ClientEventHandler {
             if (PhoneData.OpenOnLastApp) {
                 if (PhoneData.LastApp == "SettingsPage") {
                     ACsGuiApi.asyncLoadThenShowGui(PhoneData.LastApp, SettingsPage::new);
+                } else {
+                    ACsGuiApi.asyncLoadThenShowGui("HomePage", HomePage::new);
                 }
             } else {
                 ACsGuiApi.asyncLoadThenShowGui("HomePage", HomePage::new);

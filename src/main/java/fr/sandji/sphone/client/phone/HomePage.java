@@ -4,6 +4,7 @@ import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.sandji.sphone.client.phone.apps.contacts.ContactsPage;
 import fr.sandji.sphone.client.phone.apps.settings.PhoneData;
 import fr.sandji.sphone.client.phone.apps.settings.PhoneSettings;
 import fr.sandji.sphone.client.phone.apps.settings.SettingsPage;
@@ -80,6 +81,13 @@ public class HomePage extends GuiFrame {
         GuiLabel phone_app_news = new GuiLabel("");
         phone_app_news.setCssId("phone_app_news");
         add(phone_app_news);
+
+        GuiLabel phone_app_contacts = new GuiLabel("");
+        phone_app_contacts.setCssId("phone_app_contacts");
+        phone_app_contacts.addClickListener((x,y,bu) -> {
+           ACsGuiApi.asyncLoadThenShowGui("ContactsPage", ContactsPage::new);
+        });
+        add(phone_app_contacts);
 
     }
 
