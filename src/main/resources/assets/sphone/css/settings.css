@@ -154,3 +154,45 @@
 {
     background-color: green;
 }
+
+#phone_silence_mod_back{
+    height: 40px;
+    width: 265px;
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    left: 1605px;
+    top: 905px;
+    font-size: 20px;
+}
+
+.switch-button-off-2
+{
+    width: 25px;
+    height: 25px;
+    left: 1820px;
+    border: 1px gray;
+    border-radius: 10px;
+    background-color: rgb(180, 0, 0);
+    background-image: none;
+    top: 913px;
+}
+.switch-button-off-2:hover
+{
+    background-color: red;
+}
+.switch-button-on-2
+{
+    width: 25px;
+    height: 25px;
+    left: 1820px;
+    border: 1px gray;
+    border-radius: 10px;
+    background-color: rgb(40,200,40);
+    background-image: none;
+    top: 913px;
+}
+
+.switch-button-on-2:hover
+{
+    background-color: green;
+}

@@ -38,7 +38,7 @@ public class SettingsPage extends GuiFrame {
             PhoneData.LastApp = "SettingsPage";
         }
 
-        PhoneSettings phoneSettings = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+        PhoneSettings phoneSettings = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp, PhoneData.phone_silence_mod);
         phoneSettings.loadPhoneSettings();
 
         GuiLabel phone_background = new GuiLabel("");
@@ -109,46 +109,46 @@ public class SettingsPage extends GuiFrame {
         }
         phone_open_last_app.addClickListener((x,y,bu) -> {
             if (PhoneData.OpenOnLastApp) {
-                PhoneSettings phoneSettings1 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, false);
+                PhoneSettings phoneSettings1 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, false, PhoneData.phone_silence_mod);
                 phoneSettings1.savePhoneSettings(phoneSettings1);
-                PhoneSettings phoneSettings3 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+                PhoneSettings phoneSettings3 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp, PhoneData.phone_silence_mod);
                 phoneSettings3.loadPhoneSettings();
                 phone_open_last_app.setCssClass("switch-button-off");
             }
             else if (!PhoneData.OpenOnLastApp) {
-                PhoneSettings phoneSettings2 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, true);
+                PhoneSettings phoneSettings2 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, true, PhoneData.phone_silence_mod);
                 phoneSettings2.savePhoneSettings(phoneSettings2);
-                PhoneSettings phoneSettings4 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+                PhoneSettings phoneSettings4 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp, PhoneData.phone_silence_mod);
                 phoneSettings4.loadPhoneSettings();
                 phone_open_last_app.setCssClass("switch-button-on");
             }
         });
         add(phone_open_last_app);
 
-        GuiLabel phone_silence_mod_back = new GuiLabel(" Mode Silencieu");
+        GuiLabel phone_silence_mod_back = new GuiLabel(" Mode Silencieux");
         phone_silence_mod_back.setCssId("phone_silence_mod_back");
         add(phone_silence_mod_back);
 
         GuiButton phone_silence_mod = new GuiButton();
-        if (PhoneData.OpenOnLastApp) {
-            phone_silence_mod.setCssClass("switch-button-on");
-        } else if (!PhoneData.OpenOnLastApp) {
-            phone_silence_mod.setCssClass("switch-button-off");
+        if (PhoneData.phone_silence_mod) {
+            phone_silence_mod.setCssClass("switch-button-on-2");
+        } else if (!PhoneData.phone_silence_mod) {
+            phone_silence_mod.setCssClass("switch-button-off-2");
         }
         phone_silence_mod.addClickListener((x,y,bu) -> {
-            if (PhoneData.OpenOnLastApp) {
-                PhoneSettings phoneSettings1 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, false);
+            if (PhoneData.phone_silence_mod) {
+                PhoneSettings phoneSettings1 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp, false);
                 phoneSettings1.savePhoneSettings(phoneSettings1);
-                PhoneSettings phoneSettings3 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+                PhoneSettings phoneSettings3 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp, PhoneData.phone_silence_mod);
                 phoneSettings3.loadPhoneSettings();
-                phone_silence_mod.setCssClass("switch-button-off");
+                phone_silence_mod.setCssClass("switch-button-off-2");
             }
-            else if (!PhoneData.OpenOnLastApp) {
-                PhoneSettings phoneSettings2 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, true);
+            else if (!PhoneData.phone_silence_mod) {
+                PhoneSettings phoneSettings2 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp, true);
                 phoneSettings2.savePhoneSettings(phoneSettings2);
-                PhoneSettings phoneSettings4 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+                PhoneSettings phoneSettings4 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp, PhoneData.phone_silence_mod);
                 phoneSettings4.loadPhoneSettings();
-                phone_silence_mod.setCssClass("switch-button-on");
+                phone_silence_mod.setCssClass("switch-button-on-2");
             }
         });
         add(phone_silence_mod);

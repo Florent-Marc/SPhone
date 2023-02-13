@@ -25,7 +25,7 @@ public class HomePage extends GuiFrame {
         style.setBackgroundColor(Color.TRANSLUCENT);
         setCssClass("home");
 
-        PhoneSettings phoneSettings = new PhoneSettings(0, 0, 0, false);
+        PhoneSettings phoneSettings = new PhoneSettings(0, 0, 0, false, false);
         phoneSettings.loadPhoneSettings();
 
         GuiLabel phone_background = new GuiLabel("");

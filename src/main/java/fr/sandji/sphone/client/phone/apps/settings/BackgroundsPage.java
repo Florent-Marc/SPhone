@@ -25,7 +25,7 @@ public class BackgroundsPage extends GuiFrame {
             PhoneData.LastApp = "SettingsPage";
         }
 
-        PhoneSettings phoneSettings = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+        PhoneSettings phoneSettings = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp, PhoneData.phone_silence_mod);
         phoneSettings.loadPhoneSettings();
 
         GuiLabel phone_background = new GuiLabel("");
@@ -64,7 +64,7 @@ public class BackgroundsPage extends GuiFrame {
         }
         phone_background_one.setCssId("phone_background_one");
         phone_background_one.addClickListener((x,y,bu) -> {
-            PhoneSettings phoneBackground1 = new PhoneSettings(PhoneData.phone_number, 1, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+            PhoneSettings phoneBackground1 = new PhoneSettings(PhoneData.phone_number, 1, PhoneData.phone_ring, PhoneData.OpenOnLastApp, PhoneData.phone_silence_mod);
             phoneBackground1.savePhoneSettings(phoneBackground1);
             ACsGuiApi.asyncLoadThenShowGui("BackgroundsPage", BackgroundsPage::new);
         });
@@ -76,7 +76,7 @@ public class BackgroundsPage extends GuiFrame {
         }
         phone_background_two.setCssId("phone_background_two");
         phone_background_two.addClickListener((x,y,bu) -> {
-            PhoneSettings phoneBackground2 = new PhoneSettings(PhoneData.phone_number, 2, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+            PhoneSettings phoneBackground2 = new PhoneSettings(PhoneData.phone_number, 2, PhoneData.phone_ring, PhoneData.OpenOnLastApp, PhoneData.phone_silence_mod);
             phoneBackground2.savePhoneSettings(phoneBackground2);
             ACsGuiApi.asyncLoadThenShowGui("BackgroundsPage", BackgroundsPage::new);
         });
@@ -88,7 +88,7 @@ public class BackgroundsPage extends GuiFrame {
         }
         phone_background_three.setCssId("phone_background_three");
         phone_background_three.addClickListener((x,y,bu) -> {
-            PhoneSettings phoneBackground3 = new PhoneSettings(PhoneData.phone_number, 3, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+            PhoneSettings phoneBackground3 = new PhoneSettings(PhoneData.phone_number, 3, PhoneData.phone_ring, PhoneData.OpenOnLastApp, PhoneData.phone_silence_mod);
             phoneBackground3.savePhoneSettings(phoneBackground3);
             ACsGuiApi.asyncLoadThenShowGui("BackgroundsPage", BackgroundsPage::new);
         });
