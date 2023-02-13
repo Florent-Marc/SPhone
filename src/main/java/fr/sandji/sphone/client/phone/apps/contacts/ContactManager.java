@@ -28,7 +28,7 @@ public class ContactManager {
         }
     }
 
-    private static List<Contact> contacts;
+    public static List<Contact> contacts;
 
     static {
         contacts = new ArrayList<>();

@@ -130,3 +130,21 @@
 #contact_add:hover {
     background-color: #1459FF;
 }
+
+#contacts_list {
+    width: 270px;
+    height: 510px;
+    top: 500px;
+    left: 1605px;
+}
+
+#contact_name {
+    left: auto;
+    top: auto;
+    width: auto;
+    height: auto;
+}
+
+#contact_name:hover {
+    border: 3px gray;
+}

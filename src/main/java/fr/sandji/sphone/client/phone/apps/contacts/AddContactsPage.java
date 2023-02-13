@@ -57,11 +57,13 @@ public class AddContactsPage extends GuiFrame {
         GuiTextField contact_name = new GuiTextField();
         contact_name.setCssId("contact_name");
         contact_name.setHintText("Prénom");
+        contact_name.setMaxTextLength(13);
         add(contact_name);
 
         GuiTextField contact_lastname = new GuiTextField();
         contact_lastname.setCssId("contact_lastname");
         contact_lastname.setHintText("Nom");
+        contact_lastname.setMaxTextLength(13);
         add(contact_lastname);
 
         GuiIntegerField contact_number = new GuiIntegerField(0, 5559999);
