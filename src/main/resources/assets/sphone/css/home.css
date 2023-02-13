@@ -67,6 +67,10 @@
     top: 971px;
 }
 
+#phone_app_call:hover {
+
+}
+
 #phone_app_messages {
     background-image: url("sphone:textures/icons/messages.png");
     left: 1713px;

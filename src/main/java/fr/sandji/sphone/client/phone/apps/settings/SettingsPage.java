@@ -97,6 +97,10 @@ public class SettingsPage extends GuiFrame {
         });
         add(phone_ring_page);
 
+        GuiLabel phone_open_last_app_back = new GuiLabel(" Save Last App");
+        phone_open_last_app_back.setCssId("phone_open_last_app");
+        add(phone_open_last_app_back);
+
         GuiButton phone_open_last_app = new GuiButton();
         if (PhoneData.OpenOnLastApp) {
             phone_open_last_app.setCssClass("switch-button-on");
@@ -107,15 +111,47 @@ public class SettingsPage extends GuiFrame {
             if (PhoneData.OpenOnLastApp) {
                 PhoneSettings phoneSettings1 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, false);
                 phoneSettings1.savePhoneSettings(phoneSettings1);
+                PhoneSettings phoneSettings3 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+                phoneSettings3.loadPhoneSettings();
                 phone_open_last_app.setCssClass("switch-button-off");
             }
             else if (!PhoneData.OpenOnLastApp) {
                 PhoneSettings phoneSettings2 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, true);
                 phoneSettings2.savePhoneSettings(phoneSettings2);
+                PhoneSettings phoneSettings4 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+                phoneSettings4.loadPhoneSettings();
                 phone_open_last_app.setCssClass("switch-button-on");
             }
         });
         add(phone_open_last_app);
+
+        GuiLabel phone_silence_mod_back = new GuiLabel(" Mode Silencieu");
+        phone_silence_mod_back.setCssId("phone_silence_mod_back");
+        add(phone_silence_mod_back);
+
+        GuiButton phone_silence_mod = new GuiButton();
+        if (PhoneData.OpenOnLastApp) {
+            phone_silence_mod.setCssClass("switch-button-on");
+        } else if (!PhoneData.OpenOnLastApp) {
+            phone_silence_mod.setCssClass("switch-button-off");
+        }
+        phone_silence_mod.addClickListener((x,y,bu) -> {
+            if (PhoneData.OpenOnLastApp) {
+                PhoneSettings phoneSettings1 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, false);
+                phoneSettings1.savePhoneSettings(phoneSettings1);
+                PhoneSettings phoneSettings3 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+                phoneSettings3.loadPhoneSettings();
+                phone_silence_mod.setCssClass("switch-button-off");
+            }
+            else if (!PhoneData.OpenOnLastApp) {
+                PhoneSettings phoneSettings2 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, true);
+                phoneSettings2.savePhoneSettings(phoneSettings2);
+                PhoneSettings phoneSettings4 = new PhoneSettings(PhoneData.phone_number, PhoneData.phone_background, PhoneData.phone_ring, PhoneData.OpenOnLastApp);
+                phoneSettings4.loadPhoneSettings();
+                phone_silence_mod.setCssClass("switch-button-on");
+            }
+        });
+        add(phone_silence_mod);
 
     }
 

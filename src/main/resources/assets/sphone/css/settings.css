@@ -113,16 +113,26 @@
     background-color: rgba(82, 82, 82, 150);
 }
 
+#phone_open_last_app {
+    height: 40px;
+    width: 265px;
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    left: 1605px;
+    top: 860px;
+    font-size: 20px;
+}
+
 .switch-button-off
 {
-    width: 20px;
-    height: 20px;
-    left: 10px;
+    width: 25px;
+    height: 25px;
+    left: 1820px;
     border: 1px gray;
     border-radius: 10px;
     background-color: rgb(180, 0, 0);
     background-image: none;
-    top:auto;
+    top: 868px;
 }
 .switch-button-off:hover
 {
@@ -130,13 +140,14 @@
 }
 .switch-button-on
 {
-    width: 20px;
-    height: 20px;
-    left: 10px;
+    width: 25px;
+    height: 25px;
+    left: 1820px;
     border: 1px gray;
     border-radius: 10px;
     background-color: rgb(40,200,40);
     background-image: none;
+    top: 868px;
 }
 
 .switch-button-on:hover
