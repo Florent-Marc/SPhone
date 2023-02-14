@@ -97,7 +97,7 @@ public class BackgroundsPage extends GuiFrame {
     }
 
     public List<ResourceLocation> getCssStyles() {
-        return Collections.singletonList(new ResourceLocation("sphone:css/backgrounds.css"));
+        return Collections.singletonList(new ResourceLocation("sphone:css/settings.css"));
     }
 
     @Override

@@ -1,13 +1,12 @@
 package fr.sandji.sphone.client.phone.apps.contacts;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
-import fr.aym.acsguis.component.panel.GuiScrollPane;
+import fr.aym.acsguis.component.textarea.GuiIntegerField;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
-import fr.sandji.sphone.client.phone.HomePage;
+import fr.aym.acsguis.component.textarea.GuiTextField;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
@@ -16,11 +15,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static fr.sandji.sphone.client.phone.apps.contacts.ContactManager.contacts;
+public class EditContactsPage extends GuiFrame {
 
-public class ViewContactsPage extends GuiFrame {
-
-    public ViewContactsPage(String name, String last_name, int phone_number, String notes) {
+    public EditContactsPage(String name, String last_name, int phone_number, String notes) {
         super(new GuiScaler.AdjustFullScreen());
         style.setBackgroundColor(Color.TRANSLUCENT);
         setCssClass("home");
@@ -47,7 +44,7 @@ public class ViewContactsPage extends GuiFrame {
         GuiLabel phone_task_bar = new GuiLabel("");
         phone_task_bar.setCssId("phone_task_bar");
         phone_task_bar.addClickListener((x,y,bu) -> {
-            ACsGuiApi.asyncLoadThenShowGui("ContactsPage", ContactsPage::new);
+            mc.displayGuiScreen(new ViewContactsPage(name, last_name, phone_number, notes).getGuiScreen());
         });
         add(phone_task_bar);
 
@@ -55,34 +52,34 @@ public class ViewContactsPage extends GuiFrame {
         contact_avatar.setCssId("contact_avatar");
         add(contact_avatar);
 
-        GuiLabel call_back = new GuiLabel("");
-        call_back.setCssId("call_back");
-        add(call_back);
+        GuiTextField edit_name = new GuiTextField();
+        edit_name.setCssId("edit_name");
+        edit_name.setText(name);
+        edit_name.setMaxTextLength(13);
+        add(edit_name);
 
-        GuiLabel message_back = new GuiLabel("");
-        message_back.setCssId("message_back");
-        add(message_back);
+        GuiTextField edit_last_name = new GuiTextField();
+        edit_last_name.setCssId("edit_last_name");
+        edit_last_name.setText(last_name);
+        edit_last_name.setMaxTextLength(13);
+        add(edit_last_name);
 
-        GuiLabel edit_back = new GuiLabel("");
-        edit_back.setCssId("edit_back");
-        edit_back.addClickListener((x,y,bu) -> {
-            mc.displayGuiScreen(new EditContactsPage(name, last_name, phone_number, notes).getGuiScreen());
+        GuiIntegerField edit_phone = new GuiIntegerField(0, 5559999);
+        edit_phone.setValue(phone_number);
+        edit_phone.setCssId("edit_phone");
+        add(edit_phone);
+
+        GuiTextArea edit_notes = new GuiTextArea();
+        edit_notes.setCssId("edit_notes");
+        edit_notes.setText(" " + notes);
+        edit_notes.setEditable(true);
+        add(edit_notes);
+
+        GuiLabel contact_add = new GuiLabel("Sauvegarder");
+        contact_add.setCssId("contact_add");
+        contact_add.addClickListener((x,y,bu) -> {
         });
-        add(edit_back);
-
-        GuiLabel contact_name = new GuiLabel(name + " " + last_name);
-        contact_name.setCssId("name");
-        add(contact_name);
-
-        GuiLabel phone = new GuiLabel(" Numéro : " + String.valueOf(phone_number));
-        phone.setCssId("phone");
-        add(phone);
-
-        GuiTextArea contacts_notes = new GuiTextArea();
-        contacts_notes.setCssId("note");
-        contacts_notes.setText(" " + notes);
-        contacts_notes.setEditable(false);
-        add(contacts_notes);
+        add(contact_add);
 
     }
 

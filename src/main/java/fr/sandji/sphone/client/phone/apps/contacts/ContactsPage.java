@@ -81,6 +81,7 @@ public class ContactsPage extends GuiFrame {
             GuiLabel contact_name = new GuiLabel(" " + contact.name + " " + contact.lastname);
             contact_name.setCssId("contact_name");
             contact_name.addClickListener((x,y,bu) -> {
+                mc.displayGuiScreen(new ViewContactsPage(contact.name, contact.lastname, contact.phone_number, contact.notes).getGuiScreen());
             });
             contacts_list.add(contact_name);
         }

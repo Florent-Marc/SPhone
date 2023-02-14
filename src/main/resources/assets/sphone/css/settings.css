@@ -196,3 +196,48 @@
 {
     background-color: green;
 }
+
+#phone_background_one {
+    height: 40px;
+    width: 265px;
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    left: 1605px;
+    top: 550px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#phone_background_one:hover {
+    background-color: rgba(82, 82, 82, 150);
+}
+
+#phone_background_two {
+    height: 40px;
+    width: 265px;
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    left: 1605px;
+    top: 600px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#phone_background_two:hover {
+    background-color: rgba(82, 82, 82, 150);
+}
+
+#phone_background_three {
+    height: 40px;
+    width: 265px;
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    left: 1605px;
+    top: 650px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#phone_background_three:hover {
+    background-color: rgba(82, 82, 82, 150);
+}

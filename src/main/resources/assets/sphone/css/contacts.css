@@ -148,3 +148,97 @@
 #contact_name:hover {
     border: 3px gray;
 }
+
+#contact_avatar {
+    height: 140px;
+    width: 140px;
+    left: 1670px;
+    top: 460px;
+    background-image: url("sphone:textures/icons/contact_avatar.png");
+}
+
+#name {
+    width: 270px
+    height: 60px
+    left: 1607px;
+    top: 587px;
+    text-align: center;
+    font-size: 25px;
+}
+
+#call_back {
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    height: 50px;
+    width: 65px;
+    left: 1615px;
+    top: 650px;
+}
+
+#call_back:hover {
+    background-color: rgba(82, 82, 82, 150);
+}
+
+#message_back {
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    height: 50px;
+    width: 65px;
+    left: 1705px;
+    top: 650px;
+}
+
+#message_back:hover {
+    background-color: rgba(82, 82, 82, 150);
+}
+
+#edit_back {
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 10px;
+    height: 50px;
+    width: 65px;
+    left: 1795px;
+    top: 650px;
+}
+
+#edit_back:hover {
+    background-color: rgba(82, 82, 82, 150);
+}
+
+#phone {
+    background-color: rgba(82, 82, 82, 90);
+    border-radius: 8px;
+    height: 50px;
+    width: 250px;
+    left: 1615px;
+    top: 720px;
+    font-size : 18px;
+}
+
+#note {
+    background-color: #323232;
+    border-radius: 7px;
+    height: 200px;
+    width: 250px;
+    left: 1615px;
+    top: 790px;
+    font-size : 17px;
+}
+
+#edit_name {
+     background-color: #323232;
+     width: 255px;
+     height: 40px;
+     left: 1610px;
+     top: 620px;
+     font-size: 20px;
+}
+
+#edit_last_name {
+     background-color: #323232;
+     width: 255px;
+     height: 40px;
+     left: 1610px;
+     top: 680px;
+     font-size: 20px;
+}
