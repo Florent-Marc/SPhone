@@ -1,0 +1,133 @@
+/*
+ * SPhone - Tous droits réservés. (by 0hSandji)
+ */
+
+.home {
+    width: 1920px;
+    height: 1080px;
+}
+
+#case {
+    background-image: url("sphone:textures/ui/phone.png");
+    left: 82%;
+    width: 330px;
+    height: 675px;
+    top: 35%;
+}
+
+#background {
+    background-color: #272727;
+    left: 1590px;
+    width: 300px;
+    height: 646px;
+    top: 392px;
+    border-radius: 11px;
+}
+
+#top_clock {
+    color: white;
+    height: 50px;
+    left: 1610px;
+    top: 392px;
+    font-size: 17px;
+}
+
+#top_icons {
+    background-image: url("sphone:textures/ui/icons/other.png");
+    height: 14px;
+    width: 48px;
+    left: 1810px;
+    top: 412px;
+}
+
+#home_bar {
+    height: 9px;
+    width: 150px;
+    left: 1665px;
+    top: 1019px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+}
+
+#home_bar:hover {
+    background-color: #90949F;
+}
+
+#app_title {
+    font-size: 30px;
+    left: 1600px;
+    top: 450px;
+    height: 50px;
+    width: 200px;
+}
+
+#button_add {
+    left: 1840px;
+    top: 459px;
+    height: 30px;
+    width: 30px;
+    border-radius: 40%;
+    background-color: #599AF8;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+}
+
+#button_add:hover {
+    background-color: #1978ff;
+}
+
+#search_contact {
+    background-color: #2D2D2D;
+    border-color: #2D2D2D;
+    border-radius: 5px;
+    left: 1605px;
+    width: 265px;
+    height: 30px;
+    top: 510px;
+    font-size: 20px;
+}
+
+#contacts_list {
+    width: 270px;
+    height: 510px;
+    top: 500px;
+    left: 1605px;
+}
+
+.contact_background {
+    background-color: #323232;
+    width: auto;
+    height: auto;
+    left: auto;
+    top: auto;
+    border-radius: 5px;
+}
+
+.contact_background:hover {
+    background-color: #5a5a5a;
+}
+
+.contact_avatar {
+    width: 17%;
+    height: 80%;
+    left: 7%;
+    top: 10%;
+    border-radius: 5px;
+}
+
+#contact_name {
+    width: 70%;
+    height: 100%;
+    left: 30%;
+    font-size: 20px;
+    color: white;
+    text-align: left;
+}
+
+#view_contact_avatar {
+    width: 80px;
+    height: 80px;
+    left: 1620px;
+    top: 570px;
+ }

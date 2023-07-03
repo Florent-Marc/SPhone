@@ -94,9 +94,10 @@ minecraft {
         implementation 'com.google.code.gson:gson:2.10.1'
         testCompile group: 'junit', name: 'junit', version: '4.12'
         minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
+        compile fg.deobf('curse.maven:obfuscate-289380:2916310')
         compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
         compile fileTree(dir: 'libs', include: '*.jar')
-        implementation(fg.deobf( "fr.aym.acsguis:ACsGuis:1.2.5"))
+        //implementation(fg.deobf( "fr.aym.acsguis:ACsGuis:1.2.8"))
         implementation 'com.zaxxer:HikariCP:3.1.0'
     }
 

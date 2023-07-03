@@ -5,14 +5,20 @@
 package fr.sandji.sphone;
 
 import fr.sandji.sphone.api.database.DatabaseManager;
+import fr.sandji.sphone.mod.Test;
+import fr.sandji.sphone.mod.client.ClientEventHandler;
 import fr.sandji.sphone.mod.client.SPhoneTab;
+import fr.sandji.sphone.mod.common.packets.Network;
 import fr.sandji.sphone.mod.common.proxy.CommonProxy;
 import fr.sandji.sphone.mod.common.register.RegisterHandler;
+import fr.sandji.sphone.mod.server.ServerEventHandler;
+import fr.sandji.sphone.mod.server.commands.CommandGivePhone;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 @Mod(
         modid = SPhone.MOD_ID,
@@ -25,6 +31,7 @@ public class SPhone {
     public static final String MOD_ID = "sphone";
     public static final String MOD_NAME = "SPhone";
     public static final String VERSION = "0.0.1";
+    public static final boolean DEV_MOD = true;
 
     @SidedProxy(clientSide = "fr.sandji.sphone.mod.common.proxy.ClientProxy", serverSide = "fr.sandji.sphone.mod.common.proxy.CommonProxy")
     public static CommonProxy PROXY;
@@ -33,12 +40,21 @@ public class SPhone {
 
     @Mod.Instance(MOD_ID)
     public static SPhone INSTANCE;
+    public static SimpleNetworkWrapper network;
 
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent e) {
         PROXY.preInit();
+        Network.init();
         MinecraftForge.EVENT_BUS.register(new RegisterHandler());
         MinecraftForge.EVENT_BUS.register(this);
+
+        if (e.getSide().isClient()) {
+            MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
+        }
+        if (e.getSide().isServer()) {
+            MinecraftForge.EVENT_BUS.register(new ServerEventHandler());
+        }
     }
 
     @Mod.EventHandler
@@ -48,6 +64,7 @@ public class SPhone {
 
     @Mod.EventHandler
     public void onServerStart(FMLServerStartingEvent e){
+        e.registerServerCommand(new CommandGivePhone());
         if (e.getSide().isServer()) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -56,6 +73,7 @@ public class SPhone {
             }
 
             DatabaseManager.initAllDatabaseConnections();
+            Test.Test();
         }
     }
 
