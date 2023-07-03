@@ -23,7 +23,7 @@ import java.util.List;
 
 public class GuiInit extends GuiFrame {
 
-    private GuiScreen parent;
+    private final GuiScreen parent;
 
     public GuiInit(GuiScreen parent) {
         super(new GuiScaler.AdjustFullScreen());
@@ -33,10 +33,12 @@ public class GuiInit extends GuiFrame {
 
     public GuiInit() {
         super(new GuiScaler.AdjustFullScreen());
+        this.parent = null;
         init();
     }
 
     private void init(){
+        setCssClass("home");
         GuiPanel Background = new GuiPanel();
         Background.setCssClass("background");
         add(Background);
@@ -69,9 +71,6 @@ public class GuiInit extends GuiFrame {
     }
 
 
-
-
-    @Override
     public List<ResourceLocation> getCssStyles() {
         return Collections.singletonList(new ResourceLocation("sphone:css/home.css"));
     }

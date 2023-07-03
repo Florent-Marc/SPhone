@@ -9,7 +9,6 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
-import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.client.gui.phone.GuiInit;
 import fr.sandji.sphone.mod.common.phone.Contact;
@@ -47,7 +46,7 @@ public class GuiContactsList extends GuiInit {
             GuiPanel contactPanel = new GuiPanel();
             contactPanel.setCssClass("contact_background");
             contactPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiContact(contacts,contact).getGuiScreen());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiContact(contacts, contact).getGuiScreen());
             });
 
             GuiPanel ContactAvatar = new GuiPanel();
@@ -68,23 +67,11 @@ public class GuiContactsList extends GuiInit {
     }
 
 
-
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
         styles.add(new ResourceLocation("sphone:css/contacts.css"));
         return styles;
     }
-
-    @Override
-    public boolean needsCssReload() {
-        return SPhone.DEV_MOD;
-    }
-
-    @Override
-    public boolean doesPauseGame() {
-        return false;
-    }
-
 
 }

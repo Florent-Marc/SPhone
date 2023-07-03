@@ -40,14 +40,5 @@ public class GuiCalculator extends GuiInit {
         return styles;
     }
 
-    @Override
-    public boolean needsCssReload() {
-        return SPhone.DEV_MOD;
-    }
-
-    @Override
-    public boolean doesPauseGame() {
-        return false;
-    }
 
 }

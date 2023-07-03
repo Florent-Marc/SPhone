@@ -37,24 +37,11 @@ public class GuiContact extends GuiInit {
 
     }
 
-
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
         styles.add(new ResourceLocation("sphone:css/contacts.css"));
         return styles;
-    }
-
-
-
-    @Override
-    public boolean needsCssReload() {
-        return SPhone.DEV_MOD;
-    }
-
-    @Override
-    public boolean doesPauseGame() {
-        return false;
     }
 
 }

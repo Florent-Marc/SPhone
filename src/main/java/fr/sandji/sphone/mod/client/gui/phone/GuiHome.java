@@ -7,13 +7,11 @@ package fr.sandji.sphone.mod.client.gui.phone;
 
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiContactsList;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,9 +20,6 @@ public class GuiHome extends GuiInit {
 
     public GuiHome() {
         super();
-        style.setBackgroundColor(Color.TRANSLUCENT);
-        setCssClass("home");
-
 
         GuiLabel Apps = new GuiLabel("");
         Apps.setCssId("apps");
@@ -90,14 +85,5 @@ public class GuiHome extends GuiInit {
         return Collections.singletonList(new ResourceLocation("sphone:css/home.css"));
     }
 
-    @Override
-    public boolean needsCssReload() {
-        return SPhone.DEV_MOD;
-    }
-
-    @Override
-    public boolean doesPauseGame() {
-        return false;
-    }
 
 }
