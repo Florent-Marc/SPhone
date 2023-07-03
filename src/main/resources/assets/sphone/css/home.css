@@ -7,7 +7,7 @@
     height: 1080px;
 }
 
-#case {
+.case {
     background-image: url("sphone:textures/ui/phone.png");
     left: 82%;
     width: 330px;
@@ -15,7 +15,7 @@
     top: 35%;
 }
 
-#background {
+.background {
     background-image: url("sphone:textures/ui/background/test.png");
     left: 1590px;
     width: 299px;
@@ -30,8 +30,17 @@
     top: 392px;
     font-size: 17px;
 }
+.home_bar {
+    height: 9px;
+    width: 150px;
+    left: 1665px;
+    top: 1019px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+}
 
-#top_icons {
+
+.top_icons {
     background-image: url("sphone:textures/ui/icons/other.png");
     height: 14px;
     width: 48px;
@@ -153,7 +162,7 @@
     top: 458px;
 }
 
-#app_contact {
+.app_contact {
     background-image: url("sphone:textures/ui/icons/contacts.png");
     left: 1610px;
     width: 46px;
@@ -161,7 +170,7 @@
     top: 535px;
 }
 
-#app_contact:hover {
+.app_contact:hover {
     left: 1609px;
     width: 48px;
     height: 50px;

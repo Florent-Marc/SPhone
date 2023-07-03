@@ -2,62 +2,27 @@
  * SPhone - Tous droits réservés. (by 0hSandji)
  */
 
-package fr.sandji.sphone.mod.ui.phone.apps.contacts;
+package fr.sandji.sphone.mod.client.gui.phone.apps.contacts;
 
-import fr.aym.acsguis.component.layout.GuiScaler;
-import fr.aym.acsguis.component.panel.GuiFrame;
+import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
-import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
-import fr.aym.acsguis.event.listeners.mouse.IMouseMoveListener;
 import fr.sandji.sphone.SPhone;
+import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
+import fr.sandji.sphone.mod.client.gui.phone.GuiInit;
 import fr.sandji.sphone.mod.common.phone.Contact;
-import fr.sandji.sphone.mod.ui.phone.Home;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
-import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Contacts extends GuiFrame {
+public class GuiContactsList extends GuiInit {
 
-    public Contacts(List<Contact> contacts) {
-        super(new GuiScaler.AdjustFullScreen());
-        style.setBackgroundColor(Color.TRANSLUCENT);
-        setCssClass("home");
-
-        GuiLabel Background = new GuiLabel("");
-        Background.setCssId("background");
-        add(Background);
-
-        GuiLabel Case = new GuiLabel("");
-        Case.setCssId("case");
-        add(Case);
-
-        GuiLabel TopClock = new GuiLabel("");
-        TopClock.setCssId("top_clock");
-        TopClock.addTickListener(() -> {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-            Date date = new Date();
-            TopClock.setText(dateFormat.format(date));
-        });
-        add(TopClock);
-
-        GuiLabel TopIcons = new GuiLabel("");
-        TopIcons.setCssId("top_icons");
-        add(TopIcons);
-
-        GuiLabel HomeBar = new GuiLabel("");
-        HomeBar.setCssId("home_bar");
-        HomeBar.addClickListener((x,y,bu) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new Home().getGuiScreen());
-        });
-        add(HomeBar);
+    public GuiContactsList(List<Contact> contacts) {
+        super(new GuiHome().getGuiScreen());
 
         GuiLabel AppTitle = new GuiLabel("Contacts");
         AppTitle.setCssId("app_title");
@@ -81,20 +46,20 @@ public class Contacts extends GuiFrame {
 
             GuiPanel contactPanel = new GuiPanel();
             contactPanel.setCssClass("contact_background");
+            contactPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
+                Minecraft.getMinecraft().displayGuiScreen(new GuiContact(contacts,contact).getGuiScreen());
+            });
 
             GuiPanel ContactAvatar = new GuiPanel();
             ContactAvatar.setCssClass("contact_avatar");
             String cssCode = "background-image: url(\"https://mc-heads.net/avatar/" + contact.getPlayer_associated() + "\");";
             ContactAvatar.setCssCode("contact_avatar", cssCode);
+            contactPanel.add(ContactAvatar);
 
             GuiLabel ContactName = new GuiLabel(contact.getName() + " " + contact.getLastname());
             ContactName.setCssId("contact_name");
-            ContactName.addClickListener((x,y,bu) -> {
-                //Minecraft.getMinecraft().displayGuiScreen(new ViewContact().getGuiScreen());
-            });
-
-            contactPanel.add(ContactAvatar);
             contactPanel.add(ContactName);
+
             contacts_list.add(contactPanel);
         }
 
@@ -102,8 +67,13 @@ public class Contacts extends GuiFrame {
 
     }
 
+
+
     public List<ResourceLocation> getCssStyles() {
-        return Collections.singletonList(new ResourceLocation("sphone:css/contacts.css"));
+        List<ResourceLocation> styles = new ArrayList<>();
+        styles.add(super.getCssStyles().get(0));
+        styles.add(new ResourceLocation("sphone:css/contacts.css"));
+        return styles;
     }
 
     @Override
@@ -115,5 +85,6 @@ public class Contacts extends GuiFrame {
     public boolean doesPauseGame() {
         return false;
     }
+
 
 }
