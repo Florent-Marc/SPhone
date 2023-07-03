@@ -21,7 +21,7 @@ import java.util.List;
 public class GuiHome extends GuiInit {
 
     public GuiHome() {
-        super(null);
+        super();
         style.setBackgroundColor(Color.TRANSLUCENT);
         setCssClass("home");
 

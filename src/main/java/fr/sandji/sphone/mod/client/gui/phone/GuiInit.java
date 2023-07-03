@@ -23,11 +23,20 @@ import java.util.List;
 
 public class GuiInit extends GuiFrame {
 
+    private GuiScreen parent;
+
     public GuiInit(GuiScreen parent) {
         super(new GuiScaler.AdjustFullScreen());
-        style.setBackgroundColor(Color.TRANSLUCENT);
-        setCssClass("home");
+        this.parent = parent;
+        init();
+    }
 
+    public GuiInit() {
+        super(new GuiScaler.AdjustFullScreen());
+        init();
+    }
+
+    private void init(){
         GuiPanel Background = new GuiPanel();
         Background.setCssClass("background");
         add(Background);
@@ -57,9 +66,10 @@ public class GuiInit extends GuiFrame {
             }
         });
         add(HomeBar);
-
-
     }
+
+
+
 
     @Override
     public List<ResourceLocation> getCssStyles() {
