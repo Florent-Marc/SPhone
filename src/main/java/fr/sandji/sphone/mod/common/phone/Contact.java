@@ -26,6 +26,14 @@ public class Contact implements ISerializable, ISerializablePacket {
         this.player_associated = player_associated;
     }
 
+    //constructor with name and number
+    public Contact(String name, int numero) {
+        this.name = name;
+        this.numero = numero;
+
+    }
+
+
     public String getName() {
         return name;
     }

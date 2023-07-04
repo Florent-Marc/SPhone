@@ -72,15 +72,15 @@ public class SPhone {
                 ex.printStackTrace();
             }
 
-            DatabaseManager.initAllDatabaseConnections();
-            Test.Test();
+            //DatabaseManager.initAllDatabaseConnections();
+            //est.Test();
         }
     }
 
     @Mod.EventHandler
     public void onServerStop(FMLServerStoppingEvent e) {
         if (e.getSide().isServer()) {
-            DatabaseManager.closeAllDatabaseConnections();
+            //DatabaseManager.closeAllDatabaseConnections();
         }
     }
 

@@ -29,7 +29,11 @@ public class DatabaseAccess {
         hikariConfig.setLeakDetectionThreshold(300000L);
         hikariConfig.setConnectionTimeout(10000L);
 
-        this.hikariDataSource = new HikariDataSource(hikariConfig);
+        try {
+            //this.hikariDataSource = new HikariDataSource(hikariConfig);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void initPool() {

@@ -1,0 +1,55 @@
+.contacts_list {
+    width: 90%;
+    height: 70%;
+    top: 20%;
+    left: 5%;
+}
+#app_title {
+    font-size: 25px;
+    left: 4%;
+    top: 10%;
+    height: 5%;
+    width: 50%;
+}
+.search_contact{
+    width: 80%;
+    height: 5%;
+    top: 15%;
+    left: 10%;
+}
+.contact_background {
+    background-color: #323232;
+    width: 90%;
+    height: auto;
+    left: 5%;
+    top: auto;
+    border-radius: 10px;
+}
+.contact_background:hover {
+    background-color: #5a5a5a;
+}
+#name {
+    font-size: 10px;
+    color: white;
+    left: 0%;
+    top: 0%;
+    height: 30%;
+    width: 50%;
+}
+#lastmessage {
+    font-size: 10px;
+    color: white;
+    left: 0%;
+    top: 30%;
+    height: 40%;
+    width: 100%;
+}
+#date {
+    text-align: right;
+    font-size: 10px;
+    color: white;
+    right: 0%;
+    bottom: 0%;
+    height: 30%;
+    width: 50%;
+}
