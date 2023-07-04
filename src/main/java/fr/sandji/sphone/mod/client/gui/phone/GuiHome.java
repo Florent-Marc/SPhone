@@ -5,6 +5,7 @@
 
 package fr.sandji.sphone.mod.client.gui.phone;
 
+import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiContactsList;
@@ -28,7 +29,9 @@ public class GuiHome extends GuiBase {
         AppCall.setCssId("app_call");
         add(AppCall);
         AppCall.addClickListener((p, m, b) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiCall("0478.36.59.65").getGuiScreen());
+            removeAllChilds();
+            add(new GuiCall("0478.36.59.65"));
+            //Minecraft.getMinecraft().displayGuiScreen(new GuiCall("0478.36.59.65").getGuiScreen());
         });
 
         GuiLabel AppNotes = new GuiLabel("");
@@ -87,6 +90,7 @@ public class GuiHome extends GuiBase {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
         styles.add(new ResourceLocation("sphone:css/home.css"));
+        styles.add(new ResourceLocation("sphone:css/call.css"));
         return styles;
     }
 

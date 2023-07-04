@@ -1,5 +1,6 @@
 package fr.sandji.sphone.mod.client.gui.phone;
 
+import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
