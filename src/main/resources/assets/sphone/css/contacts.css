@@ -7,7 +7,7 @@
     left: 4%;
     top: 10%;
     height: 5%;
-    width: 50%;
+    width: 40%;
 }
 
 #button_add {
@@ -24,6 +24,28 @@
 
 #button_add:hover {
     background-color: #1978ff;
+}
+
+.message {
+    background-image: url("sphone:textures/ui/icons/message0.png");
+    width: 10%;
+    height: 5%;
+    right: 15%;
+    top: 10%;
+}
+.message:hover {
+    background-image: url("sphone:textures/ui/icons/message1.png");
+}
+
+.call {
+    background-image: url("sphone:textures/ui/icons/tel.png");
+    width: 10%;
+    height: 5%;
+    right: 25%;
+    top: 10%;
+}
+.call:hover {
+    background-image: url("sphone:textures/ui/icons/tel1.png");
 }
 
 

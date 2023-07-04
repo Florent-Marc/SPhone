@@ -4,9 +4,11 @@
 
 package fr.sandji.sphone.mod.client.gui.phone.apps.contacts;
 
+import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.common.phone.Contact;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -25,6 +27,17 @@ public class GuiViewContact extends GuiBase {
         GuiLabel ButtonEdit = new GuiLabel("✎");
         ButtonEdit.setCssId("button_add");
         getBackground().add(ButtonEdit);
+        ButtonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiEditContact(l, contact).getGuiScreen());
+        });
+
+        GuiPanel message = new GuiPanel();
+        message.setCssClass("message");
+        getBackground().add(message);
+
+        GuiPanel call = new GuiPanel();
+        call.setCssClass("call");
+        getBackground().add(call);
 
         GuiLabel ContactAvatar = new GuiLabel("");
         ContactAvatar.setCssId("view_contact_avatar");

@@ -40,6 +40,16 @@
 .button_add:hover{
     background-image: url("sphone:textures/ui/icons/add1.png");
 }
+.edit{
+    background-image: url("sphone:textures/ui/icons/edit.png");
+    width: 50px;
+    height: 52px;
+    left: 44%;
+    bottom: 30%;
+}
+.edit:hover{
+    background-image: url("sphone:textures/ui/icons/edit1.png");
+}
 
 
 
