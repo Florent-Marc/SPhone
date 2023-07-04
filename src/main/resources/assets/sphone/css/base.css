@@ -7,13 +7,6 @@
     height: 1080px;
 }
 
-.case {
-    background-image: url("sphone:textures/ui/phone.png");
-    left: 82%;
-    width: 330px;
-    height: 675px;
-    top: 35%;
-}
 
 .background {
     background-image: url("sphone:textures/ui/background/test.png");
@@ -21,6 +14,15 @@
     width: 299px;
     height: 646px;
     top: 392px;
+    z-index: -1;
+}
+.case {
+    background-image: url("sphone:textures/ui/phone.png");
+    left: 82%;
+    width: 330px;
+    height: 675px;
+    top: 35%;
+
 }
 
 #top_clock {

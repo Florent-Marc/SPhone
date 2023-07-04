@@ -20,17 +20,17 @@ public class GuiViewContact extends GuiBase {
 
         GuiLabel AppTitle = new GuiLabel("Contact");
         AppTitle.setCssId("app_title");
-        add(AppTitle);
+        getBackground().add(AppTitle);
 
         GuiLabel ButtonEdit = new GuiLabel("✎");
         ButtonEdit.setCssId("button_add");
-        add(ButtonEdit);
+        getBackground().add(ButtonEdit);
 
         GuiLabel ContactAvatar = new GuiLabel("");
         ContactAvatar.setCssId("view_contact_avatar");
         String cssCode = "background-image: url(\"https://mc-heads.net/avatar/" + contact.getPlayer_associated() + "\");";
         ContactAvatar.setCssCode("view_contact_avatar", cssCode);
-        add(ContactAvatar);
+        getBackground().add(ContactAvatar);
 
     }
 

@@ -14,14 +14,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
+import java.awt.*;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 
 public class GuiBase extends GuiFrame {
 
     private final GuiScreen parent;
+    private GuiPanel Background;
 
     public GuiBase(GuiScreen parent) {
         super(new GuiScaler.AdjustFullScreen());
@@ -36,14 +37,17 @@ public class GuiBase extends GuiFrame {
     }
 
     private void init(){
+        style.setBackgroundColor(Color.TRANSLUCENT);
         setCssClass("home");
-        GuiPanel Background = new GuiPanel();
-        Background.setCssClass("background");
-        add(Background);
 
         GuiPanel Case = new GuiPanel();
         Case.setCssClass("case");
         add(Case);
+        this.Background = new GuiPanel();
+        this.Background.setCssClass("background");
+        add(Background);
+
+
 
         GuiLabel TopClock = new GuiLabel("");
         TopClock.setCssId("top_clock");
@@ -58,17 +62,23 @@ public class GuiBase extends GuiFrame {
         TopIcons.setCssClass("top_icons");
         add(TopIcons);
 
-        if (parent != null) {
-            GuiPanel HomeBar = new GuiPanel();
-            HomeBar.setCssClass("home_bar");
+        GuiPanel HomeBar = new GuiPanel();
+        HomeBar.setCssClass("home_bar");
+        add(HomeBar);
+        if (parent == null) {
+            HomeBar.setVisible(false);
+        } else {
             HomeBar.addClickListener((x,y,bu) -> {
                 Minecraft.getMinecraft().displayGuiScreen(parent);
             });
-            add(HomeBar);
         }
     }
 
+    public GuiPanel getBackground() {
+        return this.Background;
+    }
 
+    @Override
     public List<ResourceLocation> getCssStyles() {
         return Collections.singletonList(new ResourceLocation("sphone:css/base.css"));
     }

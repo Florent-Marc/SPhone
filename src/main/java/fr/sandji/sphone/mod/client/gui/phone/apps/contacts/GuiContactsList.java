@@ -25,19 +25,19 @@ public class GuiContactsList extends GuiBase {
 
         GuiLabel AppTitle = new GuiLabel("Contacts");
         AppTitle.setCssId("app_title");
-        add(AppTitle);
+        getBackground().add(AppTitle);
 
         GuiLabel ButtonAdd = new GuiLabel("+");
         ButtonAdd.setCssId("button_add");
-        add(ButtonAdd);
+        //getBackground().add(ButtonAdd);
 
         GuiTextField SearchContact = new GuiTextField();
-        SearchContact.setCssId("search_contact");
+        SearchContact.setCssClass("search_contact");
         SearchContact.setHintText("➜ Rechercher");
-        add(SearchContact);
+        getBackground().add(SearchContact);
 
         GuiScrollPane contacts_list = new GuiScrollPane();
-        contacts_list.setCssId("contacts_list");
+        contacts_list.setCssClass("contacts_list");
         contacts_list.setLayout(new GridLayout(-1, 60, 5, GridLayout.GridDirection.HORIZONTAL, 1));
 
         for (Contact contact : contacts) {
@@ -61,14 +61,14 @@ public class GuiContactsList extends GuiBase {
             contacts_list.add(contactPanel);
         }
 
-        add(contacts_list);
+        getBackground().add(contacts_list);
 
     }
 
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
-        styles.add(new ResourceLocation("sphone:css/contacts.css"));
+        styles.add(new ResourceLocation("sphone:css/contactslist.css"));
         return styles;
     }
 
