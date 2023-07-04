@@ -5,20 +5,17 @@
 package fr.sandji.sphone.mod.client.gui.phone.apps.contacts;
 
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.sandji.sphone.SPhone;
-import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
-import fr.sandji.sphone.mod.client.gui.phone.GuiInit;
+import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class GuiContact extends GuiInit {
+public class GuiViewContact extends GuiBase {
 
 
-    public GuiContact(List<Contact> l,Contact contact) {
+    public GuiViewContact(List<Contact> l, Contact contact) {
         super(new GuiContactsList(l).getGuiScreen());
 
         GuiLabel AppTitle = new GuiLabel("Contact");

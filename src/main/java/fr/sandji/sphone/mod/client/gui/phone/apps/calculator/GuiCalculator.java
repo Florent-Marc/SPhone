@@ -7,16 +7,14 @@ package fr.sandji.sphone.mod.client.gui.phone.apps.calculator;
 
 import fr.aym.acsguis.component.textarea.GuiFloatField;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
-import fr.sandji.sphone.mod.client.gui.phone.GuiInit;
+import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class GuiCalculator extends GuiInit {
+public class GuiCalculator extends GuiBase {
 
     public GuiCalculator() {
         super(new GuiHome().getGuiScreen());

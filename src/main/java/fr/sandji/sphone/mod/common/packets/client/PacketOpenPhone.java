@@ -5,6 +5,8 @@
 
 package fr.sandji.sphone.mod.common.packets.client;
 
+import fr.sandji.sphone.mod.common.phone.Contact;
+import fr.sandji.sphone.mod.common.phone.Settings;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -15,6 +17,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PacketOpenPhone implements IMessage {
 
     public PacketOpenPhone() {}
+
+    public PacketOpenPhone(Settings settings, Contact contact) {}
 
     @Override
     public void fromBytes(ByteBuf buf) {

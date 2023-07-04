@@ -10,7 +10,7 @@ import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
-import fr.sandji.sphone.mod.client.gui.phone.GuiInit;
+import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiContactsList extends GuiInit {
+public class GuiContactsList extends GuiBase {
 
     public GuiContactsList(List<Contact> contacts) {
         super(new GuiHome().getGuiScreen());
@@ -38,7 +38,6 @@ public class GuiContactsList extends GuiInit {
 
         GuiScrollPane contacts_list = new GuiScrollPane();
         contacts_list.setCssId("contacts_list");
-        //contacts_list.setLayout(new GridLayout(-1, 10, 5, GridLayout.GridDirection.VERTICAL, 1));
         contacts_list.setLayout(new GridLayout(-1, 60, 5, GridLayout.GridDirection.HORIZONTAL, 1));
 
         for (Contact contact : contacts) {
@@ -46,7 +45,7 @@ public class GuiContactsList extends GuiInit {
             GuiPanel contactPanel = new GuiPanel();
             contactPanel.setCssClass("contact_background");
             contactPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiContact(contacts, contact).getGuiScreen());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiViewContact(contacts, contact).getGuiScreen());
             });
 
             GuiPanel ContactAvatar = new GuiPanel();
@@ -65,7 +64,6 @@ public class GuiContactsList extends GuiInit {
         add(contacts_list);
 
     }
-
 
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();

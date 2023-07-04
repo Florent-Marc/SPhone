@@ -14,24 +14,22 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
-import java.awt.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class GuiInit extends GuiFrame {
+public class GuiBase extends GuiFrame {
 
     private final GuiScreen parent;
 
-    public GuiInit(GuiScreen parent) {
+    public GuiBase(GuiScreen parent) {
         super(new GuiScaler.AdjustFullScreen());
         this.parent = parent;
         init();
     }
 
-    public GuiInit() {
+    public GuiBase() {
         super(new GuiScaler.AdjustFullScreen());
         this.parent = null;
         init();
@@ -60,19 +58,19 @@ public class GuiInit extends GuiFrame {
         TopIcons.setCssClass("top_icons");
         add(TopIcons);
 
-        GuiPanel HomeBar = new GuiPanel();
-        HomeBar.setCssClass("home_bar");
-        HomeBar.addClickListener((x,y,bu) -> {
-            if (parent != null) {
+        if (parent != null) {
+            GuiPanel HomeBar = new GuiPanel();
+            HomeBar.setCssClass("home_bar");
+            HomeBar.addClickListener((x,y,bu) -> {
                 Minecraft.getMinecraft().displayGuiScreen(parent);
-            }
-        });
-        add(HomeBar);
+            });
+            add(HomeBar);
+        }
     }
 
 
     public List<ResourceLocation> getCssStyles() {
-        return Collections.singletonList(new ResourceLocation("sphone:css/home.css"));
+        return Collections.singletonList(new ResourceLocation("sphone:css/base.css"));
     }
 
     @Override

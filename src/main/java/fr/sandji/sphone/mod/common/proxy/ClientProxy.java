@@ -19,6 +19,7 @@ public class ClientProxy extends CommonProxy {
         MinecraftForge.EVENT_BUS.register(ItemsRegister.INSTANCE);
         ClientRegistry.registerKeyBinding(SPhoneKeys.DEBUG);
         ClientRegistry.registerKeyBinding(SPhoneKeys.DEBUG_TWO);
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/base.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/home.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/contacts.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/calculator.css"));

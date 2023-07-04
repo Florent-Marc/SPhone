@@ -7,12 +7,10 @@ package fr.sandji.sphone.mod.common.items;
 
 import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.api.database.DatabaseManager;
-import fr.sandji.sphone.mod.common.packets.server.PacketRequestPhone;
 import fr.sandji.sphone.mod.common.register.ItemsRegister;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

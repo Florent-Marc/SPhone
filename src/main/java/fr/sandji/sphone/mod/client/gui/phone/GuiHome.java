@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class GuiHome extends GuiInit {
+public class GuiHome extends GuiBase {
 
     public GuiHome() {
         super();
@@ -82,7 +82,10 @@ public class GuiHome extends GuiInit {
     }
 
     public List<ResourceLocation> getCssStyles() {
-        return Collections.singletonList(new ResourceLocation("sphone:css/home.css"));
+        List<ResourceLocation> styles = new ArrayList<>();
+        styles.add(super.getCssStyles().get(0));
+        styles.add(new ResourceLocation("sphone:css/home.css"));
+        return styles;
     }
 
 

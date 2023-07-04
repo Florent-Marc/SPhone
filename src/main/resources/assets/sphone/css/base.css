@@ -1,0 +1,52 @@
+/*
+ * SPhone - Tous droits réservés. (by 0hSandji)
+ */
+
+.home {
+    width: 1920px;
+    height: 1080px;
+}
+
+.case {
+    background-image: url("sphone:textures/ui/phone.png");
+    left: 82%;
+    width: 330px;
+    height: 675px;
+    top: 35%;
+}
+
+.background {
+    background-image: url("sphone:textures/ui/background/test.png");
+    left: 1590px;
+    width: 299px;
+    height: 646px;
+    top: 392px;
+}
+
+#top_clock {
+    color: white;
+    height: 50px;
+    left: 1610px;
+    top: 392px;
+    font-size: 17px;
+}
+.home_bar {
+    height: 9px;
+    width: 150px;
+    left: 1665px;
+    top: 1019px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+}
+
+.home_bar:hover {
+    background-color: #90949F;
+}
+
+.top_icons {
+    background-image: url("sphone:textures/ui/icons/other.png");
+    height: 14px;
+    width: 48px;
+    left: 1810px;
+    top: 412px;
+}
