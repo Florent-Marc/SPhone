@@ -4,17 +4,17 @@
 
 #app_title {
     font-size: 25px;
-    left: 1600px;
-    top: 450px;
-    height: 50px;
-    width: 200px;
+    left: 4%;
+    top: 10%;
+    height: 5%;
+    width: 50%;
 }
 
 #button_add {
-    left: 1840px;
-    top: 459px;
-    height: 30px;
-    width: 30px;
+    right: 5%;
+    top: 10%;
+    height: 5%;
+    width: 10%;
     border-radius: 40%;
     background-color: #599AF8;
     color: white;
@@ -26,57 +26,47 @@
     background-color: #1978ff;
 }
 
-#search_contact {
-    background-color: #2D2D2D;
-    border-color: #2D2D2D;
-    border-radius: 5px;
-    left: 1605px;
-    width: 265px;
-    height: 30px;
-    top: 510px;
-    font-size: 20px;
-}
-
-#contacts_list {
-    width: 270px;
-    height: 510px;
-    top: 500px;
-    left: 1605px;
-}
-
-.contact_background {
-    background-color: #323232;
-    width: auto;
-    height: auto;
-    left: auto;
-    top: auto;
-    border-radius: 5px;
-}
-
-.contact_background:hover {
-    background-color: #5a5a5a;
-}
-
-.contact_avatar {
-    width: 17%;
-    height: 80%;
-    left: 7%;
-    top: 10%;
-    border-radius: 5px;
-}
-
-#contact_name {
-    width: 70%;
-    height: 100%;
-    left: 30%;
-    font-size: 20px;
-    color: white;
-    text-align: left;
-}
 
 #view_contact_avatar {
-    width: 80px;
-    height: 80px;
-    left: 1620px;
-    top: 570px;
+    width: 40%;
+    height: 20%;
+    left: 30%;
+    top: 20%;
  }
+#name {
+    width: 100%;
+    height: 5%;
+    left: 0%;
+    top: 40%;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+}
+#lastname {
+    width: 100%;
+    height: 5%;
+    left: 0%;
+    top: 45%;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+}
+#phone {
+    width: 100%;
+    height: 5%;
+    left: 0%;
+    top: 50%;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+}
+#notes {
+    width: 90%;
+    height: 20%;
+    left: 5%;
+    top: 55%;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+}
+

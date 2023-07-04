@@ -5,10 +5,13 @@
 
 package fr.sandji.sphone.mod.client.gui.phone;
 
+import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiContactsList;
 import fr.sandji.sphone.mod.common.phone.Contact;
+import fr.sandji.sphone.mod.common.phone.Conversation;
+import fr.sandji.sphone.mod.common.phone.Message;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
@@ -28,7 +31,9 @@ public class GuiHome extends GuiBase {
         AppCall.setCssId("app_call");
         add(AppCall);
         AppCall.addClickListener((p, m, b) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiCall("0478.36.59.65").getGuiScreen());
+            removeAllChilds();
+            add(new GuiCall("0478.36.59.65"));
+            //Minecraft.getMinecraft().displayGuiScreen(new GuiCall("0478.36.59.65").getGuiScreen());
         });
 
         GuiLabel AppNotes = new GuiLabel("");
@@ -41,6 +46,33 @@ public class GuiHome extends GuiBase {
 
         GuiLabel AppMessage = new GuiLabel("");
         AppMessage.setCssId("app_message");
+        AppMessage.addClickListener((p, m, b) -> {
+            //date d'ajourd'hui il y a 4h
+            long date = System.currentTimeMillis() ;
+            System.out.println(date);
+
+            List<Conversation> conversations = new ArrayList<>();
+            Conversation test = new Conversation();
+            Message message = new Message("Rdv bar de la place",1688395401123L ,new Contact("michel",1215), new Contact("hugo",1556));
+            List<Message> messages = new ArrayList<>();
+            messages.add(message);
+            test.setMessages(messages);
+            test.setLastUpdate(1688395401123L);
+            test.setLastMessage(message);
+            test.setSender(new Contact("michel",1215));
+            Conversation test2 = new Conversation();
+            Message message1 = new Message("vas mourir conard",1688482617877L ,new Contact("jup",1215), new Contact("hugo",1556));
+            List<Message> messages1 = new ArrayList<>();
+            messages1.add(message1);
+            test2.setMessages(messages1);
+            test2.setLastUpdate(1688482617877L);
+            test2.setLastMessage(message1);
+            test2.setSender(new Contact("jup",1215));
+            conversations.add(test);
+            conversations.add(test2);
+
+            Minecraft.getMinecraft().displayGuiScreen(new GuiConvList(conversations).getGuiScreen());
+        });
         add(AppMessage);
 
         GuiLabel AppMessageText = new GuiLabel("");
@@ -87,6 +119,7 @@ public class GuiHome extends GuiBase {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
         styles.add(new ResourceLocation("sphone:css/home.css"));
+        styles.add(new ResourceLocation("sphone:css/call.css"));
         return styles;
     }
 

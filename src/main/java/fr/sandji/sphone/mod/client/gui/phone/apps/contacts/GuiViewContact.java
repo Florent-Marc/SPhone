@@ -32,6 +32,22 @@ public class GuiViewContact extends GuiBase {
         ContactAvatar.setCssCode("view_contact_avatar", cssCode);
         getBackground().add(ContactAvatar);
 
+        GuiLabel name = new GuiLabel("Name : "+contact.getName());
+        name.setCssId("name");
+        getBackground().add(name);
+
+        GuiLabel lastname = new GuiLabel("Lastname : "+contact.getLastname());
+        lastname.setCssId("lastname");
+        getBackground().add(lastname);
+
+        GuiLabel phone = new GuiLabel("Phone : "+contact.getNumero());
+        phone.setCssId("phone");
+        getBackground().add(phone);
+
+        GuiLabel notes = new GuiLabel("Notes : "+contact.getNotes());
+        notes.setCssId("notes");
+        getBackground().add(notes);
+
     }
 
     public List<ResourceLocation> getCssStyles() {

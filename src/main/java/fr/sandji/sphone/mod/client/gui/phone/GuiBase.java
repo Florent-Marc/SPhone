@@ -39,13 +39,15 @@ public class GuiBase extends GuiFrame {
     private void init(){
         style.setBackgroundColor(Color.TRANSLUCENT);
         setCssClass("home");
-
         GuiPanel Case = new GuiPanel();
         Case.setCssClass("case");
         add(Case);
-        this.Background = new GuiPanel();
-        this.Background.setCssClass("background");
-        add(Background);
+
+        Background = new GuiPanel();
+        Background.setCssClass("background");
+        Case.add(Background);
+
+
 
 
 

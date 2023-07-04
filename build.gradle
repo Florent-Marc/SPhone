@@ -98,7 +98,8 @@ minecraft {
         compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
         compile fileTree(dir: 'libs', include: '*.jar')
         //implementation(fg.deobf( "fr.aym.acsguis:ACsGuis:1.2.8"))
-        implementation 'com.zaxxer:HikariCP:3.1.0'
+        shadow implementation('com.zaxxer:HikariCP:3.1.0')
+
     }
 
 
@@ -123,20 +124,20 @@ minecraft {
         shadowMe { transitive = false }
     }
     shadowJar {
-        classifier 'shadow'
+        classifier 'all'
 
         project.configurations.shadow.setTransitive(true)
         configurations = [project.configurations.shadow]
-        relocate 'org.apache.commons.collections4', 'be.fa.simplylife.repack.org.apache.commons.collections4'
-        relocate 'gnu.trove', 'be.fa.simplylife.repack.gnu.trove'
-        relocate "com.neovisionaries.ws.client", "be.fa.simplylife.repack.com.neovisionaries.ws.client"
-        relocate "com.iwebpp.crypto", "be.fa.simplylife.repack.com.iwebpp.crypto"
-        relocate "com.fasterxml.jackson", "be.fa.simplylife.repack.com.fasterxml.jackson"
-        relocate "org.json", "be.fa.simplylife.repack.org.json"
-        relocate "okio", "be.fa.simplylife.repack.okio"
-        relocate "okhttp3", "be.fa.simplylife.repack.okhttp3"
-        relocate "okhttp3", "be.fa.simplylife.repack.okhttp3"
-        relocate "org.slf4j", "be.fa.simplylife.repack.org.slf4j"
+        relocate 'org.apache.commons.collections4', 'fr.sandji.sphone.repack.org.apache.commons.collections4'
+        relocate 'gnu.trove', 'fr.sandji.sphone.repack.gnu.trove'
+        relocate "com.neovisionaries.ws.client", "fr.sandji.sphone.repack.com.neovisionaries.ws.client"
+        relocate "com.iwebpp.crypto", "fr.sandji.sphone.repack.com.iwebpp.crypto"
+        relocate "com.fasterxml.jackson", "fr.sandji.sphone.repack.com.fasterxml.jackson"
+        relocate "org.json", "fr.sandji.sphone.repack.org.json"
+        relocate "okio", "fr.sandji.sphone.repack.okio"
+        relocate "okhttp3", "fr.sandji.sphone.repack.okhttp3"
+        relocate "okhttp3", "fr.sandji.sphone.repack.okhttp3"
+        relocate "org.slf4j", "fr.sandji.sphone.repack.org.slf4j"
     }
     build.dependsOn shadowJar
     reobf {

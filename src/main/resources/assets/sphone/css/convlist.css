@@ -28,18 +28,28 @@
 .contact_background:hover {
     background-color: #5a5a5a;
 }
-.contact_avatar {
-    width: 17%;
-    height: 80%;
-    left: 7%;
-    top: 10%;
-    border-radius: 5px;
-}
-#contact_name {
-    width: 70%;
-    height: 100%;
-    left: 30%;
-    font-size: 20px;
+#name {
+    font-size: 10px;
     color: white;
-    text-align: left;
+    left: 0%;
+    top: 0%;
+    height: 30%;
+    width: 50%;
+}
+#lastmessage {
+    font-size: 10px;
+    color: white;
+    left: 0%;
+    top: 30%;
+    height: 40%;
+    width: 100%;
+}
+#date {
+    text-align: right;
+    font-size: 10px;
+    color: white;
+    right: 0%;
+    bottom: 0%;
+    height: 30%;
+    width: 50%;
 }
