@@ -1,33 +1,54 @@
+#app_title {
+    font-size: 30px;
+    left: 8%;
+    top: 8%;
+    height: 10%;
+    width: 70%;
+}
+
+#button_add {
+    right: 10%;
+    top: 67px;
+    height: 5%;
+    width: 10%;
+    border-radius: 40%;
+    background-color: #599AF8;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+}
+
+#button_add:hover {
+    background-color: #1978ff;
+}
+
 .contacts_list {
     width: 90%;
-    height: 70%;
-    top: 20%;
+    height: 77%;
+    top: 18%;
     left: 5%;
 }
-#app_title {
-    font-size: 25px;
-    left: 4%;
-    top: 10%;
-    height: 5%;
-    width: 50%;
-}
+
 .search_contact{
     width: 80%;
     height: 5%;
     top: 15%;
     left: 10%;
 }
+
 .contact_background {
     background-color: #323232;
     width: 90%;
     height: auto;
     left: 5%;
     top: auto;
-    border-radius: 10px;
+    border-radius: 5px;
 }
+
 .contact_background:hover {
     background-color: #5a5a5a;
 }
+
 .contact_avatar {
     width: 17%;
     height: 80%;
@@ -35,10 +56,11 @@
     top: 10%;
     border-radius: 5px;
 }
+
 #contact_name {
     width: 70%;
     height: 100%;
-    left: 30%;
+    left: 28%;
     font-size: 20px;
     color: white;
     text-align: left;

@@ -3,16 +3,16 @@
  */
 
 #app_title {
-    font-size: 25px;
-    left: 4%;
-    top: 10%;
-    height: 5%;
-    width: 50%;
+    font-size: 30px;
+    left: 8%;
+    top: 8%;
+    height: 10%;
+    width: 70%;
 }
 
 #button_add {
-    right: 5%;
-    top: 10%;
+    right: 10%;
+    top: 67px;
     height: 5%;
     width: 10%;
     border-radius: 40%;

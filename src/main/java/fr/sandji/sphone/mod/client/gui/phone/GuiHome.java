@@ -108,6 +108,21 @@ public class GuiHome extends GuiBase {
             List<Contact> test = new ArrayList<Contact>();
             test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
             test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
+            test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
+            test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
+            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
+            test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
+            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
+            test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
+            test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
+            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
+            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
+            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
+            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
+            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
+            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
+            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
+            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
             test.add(new Contact("Paris", "Kane", 14256, "Ensemble d'actes de violence (attentats, prises d'otages, etc.) commis par une organisation ou un individu pour créer un climat d'insécurité, pour exercer un chantage sur un gouvernement, pour satisfaire une haine à l'égard d'une communauté, d'un pays, d'un système.", "Zoutesou"));
 
             Minecraft.getMinecraft().displayGuiScreen(new GuiContactsList(test).getGuiScreen());
