@@ -1,0 +1,45 @@
+
+#app_title {
+    font-size: 20px;
+    left: 4%;
+    top: 10%;
+    height: 5%;
+    width: 100%;
+}
+.nom{
+    width: 80%;
+    height: 5%;
+    top: 20%;
+    left: 10%;
+}
+.prenom{
+    width: 80%;
+    height: 5%;
+    top: 30%;
+    left: 10%;
+}
+.numero{
+    width: 80%;
+    height: 5%;
+    top: 40%;
+    left: 10%;
+}
+.notes{
+    width: 80%;
+    height: 5%;
+    top: 50%;
+    left: 10%;
+}
+.button_add{
+    background-image: url("sphone:textures/ui/icons/add.png");
+    width: 50px;
+    height: 52px;
+    left: 44%;
+    bottom: 30%;
+}
+.button_add:hover{
+    background-image: url("sphone:textures/ui/icons/add1.png");
+}
+
+
+

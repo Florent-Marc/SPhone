@@ -17,6 +17,22 @@
     top: 15%;
     left: 10%;
 }
+#button_add {
+    right: 5%;
+    top: 10%;
+    height: 5%;
+    width: 10%;
+    border-radius: 40%;
+    background-color: #599AF8;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+}
+
+#button_add:hover {
+    background-color: #1978ff;
+}
+
 .contact_background {
     background-color: #323232;
     width: 90%;

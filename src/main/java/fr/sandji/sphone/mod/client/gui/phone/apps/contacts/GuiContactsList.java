@@ -29,7 +29,10 @@ public class GuiContactsList extends GuiBase {
 
         GuiLabel ButtonAdd = new GuiLabel("+");
         ButtonAdd.setCssId("button_add");
-        //getBackground().add(ButtonAdd);
+        ButtonAdd.addClickListener((mouseX, mouseY, mouseButton) -> {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiNewContact(contacts).getGuiScreen());
+        });
+        getBackground().add(ButtonAdd);
 
         GuiTextField SearchContact = new GuiTextField();
         SearchContact.setCssClass("search_contact");
