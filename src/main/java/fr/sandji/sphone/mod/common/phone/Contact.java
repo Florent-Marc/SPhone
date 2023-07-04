@@ -92,4 +92,9 @@ public class Contact implements ISerializable, ISerializablePacket {
         notes = (String) objects[3];
         player_associated = (String) objects[4];
     }
+
+
+    public boolean equals(Contact obj) {
+        return this.name.equals(obj.name) && this.numero == obj.numero;
+    }
 }

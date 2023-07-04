@@ -53,3 +53,38 @@
     height: 30%;
     width: 50%;
 }
+
+
+
+.back {
+    background-color: #a79025;
+    width: 90%;
+    height: auto;
+    left: 5%;
+    top: auto;
+    border-radius: 10px;
+}
+.back:hover {
+    background-color: #cbb654;
+}
+#title {
+    text-align: center;
+    font-size: 10px;
+    color: white;
+    left: 0%;
+    top: 0%;
+    height: 30%;
+    width: 100%;
+}
+
+#button_add {
+    right: 5%;
+    top: 10%;
+    height: 5%;
+    width: 10%;
+    border-radius: 40%;
+    background-color: #599AF8;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+}

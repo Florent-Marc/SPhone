@@ -5,13 +5,18 @@
 
 package fr.sandji.sphone.mod.client.gui.phone;
 
-import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiCallEnd;
+import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiWaitCall;
 import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiContactsList;
+import fr.sandji.sphone.mod.client.gui.phone.apps.message.GuiConvList;
+import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiCall;
+import fr.sandji.sphone.mod.client.gui.phone.apps.note.GuiNoteList;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Conversation;
 import fr.sandji.sphone.mod.common.phone.Message;
+import fr.sandji.sphone.mod.common.phone.Note;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
@@ -32,17 +37,26 @@ public class GuiHome extends GuiBase {
         add(AppCall);
         AppCall.addClickListener((p, m, b) -> {
             removeAllChilds();
-            add(new GuiCall("0478.36.59.65"));
+            add(new GuiWaitCall("0478.36.59.65"));
             //Minecraft.getMinecraft().displayGuiScreen(new GuiCall("0478.36.59.65").getGuiScreen());
         });
 
         GuiLabel AppNotes = new GuiLabel("");
         AppNotes.setCssId("app_notes");
         add(AppNotes);
+        AppNotes.addClickListener((p, m, b) -> {
+            List<Note> notes = new ArrayList<>();
+            Note note = new Note("Suspect", "Je pense que mon voisin est un tueur en série",1688503674429L);
+            notes.add(note);
+            Minecraft.getMinecraft().displayGuiScreen(new GuiNoteList(notes).getGuiScreen());
+        });
 
         GuiLabel AppGalery = new GuiLabel("");
         AppGalery.setCssId("app_gallery");
         add(AppGalery);
+        AppGalery.addClickListener((p, m, b) -> {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiCall("0478.36.59.65").getGuiScreen());
+        });
 
         GuiLabel AppMessage = new GuiLabel("");
         AppMessage.setCssId("app_message");
@@ -54,8 +68,20 @@ public class GuiHome extends GuiBase {
             List<Conversation> conversations = new ArrayList<>();
             Conversation test = new Conversation();
             Message message = new Message("Rdv bar de la place",1688395401123L ,new Contact("michel",1215), new Contact("hugo",1556));
+            Message mess = new Message("okay ma poule",1688499414507L ,new Contact("hugo",1556), new Contact("michel",1215));
+            Message mess1 = new Message("t'es ou ?",1688500163006L ,new Contact("michel",1215), new Contact("hugo",1556));
+            Message mess2 = new Message("dans le bar a droite",1688500173006L ,new Contact("hugo",1556), new Contact("michel",1215));
+            Message mess3 = new Message("j'arrive",1688500173006L ,new Contact("michel",1215), new Contact("hugo",1556));
+            Message mess4 = new Message("ok",1688500173006L ,new Contact("hugo",1556), new Contact("michel",1215));
+            Message mess5 = new Message("je te vois pas",1688500173006L ,new Contact("michel",1215), new Contact("hugo",1556));
             List<Message> messages = new ArrayList<>();
             messages.add(message);
+            messages.add(mess);
+            messages.add(mess1);
+            messages.add(mess2);
+            messages.add(mess3);
+            messages.add(mess4);
+            messages.add(mess5);
             test.setMessages(messages);
             test.setLastUpdate(1688395401123L);
             test.setLastMessage(message);
@@ -83,6 +109,9 @@ public class GuiHome extends GuiBase {
         GuiLabel AppInstagram = new GuiLabel("");
         AppInstagram.setCssId("app_instagram");
         add(AppInstagram);
+        AppInstagram.addClickListener((p, m, b) -> {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiCallEnd("0478.36.59.65").getGuiScreen());
+        });
 
         GuiLabel AppInstagramText = new GuiLabel("");
         AppInstagramText.setCssId("app_text");

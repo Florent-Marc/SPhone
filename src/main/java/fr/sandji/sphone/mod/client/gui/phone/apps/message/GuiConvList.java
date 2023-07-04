@@ -2,14 +2,14 @@
  * SPhone - Tous droits réservés. (by 0hSandji)
  */
 
-package fr.sandji.sphone.mod.client.gui.phone;
+package fr.sandji.sphone.mod.client.gui.phone.apps.message;
 
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.aym.acsguis.component.textarea.GuiTextField;
-import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiViewContact;
+import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
+import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Conversation;
 import net.minecraft.client.Minecraft;
@@ -42,6 +42,7 @@ public class GuiConvList extends GuiBase {
             GuiPanel convpanel = new GuiPanel();
             convpanel.setCssClass("contact_background");
             convpanel.addClickListener((mouseX, mouseY, mouseButton) -> {
+                Minecraft.getMinecraft().displayGuiScreen(new GuiConv(c, new Contact("hugo",1556)).getGuiScreen());
             });
             GuiLabel ContactName = new GuiLabel(c.getSender().getName());
             ContactName.setCssId("name");
