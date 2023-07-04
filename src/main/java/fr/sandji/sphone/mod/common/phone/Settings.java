@@ -10,20 +10,30 @@ import fr.aym.acslib.utils.packetserializer.ISerializablePacket;
 
 public class Settings implements ISerializable, ISerializablePacket {
 
-    int background;
+    String background;
+    boolean silence;
 
     public Settings() {}
 
-    public Settings(int background) {
+    public Settings(String background, boolean silence) {
         this.background = background;
+        this.silence = silence;
     }
 
-    public int getBackground() {
+    public String getBackground() {
         return background;
     }
 
-    public void setBackground(int background) {
+    public void setBackground(String background) {
         this.background = background;
+    }
+
+    public boolean isSilence() {
+        return silence;
+    }
+
+    public void setSilence(boolean silence) {
+        this.silence = silence;
     }
 
     @Override
@@ -33,12 +43,17 @@ public class Settings implements ISerializable, ISerializablePacket {
 
     @Override
     public Object[] getObjectsToSave() {
-        return new Object[]{background};
+        return new Object[]{background, silence};
     }
 
     @Override
     public void populateWithSavedObjects(Object[] objects) {
-        background = (Integer) objects[0];
+        background = (String) objects[0];
+        silence = (Boolean) objects[1];
+    }
+
+    public static void updateSettings(Settings settings) {
+        String jsonFormat = "[{\"background\":" + settings.getBackground() + ",\"slience\":" + settings.isSilence() + "}]";
     }
 
 }

@@ -113,6 +113,7 @@ public class GuiHome extends GuiBase {
             Minecraft.getMinecraft().displayGuiScreen(new GuiContactsList(test).getGuiScreen());
         });
         add(AppContact);
+
     }
 
     public List<ResourceLocation> getCssStyles() {
