@@ -8,26 +8,11 @@
 }
 
 .background {
-    background-image: url("sphone:textures/ui/background/test.png");
-    top: 2%;
-    left: 2%;
-    width: 96%;
-    height: 96%;
-    z-index: -1;
-}
-.test{
-    background-image: url("sphone:textures/ui/background/test.png");
-    border-color: #000000;
-    border-width: 10px;
-    border-radius: 25%;
-    left: 82%;
-    width: 330px;
-    height: 675px;
-    top: 35%;
+
 }
 
 .case {
-    background-image: url("sphone:textures/ui/phone.png");
+    background-image: url("sphone:textures/ui/background/acsguis.png");
     left: 82%;
     width: 330px;
     height: 675px;

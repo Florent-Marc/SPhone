@@ -3,15 +3,15 @@
  */
 
 #app_title {
-    font-size: 25px;
-    left: 4%;
-    top: 10%;
-    height: 5%;
-    width: 40%;
+    font-size: 30px;
+    left: 8%;
+    top: 8%;
+    height: 10%;
+    width: 70%;
 }
 
 #button_add {
-    right: 5%;
+    right: 6%;
     top: 10%;
     height: 5%;
     width: 10%;
@@ -30,7 +30,7 @@
     background-image: url("sphone:textures/ui/icons/message0.png");
     width: 10%;
     height: 5%;
-    right: 15%;
+    right: 17%;
     top: 10%;
 }
 .message:hover {
@@ -41,7 +41,7 @@
     background-image: url("sphone:textures/ui/icons/tel.png");
     width: 10%;
     height: 5%;
-    right: 25%;
+    right: 28%;
     top: 10%;
 }
 .call:hover {
@@ -55,15 +55,17 @@
     left: 30%;
     top: 20%;
  }
+
 #name {
     width: 100%;
     height: 5%;
     left: 0%;
     top: 40%;
-    font-size: 12px;
+    font-size: 20px;
     color: white;
     text-align: center;
 }
+
 #lastname {
     width: 100%;
     height: 5%;

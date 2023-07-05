@@ -47,10 +47,6 @@ public class GuiBase extends GuiFrame {
         Background.setCssClass("background");
         Case.add(Background);
 
-
-
-
-
         GuiLabel TopClock = new GuiLabel("");
         TopClock.setCssId("top_clock");
         TopClock.addTickListener(() -> {

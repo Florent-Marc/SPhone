@@ -1,41 +1,61 @@
 
 #app_title {
     font-size: 20px;
-    left: 4%;
+    left: 10%;
     top: 10%;
     height: 5%;
     width: 100%;
 }
-.nom{
+.prenom {
     width: 80%;
-    height: 5%;
+    height: 7%;
     top: 20%;
     left: 10%;
+    background-color: #323232;
+    border: 2px;
+    border-color: #b5b5b5;
+    color: white;
+    font-size: 20px;
 }
-.prenom{
+.nom {
     width: 80%;
-    height: 5%;
-    top: 30%;
+    height: 7%;
+    top: 31%;
     left: 10%;
+    background-color: #323232;
+    border: 2px;
+    border-color: #b5b5b5;
+    color: white;
+    font-size: 20px;
 }
 .numero{
     width: 80%;
-    height: 5%;
-    top: 40%;
+    height: 7%;
+    top: 42%;
     left: 10%;
+    background-color: #323232;
+    border: 2px;
+    border-color: #b5b5b5;
+    color: white;
+    font-size: 20px;
 }
 .notes{
     width: 80%;
-    height: 5%;
-    top: 50%;
+    height: 7%;
+    top: 53%;
     left: 10%;
+    background-color: #323232;
+    border: 2px;
+    border-color: #b5b5b5;
+    color: white;
+    font-size: 20px;
 }
 .button_add{
     background-image: url("sphone:textures/ui/icons/add.png");
     width: 50px;
     height: 52px;
     left: 44%;
-    bottom: 30%;
+    bottom: 25%;
 }
 .button_add:hover{
     background-image: url("sphone:textures/ui/icons/add1.png");
