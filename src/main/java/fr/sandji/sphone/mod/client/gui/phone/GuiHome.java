@@ -7,12 +7,14 @@ package fr.sandji.sphone.mod.client.gui.phone;
 
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiCallEnd;
 import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiWaitCall;
 import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiContactsList;
 import fr.sandji.sphone.mod.client.gui.phone.apps.message.GuiConvList;
 import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import fr.sandji.sphone.mod.client.gui.phone.apps.note.GuiNoteList;
+import fr.sandji.sphone.mod.common.packets.server.PacketJoinCall;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Conversation;
 import fr.sandji.sphone.mod.common.phone.Message;
@@ -56,6 +58,7 @@ public class GuiHome extends GuiBase {
         add(AppGalery);
         AppGalery.addClickListener((p, m, b) -> {
             Minecraft.getMinecraft().displayGuiScreen(new GuiCall("0478.36.59.65").getGuiScreen());
+            SPhone.network.sendToServer(new PacketJoinCall(12265));
         });
 
         GuiLabel AppMessage = new GuiLabel("");

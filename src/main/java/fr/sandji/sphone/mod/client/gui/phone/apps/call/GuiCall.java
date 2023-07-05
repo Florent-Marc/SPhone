@@ -1,10 +1,11 @@
 package fr.sandji.sphone.mod.client.gui.phone.apps.call;
 
-import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
+import fr.sandji.sphone.mod.common.packets.server.PacketQuitCall;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
@@ -29,6 +30,7 @@ public class GuiCall extends GuiBase {
         close.setCssClass("close");
         getBackground().add(close);
         close.addClickListener((p, m, b) -> {
+            SPhone.network.sendToServer(new PacketQuitCall());
             Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
         });
 
@@ -38,6 +40,13 @@ public class GuiCall extends GuiBase {
         getBackground().add(number);
 
     }
+
+    @Override
+    public void guiClose() {
+        super.guiClose();
+        SPhone.network.sendToServer(new PacketQuitCall());
+    }
+
 
 
     @Override
