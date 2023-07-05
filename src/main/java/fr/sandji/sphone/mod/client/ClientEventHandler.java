@@ -4,6 +4,7 @@
 
 package fr.sandji.sphone.mod.client;
 
+
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.common.animations.RenderAnimations;
@@ -22,5 +23,4 @@ public class ClientEventHandler {
             ACsGuiApi.asyncLoadThenShowGui("GuiInit", GuiHome::new);
         }
     }
-
 }
