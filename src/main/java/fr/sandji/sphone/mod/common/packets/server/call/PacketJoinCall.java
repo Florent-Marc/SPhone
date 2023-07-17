@@ -1,10 +1,14 @@
-package fr.sandji.sphone.mod.common.packets.server;
+
+/*
+ * SPhone - Tous droits réservés. (by 0hSandji)
+ */
+
+package fr.sandji.sphone.mod.common.packets.server.call;
 
 import de.maxhenkel.voicechat.api.Group;
 import fr.sandji.sphone.api.voicechat.SPhoneAddon;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

@@ -4,7 +4,7 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
-import fr.sandji.sphone.mod.common.packets.server.PacketCallRequest;
+import fr.sandji.sphone.mod.common.packets.server.call.PacketCallRequest;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;

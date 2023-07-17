@@ -76,16 +76,15 @@ public class SPhone {
             } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
-
-            //DatabaseManager.initAllDatabaseConnections();
-            //est.Test();
+            DatabaseManager.initAllDatabaseConnections();
+            Test.Test();
         }
     }
 
     @Mod.EventHandler
     public void onServerStop(FMLServerStoppingEvent e) {
         if (e.getSide().isServer()) {
-            //DatabaseManager.closeAllDatabaseConnections();
+            DatabaseManager.closeAllDatabaseConnections();
         }
     }
 

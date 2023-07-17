@@ -17,8 +17,8 @@ import java.util.List;
 public class GuiViewContact extends GuiBase {
 
 
-    public GuiViewContact(List<Contact> l, Contact contact) {
-        super(new GuiContactsList(l).getGuiScreen());
+    public GuiViewContact(List<Contact> contacts, Contact contact) {
+        super(new GuiContactsList(contacts).getGuiScreen());
 
         GuiLabel AppTitle = new GuiLabel("Contact");
         AppTitle.setCssId("app_title");
@@ -28,7 +28,7 @@ public class GuiViewContact extends GuiBase {
         ButtonEdit.setCssId("button_add");
         getBackground().add(ButtonEdit);
         ButtonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiEditContact(l, contact).getGuiScreen());
+            Minecraft.getMinecraft().displayGuiScreen(new GuiEditContact(contacts, contact).getGuiScreen());
         });
 
         GuiPanel message = new GuiPanel();

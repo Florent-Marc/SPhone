@@ -6,7 +6,7 @@
 }
 #app_title {
     font-size: 25px;
-    left: 4%;
+    left: 8%;
     top: 10%;
     height: 5%;
     width: 50%;
@@ -28,14 +28,16 @@
 .contact_background:hover {
     background-color: #5a5a5a;
 }
+
 #name {
-    font-size: 10px;
+    font-size: 20px;
     color: white;
-    left: 0%;
-    top: 0%;
-    height: 30%;
-    width: 50%;
+    left: 2%;
+    top: 3%;
+    height: 40%;
+    width: 90%;
 }
+
 #lastmessage {
     font-size: 10px;
     color: white;

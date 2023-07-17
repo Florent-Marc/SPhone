@@ -5,7 +5,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
-import fr.sandji.sphone.mod.common.packets.server.PacketQuitCall;
+import fr.sandji.sphone.mod.common.packets.server.call.PacketQuitCall;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 

@@ -56,7 +56,6 @@ public class GuiEditContact extends GuiBase {
         });
         getBackground().add(ButtonAdd);
 
-
     }
 
     public List<ResourceLocation> getCssStyles() {

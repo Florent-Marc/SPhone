@@ -1,4 +1,9 @@
-package fr.sandji.sphone.mod.common.packets.server;
+
+/*
+ * SPhone - Tous droits réservés. (by 0hSandji)
+ */
+
+package fr.sandji.sphone.mod.common.packets.server.call;
 
 import fr.sandji.sphone.api.voicechat.SPhoneAddon;
 import io.netty.buffer.ByteBuf;

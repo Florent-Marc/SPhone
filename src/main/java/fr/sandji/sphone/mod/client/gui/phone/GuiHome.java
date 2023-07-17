@@ -10,11 +10,11 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiCallEnd;
 import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiWaitCall;
-import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiContactsList;
 import fr.sandji.sphone.mod.client.gui.phone.apps.message.GuiConvList;
 import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import fr.sandji.sphone.mod.client.gui.phone.apps.note.GuiNoteList;
-import fr.sandji.sphone.mod.common.packets.server.PacketJoinCall;
+import fr.sandji.sphone.mod.common.packets.server.call.PacketJoinCall;
+import fr.sandji.sphone.mod.common.packets.server.contacts.PacketGetContacts;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Conversation;
 import fr.sandji.sphone.mod.common.phone.Message;
@@ -137,27 +137,7 @@ public class GuiHome extends GuiBase {
         GuiPanel AppContact = new GuiPanel();
         AppContact.setCssClass("app_contact");
         AppContact.addClickListener((x, y, bu) -> {
-            List<Contact> test = new ArrayList<Contact>();
-            test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
-            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
-            test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
-            test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
-            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
-            test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
-            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
-            test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
-            test.add(new Contact("Markus", "Kane", 14256, "Super Mec", "0hSandji"));
-            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
-            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
-            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
-            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
-            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
-            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
-            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
-            test.add(new Contact("MK", "Kane", 14256, "Super Mec", "MK_16"));
-            test.add(new Contact("Paris", "Kane", 14256, "Ensemble d'actes de violence (attentats, prises d'otages, etc.) commis par une organisation ou un individu pour créer un climat d'insécurité, pour exercer un chantage sur un gouvernement, pour satisfaire une haine à l'égard d'une communauté, d'un pays, d'un système.", "Zoutesou"));
-
-            Minecraft.getMinecraft().displayGuiScreen(new GuiContactsList(test).getGuiScreen());
+            SPhone.network.sendToServer(new PacketGetContacts());
         });
         add(AppContact);
 

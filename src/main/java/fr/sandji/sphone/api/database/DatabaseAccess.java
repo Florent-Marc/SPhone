@@ -30,7 +30,7 @@ public class DatabaseAccess {
         hikariConfig.setConnectionTimeout(10000L);
 
         try {
-            //this.hikariDataSource = new HikariDataSource(hikariConfig);
+            this.hikariDataSource = new HikariDataSource(hikariConfig);
         } catch (Exception e) {
             e.printStackTrace();
         }
