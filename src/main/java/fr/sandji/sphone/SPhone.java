@@ -4,7 +4,7 @@
 
 package fr.sandji.sphone;
 
-import fr.sandji.sphone.api.database.DatabaseManager;
+import fr.sandji.sphone.mod.server.database.DatabaseManager;
 import fr.sandji.sphone.mod.Test;
 import fr.sandji.sphone.mod.client.ClientEventHandler;
 import fr.sandji.sphone.mod.client.SPhoneTab;

@@ -6,7 +6,7 @@
 package fr.sandji.sphone.mod.common.packets.server.contacts;
 
 import fr.sandji.sphone.SPhone;
-import fr.sandji.sphone.api.database.DatabaseManager;
+import fr.sandji.sphone.mod.server.database.DatabaseManager;
 import fr.sandji.sphone.mod.common.packets.client.PacketOpenPhone;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
