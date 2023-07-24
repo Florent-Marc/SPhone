@@ -4,6 +4,7 @@
 
 package fr.sandji.sphone;
 
+import fr.sandji.sphone.mod.client.gui.phone.AppManager;
 import fr.sandji.sphone.mod.server.database.DatabaseManager;
 import fr.sandji.sphone.mod.Test;
 import fr.sandji.sphone.mod.client.ClientEventHandler;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import org.apache.logging.log4j.Logger;
 
 @Mod(
         modid = SPhone.MOD_ID,
@@ -44,6 +46,7 @@ public class SPhone {
     @Mod.Instance(MOD_ID)
     public static SPhone INSTANCE;
     public static SimpleNetworkWrapper network;
+    public static Logger logger;
 
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent e) {
@@ -51,14 +54,17 @@ public class SPhone {
         Network.init();
         MinecraftForge.EVENT_BUS.register(new RegisterHandler());
         MinecraftForge.EVENT_BUS.register(this);
+        logger = e.getModLog();
 
         if (e.getSide().isClient()) {
             MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
             MinecraftForge.EVENT_BUS.register(new RenderAnimations());
+            AppManager.init();
         }
         if (e.getSide().isServer()) {
             MinecraftForge.EVENT_BUS.register(new ServerEventHandler());
         }
+
     }
 
     @Mod.EventHandler

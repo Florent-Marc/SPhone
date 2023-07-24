@@ -1,137 +1,36 @@
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
 
-#apps {
-    background-color: rgba(0, 0, 0, 50);
-    left: 1619px;
-    width: 240px;
-    height: 66px;
-    top: 965px;
+
+.app {
+    top: auto;
+    left: auto;
+    height: auto;
+    width: auto;
+}
+.app_list {
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 13%;
+}
+.app_list_bottom {
+    width: 73%;
+    height: 10%;
+    top: 85%;
+    left: 18%;
+}
+.app_list_bottom_deco {
+    width: 73%;
+    height: 10%;
+    top: 85%;
+    left: 13%;
+    background: rgba(160,160,160, 78);
     border-radius: 25px;
 }
-
-#app_call {
-    background-image: url("sphone:textures/ui/icons/call.png");
-    left: 1647px;
-    width: 46px;
-    height: 48px;
-    top: 975px;
+.app_bottom {
+    top: 50%;
+    bottom: 50%;
+    left: auto;
+    height: auto;
+    width: auto;
 }
 
-#app_call:hover {
-    left: 1646px;
-    width: 48px;
-    height: 50px;
-    top: 973px;
-}
-
-#app_notes {
-    background-image: url("sphone:textures/ui/icons/notes.png");
-    left: 1717px;
-    width: 46px;
-    height: 48px;
-    top: 975px;
-}
-
-#app_notes:hover {
-    left: 1716px;
-    width: 48px;
-    height: 50px;
-    top: 973px;
-}
-
-#app_gallery {
-    background-image: url("sphone:textures/ui/icons/gallery.png");
-    left: 1787px;
-    width: 46px;
-    height: 48px;
-    top: 975px;
-}
-
-#app_gallery:hover {
-    left: 1786px;
-    width: 48px;
-    height: 50px;
-    top: 973px;
-}
-
-#app_message {
-    background-image: url("sphone:textures/ui/icons/message.png");
-    left: 1610px;
-    width: 46px;
-    height: 48px;
-    top: 460px;
-}
-
-#app_message:hover {
-    left: 1609px;
-    width: 48px;
-    height: 50px;
-    top: 458px;
-}
-
-#app_instagram {
-    background-image: url("sphone:textures/ui/icons/instagram.png");
-    left: 1680px;
-    width: 46px;
-    height: 48px;
-    top: 460px;
-}
-
-#app_instagram:hover {
-    left: 1679px;
-    width: 48px;
-    height: 50px;
-    top: 458px;
-}
-
-#app_settings {
-    background-image: url("sphone:textures/ui/icons/settings.png");
-    left: 1750px;
-    width: 46px;
-    height: 48px;
-    top: 460px;
-}
-
-#app_settings:hover {
-    left: 1749px;
-    width: 48px;
-    height: 50px;
-    top: 458px;
-}
-
-#app_map {
-    background-image: url("sphone:textures/ui/icons/map.png");
-    left: 1820px;
-    width: 46px;
-    height: 48px;
-    top: 460px;
-}
-
-#app_map:hover {
-    left: 1819px;
-    width: 48px;
-    height: 50px;
-    top: 458px;
-}
-
-.app_contact {
-    background-image: url("sphone:textures/ui/icons/contacts.png");
-    left: 1610px;
-    width: 46px;
-    height: 48px;
-    top: 535px;
-}
-
-.app_contact:hover {
-    left: 1609px;
-    width: 48px;
-    height: 50px;
-    top: 531px;
-}
-
-#app_text {
-    color: white;
-    font-size: 10px;
-}

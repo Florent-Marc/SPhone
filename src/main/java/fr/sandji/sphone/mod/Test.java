@@ -8,6 +8,7 @@ package fr.sandji.sphone.mod;
 import com.google.gson.Gson;
 import fr.sandji.sphone.mod.server.database.DatabaseManager;
 import fr.sandji.sphone.mod.common.phone.Contact;
+import net.minecraft.command.CommandWeather;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +19,9 @@ public class Test {
     public static void Test() {
         String simcode = "1234";
         try {
+
+
+
             final Connection connection = DatabaseManager.SPHONE.getDatabaseAccess().getConnection();
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT contacts FROM simcards WHERE sim_code = ?");
             preparedStatement.setString(1, simcode);

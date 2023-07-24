@@ -5,6 +5,7 @@
 
 package fr.sandji.sphone.mod.client.gui.phone;
 
+import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
@@ -67,9 +68,19 @@ public class GuiBase extends GuiFrame {
             HomeBar.setVisible(false);
         } else {
             HomeBar.addClickListener((x,y,bu) -> {
+                Minecraft.getMinecraft().displayGuiScreen(null);
                 Minecraft.getMinecraft().displayGuiScreen(parent);
             });
         }
+
+
+        GuiButton reloadApps = new GuiButton("↻");
+        reloadApps.addClickListener((x,y,bu) -> {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
+            AppManager.reloadApps();
+        });
+        add(reloadApps);
+
     }
 
     public GuiPanel getBackground() {

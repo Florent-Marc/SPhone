@@ -11,6 +11,7 @@ public class Message implements ISerializable, ISerializablePacket {
     private int receiver;
 
     public Message() {
+        this("Called default constructor", 0, new Contact(), new Contact());
     }
 
     public Message(String message, long date, int sender, int receiver) {

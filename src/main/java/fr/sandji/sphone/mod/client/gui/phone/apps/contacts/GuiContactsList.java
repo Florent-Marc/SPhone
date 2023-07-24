@@ -34,10 +34,7 @@ public class GuiContactsList extends GuiBase {
         });
         getBackground().add(ButtonAdd);
 
-        /*GuiTextField SearchContact = new GuiTextField();
-        SearchContact.setCssClass("search_contact");
-        SearchContact.setHintText("➜ Rechercher");
-        getBackground().add(SearchContact);*/
+
 
         GuiScrollPane contacts_list = new GuiScrollPane();
         contacts_list.setCssClass("contacts_list");
