@@ -8,6 +8,7 @@ package fr.sandji.sphone.mod.client;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.common.animations.RenderAnimations;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 
@@ -20,7 +21,8 @@ public class ClientEventHandler {
             //ACsGuiApi.asyncLoadThenShowGui("GuiInit",new GuiContactsList(test));
         }
         if (SPhoneKeys.DEBUG_TWO.isPressed()) {
-            ACsGuiApi.asyncLoadThenShowGui("GuiInit", GuiHome::new);
+            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
+            //ACsGuiApi.asyncLoadThenShowGui("GuiInit", GuiHome::new);
         }
     }
 }

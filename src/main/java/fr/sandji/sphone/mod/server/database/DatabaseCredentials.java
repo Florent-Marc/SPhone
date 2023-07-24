@@ -2,7 +2,7 @@
  * SPhone - Tous droits réservés. (by 0hSandji)
  */
 
-package fr.sandji.sphone.api.database;
+package fr.sandji.sphone.mod.server.database;
 
 public class DatabaseCredentials {
     private String host;
