@@ -44,6 +44,8 @@ repositories {
 
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'idea'
+
 apply plugin: "java"
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
@@ -147,3 +149,27 @@ minecraft {
     }
     jar.finalizedBy('reobfJar')
 }
+
+/** Shit that idea needs to process resources ? **/
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+}
+subprojects {
+    apply plugin: 'idea'
+}
+task prepareAssets(type: Copy) {
+    group = 'build'
+    from(project.file('src/main/resources'))
+    into project.file('build/classes/java/main')
+
+
+
+
+}
+
+classes.dependsOn(prepareAssets)
+
+
+/** end of shit **/
