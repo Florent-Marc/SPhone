@@ -6,7 +6,7 @@
 package fr.sandji.sphone.mod;
 
 import com.google.gson.Gson;
-import fr.sandji.sphone.api.database.DatabaseManager;
+import fr.sandji.sphone.mod.server.database.DatabaseManager;
 import fr.sandji.sphone.mod.common.phone.Contact;
 
 import java.sql.Connection;
