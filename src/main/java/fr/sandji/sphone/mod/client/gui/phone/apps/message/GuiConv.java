@@ -61,7 +61,7 @@ public class GuiConv extends GuiBase {
             //si le joueur passe sa souris sur le message, on affiche la date
 
 
-            if (c.getSender().equals(nous)) {
+            if (c.getSender() == nous.getNumero()) {
                 convpanel.setCssClass("contact_background_me");
                 ContactLastMessage.setCssId("me_message");
             } else {

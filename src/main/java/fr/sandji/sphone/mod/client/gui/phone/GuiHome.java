@@ -70,6 +70,7 @@ public class GuiHome extends GuiBase {
 
             List<Conversation> conversations = new ArrayList<>();
             Conversation test = new Conversation();
+            /*
             Message message = new Message("Rdv bar de la place",1688395401123L ,new Contact("michel",1215), new Contact("hugo",1556));
             Message mess = new Message("okay ma poule",1688499414507L ,new Contact("hugo",1556), new Contact("michel",1215));
             Message mess1 = new Message("t'es ou ?",1688500163006L ,new Contact("michel",1215), new Contact("hugo",1556));
@@ -101,6 +102,8 @@ public class GuiHome extends GuiBase {
             conversations.add(test2);
 
             Minecraft.getMinecraft().displayGuiScreen(new GuiConvList(conversations).getGuiScreen());
+
+             */
         });
         add(AppMessage);
 

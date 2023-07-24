@@ -60,7 +60,7 @@ public class GuiNewContact extends GuiBase {
         GuiPanel ButtonAdd = new GuiPanel();
         ButtonAdd.setCssClass("button_add");
         ButtonAdd.addClickListener((mouseX, mouseY, mouseButton) -> {
-            contacts.add(new Contact(NameField.getText(), LastNameField.getText(), Integer.valueOf(NumeroField.getText()), notes.getText(), "none"));
+            contacts.add(new Contact(NameField.getText(), LastNameField.getText(), Integer.valueOf(NumeroField.getText()), notes.getText()));
             Gson gson = new Gson();
             String jsonString = gson.toJson(contacts, new TypeToken<List<Contact>>(){}.getType());
             SPhone.network.sendToServer(new PacketUpdateContacts(jsonString));

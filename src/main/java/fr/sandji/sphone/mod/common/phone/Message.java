@@ -7,13 +7,13 @@ public class Message implements ISerializable, ISerializablePacket {
 
     private String message;
     private long date;
-    private Contact sender;
-    private Contact receiver;
+    private int sender;
+    private int receiver;
 
     public Message() {
     }
 
-    public Message(String message, long date, Contact sender, Contact receiver) {
+    public Message(String message, long date, int sender, int receiver) {
         this.message = message;
         this.date = date;
         this.sender = sender;
@@ -28,11 +28,11 @@ public class Message implements ISerializable, ISerializablePacket {
         return date;
     }
 
-    public Contact getSender() {
+    public int getSender() {
         return sender;
     }
 
-    public Contact getReceiver() {
+    public int getReceiver() {
         return receiver;
     }
 
@@ -51,8 +51,8 @@ public class Message implements ISerializable, ISerializablePacket {
     public void populateWithSavedObjects(Object[] objects) {
         message = (String) objects[0];
         date = (long) objects[1];
-        sender = (Contact) objects[2];
-        receiver = (Contact) objects[3];
+        sender = (int) objects[2];
+        receiver = (int) objects[3];
 
     }
 }

@@ -14,18 +14,21 @@ public class Contact implements ISerializable, ISerializablePacket {
     String lastname;
     int numero;
     String notes;
-    String player_associated;
 
     public Contact() {}
 
-    public Contact(String name, String lastname, int numero, String notes, String player_associated) {
+    public Contact(String name, String lastname, int numero, String notes) {
         this.name = name;
         this.lastname = lastname;
         this.numero = numero;
         this.notes = notes;
-        this.player_associated = player_associated;
     }
-
+    public Contact(String name, String lastname, int numero) {
+        this.name = name;
+        this.lastname = lastname;
+        this.numero = numero;
+        this.notes = "";
+    }
     //constructor with name and number
     public Contact(String name, int numero) {
         this.name = name;
@@ -66,14 +69,6 @@ public class Contact implements ISerializable, ISerializablePacket {
         this.notes = notes;
     }
 
-    public String getPlayer_associated() {
-        return player_associated;
-    }
-
-    public void setPlayer_associated(String player_associated) {
-        this.player_associated = player_associated;
-    }
-
     @Override
     public int getVersion() {
         return 0;
@@ -81,7 +76,7 @@ public class Contact implements ISerializable, ISerializablePacket {
 
     @Override
     public Object[] getObjectsToSave() {
-        return new Object[]{name, lastname, numero, notes, player_associated};
+        return new Object[]{name, lastname, numero, notes};
     }
 
     @Override
@@ -90,7 +85,6 @@ public class Contact implements ISerializable, ISerializablePacket {
         lastname = (String) objects[1];
         numero = (Integer) objects[2];
         notes = (String) objects[3];
-        player_associated = (String) objects[4];
     }
 
 

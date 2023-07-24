@@ -5,7 +5,7 @@
 package fr.sandji.sphone.mod.server.database;
 
 public enum DatabaseManager {
-    SPHONE (new DatabaseCredentials("localhost", "root", "", "sphone", 3306));
+    SPHONE (new DatabaseCredentials("localhost", "root", "", "phone", 3306));
 
     private DatabaseAccess databaseAccess;
     DatabaseManager(DatabaseCredentials credentials) {
