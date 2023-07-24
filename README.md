@@ -9,7 +9,7 @@ A Minecraft Phone Mod for the French Roleplay Server Community.
   <a href="#"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub License"></a>
 </p>
 
------
+----
 
 WIP **interactive** smartphone user interface, based on iPhone UI style.
 
