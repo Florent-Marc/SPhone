@@ -15,4 +15,4 @@ WIP **interactive** smartphone user interface, based on iPhone UI style.
 
 ## Preview
 
-![]([https://i.imgur.com/k6BJtj2.png](https://cdn.discordapp.com/attachments/1133045045008801872/1133049376000970783/image.png)https://cdn.discordapp.com/attachments/1133045045008801872/1133049376000970783/image.png)
+![image](https://github.com/Florent-Marc/SPhone/assets/40036183/3f17b3ea-38f0-4ad4-89a4-6a42bee248e1)
