@@ -53,8 +53,8 @@ public class GuiContactsList extends GuiBase {
 
             GuiPanel ContactAvatar = new GuiPanel();
             ContactAvatar.setCssClass("contact_avatar");
-            String cssCode = "background-image: url(\"https://mc-heads.net/avatar/" + contact.getPlayer_associated() + "\");";
-            ContactAvatar.setCssCode("contact_avatar", cssCode);
+            //String cssCode = "background-image: url(\"https://mc-heads.net/avatar/" + contact.getPlayer_associated() + "\");";
+            //ContactAvatar.setCssCode("contact_avatar", cssCode);
             contactPanel.add(ContactAvatar);
 
             GuiLabel ContactName = new GuiLabel(contact.getName() + " " + contact.getLastname());
