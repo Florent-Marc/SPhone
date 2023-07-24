@@ -11,8 +11,6 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
-import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
-import fr.sandji.sphone.mod.common.packets.server.contacts.PacketUpdateContacts;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import net.minecraft.util.ResourceLocation;
 
@@ -63,7 +61,7 @@ public class GuiNewContact extends GuiBase {
             contacts.add(new Contact(NameField.getText(), LastNameField.getText(), Integer.valueOf(NumeroField.getText()), notes.getText()));
             Gson gson = new Gson();
             String jsonString = gson.toJson(contacts, new TypeToken<List<Contact>>(){}.getType());
-            SPhone.network.sendToServer(new PacketUpdateContacts(jsonString));
+            //SPhone.network.sendToServer(new PacketUpdateContacts(jsonString));
         });
         getBackground().add(ButtonAdd);
     }

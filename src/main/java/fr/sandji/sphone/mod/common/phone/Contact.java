@@ -16,7 +16,6 @@ public class Contact implements ISerializable, ISerializablePacket {
     String notes;
 
     public Contact() {
-        this("Jhon", "Doe", 1324, "Called default constructor", "0");
     }
 
     public Contact(String name, String lastname, int numero, String notes) {

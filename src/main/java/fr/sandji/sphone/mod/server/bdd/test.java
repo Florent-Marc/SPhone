@@ -1,7 +1,5 @@
 package fr.sandji.sphone.mod.server.bdd;
 
-import fr.sandji.sphone.mod.common.phone.Contact;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,8 +25,7 @@ public class test {
             }
         }
 
-        MethodesBDD.checkTable();
-
+        MethodesBDDImpl.checkTable();
 
 
         int counter = 0;
@@ -36,14 +33,14 @@ public class test {
         for (int i = 0; i < 450; i++) {
             int num = (int) (Math.random() * 1000000);
             int sim = (int) (Math.random() * 1000000);
-            if (MethodesBDD.addSim(sim, num)) {
+            if (MethodesBDDImpl.addSim(sim, num)) {
                 counter++;
                 continue;
             } else {
                 for (int j = 0; j < 10; j++) {
                     num = (int) (Math.random() * 1000000);
                     sim = (int) (Math.random() * 1000000);
-                    if (MethodesBDD.addSim(sim, num)) {
+                    if (MethodesBDDImpl.addSim(sim, num)) {
                         counter++;
                         break;
                     }
@@ -53,7 +50,10 @@ public class test {
         System.out.println("Sim ajouté: " + counter);
 
 
+    }
 
-
+    //get bdd
+    public static MethodesBDD getBDD() {
+        return new MethodesBDD();
     }
 }

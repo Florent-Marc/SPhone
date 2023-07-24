@@ -41,8 +41,8 @@ public class GuiViewContact extends GuiBase {
 
         GuiLabel ContactAvatar = new GuiLabel("");
         ContactAvatar.setCssId("view_contact_avatar");
-        String cssCode = "background-image: url(\"https://mc-heads.net/avatar/" + contact.getPlayer_associated() + "\");";
-        ContactAvatar.setCssCode("view_contact_avatar", cssCode);
+        //String cssCode = "background-image: url(\"https://mc-heads.net/avatar/" + contact.getPlayer_associated() + "\");";
+        //ContactAvatar.setCssCode("view_contact_avatar", cssCode);
         getBackground().add(ContactAvatar);
 
         GuiLabel name = new GuiLabel("Name : "+contact.getName());
