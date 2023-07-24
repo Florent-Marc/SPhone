@@ -1,4 +1,4 @@
-A Minecraft Phone Mod for the French Roleplay Server Community. Developed by 0hSandji (Sandji#2447).
+A Minecraft Phone Mod for the French Roleplay Server Community.
 
 # SPhone
 <br/>
