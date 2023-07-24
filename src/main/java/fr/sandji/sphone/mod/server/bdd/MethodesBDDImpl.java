@@ -19,27 +19,26 @@ public class MethodesBDDImpl {
                 "\t`note` INT NULL DEFAULT NULL,\n" +
                 "\tPRIMARY KEY (`id`)\n" +
                 ")\n" +
-                "COLLATE='utf8mb4_0900_ai_ci'\n" +
+                "COLLATE='utf8_general_ci'\n" +
                 "ENGINE=InnoDB\n" +
                 ";\n");
         instance.execute("CREATE TABLE IF NOT EXISTS `message` (\n" +
                 "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
-                "\t`sender` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',\n" +
-                "\t`receiver` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',\n" +
-                "\t`message` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',\n" +
-                "\t`date` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',\n" +
+                "\t`sender` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n" +
+                "\t`receiver` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n" +
+                "\t`message` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n" +
+                "\t`date` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n" +
                 "\tPRIMARY KEY (`id`) USING BTREE\n" +
                 ")\n" +
-                "COLLATE='utf8mb4_0900_ai_ci'\n" +
                 "ENGINE=InnoDB\n" +
                 ";");
         instance.execute("CREATE TABLE IF NOT EXISTS `sim` (\n" +
                 "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
-                "\t`sim` TEXT NOT NULL COLLATE 'utf8mb4_0900_ai_ci',\n" +
-                "\t`number` TEXT NOT NULL COLLATE 'utf8mb4_0900_ai_ci',\n" +
+                "\t`sim` TEXT NOT NULL COLLATE 'utf8_general_ci',\n" +
+                "\t`number` TEXT NOT NULL COLLATE 'utf8_general_ci',\n" +
                 "\tPRIMARY KEY (`id`) USING BTREE\n" +
                 ")\n" +
-                "COLLATE='utf8mb4_0900_ai_ci'\n" +
+                "COLLATE='utf8_general_ci'\n" +
                 "ENGINE=InnoDB\n" +
                 "AUTO_INCREMENT=452\n" +
                 ";\n");

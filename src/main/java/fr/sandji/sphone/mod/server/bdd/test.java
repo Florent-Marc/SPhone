@@ -27,27 +27,27 @@ public class test {
 
         MethodesBDDImpl.checkTable();
 
-
-        int counter = 0;
-        //ajoute 450 sim aléatoirement
-        for (int i = 0; i < 450; i++) {
-            int num = (int) (Math.random() * 1000000);
-            int sim = (int) (Math.random() * 1000000);
-            if (MethodesBDDImpl.addSim(sim, num)) {
-                counter++;
-                continue;
-            } else {
-                for (int j = 0; j < 10; j++) {
-                    num = (int) (Math.random() * 1000000);
-                    sim = (int) (Math.random() * 1000000);
-                    if (MethodesBDDImpl.addSim(sim, num)) {
-                        counter++;
-                        break;
-                    }
-                }
-            }
-        }
-        System.out.println("Sim ajouté: " + counter);
+//
+//        int counter = 0;
+//        //ajoute 450 sim aléatoirement
+//        for (int i = 0; i < 450; i++) {
+//            int num = (int) (Math.random() * 1000000);
+//            int sim = (int) (Math.random() * 1000000);
+//            if (MethodesBDDImpl.addSim(sim, num)) {
+//                counter++;
+//                continue;
+//            } else {
+//                for (int j = 0; j < 10; j++) {
+//                    num = (int) (Math.random() * 1000000);
+//                    sim = (int) (Math.random() * 1000000);
+//                    if (MethodesBDDImpl.addSim(sim, num)) {
+//                        counter++;
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//        System.out.println("Sim ajouté: " + counter);
 
 
     }

@@ -39,6 +39,7 @@ public class GuiBase extends GuiFrame {
 
     private void init(){
         style.setBackgroundColor(Color.TRANSLUCENT);
+
         setCssClass("home");
         GuiPanel Case = new GuiPanel();
         Case.setCssClass("case");
@@ -64,12 +65,18 @@ public class GuiBase extends GuiFrame {
         GuiPanel HomeBar = new GuiPanel();
         HomeBar.setCssClass("home_bar");
         add(HomeBar);
+        System.out.println(parent);
         if (parent == null) {
             HomeBar.setVisible(false);
+
         } else {
             HomeBar.addClickListener((x,y,bu) -> {
-                Minecraft.getMinecraft().displayGuiScreen(null);
-                Minecraft.getMinecraft().displayGuiScreen(parent);
+
+
+
+                Minecraft.getMinecraft().displayGuiScreen(new GuiHome().guiScreen);
+
+
             });
         }
 

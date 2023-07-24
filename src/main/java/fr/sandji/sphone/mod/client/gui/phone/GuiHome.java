@@ -24,6 +24,11 @@ public class GuiHome extends GuiBase {
     public GuiHome() {
         super();
 
+        AppManager.getApps().forEach((e) -> {
+            System.out.println("caca app " + e.getName());
+        });
+        System.out.println("---");
+
         GuiScrollPane appListPanel = new GuiScrollPane();
         appListPanel.setCssClass("app_list");
         appListPanel.setLayout(
@@ -54,18 +59,21 @@ public class GuiHome extends GuiBase {
         );
 
         AtomicInteger displayedBottomApps = new AtomicInteger();
-
         AppManager.getApps().forEach((app) -> {
+
+
             GuiPanel appPanel = new GuiPanel();
             appPanel.setCssClass(app.getDefaultInAppBar() ? "app_bottom" : "app");
             appPanel.getStyle().setTexture(new GuiTextureSprite(app.getIcon()));
-            appPanel.addClickListener((mouseX, mouseY, mouseButton) -> Minecraft.getMinecraft().displayGuiScreen(app.getGui().getGuiScreen()));
+            appPanel.addClickListener((mouseX, mouseY, mouseButton) -> Minecraft.getMinecraft().displayGuiScreen(app.getGui()));
 
             if(app.getDefaultInAppBar()) appBottomPanel.add(appPanel); else appListPanel.add(appPanel);
 
             if(displayedBottomApps.get() >= 4) {
                 SPhone.logger.warn("Too many apps in bottom bar, some will be hidden");
             }
+
+
             if(app.getDefaultInAppBar()) displayedBottomApps.getAndIncrement();
         });
 

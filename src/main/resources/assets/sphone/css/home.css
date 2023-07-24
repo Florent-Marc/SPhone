@@ -6,6 +6,14 @@
     height: auto;
     width: auto;
 }
+
+.app:hover {
+    top: auto;
+    left: auto;
+    height: 52px;
+    width: 52px;
+}
+
 .app_list {
     width: 80%;
     height: 80%;
@@ -26,11 +34,20 @@
     background: rgba(160,160,160, 78);
     border-radius: 25px;
 }
+
 .app_bottom {
     top: 50%;
     bottom: 50%;
     left: auto;
     height: auto;
     width: auto;
+}
+
+.app_bottom:hover {
+    top: 50%;
+    bottom: 50%;
+    left: auto;
+    height: 42px;
+    width: 42px;
 }
 
