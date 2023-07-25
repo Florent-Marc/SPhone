@@ -66,7 +66,14 @@ public class GuiHome extends GuiBase {
             GuiPanel appPanel = new GuiPanel();
             appPanel.setCssClass(app.getDefaultInAppBar() ? "app_bottom" : "app");
             appPanel.getStyle().setTexture(new GuiTextureSprite(app.getIcon()));
-            appPanel.addClickListener((mouseX, mouseY, mouseButton) -> Minecraft.getMinecraft().displayGuiScreen(app.getGui()));
+            appPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
+                if(app.getGui() != null) {
+                    Minecraft.getMinecraft().displayGuiScreen(app.getGui());
+                }
+                if(app.getRunnable() != null){
+                    app.getRunnable().run();
+                }
+            });
 
             if(app.getDefaultInAppBar()) appBottomPanel.add(appPanel); else appListPanel.add(appPanel);
 

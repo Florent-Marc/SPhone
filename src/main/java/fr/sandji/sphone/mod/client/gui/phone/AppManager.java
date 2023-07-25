@@ -6,6 +6,8 @@ import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiContactsList;
 import fr.sandji.sphone.mod.client.gui.phone.apps.message.GuiConvList;
 import fr.sandji.sphone.mod.client.gui.phone.apps.note.GuiNoteList;
+import fr.sandji.sphone.mod.common.items.ItemPhone;
+import fr.sandji.sphone.mod.common.packets.server.PacketRequestData;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Conversation;
 import fr.sandji.sphone.mod.common.phone.Message;
@@ -13,6 +15,7 @@ import fr.sandji.sphone.mod.common.phone.Note;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,12 +32,13 @@ public class AppManager {
         Supplier<GuiScreen> guiSupplier = () -> new GuiNoteList(root, Collections.singletonList(new Note("Hello", "Coucou", System.currentTimeMillis()))).getGuiScreen();
         // TODO: Get notes in phone
         apps.add(new App(
-                guiSupplier,
+                null,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/notes.png"),
                 "Notes",
                 "1.0",
                 false,
-                true
+                true,
+                () -> SPhone.network.sendToServer(new PacketRequestData("notes", String.valueOf(ItemPhone.getSimCard(root.mc.player.getHeldItemMainhand()))))
         ));
         
         // TODO: Remove that
@@ -81,39 +85,41 @@ public class AppManager {
                 "Messages",
                 "1.0",
                 false,
-                false
+                false,
+                null
         ));
 
-        guiSupplier = () -> new GuiContactsList(
-                Collections.singletonList(new Contact("caca", "Jean Michel",1234))
-        ).getGuiScreen();
+        guiSupplier = () -> new GuiContactsList(root, Collections.singletonList(new Contact("caca", "Jean Michel",1234))).getGuiScreen();
 
         apps.add(new App(guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/contacts.png"),
                 "Contacts",
                 "1.0",
                 false,
-                true
+                true,
+                null
         ));
 
-        guiSupplier = () -> new GuiCall("caca").getGuiScreen();
+        guiSupplier = () -> new GuiCall(root, "caca").getGuiScreen();
 
         apps.add(new App(guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/call.png"),
                 "Téléphone",
                 "1.0",
                 false,
-                true
+                true,
+                null
         ));
 
-        guiSupplier = () -> new GuiCalculator().getGuiScreen();
+        guiSupplier = () -> new GuiCalculator(root).getGuiScreen();
 
         apps.add(new App(guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/calculator.png"),
                 "Calculatrice",
                 "1.0",
                 false,
-                false
+                false,
+                null
         ));
 
 
@@ -136,6 +142,7 @@ public class AppManager {
         String version; // don't care it's just for "realism"
         boolean  showInDebug = false; // only for dev
         boolean  defaultInAppBar = false;
+        Runnable  runnable;
 
         /**
          * @param gui             Gui to display
@@ -145,18 +152,21 @@ public class AppManager {
          * @param showInDebug     If true, the app will be displayed in debug mode
          * @param defaultInAppBar If true, the app will be displayed in the app bar
          */
-        public App(Supplier<GuiScreen> gui, ResourceLocation icon, String name, String version, boolean showInDebug, boolean defaultInAppBar) {
+        public App(Supplier<GuiScreen> gui, ResourceLocation icon, String name, String version, boolean showInDebug, boolean defaultInAppBar, @Nullable Runnable runnable) {
             this.gui = gui;
             this.icon = icon;
             this.name = name;
             this.version = version;
             this.showInDebug = showInDebug;
             this.defaultInAppBar = defaultInAppBar;
+            this.runnable = runnable;
         }
 
-
         public GuiScreen getGui() {
-            return gui.get();
+            if(gui != null) {
+                return gui.get();
+            }
+            return null;
         }
 
         public void setGui(GuiScreen gui) {
@@ -201,6 +211,10 @@ public class AppManager {
 
         public void setDefaultInAppBar(boolean defaultInAppBar) {
             this.defaultInAppBar = defaultInAppBar;
+        }
+
+        public Runnable getRunnable() {
+            return runnable;
         }
     }
 }
