@@ -1,5 +1,6 @@
 package fr.sandji.sphone.mod.common.packets.client;
 
+import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiCallEnd;
 import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiCallRequest;
@@ -48,10 +49,10 @@ public class PacketCall implements IMessage {
         public IMessage onMessage(PacketCall message, MessageContext ctx) {
             int id = message.id;
             if(id == 0){
-                Minecraft.getMinecraft().displayGuiScreen(new GuiCallEnd("").getGuiScreen());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiCallEnd(new GuiHome().getGuiScreen(),"").getGuiScreen());
             }
             if(id == 1){
-                Minecraft.getMinecraft().displayGuiScreen(new GuiCall(message.number).getGuiScreen());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiHome().getGuiScreen(), message.number).getGuiScreen());
             }
             if(id == 2){
                 //song and set call enter in tel

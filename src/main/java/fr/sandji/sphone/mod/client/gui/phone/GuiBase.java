@@ -5,7 +5,6 @@
 
 package fr.sandji.sphone.mod.client.gui.phone;
 
-import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
@@ -17,7 +16,8 @@ import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class GuiBase extends GuiFrame {
@@ -37,7 +37,20 @@ public class GuiBase extends GuiFrame {
         init();
     }
 
+    @Override
+    public void resize(GuiFrame.APIGuiScreen gui, int screenWidth, int screenHeight) {
+        super.resize(gui, screenWidth, screenHeight);
+        this.GuiInit();
+    }
+
+    public void GuiInit(){
+        init();
+    }
+
     private void init(){
+        this.removeAllChilds();
+        this.flushComponentsQueue();
+        this.flushRemovedComponents();
         style.setBackgroundColor(Color.TRANSLUCENT);
 
         setCssClass("home");
@@ -70,19 +83,11 @@ public class GuiBase extends GuiFrame {
 
         } else {
             HomeBar.addClickListener((x,y,bu) -> {
-
                 Minecraft.getMinecraft().displayGuiScreen(parent);
                 //Minecraft.getMinecraft().displayGuiScreen(new GuiHome().guiScreen);
 
             });
         }
-
-        GuiButton reloadApps = new GuiButton("↻");
-        reloadApps.addClickListener((x,y,bu) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
-            //AppManager.reloadApps();
-        });
-        add(reloadApps);
 
     }
 

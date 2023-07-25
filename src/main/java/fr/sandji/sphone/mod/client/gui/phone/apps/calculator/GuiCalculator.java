@@ -7,8 +7,8 @@ package fr.sandji.sphone.mod.client.gui.phone.apps.calculator;
 
 import fr.aym.acsguis.component.textarea.GuiFloatField;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -16,10 +16,13 @@ import java.util.List;
 
 public class GuiCalculator extends GuiBase {
 
-    public GuiCalculator() {
-        super(new GuiHome().getGuiScreen());
+    public GuiCalculator(GuiScreen parent) {
+        super(parent);
+    }
 
-
+    @Override
+    public void GuiInit() {
+        super.GuiInit();
         GuiFloatField Field = new GuiFloatField(0, 999999999);
         Field.setCssId("field");
         add(Field);
@@ -27,8 +30,6 @@ public class GuiCalculator extends GuiBase {
         GuiLabel Button_AC = new GuiLabel("AC");
         Button_AC.setCssId("button_ac");
         add(Button_AC);
-
-
     }
 
     public List<ResourceLocation> getCssStyles() {

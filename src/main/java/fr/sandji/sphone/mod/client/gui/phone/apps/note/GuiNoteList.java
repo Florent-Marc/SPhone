@@ -21,8 +21,16 @@ import java.util.List;
 
 public class GuiNoteList extends GuiBase {
 
+    private final List<Note> n;
+
     public GuiNoteList(GuiScreen parent, List<Note> n) {
         super(parent);
+        this.n = n;
+    }
+
+    @Override
+    public void GuiInit(){
+        super.GuiInit();
 
         GuiLabel AppTitle = new GuiLabel("Notes");
         AppTitle.setCssId("app_title");
@@ -41,7 +49,7 @@ public class GuiNoteList extends GuiBase {
 
 
         //trier les conversations par date de dernier message
-       // n.sort((o1, o2) -> getDate(o2.getLastUpdate()).compareTo(getDate(o1.getLastUpdate())));
+        // n.sort((o1, o2) -> getDate(o2.getLastUpdate()).compareTo(getDate(o1.getLastUpdate())));
 
         for (Note c : n) {
 
@@ -66,7 +74,6 @@ public class GuiNoteList extends GuiBase {
         }
 
         getBackground().add(contacts_list);
-
     }
 
     //get date with long

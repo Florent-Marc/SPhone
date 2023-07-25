@@ -10,10 +10,10 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.sandji.sphone.mod.client.gui.layout.CustomGridLayout;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
-import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Conversation;
 import fr.sandji.sphone.mod.common.phone.Message;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.text.SimpleDateFormat;
@@ -25,9 +25,18 @@ import java.util.List;
 public class GuiConv extends GuiBase {
 
     private static boolean load = false;
+    private final Conversation conv;
+    private final Contact nous;
 
-    public GuiConv(Conversation conv, Contact nous) {
-        super(new GuiHome().getGuiScreen());
+    public GuiConv(GuiScreen parent, Conversation conv, Contact nous) {
+        super(parent);
+        this.conv = conv;
+        this.nous = nous;
+    }
+
+    @Override
+    public void GuiInit() {
+        super.GuiInit();
 
         GuiLabel AppTitle = new GuiLabel(conv.getSender().getName());
         AppTitle.setCssId("app_title");
@@ -69,7 +78,7 @@ public class GuiConv extends GuiBase {
             }
 
             int len = 10 + (c.getMessage().length() / 21) * 4;
-            messagePanel.setCssCode("height: " + len + "%;");
+            //messagePanel.setCssCode("height: " + len + "%;");
 
             GuiLabel date = new GuiLabel(getDate(c.getDate()));
             date.setCssId("date");
@@ -96,7 +105,6 @@ public class GuiConv extends GuiBase {
         contacts_list.getySlider().setValue(contacts_list.getySlider().getMax());
     }
 
-
     //get date et si c'est aujourd'hui on affiche l'heure
     public String getDate(long date) {
         Date d = new Date(date);
@@ -121,11 +129,4 @@ public class GuiConv extends GuiBase {
         styles.add(new ResourceLocation("sphone:css/conv.css"));
         return styles;
     }
-
-    @Override
-    public boolean allowDebugInGui() {
-        return true;
-    }
-
-
 }

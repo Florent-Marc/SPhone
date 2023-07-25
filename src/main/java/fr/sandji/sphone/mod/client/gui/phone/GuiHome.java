@@ -23,11 +23,13 @@ public class GuiHome extends GuiBase {
 
     public GuiHome() {
         super();
+    }
+
+    @Override
+    public void GuiInit(){
+        super.GuiInit();
+
         AppManager.reloadApps(this.getGuiScreen());
-        AppManager.getApps().forEach((e) -> {
-            System.out.println("caca app " + e.getName());
-        });
-        System.out.println("---");
 
         GuiScrollPane appListPanel = new GuiScrollPane();
         appListPanel.setCssClass("app_list");
@@ -76,10 +78,8 @@ public class GuiHome extends GuiBase {
             if(app.getDefaultInAppBar()) displayedBottomApps.getAndIncrement();
         });
 
-
         getBackground().add(appListPanel);
         getBackground().add(appBottomPanel);
-
     }
 
     public List<ResourceLocation> getCssStyles() {
@@ -89,6 +89,5 @@ public class GuiHome extends GuiBase {
         styles.add(new ResourceLocation("sphone:css/call.css"));
         return styles;
     }
-
 
 }

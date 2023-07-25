@@ -12,8 +12,16 @@ import java.util.List;
 
 public class GuiCallRequest extends GuiHome {
 
+    private final String number;
+
     public GuiCallRequest(String number) {
         super();
+        this.number = number;
+    }
+
+    @Override
+    public void GuiInit() {
+        super.GuiInit();
         GuiLabel label = new GuiLabel("Appel entrant");
         label.setCssId("app_title");
         getBackground().add(label);
@@ -26,7 +34,7 @@ public class GuiCallRequest extends GuiHome {
         ButtonAccept.setCssClass("button_accept");
         ButtonAccept.addClickListener((mouseX, mouseY, mouseButton) -> {
             SPhone.network.sendToServer(new PacketCallRequest(true));
-            mc.displayGuiScreen(new GuiCall(number).getGuiScreen());
+            mc.displayGuiScreen(new GuiCall(this.getGuiScreen(), number).getGuiScreen());
         });
         getBackground().add(ButtonAccept);
 
@@ -34,12 +42,10 @@ public class GuiCallRequest extends GuiHome {
         ButtonDecline.setCssClass("button_decline");
         ButtonDecline.addClickListener((mouseX, mouseY, mouseButton) -> {
             SPhone.network.sendToServer(new PacketCallRequest(false));
-            mc.displayGuiScreen(new GuiCallEnd(number).getGuiScreen());
+            mc.displayGuiScreen(new GuiCallEnd(this.getGuiScreen(), number).getGuiScreen());
         });
         getBackground().add(ButtonDecline);
-
     }
-
 
     @Override
     public List<ResourceLocation> getCssStyles() {

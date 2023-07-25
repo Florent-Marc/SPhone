@@ -8,11 +8,10 @@ import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.aym.acsguis.component.textarea.GuiTextField;
-import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -20,9 +19,16 @@ import java.util.List;
 
 public class GuiContactsList extends GuiBase {
 
-    public GuiContactsList(List<Contact> contacts) {
-        super(new GuiHome().getGuiScreen());
+    private final List<Contact> contacts;
 
+    public GuiContactsList(GuiScreen parent, List<Contact> contacts) {
+        super(parent);
+        this.contacts = contacts;
+    }
+
+    @Override
+    public void GuiInit() {
+        super.GuiInit();
         GuiLabel AppTitle = new GuiLabel("Contacts");
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
@@ -30,7 +36,7 @@ public class GuiContactsList extends GuiBase {
         GuiLabel ButtonAdd = new GuiLabel("+");
         ButtonAdd.setCssId("button_add");
         ButtonAdd.addClickListener((mouseX, mouseY, mouseButton) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiNewContact(contacts).getGuiScreen());
+            Minecraft.getMinecraft().displayGuiScreen(new GuiNewContact(this.getGuiScreen(), contacts).getGuiScreen());
         });
         getBackground().add(ButtonAdd);
 
@@ -45,7 +51,7 @@ public class GuiContactsList extends GuiBase {
             GuiPanel contactPanel = new GuiPanel();
             contactPanel.setCssClass("contact_background");
             contactPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiViewContact(contacts, contact).getGuiScreen());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiViewContact(this.getGuiScreen(), contacts, contact).getGuiScreen());
             });
 
             GuiPanel ContactAvatar = new GuiPanel();
@@ -62,7 +68,6 @@ public class GuiContactsList extends GuiBase {
         }
 
         getBackground().add(contacts_list);
-
     }
 
     public List<ResourceLocation> getCssStyles() {

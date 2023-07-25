@@ -17,8 +17,18 @@ import java.util.List;
 
 public class GuiEditNote extends GuiBase {
 
+    private final List<Note> l;
+    private final Note note;
+
     public GuiEditNote(GuiScreen parent, List<Note> l, Note note) {
         super(parent);
+        this.l = l;
+        this.note = note;
+    }
+    
+    @Override
+    public void GuiInit(){
+        super.GuiInit();
         GuiLabel AppTitle = new GuiLabel("Modifier une note");
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
@@ -40,8 +50,6 @@ public class GuiEditNote extends GuiBase {
 
         });
         getBackground().add(ButtonAdd);
-
-
     }
 
     public List<ResourceLocation> getCssStyles() {

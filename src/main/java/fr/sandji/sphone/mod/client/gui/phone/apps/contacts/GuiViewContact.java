@@ -9,6 +9,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -17,9 +18,19 @@ import java.util.List;
 public class GuiViewContact extends GuiBase {
 
 
-    public GuiViewContact(List<Contact> contacts, Contact contact) {
-        super(new GuiContactsList(contacts).getGuiScreen());
+    private final List<Contact> contacts;
+    private final Contact contact;
 
+    public GuiViewContact(GuiScreen parent, List<Contact> contacts, Contact contact) {
+        super(parent);
+        this.contacts = contacts;
+        this.contact = contact;
+    }
+
+
+    @Override
+    public void GuiInit() {
+        super.GuiInit();
         GuiLabel AppTitle = new GuiLabel("Contact");
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
@@ -28,7 +39,7 @@ public class GuiViewContact extends GuiBase {
         ButtonEdit.setCssId("button_add");
         getBackground().add(ButtonEdit);
         ButtonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiEditContact(contacts, contact).getGuiScreen());
+            Minecraft.getMinecraft().displayGuiScreen(new GuiEditContact(this.getGuiScreen(), contacts, contact).getGuiScreen());
         });
 
         GuiPanel message = new GuiPanel();
@@ -60,7 +71,6 @@ public class GuiViewContact extends GuiBase {
         GuiLabel notes = new GuiLabel("Notes : "+contact.getNotes());
         notes.setCssId("notes");
         getBackground().add(notes);
-
     }
 
     public List<ResourceLocation> getCssStyles() {

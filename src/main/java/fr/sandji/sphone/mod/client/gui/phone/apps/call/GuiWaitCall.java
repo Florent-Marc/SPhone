@@ -7,6 +7,7 @@ import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.common.packets.server.call.PacketQuitCall;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -14,11 +15,17 @@ import java.util.List;
 
 public class GuiWaitCall extends GuiBase {
 
+    private final String s;
     private GuiLabel time;
 
-    public GuiWaitCall(String s) {
-        super(new GuiHome().getGuiScreen());
+    public GuiWaitCall(GuiScreen parent, String s) {
+        super(parent);
+        this.s = s;
+    }
 
+    @Override
+    public void GuiInit() {
+        super.GuiInit();
         time = new GuiLabel("Appel en cours");
         time.setCssId("time");
         getBackground().add(time);
@@ -35,7 +42,6 @@ public class GuiWaitCall extends GuiBase {
         GuiLabel number = new GuiLabel(s);
         number.setCssId("number");
         getBackground().add(number);
-
     }
 
     @Override

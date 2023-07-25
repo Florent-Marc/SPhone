@@ -16,9 +16,19 @@ import java.util.List;
 
 public class GuiNote extends GuiBase {
 
+    private final List<Note> l;
+    private final Note contact;
 
     public GuiNote(GuiScreen parent, List<Note> l, Note contact) {
         super(parent);
+        this.l = l;
+        this.contact = contact;
+    }
+
+    @Override
+    public void GuiInit(){
+        super.GuiInit();
+
         GuiLabel AppTitle = new GuiLabel(contact.getTitle());
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
@@ -34,7 +44,6 @@ public class GuiNote extends GuiBase {
         GuiLabel notes = new GuiLabel("Notes : "+contact.getText());
         notes.setCssId("notes");
         getBackground().add(notes);
-
     }
 
     public List<ResourceLocation> getCssStyles() {

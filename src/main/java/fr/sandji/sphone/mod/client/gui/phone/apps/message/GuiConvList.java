@@ -23,9 +23,16 @@ import java.util.List;
 
 public class GuiConvList extends GuiBase {
 
+    private final List<Conversation> conv;
+
     public GuiConvList(GuiScreen parent, List<Conversation> conv) {
         super(parent);
+        this.conv = conv;
+    }
 
+    @Override
+    public void GuiInit() {
+        super.GuiInit();
         GuiLabel AppTitle = new GuiLabel("Messages");
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
@@ -43,7 +50,7 @@ public class GuiConvList extends GuiBase {
             GuiPanel convpanel = new GuiPanel();
             convpanel.setCssClass("contact_background");
             convpanel.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiConv(c, new Contact("hugo",2)).getGuiScreen());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiConv(this.getGuiScreen(), c, new Contact("hugo",2)).getGuiScreen());
             });
             GuiLabel ContactName = new GuiLabel(c.getSender().getName());
             ContactName.setCssId("name");
@@ -61,7 +68,6 @@ public class GuiConvList extends GuiBase {
         }
 
         getBackground().add(conversations_list);
-
     }
 
     //get date with long

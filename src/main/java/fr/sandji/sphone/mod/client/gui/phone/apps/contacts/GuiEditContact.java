@@ -9,6 +9,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.common.phone.Contact;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -16,9 +17,19 @@ import java.util.List;
 
 public class GuiEditContact extends GuiBase {
 
-    public GuiEditContact(List<Contact> contacts, Contact contact) {
-        super(new GuiContactsList(contacts).getGuiScreen());
+    private final List<Contact> contacts;
+    private final Contact contact;
 
+    public GuiEditContact(GuiScreen parent, List<Contact> contacts, Contact contact) {
+        super(parent);
+
+        this.contacts = contacts;
+        this.contact = contact;
+    }
+
+    @Override
+    public void GuiInit() {
+        super.GuiInit();
         GuiLabel AppTitle = new GuiLabel("Modifier un contact");
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
@@ -55,7 +66,6 @@ public class GuiEditContact extends GuiBase {
 
         });
         getBackground().add(ButtonAdd);
-
     }
 
     public List<ResourceLocation> getCssStyles() {

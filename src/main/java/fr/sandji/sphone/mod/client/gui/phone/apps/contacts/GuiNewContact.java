@@ -9,9 +9,9 @@ import com.google.gson.reflect.TypeToken;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
-import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.common.phone.Contact;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -21,9 +21,16 @@ import java.util.regex.Pattern;
 
 public class GuiNewContact extends GuiBase {
 
-    public GuiNewContact(List<Contact> contacts) {
-        super(new GuiContactsList(contacts).getGuiScreen());
+    private final List<Contact> contacts;
 
+    public GuiNewContact(GuiScreen parent, List<Contact> contacts) {
+        super(parent);
+        this.contacts = contacts;
+    }
+
+    @Override
+    public void GuiInit() {
+        super.GuiInit();
         GuiLabel AppTitle = new GuiLabel("Ajouter un contact");
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
@@ -42,11 +49,11 @@ public class GuiNewContact extends GuiBase {
         NumeroField.setCssClass("numero");
         NumeroField.setHintText(" 555-1234");
         NumeroField.addTickListener(() -> {
-           if (!NumeroField.getText().equals("")) {
-               if (isValidInput(NumeroField.getText())) {
+            if (!NumeroField.getText().equals("")) {
+                if (isValidInput(NumeroField.getText())) {
 
-               }
-           }
+                }
+            }
         });
         getBackground().add(NumeroField);
 

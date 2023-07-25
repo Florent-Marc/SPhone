@@ -19,9 +19,13 @@ import java.util.List;
 
 public class GuiNewNote extends GuiBase {
 
-    public GuiNewNote(GuiScreen root, List<Note> note) {
-        super(root);
+    public GuiNewNote(GuiScreen parent, List<Note> note) {
+        super(parent);
+    }
 
+    @Override
+    public void GuiInit(){
+        super.GuiInit();
         GuiLabel AppTitle = new GuiLabel("Ajouter une note");
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
@@ -44,8 +48,6 @@ public class GuiNewNote extends GuiBase {
 
         });
         getBackground().add(ButtonAdd);
-
-
     }
 
     public List<ResourceLocation> getCssStyles() {
