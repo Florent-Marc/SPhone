@@ -46,6 +46,9 @@ public class PacketRequestData implements IMessage {
                 MethodesBDDImpl.getContact(Integer.parseInt(message.sim));
                 //packet to client
             }
+            if (request.equals("notes")) {
+                SPhone.network.sendTo(new PacketOpenNotes(MethodesBDDImpl.getNotes(Integer.parseInt(message.sim)), "notes"), player);
+            }
             return null;
         }
 

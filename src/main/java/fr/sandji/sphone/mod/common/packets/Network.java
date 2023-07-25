@@ -6,6 +6,7 @@ package fr.sandji.sphone.mod.common.packets;
 
 import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.common.packets.client.PacketCall;
+import fr.sandji.sphone.mod.common.packets.client.PacketOpenNotes;
 import fr.sandji.sphone.mod.common.packets.client.PacketOpenPhone;
 import fr.sandji.sphone.mod.common.packets.server.PacketRequestData;
 import fr.sandji.sphone.mod.common.packets.server.call.PacketCallRequest;
@@ -21,6 +22,7 @@ public class Network {
         SPhone.network = NetworkRegistry.INSTANCE.newSimpleChannel("sphone");
         // Global
         packetFromClient(PacketOpenPhone.Handler.class, PacketOpenPhone.class);
+        packetFromClient(PacketOpenNotes.Handler.class, PacketOpenNotes.class);
 
         // Call
         packetFromServer(PacketJoinCall.ServerHandler.class, PacketJoinCall.class);
