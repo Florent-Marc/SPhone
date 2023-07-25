@@ -6,13 +6,14 @@
 package fr.sandji.sphone.mod.common.items;
 
 import fr.sandji.sphone.SPhone;
-import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
-import fr.sandji.sphone.mod.server.database.DatabaseManager;
+import fr.sandji.sphone.mod.common.packets.client.PacketOpenPhone;
 import fr.sandji.sphone.mod.common.register.ItemsRegister;
-import net.minecraft.client.Minecraft;
+import fr.sandji.sphone.mod.server.bdd.MethodesBDDImpl;
+import fr.sandji.sphone.mod.utils.Utils;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,10 +23,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public class ItemPhone extends Item {
@@ -43,24 +40,30 @@ public class ItemPhone extends Item {
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote) {
             ItemStack stack = player.getHeldItem(hand);
-            if (stack.hasTagCompound() && stack.getTagCompound().hasKey("simcard")) {
-                try {
-                    final Connection connection = DatabaseManager.SPHONE.getDatabaseAccess().getConnection();
-                    final PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM simcards WHERE sim_code = ?");
-                    preparedStatement.setString(1, String.valueOf(getSimCard(stack)));
-                    preparedStatement.executeQuery();
-                    final ResultSet resultSet = preparedStatement.getResultSet();
-                    if (resultSet.next()) {
 
-                    } else {
-                        System.out.println("Erreur : Donnée de la Carte Sim introuvable");
+            if (stack.hasTagCompound() && stack.getTagCompound().hasKey("simcard")) {
+                SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) player);
+            } else {
+                int sim = Utils.getRandomNumber(1000, 9999);
+                int num = Utils.getRandomNumber(10000, 99999);
+                boolean isExist = false;
+                if (!MethodesBDDImpl.addSim(sim, num)) {
+                    for (int j = 0; j < 50; j++) {
+                        sim = Utils.getRandomNumber(1000, 9999);
+                        num = Utils.getRandomNumber(10000, 99999);
+                        if (MethodesBDDImpl.addSim(sim, num)) {
+                            isExist = true;
+                            setSimCard(player, stack, sim);
+                            break;
+                        }
                     }
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    if (!isExist) {
+                        Utils.sendErrorChat(player, "Il semblerai que la limite de sim soit atteinte, veuillez contacter un administrateur.", false);
+                    }
+                } else {
+                    setSimCard(player, stack, sim);
                 }
             }
-        }else{
-            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
@@ -97,10 +100,11 @@ public class ItemPhone extends Item {
         return nbt;
     }
 
-    public static void setSimCard(ItemStack stack, Integer sim_code){
+    public static void setSimCard(EntityPlayer player, ItemStack stack, int sim){
         if(!isPhone(stack)) return;
         NBTTagCompound nbt = getTagCompound(stack);
-        nbt.setInteger(SIM_KEY_TAG, sim_code);
+        nbt.setInteger(SIM_KEY_TAG, sim);
+        Utils.sendActionChat(player, "Vous avez injecté la carte sim : " + sim, false);
     }
 
     public static int getSimCard(ItemStack stack){

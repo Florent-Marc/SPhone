@@ -5,22 +5,17 @@
 
 package fr.sandji.sphone.mod.common.packets.client;
 
-import com.google.gson.Gson;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
-import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiContactsList;
-import fr.sandji.sphone.mod.client.tempdata.PhoneSettings;
-import fr.sandji.sphone.mod.common.phone.Contact;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.IThreadListener;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PacketOpenPhone implements IMessage {
 
@@ -50,13 +45,17 @@ public class PacketOpenPhone implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenPhone message, MessageContext ctx) {
-            if (message.action.equals("Home")) {
-                if (PhoneSettings.background != null) {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
-                } else {
-
-                }
+            if (message.action.equals("home")) {
+                IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
+                thread.addScheduledTask(new Runnable()
+                {
+                    public void run()
+                    {
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
+                    }
+                });
             }
+            /*
             if (message.action.equals("openContacts")) {
                 List<Contact> contactList = new ArrayList<Contact>();
                 Gson gson = new Gson();
@@ -64,8 +63,8 @@ public class PacketOpenPhone implements IMessage {
                 for (Contact contact : contacts) {
                     contactList.add(new Contact(contact.getName(), contact.getLastname(), contact.getNumero(), contact.getNotes()));
                 }
-                Minecraft.getMinecraft().displayGuiScreen(new GuiContactsList(contactList).getGuiScreen());
-            }
+                Minecraft.getMinecraft().displayGuiScreen(new GuiContactsList(new GuiHome().getGuiScreen(), contactList).getGuiScreen());
+            }*/
             return null;
         }
     }
