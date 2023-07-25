@@ -43,10 +43,7 @@ public class CommandGivePhone extends CommandBase {
             //set tag number to item
             stack.setTagCompound(tag);
 
-            ItemPhone.setSimCard(stack, Integer.valueOf(args[0]));
-            //set tag number to item
-
-            sender.sendMessage(new TextComponentString(TextFormatting.GREEN + "Votre téléphone posséde maintenant la carte sim : " + ItemPhone.getSimCard(stack)));
+            ItemPhone.setSimCard(player, stack, Integer.parseInt(args[0]));
         }
     }
 }
