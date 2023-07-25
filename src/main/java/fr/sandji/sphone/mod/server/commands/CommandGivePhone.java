@@ -15,7 +15,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.common.util.Constants;
 
 public class CommandGivePhone extends CommandBase {
     @Override
@@ -35,7 +34,7 @@ public class CommandGivePhone extends CommandBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-        if (args.length > 1) {
+        if (args.length == 1) {
             EntityPlayer player = (EntityPlayer) sender;
             ItemStack stack = player.getHeldItemMainhand();
             //get tag of stack
