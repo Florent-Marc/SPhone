@@ -2,8 +2,10 @@ package fr.sandji.sphone.mod.server.bdd;
 
 import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Message;
+import fr.sandji.sphone.mod.common.phone.Note;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MethodesBDDImpl {
@@ -43,7 +45,7 @@ public class MethodesBDDImpl {
                 "AUTO_INCREMENT=452\n" +
                 ";\n");
         instance.execute("CREATE TABLE IF NOT EXISTS notes (\n" +
-                "  id INT,\n" +
+                "  id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
                 "  sim VARCHAR(10),\n" +
                 "  name VARCHAR(10),\n" +
                 "  note VARCHAR(255)\n" +
@@ -63,13 +65,27 @@ public class MethodesBDDImpl {
         return contacts;
     }
 
+    public static List<Note> getNotes(int sim) {
+        List<Note> notes = new ArrayList<>();
+        QueryResult qr = instance.getData("SELECT * FROM notes WHERE sim = ?", sim);
+        for (int i = 0; i < qr.getRowsCount(); i++) {
+            //get the current date in a long format
+            Date date = new Date();
+            notes.add(new Note(qr.getValue(i, 2), qr.getValue(i, 3), date.getTime()));
+        }
+        return notes;
+    }
+
     public static void addMessage(Message message) {
         instance.execute("INSERT INTO message (sender, receiver, message, date) VALUES (?, ?, ?, ?)", message.getSender(), message.getReceiver(), message.getMessage(), message.getDate());
     }
 
     public static int getNumero(int sim) {
         QueryResult qr = instance.getData("SELECT * FROM sim WHERE sim = ?", sim);
-        return Integer.parseInt(qr.getValue(0, 2));
+        if(qr.getRowsCount() > 0) {
+            return Integer.parseInt(qr.getValue(0, 2));
+        }
+        return -1;
     }
 
     public static List<Message> getMessage(int sim) {
