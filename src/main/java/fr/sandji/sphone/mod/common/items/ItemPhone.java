@@ -6,8 +6,10 @@
 package fr.sandji.sphone.mod.common.items;
 
 import fr.sandji.sphone.SPhone;
+import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.server.database.DatabaseManager;
 import fr.sandji.sphone.mod.common.register.ItemsRegister;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,6 +59,8 @@ public class ItemPhone extends Item {
                     throw new RuntimeException(e);
                 }
             }
+        }else{
+            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
