@@ -9,6 +9,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.common.phone.Note;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -16,13 +17,11 @@ import java.util.List;
 
 public class GuiEditNote extends GuiBase {
 
-    public GuiEditNote(List<Note> l,Note note) {
-        super(new GuiNote(l,note).getGuiScreen());
-
+    public GuiEditNote(GuiScreen parent, List<Note> l, Note note) {
+        super(parent);
         GuiLabel AppTitle = new GuiLabel("Modifier une note");
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
-
 
         GuiTextField nom = new GuiTextField();
         nom.setCssClass("nom");

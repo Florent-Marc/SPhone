@@ -11,6 +11,7 @@ import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiContactsList;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Note;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -18,8 +19,8 @@ import java.util.List;
 
 public class GuiNewNote extends GuiBase {
 
-    public GuiNewNote(List<Note> note) {
-        super(new GuiNoteList(note).getGuiScreen());
+    public GuiNewNote(GuiScreen root, List<Note> note) {
+        super(root);
 
         GuiLabel AppTitle = new GuiLabel("Ajouter une note");
         AppTitle.setCssId("app_title");

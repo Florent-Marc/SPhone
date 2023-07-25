@@ -65,26 +65,22 @@ public class GuiBase extends GuiFrame {
         GuiPanel HomeBar = new GuiPanel();
         HomeBar.setCssClass("home_bar");
         add(HomeBar);
-        System.out.println(parent);
         if (parent == null) {
             HomeBar.setVisible(false);
 
         } else {
             HomeBar.addClickListener((x,y,bu) -> {
 
-
-
-                Minecraft.getMinecraft().displayGuiScreen(new GuiHome().guiScreen);
-
+                Minecraft.getMinecraft().displayGuiScreen(parent);
+                //Minecraft.getMinecraft().displayGuiScreen(new GuiHome().guiScreen);
 
             });
         }
 
-
         GuiButton reloadApps = new GuiButton("↻");
         reloadApps.addClickListener((x,y,bu) -> {
             Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
-            AppManager.reloadApps();
+            //AppManager.reloadApps();
         });
         add(reloadApps);
 

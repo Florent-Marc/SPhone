@@ -4,14 +4,11 @@
 
 package fr.sandji.sphone.mod.client.gui.phone.apps.note;
 
-import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
-import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiContactsList;
-import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiEditContact;
-import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Note;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -20,9 +17,8 @@ import java.util.List;
 public class GuiNote extends GuiBase {
 
 
-    public GuiNote(List<Note> l, Note contact) {
-        super(new GuiNoteList(l).getGuiScreen());
-
+    public GuiNote(GuiScreen parent, List<Note> l, Note contact) {
+        super(parent);
         GuiLabel AppTitle = new GuiLabel(contact.getTitle());
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
@@ -31,7 +27,7 @@ public class GuiNote extends GuiBase {
         ButtonEdit.setCssId("button_add");
         getBackground().add(ButtonEdit);
         ButtonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiEditNote(l,contact).getGuiScreen());
+            Minecraft.getMinecraft().displayGuiScreen(new GuiEditNote(this.getGuiScreen(), l,contact).getGuiScreen());
         });
 
 

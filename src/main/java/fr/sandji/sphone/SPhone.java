@@ -59,7 +59,6 @@ public class SPhone {
         if (e.getSide().isClient()) {
             MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
             MinecraftForge.EVENT_BUS.register(new RenderAnimations());
-            AppManager.init();
         }
         if (e.getSide().isServer()) {
             MinecraftForge.EVENT_BUS.register(new ServerEventHandler());

@@ -1,12 +1,10 @@
 package fr.sandji.sphone.mod.client.gui.phone;
 
-import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.apps.calculator.GuiCalculator;
 import fr.sandji.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiContactsList;
 import fr.sandji.sphone.mod.client.gui.phone.apps.message.GuiConvList;
-import fr.sandji.sphone.mod.client.gui.phone.apps.note.GuiNote;
 import fr.sandji.sphone.mod.client.gui.phone.apps.note.GuiNoteList;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Conversation;
@@ -14,24 +12,24 @@ import fr.sandji.sphone.mod.common.phone.Message;
 import fr.sandji.sphone.mod.common.phone.Note;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.config.GuiMessageDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class AppManager {
-    private static List<App> Apps = new ArrayList<>();
-
+    private static final List<App> apps = new ArrayList<>();
     /**
      * @apiNote Add only the guis who there are to be displayed in home.
      * @author gabidut76
      */
-    public static void init() {
+    public static void init(GuiScreen root) {
 
+        Supplier<GuiScreen> guiSupplier = () -> new GuiNoteList(root, Collections.singletonList(new Note("Hello", "Coucou", System.currentTimeMillis()))).getGuiScreen();
         // TODO: Get notes in phone
-        Apps.add(new App(
-                new GuiNoteList(Collections.singletonList(new Note("Hello", "Coucou", System.currentTimeMillis()))).getGuiScreen(),
+        apps.add(new App(
+                guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/notes.png"),
                 "Notes",
                 "1.0",
@@ -44,12 +42,13 @@ public class AppManager {
         List<Conversation> conversations = new ArrayList<>();
         Conversation test = new Conversation();
         Message message = new Message("Rdv bar de la place",1688395401123L ,1,2);
-        Message mess = new Message("okay ma poule",1688499414507L ,1,2);
-        Message mess1 = new Message("t'es ou ?",1688500163006L ,1,2);
-        Message mess2 = new Message("dans le bar a droite",1688500173006L ,1,2);
-        Message mess3 = new Message("j'arrive",1688500173006L ,1, 2);
-        Message mess4 = new Message("ok",1688500173006L , 1, 2);
-        Message mess5 = new Message("je te vois pas",1688500173006L ,1, 1);
+        Message mess = new Message("okay ma poule",1688499414507L ,2,1);
+        Message mess1 = new Message("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",1688500163006L ,1,2);
+        Message mess2 = new Message("dans le bar a droite",1688500173006L ,2,1);
+        Message mess3 = new Message("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",1688500173006L ,1, 2);
+        Message mess4 = new Message("Salut ça c'est 160 charactères voilà c'est génial. Sinon je suis vraiment beau gosse et très très intelligent et aussi très charismatique",1688500173006L , 2, 1);
+        Message mess5 = new Message("AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA",1688500173006L ,1, 1);
+        Message mess6 = new Message("Salut ça c'est 160 charactères voilà c'est génial. Sinon je suis vraiment beau gosse et très très intelligent et aussi très charismatique Salut ça c'est 160 charactères voilà c'est génial. Sinon je suis vraiment vraiment vraiment",1688500173006L ,1, 1);
         List<Message> messages = new ArrayList<>();
         messages.add(message);
         messages.add(mess);
@@ -58,6 +57,7 @@ public class AppManager {
         messages.add(mess3);
         messages.add(mess4);
         messages.add(mess5);
+        messages.add(mess6);
         test.setMessages(messages);
         test.setLastUpdate(1688395401123L);
         test.setLastMessage(message);
@@ -73,8 +73,10 @@ public class AppManager {
         conversations.add(test);
         conversations.add(test2);
 
-        Apps.add(new App(
-                new GuiConvList(conversations).getGuiScreen(),
+        guiSupplier = () -> new GuiConvList(root, conversations).getGuiScreen();
+
+        apps.add(new App(
+                guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/message.png"),
                 "Messages",
                 "1.0",
@@ -82,26 +84,31 @@ public class AppManager {
                 false
         ));
 
-        Apps.add(new App(
-                new GuiContactsList(
-                        Collections.singletonList(new Contact("caca", "Jean Michel",1234))
-                ).getGuiScreen(),
+        guiSupplier = () -> new GuiContactsList(
+                Collections.singletonList(new Contact("caca", "Jean Michel",1234))
+        ).getGuiScreen();
+
+        apps.add(new App(guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/contacts.png"),
                 "Contacts",
                 "1.0",
                 false,
                 true
         ));
-        Apps.add(new App(
-                new GuiCall("caca").getGuiScreen(),
+
+        guiSupplier = () -> new GuiCall("caca").getGuiScreen();
+
+        apps.add(new App(guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/call.png"),
                 "Téléphone",
                 "1.0",
                 false,
                 true
         ));
-        Apps.add(new App(
-                new GuiCalculator().getGuiScreen(),
+
+        guiSupplier = () -> new GuiCalculator().getGuiScreen();
+
+        apps.add(new App(guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/calculator.png"),
                 "Calculatrice",
                 "1.0",
@@ -112,23 +119,23 @@ public class AppManager {
 
     }
 
-    public static void reloadApps() {
-        Apps.clear();
-        init();
+    public static void reloadApps(GuiScreen root) {
+        apps.clear();
+        init(root);
     }
 
 
     public static List<App> getApps() {
-        return Apps;
+        return apps;
     }
 
     public static class App {
-        GuiScreen gui;
+        Supplier<GuiScreen> gui;
         ResourceLocation icon;
         String name;
         String version; // don't care it's just for "realism"
-        Boolean showInDebug = false; // only for dev
-        Boolean defaultInAppBar = false;
+        boolean  showInDebug = false; // only for dev
+        boolean  defaultInAppBar = false;
 
         /**
          * @param gui             Gui to display
@@ -138,7 +145,7 @@ public class AppManager {
          * @param showInDebug     If true, the app will be displayed in debug mode
          * @param defaultInAppBar If true, the app will be displayed in the app bar
          */
-        public App(GuiScreen gui, ResourceLocation icon, String name, String version, Boolean showInDebug, Boolean defaultInAppBar) {
+        public App(Supplier<GuiScreen> gui, ResourceLocation icon, String name, String version, boolean showInDebug, boolean defaultInAppBar) {
             this.gui = gui;
             this.icon = icon;
             this.name = name;
@@ -149,11 +156,11 @@ public class AppManager {
 
 
         public GuiScreen getGui() {
-            return gui;
+            return gui.get();
         }
 
         public void setGui(GuiScreen gui) {
-            this.gui = gui;
+            //this.gui.gui;
         }
 
         public ResourceLocation getIcon() {
@@ -180,19 +187,19 @@ public class AppManager {
             this.version = version;
         }
 
-        public Boolean getShowInDebug() {
+        public boolean getShowInDebug() {
             return showInDebug;
         }
 
-        public void setShowInDebug(Boolean showInDebug) {
+        public void setShowInDebug(boolean showInDebug) {
             this.showInDebug = showInDebug;
         }
 
-        public Boolean getDefaultInAppBar() {
+        public boolean getDefaultInAppBar() {
             return defaultInAppBar;
         }
 
-        public void setDefaultInAppBar(Boolean defaultInAppBar) {
+        public void setDefaultInAppBar(boolean defaultInAppBar) {
             this.defaultInAppBar = defaultInAppBar;
         }
     }

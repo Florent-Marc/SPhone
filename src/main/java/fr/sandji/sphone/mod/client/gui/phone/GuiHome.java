@@ -23,7 +23,7 @@ public class GuiHome extends GuiBase {
 
     public GuiHome() {
         super();
-
+        AppManager.reloadApps(this.getGuiScreen());
         AppManager.getApps().forEach((e) -> {
             System.out.println("caca app " + e.getName());
         });
@@ -60,7 +60,6 @@ public class GuiHome extends GuiBase {
 
         AtomicInteger displayedBottomApps = new AtomicInteger();
         AppManager.getApps().forEach((app) -> {
-
 
             GuiPanel appPanel = new GuiPanel();
             appPanel.setCssClass(app.getDefaultInAppBar() ? "app_bottom" : "app");

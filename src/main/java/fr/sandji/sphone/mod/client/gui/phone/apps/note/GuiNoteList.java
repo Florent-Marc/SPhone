@@ -9,12 +9,9 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
-import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
-import fr.sandji.sphone.mod.client.gui.phone.apps.contacts.GuiEditContact;
-import fr.sandji.sphone.mod.common.phone.Contact;
-import fr.sandji.sphone.mod.common.phone.Conversation;
 import fr.sandji.sphone.mod.common.phone.Note;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.text.SimpleDateFormat;
@@ -24,8 +21,8 @@ import java.util.List;
 
 public class GuiNoteList extends GuiBase {
 
-    public GuiNoteList(List<Note> n) {
-        super(new GuiHome().getGuiScreen());
+    public GuiNoteList(GuiScreen parent, List<Note> n) {
+        super(parent);
 
         GuiLabel AppTitle = new GuiLabel("Notes");
         AppTitle.setCssId("app_title");
@@ -35,7 +32,7 @@ public class GuiNoteList extends GuiBase {
         ButtonEdit.setCssId("button_add");
         getBackground().add(ButtonEdit);
         ButtonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiNewNote(n).getGuiScreen());
+            Minecraft.getMinecraft().displayGuiScreen(new GuiNewNote(this.getGuiScreen(), n).getGuiScreen());
         });
 
         GuiScrollPane contacts_list = new GuiScrollPane();
@@ -51,7 +48,7 @@ public class GuiNoteList extends GuiBase {
             GuiPanel convpanel = new GuiPanel();
             convpanel.setCssClass("back");
             convpanel.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiNote(n,c).getGuiScreen());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiNote(this.getGuiScreen(), n,c).getGuiScreen());
             });
             GuiLabel ContactName = new GuiLabel(c.getTitle());
             ContactName.setCssId("title");

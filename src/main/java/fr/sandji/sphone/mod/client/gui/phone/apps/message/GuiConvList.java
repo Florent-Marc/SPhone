@@ -13,6 +13,7 @@ import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Conversation;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.text.SimpleDateFormat;
@@ -22,8 +23,8 @@ import java.util.List;
 
 public class GuiConvList extends GuiBase {
 
-    public GuiConvList(List<Conversation> conv) {
-        super(new GuiHome().getGuiScreen());
+    public GuiConvList(GuiScreen parent, List<Conversation> conv) {
+        super(parent);
 
         GuiLabel AppTitle = new GuiLabel("Messages");
         AppTitle.setCssId("app_title");
@@ -42,7 +43,7 @@ public class GuiConvList extends GuiBase {
             GuiPanel convpanel = new GuiPanel();
             convpanel.setCssClass("contact_background");
             convpanel.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiConv(c, new Contact("hugo",1556)).getGuiScreen());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiConv(c, new Contact("hugo",2)).getGuiScreen());
             });
             GuiLabel ContactName = new GuiLabel(c.getSender().getName());
             ContactName.setCssId("name");
