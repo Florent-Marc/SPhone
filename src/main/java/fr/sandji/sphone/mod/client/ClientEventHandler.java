@@ -1,11 +1,5 @@
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package fr.sandji.sphone.mod.client;
 
-
-import fr.aym.acsguis.api.ACsGuiApi;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.common.animations.RenderAnimations;
 import net.minecraft.client.Minecraft;
