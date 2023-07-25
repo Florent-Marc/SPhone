@@ -4,6 +4,7 @@
     top: 20%;
     left: 5%;
 }
+
 #app_title {
     font-size: 25px;
     left: 4%;
@@ -13,22 +14,33 @@
 }
 
 
-.contact_background {
+#contact_message{
+    height: 90%;
+    width: 100%;
+    padding-left: 5px;
+    padding-top: 10px;
+    font-size: 16px;
+    text-align-vertical: top;
+}
+
+#contact_background {
     background-color: #323232;
     width: 80%;
-    height: auto;
     left: 5%;
+    min-height: 10%;
     top: auto;
     border-radius: 10px;
 }
-.contact_background_me{
+
+#contact_background_me{
     background-color: #0676f3;
     width: 80%;
-    height: auto;
     right: 5%;
+    min-height: 10%;
     top: auto;
     border-radius: 10px;
 }
+
 #lastmessage {
     font-size: 10px;
     color: white;
@@ -43,8 +55,8 @@
     color: white;
     right: 0%;
     bottom: 0%;
-    height: 30%;
-    width: 50%;
+    height: auto;
+    width: auto;
 }
 
 .message {

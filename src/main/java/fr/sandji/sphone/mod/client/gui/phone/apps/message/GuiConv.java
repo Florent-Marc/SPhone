@@ -4,11 +4,11 @@
 
 package fr.sandji.sphone.mod.client.gui.phone.apps.message;
 
-import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
+import fr.sandji.sphone.mod.client.gui.layout.CustomGridLayout;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.common.phone.Contact;
@@ -47,35 +47,37 @@ public class GuiConv extends GuiBase {
             }
         };
         contacts_list.setCssClass("contacts_list");
-        contacts_list.setLayout(new GridLayout(-1, 70, 5, GridLayout.GridDirection.HORIZONTAL, 1));
+        contacts_list.setLayout(new CustomGridLayout(-1, 70, 5, CustomGridLayout.GridDirection.HORIZONTAL, 1));
 
         //trier les conversations par date de dernier message
         //conv.sort((o1, o2) -> getDate(o2.getLastUpdate()).compareTo(getDate(o1.getLastUpdate())));
 
         for (Message c : conv.getMessages()) {
 
-            GuiPanel convpanel = new GuiPanel();
+            GuiPanel messagePanel = new GuiPanel();
 
-            GuiLabel ContactLastMessage = new GuiLabel(c.getMessage());
-            convpanel.add(ContactLastMessage);
-            //si le joueur passe sa souris sur le message, on affiche la date
-
+            GuiLabel labelMessage = new GuiLabel("");
+            labelMessage.setMaxTextLength(240);
+            labelMessage.setText(c.getMessage());
+            labelMessage.setCssId("contact_message");
+            messagePanel.add(labelMessage);
 
             if (c.getSender() == nous.getNumero()) {
-                convpanel.setCssClass("contact_background_me");
-                ContactLastMessage.setCssId("me_message");
+                messagePanel.setCssId("contact_background_me");
             } else {
-                convpanel.setCssClass("contact_background");
-                ContactLastMessage.setCssId("contact_message");
+                messagePanel.setCssId("contact_background");
             }
+
+            int len = 10 + (c.getMessage().length() / 21) * 4;
+            messagePanel.setCssCode("height: " + len + "%;");
 
             GuiLabel date = new GuiLabel(getDate(c.getDate()));
             date.setCssId("date");
             //check si c'est aujourd'hui
             date.setHoveringText(Collections.singletonList(getHour(c.getDate()).toString()));
-            convpanel.add(date);
+            messagePanel.add(date);
 
-            contacts_list.add(convpanel);
+            contacts_list.add(messagePanel);
 
         }
 
@@ -119,5 +121,11 @@ public class GuiConv extends GuiBase {
         styles.add(new ResourceLocation("sphone:css/conv.css"));
         return styles;
     }
+
+    @Override
+    public boolean allowDebugInGui() {
+        return true;
+    }
+
 
 }
