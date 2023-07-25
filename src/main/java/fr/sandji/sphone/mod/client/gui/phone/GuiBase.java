@@ -106,6 +106,11 @@ public class GuiBase extends GuiFrame {
     }
 
     @Override
+    public boolean allowDebugInGui() {
+        return SPhone.DEV_MOD;
+    }
+
+    @Override
     public boolean doesPauseGame() {
         return false;
     }
