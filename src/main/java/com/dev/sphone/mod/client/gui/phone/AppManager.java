@@ -1,11 +1,12 @@
 package com.dev.sphone.mod.client.gui.phone;
 
-import com.dev.sphone.mod.client.gui.phone.apps.calculator.GuiCalculator;
+import com.dev.sphone.SPhone;
+import com.dev.sphone.api.events.AppAddon;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import com.dev.sphone.mod.common.packets.server.PacketRequestData;
-import com.dev.sphone.SPhone;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class AppManager {
     public static void init(GuiScreen root) {
 
         Supplier<GuiScreen> guiSupplier;
+
+        MinecraftForge.EVENT_BUS.post(new AppAddon(apps));
 
         apps.add(new App(
                 null,
