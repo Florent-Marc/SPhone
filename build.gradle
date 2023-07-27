@@ -52,7 +52,7 @@ tasks.withType(JavaCompile) {
 }
 sourceSets {main { output.resourcesDir = output.classesDir }}
 
-group = "fr.sandji" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "com.dev" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 version = "1.0"
 archivesBaseName = "sphone"
 
