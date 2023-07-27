@@ -1,31 +1,49 @@
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
+#root{
+    background-color: #242425;
+}
 
 #field {
-    background-color: #242425;
-    border-color: #242425;
-    width: 270px;
-    height: 70px;
-    left: 1600px;
-    top: 520px;
+    width: 88%;
+    height: 10%;
+    top: 25%;
     font-size: 40px;
+    text-align: right;
+    horizontal-position: center;
 }
 
-#button_ac{
-    height: 70px;
-    width: 67px;
-    left: 1600px;
-    top: 600px;
-    background-color: #A5A5A5;
-    border-radius: 50%;
-    color: black;
+.buttons_list {
+    width: 90%;
+    height: 53%;
+    bottom: 10%;
+    left: 5%;
+    horizontal-position: center;
+}
+
+.button {
+    width: auto;
+    height: auto;
+    top: auto;
+    left: auto;
+    right: auto;
     text-align: center;
-    font-size: 30px;
-    text-shadow: disable;
+    font-size: 20px;
+    border-position: internal;
+    border-width: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
-#button_ac:hover {
-    background-color: #787878;
+#button_1 {
+    background-color: #323232;
 }
+#button_1:hover {
+    background-color: #5a5a5a;
+}
+#button_2 {
+    background-color: #ff8c00;
+}
+#button_2:hover {
+    background-color: orange;
+}
+
 
