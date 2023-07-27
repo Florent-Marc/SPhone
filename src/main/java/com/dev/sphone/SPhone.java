@@ -47,6 +47,8 @@ public class SPhone {
     public void preinit(FMLPreInitializationEvent e) {
         PROXY.preInit();
         Network.init();
+        MethodesBDDImpl.checkFile();
+        MethodesBDDImpl.checkTable();
         MinecraftForge.EVENT_BUS.register(new RegisterHandler());
         MinecraftForge.EVENT_BUS.register(this);
         logger = e.getModLog();
@@ -71,7 +73,6 @@ public class SPhone {
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        MethodesBDDImpl.checkFile();
-        MethodesBDDImpl.checkTable();
+
     }
 }
