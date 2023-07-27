@@ -16,4 +16,8 @@ public class InitAppEvent extends Event {
     public List<AppManager.App> getApps() {
         return apps;
     }
+
+    public void addApp(AppManager.App app){
+        apps.add(app);
+    }
 }
