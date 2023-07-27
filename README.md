@@ -42,3 +42,4 @@ immersion in the Minecraft universe.
 - [Ertinox](https://github.com/Ertinox45) Developer
 - [Gabidut](https://github.com/gabidut) Developer
 - [Afhistos](https://github.com/afhistos) SQL Developer
+- [Afhistos]([https://github.com/afhistos](https://github.com/yan36)https://github.com/yan36) Designer of Meteo & Settings
