@@ -60,5 +60,15 @@
     background-image: url("sphone:textures/ui/icons/edit1.png");
 }
 
+.delete{
+    background-image: url("sphone:textures/ui/icons/delete.png");
+    width: 50px;
+    height: 52px;
+    horizontal-position: center;
+    bottom: 20%;
+}
+.delete:hover{
+    background-image: url("sphone:textures/ui/icons/delete1.png");
+}
 
 
