@@ -53,7 +53,6 @@ public class ItemPhone extends Item {
                         num = Utils.getRandomNumber(10000, 99999);
                         if (MethodesBDDImpl.addSim(sim, num)) {
                             isExist = true;
-                            setSimCard(player, stack, sim);
                             break;
                         }
                     }
@@ -61,6 +60,9 @@ public class ItemPhone extends Item {
                         Utils.sendErrorChat(player, "Il semblerai que la limite de sim soit atteinte, veuillez contacter un administrateur.", false);
                     }
                 } else {
+                    isExist = true;
+                }
+                if (isExist) {
                     setSimCard(player, stack, sim);
                 }
             }
