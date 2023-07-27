@@ -1,7 +1,3 @@
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package fr.sandji.sphone;
 
 import fr.sandji.sphone.mod.client.ClientEventHandler;
@@ -11,7 +7,6 @@ import fr.sandji.sphone.mod.common.packets.Network;
 import fr.sandji.sphone.mod.common.proxy.CommonProxy;
 import fr.sandji.sphone.mod.common.register.RegisterHandler;
 import fr.sandji.sphone.mod.server.ServerEventHandler;
-import fr.sandji.sphone.mod.server.bdd.MethodesBDDImpl;
 import fr.sandji.sphone.mod.server.commands.CommandGivePhone;
 import fr.sandji.sphone.mod.server.commands.CommandGroup;
 import net.minecraft.creativetab.CreativeTabs;

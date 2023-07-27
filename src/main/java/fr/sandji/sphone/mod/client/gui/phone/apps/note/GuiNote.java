@@ -4,6 +4,7 @@
 
 package fr.sandji.sphone.mod.client.gui.phone.apps.note;
 
+import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
 import fr.sandji.sphone.mod.common.phone.Note;
@@ -16,12 +17,10 @@ import java.util.List;
 
 public class GuiNote extends GuiBase {
 
-    private final List<Note> l;
     private final Note contact;
 
-    public GuiNote(GuiScreen parent, List<Note> l, Note contact) {
+    public GuiNote(GuiScreen parent, Note contact) {
         super(parent);
-        this.l = l;
         this.contact = contact;
     }
 
@@ -29,27 +28,31 @@ public class GuiNote extends GuiBase {
     public void GuiInit(){
         super.GuiInit();
 
+        GuiPanel root = new GuiPanel();
+        root.setCssId("root");
+        add(root);
+
         GuiLabel AppTitle = new GuiLabel(contact.getTitle());
         AppTitle.setCssId("app_title");
-        getBackground().add(AppTitle);
+        root.add(AppTitle);
 
-        GuiLabel ButtonEdit = new GuiLabel("✎");
-        ButtonEdit.setCssId("button_add");
-        getBackground().add(ButtonEdit);
-        ButtonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiEditNote(this.getGuiScreen(), l,contact).getGuiScreen());
+        GuiLabel buttonEdit = new GuiLabel("✎");
+        buttonEdit.setCssId("button_add");
+        buttonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiEditNote(this.getGuiScreen(), contact).getGuiScreen());
         });
+        root.add(buttonEdit);
 
 
-        GuiLabel notes = new GuiLabel("Notes : "+contact.getText());
-        notes.setCssId("notes");
-        getBackground().add(notes);
+        GuiLabel note = new GuiLabel("Note : "+contact.getText());
+        note.setCssId("note");
+        root.add(note);
     }
 
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
-        styles.add(new ResourceLocation("sphone:css/contacts.css"));
+        styles.add(new ResourceLocation("sphone:css/note.css"));
         return styles;
     }
 

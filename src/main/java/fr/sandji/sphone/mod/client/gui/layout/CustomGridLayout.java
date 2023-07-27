@@ -5,13 +5,13 @@ import fr.aym.acsguis.component.layout.PanelLayout;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.style.ComponentStyleManager;
+import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.cssengine.parsing.core.objects.CssValue;
 import fr.aym.acsguis.cssengine.positionning.Size.SizeValue;
 import fr.aym.acsguis.utils.GuiConstants;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * A simple grid layout
@@ -20,7 +20,9 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class CustomGridLayout implements PanelLayout<ComponentStyleManager> {
     private final Map<ComponentStyleManager, Integer> cache = new HashMap<>();
+    private final Map<ComponentStyleManager, Integer> cacheY = new HashMap<>();
     private int nextIndex;
+    private int totalHeight;
 
     private final SizeValue width, height, spacing;
     private final GridDirection direction;
@@ -111,25 +113,18 @@ public class CustomGridLayout implements PanelLayout<ComponentStyleManager> {
             cache.put(target, nextIndex);
             nextIndex++;
         }
+
         int elementsPerLine = this.elementsPerLine;
         if (direction == GridDirection.VERTICAL && elementsPerLine == -1) {
             elementsPerLine = target.getParent().getRenderHeight() / getHeight(target);
         }
 
-        AtomicReference<Integer> integer = new AtomicReference<>(0);
-        cache.forEach((key, value) -> {
-            //System.out.println("add: " + key.getRenderHeight() + " for " + value);
-            integer.set(integer.get() + (int) key.getRenderHeight());
-        });
+        if(!cacheY.containsKey(target)) {
+            cacheY.put(target, totalHeight);
+            totalHeight += getHeight(target) + 5;
+        }
 
-
-        //int spacing = integer.get();
-        //System.out.println("spacing: " + spacing);
-        //System.out.println("----");
-
-
-        int spacing = this.spacing.computeValue(container.getWidth(), container.getHeight(), container.getHeight());
-        return direction == GridDirection.VERTICAL ? (getHeight() + spacing) * (cache.get(target) % elementsPerLine) : (getHeight() + spacing) * (cache.get(target) / elementsPerLine);
+        return cacheY.get(target);
     }
 
     @Override
@@ -139,21 +134,31 @@ public class CustomGridLayout implements PanelLayout<ComponentStyleManager> {
 
     @Override
     public int getHeight(ComponentStyleManager target) {
-        return getHeight();
+        int height = 0;
+
+        if(((GuiPanel)target.getOwner()).getChildComponents().size() == 0){
+            ((GuiPanel)target.getOwner()).flushComponentsQueue();
+        }
+
+        for(Object componentChild : ((GuiPanel)target.getOwner()).getChildComponents()){
+            if(componentChild instanceof GuiLabel){
+                int len = 5 + (Math.max(21, ((GuiLabel)componentChild).getText().length()));
+                height += len;
+            }
+        }
+        return height;
     }
 
     @Override
     public void clear() {
         cache.clear();
+        cacheY.clear();
+        totalHeight = 0;
         nextIndex = 0;
     }
 
     public int getWidth() {
         return width.computeValue(GuiFrame.resolution.getScaledWidth(), GuiFrame.resolution.getScaledHeight(), container.getWidth());
-    }
-
-    public int getHeight() {
-        return height.computeValue(GuiFrame.resolution.getScaledWidth(), GuiFrame.resolution.getScaledHeight(), container.getHeight());
     }
 
     @Override

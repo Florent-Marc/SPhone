@@ -1,0 +1,45 @@
+#root{
+    right: 32px;
+    width: 298px;
+    height: 646px;
+    border-radius: 41px;
+    background-color: #1E1E1E;
+    bottom: 42px;
+    z-index: 1;
+}
+
+#app_title {
+    font-size: 20px;
+    left: 4%;
+    top: 8%;
+    height: 5%;
+    width: 100%;
+    z-index: 2;
+}
+
+#button_add {
+    right: 4%;
+    top: 8%;
+    width: 24px;
+    height: 26px;
+    border-radius: 35%;
+    background-color: #599AF8;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+    z-index: 2;
+}
+#button_add:hover {
+    background-color: #59C2F8;
+}
+
+#note {
+    width: 100%;
+    height: 80%;
+    top: 15%;
+    font-size: 18px;
+    color: white;
+    text-align-vertical: top;
+    padding-top: 10px;
+}
+

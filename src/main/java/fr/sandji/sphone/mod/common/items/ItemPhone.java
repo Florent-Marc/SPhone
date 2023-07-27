@@ -38,7 +38,7 @@ public class ItemPhone extends Item {
     }
 
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        if (!world.isRemote) {
+        if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
             ItemStack stack = player.getHeldItem(hand);
 
             if (stack.hasTagCompound() && stack.getTagCompound().hasKey("simcard")) {

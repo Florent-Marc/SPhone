@@ -36,11 +36,9 @@ public class GuiContactsList extends GuiBase {
         GuiLabel ButtonAdd = new GuiLabel("+");
         ButtonAdd.setCssId("button_add");
         ButtonAdd.addClickListener((mouseX, mouseY, mouseButton) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiNewContact(this.getGuiScreen(), contacts).getGuiScreen());
+            Minecraft.getMinecraft().displayGuiScreen(new GuiNewContact(this.getGuiScreen()).getGuiScreen());
         });
         getBackground().add(ButtonAdd);
-
-
 
         GuiScrollPane contacts_list = new GuiScrollPane();
         contacts_list.setCssClass("contacts_list");
@@ -51,7 +49,7 @@ public class GuiContactsList extends GuiBase {
             GuiPanel contactPanel = new GuiPanel();
             contactPanel.setCssClass("contact_background");
             contactPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiViewContact(this.getGuiScreen(), contacts, contact).getGuiScreen());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiViewContact(this.getGuiScreen(), contact).getGuiScreen());
             });
 
             GuiPanel ContactAvatar = new GuiPanel();

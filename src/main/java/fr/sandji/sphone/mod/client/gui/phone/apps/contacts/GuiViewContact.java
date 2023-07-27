@@ -6,7 +6,9 @@ package fr.sandji.sphone.mod.client.gui.phone.apps.contacts;
 
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
+import fr.sandji.sphone.mod.common.packets.server.PacketGetUniqueConv;
 import fr.sandji.sphone.mod.common.phone.Contact;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -17,60 +19,65 @@ import java.util.List;
 
 public class GuiViewContact extends GuiBase {
 
-
-    private final List<Contact> contacts;
     private final Contact contact;
 
-    public GuiViewContact(GuiScreen parent, List<Contact> contacts, Contact contact) {
+    public GuiViewContact(GuiScreen parent, Contact contact) {
         super(parent);
-        this.contacts = contacts;
         this.contact = contact;
     }
-
 
     @Override
     public void GuiInit() {
         super.GuiInit();
-        GuiLabel AppTitle = new GuiLabel("Contact");
-        AppTitle.setCssId("app_title");
-        getBackground().add(AppTitle);
 
-        GuiLabel ButtonEdit = new GuiLabel("✎");
-        ButtonEdit.setCssId("button_add");
-        getBackground().add(ButtonEdit);
-        ButtonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiEditContact(this.getGuiScreen(), contacts, contact).getGuiScreen());
+        add(getRoot());
+
+        GuiLabel appTitle = new GuiLabel("Contact");
+        appTitle.setCssId("app_title");
+        getRoot().add(appTitle);
+
+        GuiLabel buttonEdit = new GuiLabel("✎");
+        buttonEdit.setCssId("button_add");
+        getRoot().add(buttonEdit);
+        buttonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiEditContact(this.getGuiScreen(), contact).getGuiScreen());
         });
 
         GuiPanel message = new GuiPanel();
         message.setCssClass("message");
-        getBackground().add(message);
+        getRoot().add(message);
+        message.addClickListener((mouseX, mouseY, mouseButton) -> {
+            SPhone.network.sendToServer(new PacketGetUniqueConv(contact));
+        });
 
         GuiPanel call = new GuiPanel();
         call.setCssClass("call");
-        getBackground().add(call);
+        getRoot().add(call);
 
-        GuiLabel ContactAvatar = new GuiLabel("");
-        ContactAvatar.setCssId("view_contact_avatar");
-        //String cssCode = "background-image: url(\"https://mc-heads.net/avatar/" + contact.getPlayer_associated() + "\");";
-        //ContactAvatar.setCssCode("view_contact_avatar", cssCode);
-        getBackground().add(ContactAvatar);
+        GuiLabel contactAvatar = new GuiLabel("");
+        contactAvatar.setCssId("view_contact_avatar");
+        //String cssCode = "background-image: url(\"https://mc-heads.net/avatar/" + "Steve" + "\");";
+        String cssCode = "background-image: url(\"sphone:textures/ui/icons/nohead.png\");";
+        contactAvatar.setCssCode("view_contact_avatar", cssCode);
+        getRoot().add(contactAvatar);
 
-        GuiLabel name = new GuiLabel("Name : "+contact.getName());
+        GuiLabel name = new GuiLabel("Nom : "+contact.getName());
         name.setCssId("name");
-        getBackground().add(name);
+        getRoot().add(name);
 
-        GuiLabel lastname = new GuiLabel("Lastname : "+contact.getLastname());
+        GuiLabel lastname = new GuiLabel("Prénom : " + (contact.getLastname().isEmpty() ? "Non renseigné" : contact.getLastname()));
         lastname.setCssId("lastname");
-        getBackground().add(lastname);
+        getRoot().add(lastname);
 
-        GuiLabel phone = new GuiLabel("Phone : "+contact.getNumero());
+        GuiLabel phone = new GuiLabel("Numéro : "+contact.getNumero());
         phone.setCssId("phone");
-        getBackground().add(phone);
+        getRoot().add(phone);
 
-        GuiLabel notes = new GuiLabel("Notes : "+contact.getNotes());
-        notes.setCssId("notes");
-        getBackground().add(notes);
+        if(!contact.getNotes().isEmpty()) {
+            GuiLabel notes = new GuiLabel("Note : " + contact.getNotes());
+            notes.setCssId("notes");
+            getRoot().add(notes);
+        }
     }
 
     public List<ResourceLocation> getCssStyles() {

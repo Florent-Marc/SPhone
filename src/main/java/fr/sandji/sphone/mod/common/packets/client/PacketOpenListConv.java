@@ -1,19 +1,12 @@
-
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package fr.sandji.sphone.mod.common.packets.client;
 
 import fr.aym.acslib.utils.packetserializer.SerializablePacket;
-import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
-import fr.sandji.sphone.mod.client.gui.phone.apps.note.GuiNoteList;
-import fr.sandji.sphone.mod.common.phone.Note;
+import fr.sandji.sphone.mod.client.gui.phone.apps.message.GuiConvList;
+import fr.sandji.sphone.mod.common.phone.Conversation;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -22,12 +15,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class PacketOpenNotes extends SerializablePacket implements IMessage {
+public class PacketOpenListConv extends SerializablePacket implements IMessage {
 
-    public PacketOpenNotes() {}
+    public PacketOpenListConv() {}
 
-    public PacketOpenNotes(List<Note> note) {
-        super(note);
+    public PacketOpenListConv(List<Conversation> conversations) {
+        super(conversations);
     }
 
     @Override
@@ -40,15 +33,16 @@ public class PacketOpenNotes extends SerializablePacket implements IMessage {
         super.toBytes(buf);
     }
 
-    public static class Handler implements IMessageHandler<PacketOpenNotes, IMessage> {
+    public static class Handler implements IMessageHandler<PacketOpenListConv, IMessage> {
         @Override
         @SideOnly(Side.CLIENT)
-        public IMessage onMessage(PacketOpenNotes message, MessageContext ctx) {
-            List<Note> noteList = (List<Note>) message.getObjectsIn()[0];
+        public IMessage onMessage(PacketOpenListConv message, MessageContext ctx) {
+            List<Conversation> conversations = (List<Conversation>) message.getObjectsIn()[0];
+
             IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
             thread.addScheduledTask(new Runnable() {
                 public void run() {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiNoteList(new GuiHome().getGuiScreen(), noteList).getGuiScreen());
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiConvList(conversations).getGuiScreen());
                 }
             });
             return null;

@@ -24,14 +24,11 @@ import java.util.List;
 
 public class GuiConv extends GuiBase {
 
-    private static boolean load = false;
     private final Conversation conv;
-    private final Contact nous;
 
-    public GuiConv(GuiScreen parent, Conversation conv, Contact nous) {
+    public GuiConv(GuiScreen parent, Conversation conv) {
         super(parent);
         this.conv = conv;
-        this.nous = nous;
     }
 
     @Override
@@ -71,14 +68,11 @@ public class GuiConv extends GuiBase {
             labelMessage.setCssId("contact_message");
             messagePanel.add(labelMessage);
 
-            if (c.getSender() == nous.getNumero()) {
+            if (!c.getSender().equals(conv.getSender().getNumero())) {
                 messagePanel.setCssId("contact_background_me");
             } else {
                 messagePanel.setCssId("contact_background");
             }
-
-            int len = 10 + (c.getMessage().length() / 21) * 4;
-            //messagePanel.setCssCode("height: " + len + "%;");
 
             GuiLabel date = new GuiLabel(getDate(c.getDate()));
             date.setCssId("date");

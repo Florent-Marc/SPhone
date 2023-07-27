@@ -8,7 +8,9 @@ package fr.sandji.sphone.mod.common.packets.client;
 import fr.aym.acslib.utils.packetserializer.SerializablePacket;
 import fr.sandji.sphone.mod.client.gui.phone.GuiHome;
 import fr.sandji.sphone.mod.client.gui.phone.apps.note.GuiNoteList;
+import fr.sandji.sphone.mod.client.gui.phone.apps.weather.GuiWeather;
 import fr.sandji.sphone.mod.common.phone.Note;
+import fr.sandji.sphone.mod.common.phone.Weather;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IThreadListener;
@@ -22,11 +24,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class PacketOpenNotes extends SerializablePacket implements IMessage {
+public class PacketSendWeather extends SerializablePacket implements IMessage {
 
-    public PacketOpenNotes() {}
+    public PacketSendWeather() {}
 
-    public PacketOpenNotes(List<Note> note) {
+    public PacketSendWeather(Weather note) {
         super(note);
     }
 
@@ -40,15 +42,16 @@ public class PacketOpenNotes extends SerializablePacket implements IMessage {
         super.toBytes(buf);
     }
 
-    public static class Handler implements IMessageHandler<PacketOpenNotes, IMessage> {
+    public static class Handler implements IMessageHandler<PacketSendWeather, IMessage> {
         @Override
         @SideOnly(Side.CLIENT)
-        public IMessage onMessage(PacketOpenNotes message, MessageContext ctx) {
-            List<Note> noteList = (List<Note>) message.getObjectsIn()[0];
+        public IMessage onMessage(PacketSendWeather message, MessageContext ctx) {
+            Weather weather = (Weather) message.getObjectsIn()[0];
             IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
             thread.addScheduledTask(new Runnable() {
                 public void run() {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiNoteList(new GuiHome().getGuiScreen(), noteList).getGuiScreen());
+
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiWeather(new GuiHome().getGuiScreen(), weather).getGuiScreen());
                 }
             });
             return null;

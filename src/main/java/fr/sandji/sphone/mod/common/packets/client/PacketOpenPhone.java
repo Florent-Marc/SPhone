@@ -55,16 +55,6 @@ public class PacketOpenPhone implements IMessage {
                     }
                 });
             }
-            /*
-            if (message.action.equals("openContacts")) {
-                List<Contact> contactList = new ArrayList<Contact>();
-                Gson gson = new Gson();
-                Contact[] contacts = gson.fromJson(message.content, Contact[].class);
-                for (Contact contact : contacts) {
-                    contactList.add(new Contact(contact.getName(), contact.getLastname(), contact.getNumero(), contact.getNotes()));
-                }
-                Minecraft.getMinecraft().displayGuiScreen(new GuiContactsList(new GuiHome().getGuiScreen(), contactList).getGuiScreen());
-            }*/
             return null;
         }
     }

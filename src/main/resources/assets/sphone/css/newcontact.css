@@ -1,70 +1,59 @@
+#root{
+    background-color: #1C3360;
+}
 
 #app_title {
     font-size: 20px;
-    left: 10%;
+    left: 4%;
     top: 10%;
     height: 5%;
     width: 100%;
+    z-index: 2;
 }
-.prenom {
-    width: 80%;
+
+.textarea{
+    padding-top: 5px;
+    padding-left: 5px;
+    width: 89%;
     height: 7%;
+    left: 4%;
+    background-color: #323232;
+    border: 2px;
+    border-color: #b5b5b5;
+    color: white;
+    font-size: 20px;
+    z-index: 2;
+}
+
+#nom {
     top: 20%;
-    left: 10%;
-    background-color: #323232;
-    border: 2px;
-    border-color: #b5b5b5;
-    color: white;
-    font-size: 20px;
 }
-.nom {
-    width: 80%;
-    height: 7%;
-    top: 31%;
-    left: 10%;
-    background-color: #323232;
-    border: 2px;
-    border-color: #b5b5b5;
-    color: white;
-    font-size: 20px;
+#prenom {
+    top: 30%;
 }
-.numero{
-    width: 80%;
-    height: 7%;
-    top: 42%;
-    left: 10%;
-    background-color: #323232;
-    border: 2px;
-    border-color: #b5b5b5;
-    color: white;
-    font-size: 20px;
+#numero{
+    top: 40%;
 }
-.notes{
-    width: 80%;
-    height: 7%;
-    top: 53%;
-    left: 10%;
-    background-color: #323232;
-    border: 2px;
-    border-color: #b5b5b5;
-    color: white;
-    font-size: 20px;
+#notes{
+    top: 50%;
 }
+
 .button_add{
     background-image: url("sphone:textures/ui/icons/add.png");
     width: 50px;
     height: 52px;
-    left: 44%;
+    horizontal-position: center;
     bottom: 25%;
 }
 .button_add:hover{
     background-image: url("sphone:textures/ui/icons/add1.png");
 }
+
 .edit{
     background-image: url("sphone:textures/ui/icons/edit.png");
     width: 50px;
     height: 52px;
-    left: 44%;
+    horizontal-position: center;
     bottom: 30%;
 }
 .edit:hover{
