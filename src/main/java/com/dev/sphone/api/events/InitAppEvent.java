@@ -5,12 +5,15 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.List;
 
-public class AppAddon extends Event {
+public class InitAppEvent extends Event {
 
-    public final List<AppManager.App> apps;
+    private final List<AppManager.App> apps;
 
-    public AppAddon(List<AppManager.App> apps){
+    public InitAppEvent(List<AppManager.App> apps){
         this.apps = apps;
     }
 
+    public List<AppManager.App> getApps() {
+        return apps;
+    }
 }

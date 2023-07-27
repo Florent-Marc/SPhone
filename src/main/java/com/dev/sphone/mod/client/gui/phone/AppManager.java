@@ -1,7 +1,8 @@
 package com.dev.sphone.mod.client.gui.phone;
 
 import com.dev.sphone.SPhone;
-import com.dev.sphone.api.events.AppAddon;
+import com.dev.sphone.api.events.InitAppEvent;
+import com.dev.sphone.mod.client.gui.phone.apps.calculator.GuiCalculator;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import com.dev.sphone.mod.common.packets.server.PacketRequestData;
 import net.minecraft.client.gui.GuiScreen;
@@ -23,7 +24,7 @@ public class AppManager {
 
         Supplier<GuiScreen> guiSupplier;
 
-        MinecraftForge.EVENT_BUS.post(new AppAddon(apps));
+        MinecraftForge.EVENT_BUS.post(new InitAppEvent(apps));
 
         apps.add(new App(
                 null,

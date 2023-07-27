@@ -10,6 +10,22 @@ public class ClientEventHandler {
 
     public static final Minecraft mc = Minecraft.getMinecraft();
 
+    /*
+    @SubscribeEvent
+
+    public void addApp(InitAppEvent event){
+        event.getApps().add(new AppManager.App(() -> new GuiCalculator(new GuiHome().getGuiScreen()).getGuiScreen(),
+                new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/calculator.png"),
+                "Calculatrice",
+                "1.0",
+                false,
+                false,
+                null
+        ));
+    }
+     */
+
+
     @SubscribeEvent
     public void onPress(InputEvent.KeyInputEvent event) {
         if (SPhoneKeys.DEBUG.isPressed()) {
