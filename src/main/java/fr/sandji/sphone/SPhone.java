@@ -6,7 +6,7 @@ import fr.sandji.sphone.mod.common.animations.RenderAnimations;
 import fr.sandji.sphone.mod.common.packets.Network;
 import fr.sandji.sphone.mod.common.proxy.CommonProxy;
 import fr.sandji.sphone.mod.common.register.RegisterHandler;
-import fr.sandji.sphone.mod.server.ServerEventHandler;
+import fr.sandji.sphone.mod.server.bdd.MethodesBDDImpl;
 import fr.sandji.sphone.mod.server.commands.CommandGivePhone;
 import fr.sandji.sphone.mod.server.commands.CommandGroup;
 import net.minecraft.creativetab.CreativeTabs;
@@ -54,9 +54,6 @@ public class SPhone {
         if (e.getSide().isClient()) {
             MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
             MinecraftForge.EVENT_BUS.register(new RenderAnimations());
-        }
-        if (e.getSide().isServer()) {
-            MinecraftForge.EVENT_BUS.register(new ServerEventHandler());
         }
 
     }

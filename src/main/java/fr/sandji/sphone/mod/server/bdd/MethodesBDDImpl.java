@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class MethodesBDDImpl {
 
-    static SQLUtils instance = MethodesBDD.instance;
+    static SQLUtils instance = new SQLUtils();
 
     public static void checkFile() {
         if (!new File("bdd.properties").exists()) {
