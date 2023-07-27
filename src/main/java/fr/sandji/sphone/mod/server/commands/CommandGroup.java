@@ -31,7 +31,7 @@ public class CommandGroup extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return "/group <group> <test>";
+        return "/group <group> <TestSql>";
     }
 
     @Override

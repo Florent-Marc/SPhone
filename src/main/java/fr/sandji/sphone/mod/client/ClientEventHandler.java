@@ -12,7 +12,7 @@ public class ClientEventHandler {
     public void onPress(InputEvent.KeyInputEvent event) {
         if (SPhoneKeys.DEBUG.isPressed()) {
             RenderAnimations.debug_anim = !RenderAnimations.debug_anim;
-            //ACsGuiApi.asyncLoadThenShowGui("GuiInit",new GuiContactsList(test));
+            //ACsGuiApi.asyncLoadThenShowGui("GuiInit",new GuiContactsList(TestSql));
         }
         if (SPhoneKeys.DEBUG_TWO.isPressed()) {
             Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());

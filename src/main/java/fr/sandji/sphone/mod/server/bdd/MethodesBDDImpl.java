@@ -4,6 +4,9 @@ import fr.sandji.sphone.mod.common.phone.Contact;
 import fr.sandji.sphone.mod.common.phone.Message;
 import fr.sandji.sphone.mod.common.phone.Note;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +14,27 @@ import java.util.List;
 public class MethodesBDDImpl {
 
     static SQLUtils instance = MethodesBDD.instance;
+
+    public static void checkFile() {
+        if (!new File("bdd.properties").exists()) {
+            if (!new File("bdd.properties").exists()) {
+                try {
+                    File f = new File("bdd.properties");
+                    f.createNewFile();
+                    //write default values url, user, password
+                    FileWriter fw = new FileWriter(f);
+                    fw.write("url=jdbc:mysql://127.0.0.1:3306/phone?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true\n");
+                    fw.write("user=root\n");
+                    fw.write("password=\n");
+                    fw.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public static void checkTable() {
         instance.execute("CREATE TABLE IF NOT EXISTS `contact` (\n" +
                 "\t`id` INT NOT NULL AUTO_INCREMENT,\n" +
