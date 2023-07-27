@@ -1,7 +1,3 @@
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package com.dev.sphone.mod.client.gui.phone.apps.note;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
@@ -32,18 +28,15 @@ public class GuiNoteList extends GuiBase {
     public void GuiInit(){
         super.GuiInit();
 
-        GuiPanel root = new GuiPanel();
-        root.setCssId("root");
-        add(root);
-
+        add(getRoot());
 
         GuiLabel appTitle2 = new GuiLabel("Notes");
         appTitle2.setCssId("app_title");
-        root.add(appTitle2);
+        getRoot().add(appTitle2);
 
         GuiLabel buttonEdit2 = new GuiLabel("+");
         buttonEdit2.setCssId("button_add");
-        root.add(buttonEdit2);
+        getRoot().add(buttonEdit2);
         buttonEdit2.addClickListener((mouseX, mouseY, mouseButton) -> {
             Minecraft.getMinecraft().displayGuiScreen(new GuiNewNote(this.getGuiScreen()).getGuiScreen());
         });
@@ -76,7 +69,7 @@ public class GuiNoteList extends GuiBase {
 
             contacts_list2.add(convpanel);
         }
-        root.add(contacts_list2);
+        getRoot().add(contacts_list2);
     }
 
     //get date with long

@@ -1,16 +1,11 @@
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package com.dev.sphone.mod.client.gui.phone.apps.note;
 
-import com.dev.sphone.mod.client.gui.phone.GuiBase;
-import fr.aym.acsguis.component.panel.GuiPanel;
-import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.aym.acsguis.component.textarea.GuiTextField;
 import com.dev.sphone.SPhone;
+import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.common.packets.server.PacketEditNote;
 import com.dev.sphone.mod.common.phone.Note;
+import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.aym.acsguis.component.textarea.GuiTextField;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
@@ -30,39 +25,37 @@ public class GuiEditNote extends GuiBase {
     public void GuiInit(){
         super.GuiInit();
 
-        GuiPanel root = new GuiPanel();
-        root.setCssId("root");
-        add(root);
+        add(getRoot());
 
         GuiLabel AppTitle = new GuiLabel("Modifier une note");
         AppTitle.setCssId("app_title");
-        root.add(AppTitle);
+        getRoot().add(AppTitle);
 
         GuiTextField titre = new GuiTextField();
         titre.setCssClass("titre");
         titre.setText(note.getTitle());
         titre.setMaxTextLength(20);
-        root.add(titre);
+        getRoot().add(titre);
 
         GuiTextField noteField = new GuiTextField();
         noteField.setCssClass("note");
         noteField.setText(this.note.getText());
         noteField.setMaxTextLength(1000);
-        root.add(noteField);
+        getRoot().add(noteField);
 
         GuiLabel buttonEdit = new GuiLabel("+");
         buttonEdit.setCssId("button_add");
         buttonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
             SPhone.network.sendToServer(new PacketEditNote(new Note(note.getId(), titre.getText(), noteField.getText(), System.currentTimeMillis()), "edit"));
         });
-        root.add(buttonEdit);
+        getRoot().add(buttonEdit);
 
         GuiLabel buttonDel = new GuiLabel("-");
         buttonDel.setCssId("button_del");
         buttonDel.addClickListener((mouseX, mouseY, mouseButton) -> {
             SPhone.network.sendToServer(new PacketEditNote(new Note(note.getId(), titre.getText(), noteField.getText(), System.currentTimeMillis()), "delete"));
         });
-        root.add(buttonDel);
+        getRoot().add(buttonDel);
     }
 
     public List<ResourceLocation> getCssStyles() {

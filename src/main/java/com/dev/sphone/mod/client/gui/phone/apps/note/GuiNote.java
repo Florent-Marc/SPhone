@@ -1,13 +1,8 @@
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package com.dev.sphone.mod.client.gui.phone.apps.note;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
-import fr.aym.acsguis.component.panel.GuiPanel;
-import fr.aym.acsguis.component.textarea.GuiLabel;
 import com.dev.sphone.mod.common.phone.Note;
+import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -28,25 +23,23 @@ public class GuiNote extends GuiBase {
     public void GuiInit(){
         super.GuiInit();
 
-        GuiPanel root = new GuiPanel();
-        root.setCssId("root");
-        add(root);
+        add(getRoot());
 
         GuiLabel AppTitle = new GuiLabel(contact.getTitle());
         AppTitle.setCssId("app_title");
-        root.add(AppTitle);
+        getRoot().add(AppTitle);
 
         GuiLabel buttonEdit = new GuiLabel("✎");
         buttonEdit.setCssId("button_add");
         buttonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
             Minecraft.getMinecraft().displayGuiScreen(new GuiEditNote(this.getGuiScreen(), contact).getGuiScreen());
         });
-        root.add(buttonEdit);
+        getRoot().add(buttonEdit);
 
 
         GuiLabel note = new GuiLabel("Note : "+contact.getText());
         note.setCssId("note");
-        root.add(note);
+        getRoot().add(note);
     }
 
     public List<ResourceLocation> getCssStyles() {

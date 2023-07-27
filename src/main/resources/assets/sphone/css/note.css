@@ -1,11 +1,5 @@
 #root{
-    right: 32px;
-    width: 298px;
-    height: 646px;
-    border-radius: 41px;
     background-color: #1E1E1E;
-    bottom: 42px;
-    z-index: 1;
 }
 
 #app_title {
