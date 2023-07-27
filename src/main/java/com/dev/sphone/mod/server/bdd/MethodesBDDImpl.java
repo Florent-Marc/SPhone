@@ -172,36 +172,29 @@ public class MethodesBDDImpl {
     }
 
 
-    public static List<Conversation> getConversations(int sim){
+    public static List<Conversation> getConversations(int sim) {
         List<Conversation> conversations = new ArrayList<>();
         List<String> senders = new ArrayList<>();
-        Thread thread = new Thread(()->{
+        List<Message> messages = getMessages(sim);
+        for (Message message : messages) {
+            if (!senders.contains(message.getSender()) || !senders.contains(message.getReceiver())) {
+                senders.add(message.getSender());
+                senders.add(message.getReceiver());
 
-            List<Message> messages = getMessages(sim);
-            for(Message message : messages){
-                if(!senders.contains(message.getSender()) || !senders.contains(message.getReceiver())) {
-                    senders.add(message.getSender());
-                    senders.add(message.getReceiver());
+                List<Message> messages1 = messages.stream().filter(m -> (m.getSender().equals(message.getSender()) && m.getReceiver().equals(message.getReceiver())) || (m.getSender().equals(message.getReceiver()) && m.getReceiver().equals(message.getSender()))).collect(Collectors.toList());
 
-                    List<Message> messages1 = messages.stream().filter(m -> (m.getSender().equals(message.getSender()) && m.getReceiver().equals(message.getReceiver())) || (m.getSender().equals(message.getReceiver()) && m.getReceiver().equals(message.getSender()) )).collect(Collectors.toList());
+                messages1.sort(Comparator.comparing(o -> Utils.getDate(o.getDate())));
 
-                    messages1.sort(Comparator.comparing(o -> Utils.getDate(o.getDate())));
-
-                    String firstSenderNumber = (!Objects.equals( message.getSender(), String.valueOf(getNumero(sim)) ) ? message.getSender() : message.getReceiver());
-                    if(getContacts(sim).stream().anyMatch(c -> c.getNumero().equals(firstSenderNumber))) {
-                        Contact contact = getContacts(sim).stream().filter(c -> c.getNumero().equals(firstSenderNumber)).findFirst().get();
-                        conversations.add(new Conversation(messages1, contact, messages1.get(messages1.size() - 1)));
-                    }else {
-                        conversations.add(new Conversation(messages1, new Contact(-1, firstSenderNumber, "", firstSenderNumber, ""), messages1.get(messages1.size() - 1)));
-                    }
+                String firstSenderNumber = (!Objects.equals(message.getSender(), String.valueOf(getNumero(sim))) ? message.getSender() : message.getReceiver());
+                if (getContacts(sim).stream().anyMatch(c -> c.getNumero().equals(firstSenderNumber))) {
+                    Contact contact = getContacts(sim).stream().filter(c -> c.getNumero().equals(firstSenderNumber)).findFirst().get();
+                    conversations.add(new Conversation(messages1, contact, messages1.get(messages1.size() - 1)));
+                } else {
+                    conversations.add(new Conversation(messages1, new Contact(-1, firstSenderNumber, "", firstSenderNumber, ""), messages1.get(messages1.size() - 1)));
                 }
             }
-
-        });
-        thread.start();
-
+        }
         return conversations;
-
     }
 
     public static boolean checkNumber(int number) {
