@@ -124,7 +124,7 @@ public class GuiCalculator extends GuiBase {
                     case "*":
                     case "-":
                     case "+":
-                    case ".":
+
                     case "^":
                         if(checkEqual){
                             y = 0;
@@ -141,7 +141,7 @@ public class GuiCalculator extends GuiBase {
                         if(operator.equals("*")) x = (x * y);
                         if(operator.equals("/")) x = (x / y);
                         if(operator.equals("%")) x = (x % y);
-                        if(operator.equals("^")) x = (x ^ y);
+                        if(operator.equals("^")) x = (int) Math.pow(x, y);
                         break;
 
                     case "0":
