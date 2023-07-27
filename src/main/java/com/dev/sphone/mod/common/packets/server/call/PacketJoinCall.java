@@ -5,10 +5,14 @@
 
 package com.dev.sphone.mod.common.packets.server.call;
 
+import com.dev.sphone.api.events.CallEvent;
+import com.dev.sphone.api.events.InitAppEvent;
 import de.maxhenkel.voicechat.api.Group;
 import com.dev.sphone.api.voicechat.SPhoneAddon;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -17,22 +21,22 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketJoinCall implements IMessage {
 
-    private int number;
+    private String number;
 
     public PacketJoinCall() {}
 
-    public PacketJoinCall(int number) {
+    public PacketJoinCall(String number) {
         this.number = number;
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        this.number = buf.readInt();
+        this.number = ByteBufUtils.readUTF8String(buf);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        buf.writeInt(this.number);
+        ByteBufUtils.writeUTF8String(buf, this.number);
     }
 
     public static class ServerHandler implements IMessageHandler<PacketJoinCall, IMessage> {
@@ -40,11 +44,12 @@ public class PacketJoinCall implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketJoinCall message, MessageContext ctx) {
             EntityPlayer player = ctx.getServerHandler().player;
-            if(SPhoneAddon.groupExists(String.valueOf(message.number))){
-                SPhoneAddon.addToGroup(String.valueOf(message.number), player);
+            MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(player, message.number));
+            if(SPhoneAddon.groupExists(message.number)){
+                SPhoneAddon.addToGroup(message.number, player);
             }else {
-                SPhoneAddon.createGroup(String.valueOf(message.number),false, Group.Type.ISOLATED);
-                SPhoneAddon.addToGroup(String.valueOf(message.number), player);
+                SPhoneAddon.createGroup(message.number,false, Group.Type.ISOLATED);
+                SPhoneAddon.addToGroup(message.number, player);
             }
             
             return null;
