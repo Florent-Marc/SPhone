@@ -24,11 +24,8 @@ immersion in the Minecraft universe.
 - **Call** with other players
 - **Weather** with prediction forcecast
 - **calculator** for small memory lapses
-<br>
-<br>
-**For Developers**
-<br>
-<br>
+
+## For Developers
 - **API** with **Events** and basic **UI**
 
 ## Preview
