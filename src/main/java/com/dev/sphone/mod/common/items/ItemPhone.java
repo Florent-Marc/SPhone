@@ -1,10 +1,7 @@
-
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package com.dev.sphone.mod.common.items;
 
+import com.dev.sphone.api.events.CallEvent;
+import com.dev.sphone.api.events.SimRegisterEvent;
 import com.dev.sphone.mod.utils.Utils;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
@@ -21,6 +18,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
@@ -47,7 +45,9 @@ public class ItemPhone extends Item {
                 int sim = Utils.getRandomNumber(1000, 9999);
                 int num = Utils.getRandomNumber(10000, 99999);
                 boolean isExist = false;
-                if (!MethodesBDDImpl.addSim(sim, num)) {
+                if (MethodesBDDImpl.addSim(sim, num)) {
+                    isExist = true;
+                } else {
                     for (int j = 0; j < 50; j++) {
                         sim = Utils.getRandomNumber(1000, 9999);
                         num = Utils.getRandomNumber(10000, 99999);
@@ -59,10 +59,9 @@ public class ItemPhone extends Item {
                     if (!isExist) {
                         Utils.sendErrorChat(player, "Il semblerai que la limite de sim soit atteinte, veuillez contacter un administrateur.", false);
                     }
-                } else {
-                    isExist = true;
                 }
                 if (isExist) {
+                    MinecraftForge.EVENT_BUS.post(new SimRegisterEvent(player, String.valueOf(sim),String.valueOf(num)));
                     setSimCard(player, stack, sim);
                 }
             }
@@ -72,7 +71,12 @@ public class ItemPhone extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flagIn) {
-        if(!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+        if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+            tooltip.add("");
+            tooltip.add("-> Version du Téléphone : " + SPhone.VERSION);
+            tooltip.add("-> Mode Développeur : " + SPhone.DEV_MOD);
+            tooltip.add("");
+        } else {
             if (getSimCard(stack) == 0) {
                 tooltip.add("-> Aucune Carte Sim Injecté");
             } else {
@@ -81,12 +85,6 @@ public class ItemPhone extends Item {
             tooltip.add("-> Batterie : 100%");
             tooltip.add("");
             tooltip.add("Appuyer sur SHIFT pour plus d'informations.");
-        }
-        else {
-            tooltip.add("");
-            tooltip.add("-> Version du Téléphone : " + SPhone.VERSION);
-            tooltip.add("-> Mode Développeur : " + SPhone.DEV_MOD);
-            tooltip.add("");
         }
         super.addInformation(stack, world, tooltip, flagIn);
     }
