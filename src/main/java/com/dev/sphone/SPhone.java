@@ -55,7 +55,6 @@ public class SPhone {
             MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
             MinecraftForge.EVENT_BUS.register(new RenderAnimations());
         }
-
     }
 
     @Mod.EventHandler
@@ -67,16 +66,12 @@ public class SPhone {
     public void onServerStart(FMLServerStartingEvent e) {
         e.registerServerCommand(new CommandGivePhone());
         e.registerServerCommand(new CommandGroup());
-        if (e.getSide().isServer()) {
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-            } catch (ClassNotFoundException ex) {
-                ex.printStackTrace();
-            }
-            MethodesBDDImpl.checkFile();
-            MethodesBDDImpl.checkTable();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
+        MethodesBDDImpl.checkFile();
+        MethodesBDDImpl.checkTable();
     }
-
-
 }

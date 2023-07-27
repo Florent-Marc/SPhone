@@ -49,8 +49,6 @@ public class MethodesBDDImpl {
                 "\t`note` INT NULL DEFAULT NULL,\n" +
                 "\tPRIMARY KEY (`id`)\n" +
                 ")\n" +
-                "COLLATE='utf8_general_ci'\n" +
-                "ENGINE=InnoDB\n" +
                 ";\n");
         instance.execute("CREATE TABLE IF NOT EXISTS `message` (\n" +
                 "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
