@@ -40,5 +40,6 @@ immersion in the Minecraft universe.
 - [Sandji](https://github.com/SandjiGit) Original Developer
 - [MK](https://github.com/Florent-Marc) Developer
 - [Ertinox](https://github.com/Ertinox45) Developer
-- [Gabidut](https://github.com/gabidut) Developer
+- [Gabidut76](https://github.com/gabidut) Developer
 - [Afhistos](https://github.com/afhistos) SQL Developer
+- [Yan36](https://github.com/yan36) Designer of Meteo & Settings
