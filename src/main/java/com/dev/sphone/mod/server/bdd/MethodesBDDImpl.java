@@ -41,15 +41,19 @@ public class MethodesBDDImpl {
 
     public static void checkTable() {
         instance.execute("CREATE TABLE IF NOT EXISTS `contact` (\n" +
-                "\t`id` INT NOT NULL AUTO_INCREMENT,\n" +
-                "\t`sim` TEXT NOT NULL DEFAULT NULL,\n" +
-                "\t`name` INT NULL DEFAULT NULL,\n" +
-                "\t`lastname` INT NULL DEFAULT NULL,\n" +
-                "\t`numero` INT NULL DEFAULT NULL,\n" +
-                "\t`note` INT NULL DEFAULT NULL,\n" +
-                "\tPRIMARY KEY (`id`)\n" +
+                "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
+                "\t`sim` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`name` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`lastname` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`numero` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`note` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\tPRIMARY KEY (`id`) USING BTREE\n" +
                 ")\n" +
+                "COLLATE='utf8mb3_general_ci'\n" +
+                "ENGINE=InnoDB\n" +
+                "AUTO_INCREMENT=0\n" +
                 ";\n");
+
         instance.execute("CREATE TABLE IF NOT EXISTS `message` (\n" +
                 "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
                 "\t`sender` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n" +
@@ -68,15 +72,20 @@ public class MethodesBDDImpl {
                 ")\n" +
                 "COLLATE='utf8_general_ci'\n" +
                 "ENGINE=InnoDB\n" +
-                "AUTO_INCREMENT=452\n" +
+                "AUTO_INCREMENT=0\n" +
                 ";\n");
-        instance.execute("CREATE TABLE IF NOT EXISTS notes (\n" +
-                "  id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
-                "  sim VARCHAR(10),\n" +
-                "  name VARCHAR(64),\n" +
-                "  note TEXT,\n" +
-                "  date BIGINT(255)\n" +
-                ");");
+        instance.execute("CREATE TABLE IF NOT EXISTS `notes` (\n" +
+                "\t`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,\n" +
+                "\t`sim` VARCHAR(10) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`name` VARCHAR(24) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`note` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`date` BIGINT(19) NULL DEFAULT NULL,\n" +
+                "\tPRIMARY KEY (`id`) USING BTREE\n" +
+                ")\n" +
+                "COLLATE='utf8mb3_general_ci'\n" +
+                "ENGINE=InnoDB\n" +
+                "AUTO_INCREMENT=0\n" +
+                ";\n");
     }
 
     public static void addContact(int sim, Contact contact) {
