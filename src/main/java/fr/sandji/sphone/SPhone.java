@@ -4,23 +4,23 @@
 
 package fr.sandji.sphone;
 
-import fr.sandji.sphone.mod.client.gui.phone.AppManager;
-import fr.sandji.sphone.mod.server.database.DatabaseManager;
-import fr.sandji.sphone.mod.Test;
 import fr.sandji.sphone.mod.client.ClientEventHandler;
 import fr.sandji.sphone.mod.client.SPhoneTab;
 import fr.sandji.sphone.mod.common.animations.RenderAnimations;
 import fr.sandji.sphone.mod.common.packets.Network;
 import fr.sandji.sphone.mod.common.proxy.CommonProxy;
 import fr.sandji.sphone.mod.common.register.RegisterHandler;
-import fr.sandji.sphone.mod.server.ServerEventHandler;
 import fr.sandji.sphone.mod.server.commands.CommandGivePhone;
 import fr.sandji.sphone.mod.server.commands.CommandGroup;
+import fr.sandji.sphone.mod.server.database.DatabaseManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
 
@@ -61,7 +61,6 @@ public class SPhone {
             MinecraftForge.EVENT_BUS.register(new RenderAnimations());
         }
         if (e.getSide().isServer()) {
-            MinecraftForge.EVENT_BUS.register(new ServerEventHandler());
         }
 
     }
@@ -81,15 +80,14 @@ public class SPhone {
             } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
-            DatabaseManager.initAllDatabaseConnections();
-            Test.Test();
+            //DatabaseManager.initAllDatabaseConnections();
         }
     }
 
     @Mod.EventHandler
     public void onServerStop(FMLServerStoppingEvent e) {
         if (e.getSide().isServer()) {
-            DatabaseManager.closeAllDatabaseConnections();
+            //DatabaseManager.closeAllDatabaseConnections();
         }
     }
 

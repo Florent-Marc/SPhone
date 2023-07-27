@@ -25,8 +25,8 @@ public class GuiConvList extends GuiBase {
 
     private final List<Conversation> conv;
 
-    public GuiConvList(GuiScreen parent, List<Conversation> conv) {
-        super(parent);
+    public GuiConvList(List<Conversation> conv) {
+        super(new GuiHome().getGuiScreen());
         this.conv = conv;
     }
 
@@ -43,14 +43,14 @@ public class GuiConvList extends GuiBase {
 
 
         //trier les conversations par date de dernier message
-        conv.sort((o1, o2) -> getDate(o2.getLastUpdate()).compareTo(getDate(o1.getLastUpdate())));
+        //conv.sort((o1, o2) -> getDate(o2.getLastUpdate()).compareTo(getDate(o1.getLastUpdate())));
 
         for (Conversation c : conv) {
 
             GuiPanel convpanel = new GuiPanel();
             convpanel.setCssClass("contact_background");
             convpanel.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiConv(this.getGuiScreen(), c, new Contact("hugo",2)).getGuiScreen());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiConv(this.getGuiScreen(), c).getGuiScreen());
             });
             GuiLabel ContactName = new GuiLabel(c.getSender().getName());
             ContactName.setCssId("name");
@@ -60,7 +60,7 @@ public class GuiConvList extends GuiBase {
             ContactLastMessage.setCssId("lastmessage");
             convpanel.add(ContactLastMessage);
 
-            GuiLabel date = new GuiLabel(getDate(c.getLastUpdate()));
+            GuiLabel date = new GuiLabel(getDate(c.getLastMessage().getDate()));
             date.setCssId("date");
             convpanel.add(date);
 

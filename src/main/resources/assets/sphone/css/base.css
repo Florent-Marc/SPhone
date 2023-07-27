@@ -4,6 +4,18 @@
     font-size: 52px;
 }
 
+@font-face {
+    font-family: "dnx:montserrat";
+    src: url("sphone:fonts/montserrat.ttf");
+    font-size: 52px;
+}
+@font-face {
+    font-family: "dnx:montserratlow";
+    src: url("sphone:fonts/montserrat.ttf");
+    font-size: 48px;
+}
+
+
 
 .home {
     width: 1920px;
@@ -13,12 +25,30 @@
 .background {
 }
 
+#root{
+    right: 32px;
+    width: 298px;
+    height: 646px;
+    border-radius: 41px;
+    bottom: 42px;
+    z-index: 1;
+}
+
 .case {
-    background-image: url("sphone:textures/ui/background/acsguis.png");
+    background-image: url("sphone:textures/ui/background/acsgui.png");
     left: 82%;
     width: 330px;
     height: 675px;
     top: 35%;
+}
+
+.camera{
+    background-image: url("sphone:textures/ui/background/camera.png");
+    width: 96px;
+    height: 29px;
+    top: 23px;
+    horizontal-position: center;
+    z-index: 12;
 }
 
 #top_clock {
@@ -28,6 +58,7 @@
     left: 1610px;
     top: 392px;
     font-size: 3px;
+    z-index: 10;
 }
 .home_bar {
     height: 9px;
@@ -36,6 +67,7 @@
     top: 1019px;
     background-color: #FFFFFF;
     border-radius: 5px;
+    z-index: 10;
 }
 
 .home_bar:hover {
@@ -48,4 +80,5 @@
     width: 48px;
     left: 1810px;
     top: 412px;
+    z-index: 10;
 }

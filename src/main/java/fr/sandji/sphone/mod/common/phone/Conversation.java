@@ -8,26 +8,20 @@ import java.util.List;
 public class Conversation implements ISerializable, ISerializablePacket {
 
     private List<Message> messages;
-    private long lastUpdate;
     private Message lastMessage;
     private Contact sender;
 
     public Conversation() {
     }
 
-    public Conversation(List<Message> messages, long lastUpdate, Contact sender, Message lastMessage) {
+    public Conversation(List<Message> messages, Contact sender, Message lastMessage) {
         this.messages = messages;
-        this.lastUpdate = lastUpdate;
         this.sender = sender;
         this.lastMessage = lastMessage;
     }
 
     public List<Message> getMessages() {
         return messages;
-    }
-
-    public long getLastUpdate() {
-        return lastUpdate;
     }
 
     public Contact getSender() {
@@ -40,10 +34,6 @@ public class Conversation implements ISerializable, ISerializablePacket {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
-    }
-
-    public void setLastUpdate(long lastUpdate) {
-        this.lastUpdate = lastUpdate;
     }
 
     public void setLastMessage(Message lastMessage) {
@@ -61,15 +51,14 @@ public class Conversation implements ISerializable, ISerializablePacket {
 
     @Override
     public Object[] getObjectsToSave() {
-        return new Object[]{messages, lastUpdate, sender,lastMessage};
+        return new Object[]{messages, sender,lastMessage};
     }
 
     @Override
     public void populateWithSavedObjects(Object[] objects) {
         messages = (List<Message>) objects[0];
-        lastUpdate = (long) objects[1];
-        sender = (Contact) objects[2];
-        lastMessage = (Message) objects[3];
+        sender = (Contact) objects[1];
+        lastMessage = (Message) objects[2];
 
     }
 }

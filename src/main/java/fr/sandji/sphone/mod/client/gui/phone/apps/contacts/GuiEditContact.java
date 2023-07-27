@@ -17,13 +17,10 @@ import java.util.List;
 
 public class GuiEditContact extends GuiBase {
 
-    private final List<Contact> contacts;
     private final Contact contact;
 
-    public GuiEditContact(GuiScreen parent, List<Contact> contacts, Contact contact) {
+    public GuiEditContact(GuiScreen parent, Contact contact) {
         super(parent);
-
-        this.contacts = contacts;
         this.contact = contact;
     }
 

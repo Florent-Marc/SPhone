@@ -1,0 +1,86 @@
+#root{
+    right: 32px;
+    width: 298px;
+    height: 646px;
+    border-radius: 41px;
+    background-color: #1E1E1E;
+    bottom: 42px;
+    z-index: 1;
+}
+
+#app_title {
+    font-size: 25px;
+    left: 4%;
+    top: 8%;
+    height: auto;
+    width: 50%;
+}
+
+#button_add {
+    right: 4%;
+    top: 8%;
+    width: 24px;
+    height: 26px;
+    border-radius: 35%;
+    background-color: #599AF8;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+    z-index: 2;
+}
+#button_add:hover {
+    background-color: #59C2F8;
+}
+
+.contacts_list {
+    width: 100%;
+    height: 75%;
+    top: 19%;
+    z-index: 3;
+}
+
+#lastmessage {
+    font-size: 10px;
+    color: white;
+    left: 0%;
+    top: 30%;
+    height: 40%;
+    width: 100%;
+    z-index: 2;
+}
+
+#date {
+    text-align: right;
+    font-size: 10px;
+    color: white;
+    right: 0%;
+    bottom: 0%;
+    height: 30%;
+    width: 50%;
+    z-index: 2;
+}
+
+.back {
+    background-color: #a79025;
+    width: 90%;
+    height: auto;
+    left: 5%;
+    top: auto;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+.back:hover {
+    background-color: #cbb654;
+}
+
+#title {
+    text-align: center;
+    font-size: 12px;
+    color: white;
+    left: 0%;
+    top: 10%;
+    height: 30%;
+    width: 100%;
+    z-index: 2;
+}

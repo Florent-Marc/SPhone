@@ -24,6 +24,7 @@ public class GuiBase extends GuiFrame {
 
     private final GuiScreen parent;
     private GuiPanel Background;
+    private GuiPanel root;
 
     public GuiBase(GuiScreen parent) {
         super(new GuiScaler.AdjustFullScreen());
@@ -62,6 +63,10 @@ public class GuiBase extends GuiFrame {
         Background.setCssClass("background");
         Case.add(Background);
 
+        root = new GuiPanel();
+        root.setCssId("root");
+
+
         GuiLabel TopClock = new GuiLabel("");
         TopClock.setCssId("top_clock");
         TopClock.addTickListener(() -> {
@@ -74,6 +79,10 @@ public class GuiBase extends GuiFrame {
         GuiPanel TopIcons = new GuiPanel();
         TopIcons.setCssClass("top_icons");
         add(TopIcons);
+
+        GuiPanel camera = new GuiPanel();
+        camera.setCssClass("camera");
+        Case.add(camera);
 
         GuiPanel HomeBar = new GuiPanel();
         HomeBar.setCssClass("home_bar");
@@ -93,6 +102,10 @@ public class GuiBase extends GuiFrame {
 
     public GuiPanel getBackground() {
         return this.Background;
+    }
+
+    public GuiPanel getRoot() {
+        return this.root;
     }
 
     @Override

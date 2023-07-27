@@ -2,6 +2,10 @@
  * SPhone - Tous droits réservés. (by 0hSandji)
  */
 
+#root{
+    background-color: #1C3360;
+}
+
 #app_title {
     font-size: 30px;
     left: 8%;
@@ -11,11 +15,11 @@
 }
 
 #button_add {
-    right: 6%;
+    right: 5%;
     top: 10%;
     height: 5%;
     width: 10%;
-    border-radius: 40%;
+    border-radius: 50%;
     background-color: #599AF8;
     color: white;
     text-align: center;
@@ -54,43 +58,46 @@
     height: 20%;
     left: 30%;
     top: 20%;
- }
+}
 
 #name {
-    width: 100%;
+    width: auto;
+    horizontal-position: center;
     height: 5%;
     left: 0%;
     top: 40%;
     font-size: 20px;
     color: white;
-    text-align: center;
 }
 
 #lastname {
-    width: 100%;
+    width: auto;
+    horizontal-position: center;
     height: 5%;
     left: 0%;
     top: 45%;
-    font-size: 12px;
+    font-size: 16px;
     color: white;
-    text-align: center;
 }
+
 #phone {
-    width: 100%;
+    width: auto;
+    horizontal-position: center;
     height: 5%;
     left: 0%;
     top: 50%;
-    font-size: 12px;
+    font-size: 18px;
     color: white;
-    text-align: center;
 }
+
 #notes {
-    width: 90%;
-    height: 20%;
-    left: 5%;
+    width: 100%;
+    horizontal-position: center;
+    height: 12%;
     top: 55%;
     font-size: 12px;
     color: white;
     text-align: center;
+    text-align-vertical: top;
 }
 

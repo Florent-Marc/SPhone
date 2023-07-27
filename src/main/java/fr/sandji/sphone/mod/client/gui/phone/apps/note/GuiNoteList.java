@@ -21,59 +21,62 @@ import java.util.List;
 
 public class GuiNoteList extends GuiBase {
 
-    private final List<Note> n;
+    private final List<Note> notes;
 
-    public GuiNoteList(GuiScreen parent, List<Note> n) {
+    public GuiNoteList(GuiScreen parent, List<Note> notes) {
         super(parent);
-        this.n = n;
+        this.notes = notes;
     }
 
     @Override
     public void GuiInit(){
         super.GuiInit();
 
-        GuiLabel AppTitle = new GuiLabel("Notes");
-        AppTitle.setCssId("app_title");
-        getBackground().add(AppTitle);
+        GuiPanel root = new GuiPanel();
+        root.setCssId("root");
+        add(root);
 
-        GuiLabel ButtonEdit = new GuiLabel("+");
-        ButtonEdit.setCssId("button_add");
-        getBackground().add(ButtonEdit);
-        ButtonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiNewNote(this.getGuiScreen(), n).getGuiScreen());
+
+        GuiLabel appTitle2 = new GuiLabel("Notes");
+        appTitle2.setCssId("app_title");
+        root.add(appTitle2);
+
+        GuiLabel buttonEdit2 = new GuiLabel("+");
+        buttonEdit2.setCssId("button_add");
+        root.add(buttonEdit2);
+        buttonEdit2.addClickListener((mouseX, mouseY, mouseButton) -> {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiNewNote(this.getGuiScreen()).getGuiScreen());
         });
 
-        GuiScrollPane contacts_list = new GuiScrollPane();
-        contacts_list.setCssClass("contacts_list");
-        contacts_list.setLayout(new GridLayout(-1, 80, 5, GridLayout.GridDirection.HORIZONTAL, 1));
-
+        GuiScrollPane contacts_list2 = new GuiScrollPane();
+        contacts_list2.setCssClass("contacts_list");
+        contacts_list2.setLayout(new GridLayout(-1, 80, 5, GridLayout.GridDirection.HORIZONTAL, 1));
 
         //trier les conversations par date de dernier message
         // n.sort((o1, o2) -> getDate(o2.getLastUpdate()).compareTo(getDate(o1.getLastUpdate())));
 
-        for (Note c : n) {
+        for (Note note : notes) {
 
             GuiPanel convpanel = new GuiPanel();
             convpanel.setCssClass("back");
             convpanel.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiNote(this.getGuiScreen(), n,c).getGuiScreen());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiNote(this.getGuiScreen(), note).getGuiScreen());
             });
-            GuiLabel ContactName = new GuiLabel(c.getTitle());
+            GuiLabel ContactName = new GuiLabel(note.getTitle());
             ContactName.setCssId("title");
             convpanel.add(ContactName);
 
-            GuiLabel ContactLastMessage = new GuiLabel(c.getText());
+            GuiLabel ContactLastMessage = new GuiLabel(note.getText());
             ContactLastMessage.setCssId("lastmessage");
             convpanel.add(ContactLastMessage);
 
-            GuiLabel date = new GuiLabel(getDate(c.getDate()));
+            GuiLabel date = new GuiLabel(getDate(note.getDate()));
             date.setCssId("date");
             convpanel.add(date);
 
-            contacts_list.add(convpanel);
+            contacts_list2.add(convpanel);
         }
-
-        getBackground().add(contacts_list);
+        root.add(contacts_list2);
     }
 
     //get date with long
@@ -86,7 +89,7 @@ public class GuiNoteList extends GuiBase {
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
-        styles.add(new ResourceLocation("sphone:css/convlist.css"));
+        styles.add(new ResourceLocation("sphone:css/notelist.css"));
         return styles;
     }
 

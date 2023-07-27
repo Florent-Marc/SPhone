@@ -4,13 +4,15 @@
 
 package fr.sandji.sphone.mod.client.gui.phone.apps.contacts;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
+import fr.sandji.sphone.SPhone;
 import fr.sandji.sphone.mod.client.gui.phone.GuiBase;
+import fr.sandji.sphone.mod.common.packets.server.PacketEditContact;
+import fr.sandji.sphone.mod.common.packets.server.PacketEditNote;
 import fr.sandji.sphone.mod.common.phone.Contact;
+import fr.sandji.sphone.mod.common.phone.Note;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
@@ -21,56 +23,55 @@ import java.util.regex.Pattern;
 
 public class GuiNewContact extends GuiBase {
 
-    private final List<Contact> contacts;
-
-    public GuiNewContact(GuiScreen parent, List<Contact> contacts) {
+    public GuiNewContact(GuiScreen parent) {
         super(parent);
-        this.contacts = contacts;
     }
 
     @Override
     public void GuiInit() {
         super.GuiInit();
-        GuiLabel AppTitle = new GuiLabel("Ajouter un contact");
+
+        add(getRoot());
+
+        GuiLabel AppTitle = new GuiLabel("Ajouter Un Contact");
         AppTitle.setCssId("app_title");
-        getBackground().add(AppTitle);
+        getRoot().add(AppTitle);
 
-        GuiTextField NameField = new GuiTextField();
-        NameField.setCssClass("prenom");
-        NameField.setHintText(" Prénom");
-        getBackground().add(NameField);
+        GuiTextField name = new GuiTextField();
+        name.setCssClass("textarea");
+        name.setMaxTextLength(16);
+        name.setCssId("nom");
+        name.setHintText("Nom");
+        getRoot().add(name);
 
-        GuiTextField LastNameField = new GuiTextField();
-        LastNameField.setCssClass("nom");
-        LastNameField.setHintText(" Nom");
-        getBackground().add(LastNameField);
+        GuiTextField lastName = new GuiTextField();
+        lastName.setCssClass("textarea");
+        lastName.setMaxTextLength(16);
+        lastName.setCssId("prenom");
+        lastName.setHintText("Prénom");
+        getRoot().add(lastName);
 
-        GuiTextField NumeroField = new GuiTextField();
-        NumeroField.setCssClass("numero");
-        NumeroField.setHintText(" 555-1234");
-        NumeroField.addTickListener(() -> {
-            if (!NumeroField.getText().equals("")) {
-                if (isValidInput(NumeroField.getText())) {
-
-                }
-            }
-        });
-        getBackground().add(NumeroField);
+        GuiTextField numero = new GuiTextField();
+        numero.setCssClass("textarea");
+        numero.setCssId("numero");
+        numero.setHintText("555-1234");
+        //numero.setRegexPattern(Pattern.compile("^-?\\d+$"));
+        getRoot().add(numero);
 
         GuiTextField notes = new GuiTextField();
-        notes.setCssClass("notes");
-        notes.setHintText(" Notes");
-        getBackground().add(notes);
+        notes.setCssClass("textarea");
+        notes.setCssId("notes");
+        notes.setHintText("Notes");
+        getRoot().add(notes);
 
         GuiPanel ButtonAdd = new GuiPanel();
         ButtonAdd.setCssClass("button_add");
         ButtonAdd.addClickListener((mouseX, mouseY, mouseButton) -> {
-            contacts.add(new Contact(NameField.getText(), LastNameField.getText(), Integer.valueOf(NumeroField.getText()), notes.getText()));
-            Gson gson = new Gson();
-            String jsonString = gson.toJson(contacts, new TypeToken<List<Contact>>(){}.getType());
-            //SPhone.network.sendToServer(new PacketUpdateContacts(jsonString));
+            if(!name.getText().isEmpty() && !numero.getText().isEmpty()) {
+                SPhone.network.sendToServer(new PacketEditContact(new Contact(-1, name.getText(), lastName.getText(), numero.getText(), notes.getText()), "add"));
+            }
         });
-        getBackground().add(ButtonAdd);
+        getRoot().add(ButtonAdd);
     }
 
     private boolean isValidInput(String input) {
