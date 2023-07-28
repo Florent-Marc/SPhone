@@ -28,7 +28,7 @@ immersion in the Minecraft universe.
 
 ## Documentation
 
-You can check [here](https://github.com/Florent-Marc/SPhone/wiki) the documentation. If you have any question you can ask them on our [Discord](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
+You can check [here](https://github.com/Florent-Marc/SPhone/wiki) the documentation. If you have any question you can ask them on our [Discord](https://discord.gg/vDvQedp2Xj).
 
 ## For Developers
 - **API** with **Events** and basic **UI**
