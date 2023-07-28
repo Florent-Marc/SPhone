@@ -15,7 +15,9 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
+import java.util.concurrent.CompletableFuture;
 
 public class ClientEventHandler {
 
@@ -109,6 +111,10 @@ public class ClientEventHandler {
                 GlStateManager.popMatrix();
 
                 if (lastPhoneScreenshot == null) {
+                    CompletableFuture<BufferedImage> lastPhoneImage = Utils.getLastPhoneImage();
+                    if (lastPhoneImage == null) {
+                        return;
+                    }
                     lastPhoneScreenshot = new DynamicTexture(Utils.getLastPhoneImage().join());
                 }
 
