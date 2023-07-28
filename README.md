@@ -46,7 +46,7 @@ You can check [here](https://github.com/Florent-Marc/SPhone/wiki) the documentat
 ## Authors
 - [Sandji](https://github.com/SandjiGit) Original Developer
 - [MK](https://github.com/Florent-Marc) Original Developer
-- [Ertinox](https://github.com/Ertinox45) Pro Developer
-- [Gabidut76](https://github.com/gabidut) Noob Developer
+- [Ertinox](https://github.com/Ertinox45) Developer
+- [Gabidut76](https://github.com/gabidut) Developer
 - [Afhistos](https://github.com/afhistos) SQL Developer
 - [Yan36](https://github.com/yan36) Designer of Meteo & Settings
