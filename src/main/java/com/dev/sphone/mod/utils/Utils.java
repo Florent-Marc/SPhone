@@ -1,6 +1,9 @@
 package com.dev.sphone.mod.utils;
 
+import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.ClientEventHandler;
+import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import com.dev.sphone.mod.common.packets.server.PacketSetAnim;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -144,5 +147,22 @@ public class Utils {
             }
             return null;
         }, HttpUtil.DOWNLOADER_EXECUTOR);
+    }
+
+    public static boolean isUsingMod(String mainClass) {
+        try{
+            Class.forName(mainClass);
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    public static void leaveCamera(boolean returnHome){
+        ClientEventHandler.lastPhoneScreenshot = null;
+        ClientEventHandler.isCameraActive = false;
+        if(isUsingMod("com.mrcrayfish.obfuscate.Obfuscate")) SPhone.network.sendToServer(new PacketSetAnim(false));
+
+        if(returnHome) ClientEventHandler.mc.displayGuiScreen(new GuiHome().getGuiScreen());
     }
 }

@@ -8,6 +8,8 @@ import com.dev.sphone.mod.client.gui.phone.apps.calculator.GuiGallery;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import com.dev.sphone.mod.client.gui.phone.apps.settings.GuiSettingList;
 import com.dev.sphone.mod.common.packets.server.PacketRequestData;
+import com.dev.sphone.mod.common.packets.server.PacketSetAnim;
+import com.dev.sphone.mod.utils.Utils;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -111,7 +113,9 @@ public class AppManager {
                 false,
                 false,
                 () -> {
-                    ClientEventHandler.hudcameraphone = true;
+                    if(Utils.isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
+                        SPhone.network.sendToServer(new PacketSetAnim(true));
+                    ClientEventHandler.isCameraActive = true;
                     ClientEventHandler.mc.player.closeScreen();
                 }
         ));

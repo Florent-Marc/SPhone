@@ -1,14 +1,16 @@
 package com.dev.sphone;
 
+import com.dev.sphone.mod.client.ClientEventAnim;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.SPhoneTab;
-import com.dev.sphone.mod.common.animations.RenderAnimations;
 import com.dev.sphone.mod.common.packets.Network;
 import com.dev.sphone.mod.common.proxy.CommonProxy;
 import com.dev.sphone.mod.common.register.RegisterHandler;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.server.commands.CommandGivePhone;
 import com.dev.sphone.mod.server.commands.CommandGroup;
+import com.dev.sphone.mod.utils.ObfuscateUtils;
+import com.dev.sphone.mod.utils.Utils;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -55,13 +57,17 @@ public class SPhone {
 
         if (e.getSide().isClient()) {
             MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
-            MinecraftForge.EVENT_BUS.register(new RenderAnimations());
+
+            if(Utils.isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
+                MinecraftForge.EVENT_BUS.register(new ClientEventAnim());
         }
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
         PROXY.init();
+        if(Utils.isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
+            ObfuscateUtils.init();
     }
 
     @Mod.EventHandler

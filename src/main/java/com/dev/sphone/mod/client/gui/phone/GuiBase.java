@@ -4,6 +4,7 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.tempdata.PhoneSettings;
 import com.dev.sphone.mod.common.items.ItemPhone;
+import com.dev.sphone.mod.utils.Utils;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
@@ -48,9 +49,8 @@ public class GuiBase extends GuiFrame {
 
     public void GuiInit(){
         init();
-        if(ClientEventHandler.hudcameraphone){
-            ClientEventHandler.hudcameraphone = false;
-            ClientEventHandler.lastPhoneScreenshot = null;
+        if(ClientEventHandler.isCameraActive){
+            Utils.leaveCamera(false);
         }
     }
 

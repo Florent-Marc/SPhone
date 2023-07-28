@@ -1,7 +1,6 @@
 package com.dev.sphone.mod.client;
 
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
-import com.dev.sphone.mod.common.animations.RenderAnimations;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -23,8 +22,6 @@ public class ClientEventHandler {
 
     public static final Minecraft mc = Minecraft.getMinecraft();
 
-    public static boolean hudcameraphone = false;
-
     /*
     @SubscribeEvent
 
@@ -41,6 +38,8 @@ public class ClientEventHandler {
      */
 
 
+    public static boolean isCameraActive = false;
+
     private static final ResourceLocation CAMERA_OVERLAY = new ResourceLocation("SPhone", "textures/ui/background/appcam.png");
     private static int framebufferTextureId = -1;
 
@@ -50,10 +49,10 @@ public class ClientEventHandler {
     public void onRenderGameOverlay(RenderGameOverlayEvent.Pre event) {
         if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
 
-            if (hudcameraphone) {
+
+            if(isCameraActive) {
                 if(!(mc.player.getHeldItemMainhand().getItem() instanceof ItemPhone)){
-                    ClientEventHandler.lastPhoneScreenshot = null;
-                    ClientEventHandler.hudcameraphone = false;
+                    Utils.leaveCamera(false);
                     return;
                 }
 
@@ -142,22 +141,16 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onPress(InputEvent.KeyInputEvent event) {
-        if (SPhoneKeys.DEBUG.isPressed()) {
-            RenderAnimations.debug_anim = !RenderAnimations.debug_anim;
-            //ACsGuiApi.asyncLoadThenShowGui("GuiInit",new GuiContactsList(test));
-        }
+
         if (SPhoneKeys.DEBUG_TWO.isPressed()) {
             Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
-            //ACsGuiApi.asyncLoadThenShowGui("GuiInit", GuiHome::new);
         }
 
-        if (hudcameraphone) {
+        if(isCameraActive){
             if (Keyboard.getEventKeyState()) {
                 int keycode = Keyboard.getEventKey();
                 if (keycode == Keyboard.KEY_BACK || keycode == Keyboard.KEY_DELETE || keycode == Keyboard.KEY_ESCAPE || keycode == Keyboard.KEY_E) {
-                    ClientEventHandler.lastPhoneScreenshot = null;
-                    ClientEventHandler.hudcameraphone = false;
-                    mc.displayGuiScreen(new GuiHome().getGuiScreen());
+                    Utils.leaveCamera(true);
                 }
                 if (keycode == Keyboard.KEY_SPACE || keycode == Keyboard.KEY_RETURN) {
                     Utils.makeScreenPhone(framebufferTextureId);

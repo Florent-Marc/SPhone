@@ -5,12 +5,9 @@
 package com.dev.sphone.mod.common.packets;
 
 import com.dev.sphone.mod.common.packets.client.*;
+import com.dev.sphone.mod.common.packets.server.*;
 import com.dev.sphone.mod.common.packets.server.call.PacketJoinCall;
 import com.dev.sphone.SPhone;
-import com.dev.sphone.mod.common.packets.server.PacketEditContact;
-import com.dev.sphone.mod.common.packets.server.PacketEditNote;
-import com.dev.sphone.mod.common.packets.server.PacketGetUniqueConv;
-import com.dev.sphone.mod.common.packets.server.PacketRequestData;
 import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
 import com.dev.sphone.mod.common.packets.server.call.PacketQuitCall;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -29,6 +26,8 @@ public class Network {
         packetFromClient(PacketOpenContacts.Handler.class, PacketOpenContacts.class);
         packetFromClient(PacketOpenConvContact.Handler.class, PacketOpenConvContact.class);
 
+        // *** SERVERS *** //
+
         packetFromServer(PacketJoinCall.ServerHandler.class, PacketJoinCall.class);
         packetFromServer(PacketQuitCall.ServerHandler.class, PacketQuitCall.class);
         packetFromClient(PacketCall.Handler.class, PacketCall.class);
@@ -38,6 +37,8 @@ public class Network {
         packetFromServer(PacketEditNote.ServerHandler.class, PacketEditNote.class);
         packetFromServer(PacketEditContact.ServerHandler.class, PacketEditContact.class);
         packetFromServer(PacketGetUniqueConv.ServerHandler.class, PacketGetUniqueConv.class);
+
+        packetFromServer(PacketSetAnim.ServerHandler.class, PacketSetAnim.class);
 
         // Contacts
         //packetFromServer(PacketGetContacts.ServerHandler.class, PacketGetContacts.class);
