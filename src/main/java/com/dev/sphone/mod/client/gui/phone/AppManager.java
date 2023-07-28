@@ -2,7 +2,9 @@ package com.dev.sphone.mod.client.gui.phone;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.InitAppEvent;
+import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.gui.phone.apps.calculator.GuiCalculator;
+import com.dev.sphone.mod.client.gui.phone.apps.calculator.GuiGallery;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import com.dev.sphone.mod.client.gui.phone.apps.settings.GuiSettingList;
 import com.dev.sphone.mod.common.packets.server.PacketRequestData;
@@ -95,6 +97,30 @@ public class AppManager {
         apps.add(new App(guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings.png"),
                 "Paramètres",
+                "1.0",
+                false,
+                false,
+                null
+        ));
+
+
+        apps.add(new App(null,
+                new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/photo.png"),
+                "Camera",
+                "1.0",
+                false,
+                false,
+                () -> {
+                    ClientEventHandler.hudcameraphone = true;
+                    ClientEventHandler.mc.player.closeScreen();
+                }
+        ));
+
+        guiSupplier = () -> new GuiGallery(root).getGuiScreen();
+
+        apps.add(new App(guiSupplier,
+                new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/gallery.png"),
+                "Galerie",
                 "1.0",
                 false,
                 false,

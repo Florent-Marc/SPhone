@@ -1,0 +1,30 @@
+#root{
+    background-color: #242425;
+}
+
+#field {
+    width: 88%;
+    height: 10%;
+    top: 25%;
+    font-size: 40px;
+    text-align: right;
+    horizontal-position: center;
+}
+
+.screens_list {
+    width: auto;
+    height: 85%;
+    bottom: 10%;
+    top: 15%;
+}
+
+.screen {
+    width: auto;
+    height: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-color: red;
+}

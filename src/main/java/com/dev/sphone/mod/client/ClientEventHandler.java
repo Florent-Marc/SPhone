@@ -109,7 +109,7 @@ public class ClientEventHandler {
                 GlStateManager.popMatrix();
 
                 if (lastPhoneScreenshot == null) {
-                    lastPhoneScreenshot = new DynamicTexture(Utils.getImage(Utils.getLastScreenInFolder()).join());
+                    lastPhoneScreenshot = new DynamicTexture(Utils.getLastPhoneImage().join());
                 }
 
                 GlStateManager.pushMatrix();
