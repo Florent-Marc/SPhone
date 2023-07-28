@@ -1,1 +1,12 @@
+sphone.meteo.cityname= Baltia's Archipelago
+
+
 itemGroup.tab=SPhone
+
+sphone.meteo.prevs=Meteorological previsions
+sphone.meteo.types.thunder=Thunderstorm
+sphone.meteo.types.rain=Rain
+sphone.meteo.types.sunny=Sunny
+sphone.meteo.types.snow=Snow
+sphone.meteo.types.cloud=cloudy
+sphone.meteo.types.sun=Sun

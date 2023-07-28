@@ -6,12 +6,16 @@ import com.dev.sphone.mod.utils.Utils;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.utils.GuiTextureSprite;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class GuiWeather extends GuiBase {
@@ -30,7 +34,7 @@ public class GuiWeather extends GuiBase {
 
         add(getRoot());
 
-        GuiLabel city = new GuiLabel("Archipel de Baltia");
+        GuiLabel city = new GuiLabel(I18n.format("sphone.meteo.cityname"));
         city.setCssId("city");
         getRoot().add(city);
 
@@ -48,12 +52,12 @@ public class GuiWeather extends GuiBase {
         weatherIcon.getStyle().setTexture(new GuiTextureSprite(new ResourceLocation("sphone:textures/ui/icons/weather/"+getTypeFormat(weatherType)+".png")));
         getRoot().add(weatherIcon);
 
-        GuiLabel weatherLabel = new GuiLabel(weatherType);
+        GuiLabel weatherLabel = new GuiLabel(I18n.format("sphone.meteo.types." + weatherType));
         weatherLabel.setCssId("weatherLabel");
         getRoot().add(weatherLabel);
 
 
-        GuiLabel forecastLabel = new GuiLabel("Prévision météorologique");
+        GuiLabel forecastLabel = new GuiLabel(I18n.format("sphone.meteo.prevs"));
         forecastLabel.setCssId("forecastLabel");
         getRoot().add(forecastLabel);
 
@@ -67,7 +71,8 @@ public class GuiWeather extends GuiBase {
         forecastIcon.getStyle().setTexture(new GuiTextureSprite(new ResourceLocation("sphone:textures/ui/icons/weather/"+getTypeFormat(forecastType)+".png")));
         getRoot().add(forecastIcon);
 
-        GuiLabel forecastName = new GuiLabel(forecastType);
+
+        GuiLabel forecastName = new GuiLabel(I18n.format("sphone.meteo.types." + forecastType));
         forecastName.setCssId("forecastName");
         getRoot().add(forecastName);
 
@@ -76,16 +81,16 @@ public class GuiWeather extends GuiBase {
 
     public String getTypeFormat(String weatherType){
         switch (weatherType) {
-            case "Ensoleillé":
-            case "Soleil":
+            case "sunny":
+            case "sun":
                 return "sun";
-            case "Clair":
+            case "clear":
                 return "cloud";
-            case "Pluie":
+            case "rain":
                 return "rain";
-            case "Orage":
+            case "thunder":
                 return "thunder";
-            case "Neige":
+            case "snow":
                 return "snow";
             default:
                 return "";
@@ -104,51 +109,51 @@ public class GuiWeather extends GuiBase {
         String afterTime;
         if(isRaining){
             if(isThundering){
-                current = "Orage";
+                current = "thunder";
                 if(rainTime < thunderTime) {
-                    after = "Soleil";
+                    after = "sun";
                     afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
                 }else{
-                    after = "Pluie";
+                    after = "rain";
                     afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, thunderTime / 20);
                 }
             }else{
-                current = "Pluie";
+                current = "rain";
                 if(thunderTime > rainTime) {
-                    after = "Soleil";
+                    after = "sun";
                     afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
                 }else{
-                    after = "Orage";
+                    after = "thunder";
                     afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, thunderTime / 20);
                 }
             }
         }else{
             if(clearTime != 0) {
                 if (clearTime / (20 * 60) <= 10) {
-                    current = "Clair";
-                    after = "Pluie";
+                    current = "clear";
+                    after = "rain";
                     afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, clearTime / 20);
                 } else {
-                    current = "Ensoleillé";
-                    after = "Pluie";
+                    current = "sunny";
+                    after = "rain";
                     afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, clearTime / 20);
                 }
             }else{
                 if(rainTime < thunderTime){
                     if(rainTime / (20*60) <= 10) {
-                        current = "Clair";
+                        current = "clear";
                     }else{
-                        current = "Ensoleillé";
+                        current = "sunny";
                     }
-                    after = "Pluie";
+                    after = "rain";
                     afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
                 }else{
                     if(thunderTime / (20*60) <= 10) {
-                        current = "Clair";
+                        current = "clear";
                     }else{
-                        current = "Ensoleillé";
+                        current = "sunny";
                     }
-                    after = "Orage";
+                    after = "thunder";
                     afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, thunderTime / 20);
                 }
             }
