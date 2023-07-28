@@ -1,8 +1,3 @@
-
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package com.dev.sphone.mod.client.gui.phone;
 
 import fr.aym.acsguis.component.layout.GridLayout;

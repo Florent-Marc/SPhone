@@ -1,8 +1,3 @@
-
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package com.dev.sphone.mod.server.commands;
 
 import net.minecraft.command.CommandBase;

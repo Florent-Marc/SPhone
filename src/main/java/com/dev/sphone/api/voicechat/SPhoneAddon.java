@@ -1,8 +1,3 @@
-
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package com.dev.sphone.api.voicechat;
 
 import com.dev.sphone.mod.common.packets.client.PacketCall;

@@ -1,14 +1,8 @@
-
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package com.dev.sphone.mod.common.packets.server.call;
 
 import com.dev.sphone.api.events.CallEvent;
-import com.dev.sphone.api.events.InitAppEvent;
-import de.maxhenkel.voicechat.api.Group;
 import com.dev.sphone.api.voicechat.SPhoneAddon;
+import de.maxhenkel.voicechat.api.Group;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;

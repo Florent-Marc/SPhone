@@ -1,8 +1,3 @@
-
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package com.dev.sphone.mod.client.gui.phone.apps.calculator;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
@@ -84,16 +79,16 @@ public class GuiCalculator extends GuiBase {
             String button = buttons.get(i);
             GuiLabel buttonLabel = new GuiLabel(button);
             buttonLabel.setCssClass("button");
-            if(i % 4 == 3){
+            if (i % 4 == 3) {
                 buttonLabel.setCssId("button_2");
-            }else{
+            } else {
                 buttonLabel.setCssId("button_1");
             }
             buttons_list.add(buttonLabel);
             buttonLabel.addClickListener((xB, yB, b) -> {
                 switch (button) {
                     case "C":
-                        if(checkEqual){
+                        if (checkEqual) {
                             y = 0;
                             operator = "";
                             checkEqual = false;
@@ -104,17 +99,17 @@ public class GuiCalculator extends GuiBase {
                         operator = "";
                         break;
                     case "del":
-                        if(checkEqual){
+                        if (checkEqual) {
                             y = 0;
                             operator = "";
                             checkEqual = false;
                         }
 
-                        if(operator.isEmpty()) {
+                        if (operator.isEmpty()) {
                             x = Integer.parseInt(String.valueOf(x).length() > 1 ? String.valueOf(x).substring(0, String.valueOf(x).length() - 1) : String.valueOf(0));
-                        }else if(y != 0){
+                        } else if (y != 0) {
                             y = Integer.parseInt(String.valueOf(y).length() > 1 ? String.valueOf(y).substring(0, String.valueOf(y).length() - 1) : String.valueOf(0));
-                        }else{
+                        } else {
                             operator = "";
                         }
 
@@ -126,7 +121,7 @@ public class GuiCalculator extends GuiBase {
                     case "+":
 
                     case "^":
-                        if(checkEqual){
+                        if (checkEqual) {
                             y = 0;
                             operator = "";
                             checkEqual = false;
@@ -136,12 +131,12 @@ public class GuiCalculator extends GuiBase {
                         break;
                     case "=":
                         checkEqual = true;
-                        if(operator.equals("+")) x = (x + y);
-                        if(operator.equals("-")) x = (x - y);
-                        if(operator.equals("*")) x = (x * y);
-                        if(operator.equals("/")) x = (x / y);
-                        if(operator.equals("%")) x = (x % y);
-                        if(operator.equals("^")) x = (int) Math.pow(x, y);
+                        if (operator.equals("+")) x = (x + y);
+                        if (operator.equals("-")) x = (x - y);
+                        if (operator.equals("*")) x = (x * y);
+                        if (operator.equals("/")) x = (x / y);
+                        if (operator.equals("%")) x = (x % y);
+                        if (operator.equals("^")) x = (int) Math.pow(x, y);
                         break;
 
                     case "0":
@@ -154,22 +149,22 @@ public class GuiCalculator extends GuiBase {
                     case "7":
                     case "8":
                     case "9":
-                        if(operator.isEmpty()) {
-                            if(String.valueOf(x).length() < 5) {
-                                if(checkEqual){
+                        if (operator.isEmpty()) {
+                            if (String.valueOf(x).length() < 5) {
+                                if (checkEqual) {
                                     y = 0;
                                     operator = "";
                                     checkEqual = false;
                                 }
                                 x = Integer.parseInt(x + button);
                             }
-                        }else{
-                            if(checkEqual){
+                        } else {
+                            if (checkEqual) {
                                 y = 0;
                                 operator = "";
                                 checkEqual = false;
                             }
-                            if(String.valueOf(y).length() < 5) {
+                            if (String.valueOf(y).length() < 5) {
                                 y = Integer.parseInt(y + button);
                             }
                         }
