@@ -128,7 +128,6 @@ public class Utils {
         File[] listOfFiles = folder.listFiles();
         assert listOfFiles != null;
         if(listOfFiles.length == 0) return null;
-        if(listOfFiles == null) return null;
         File lastModifiedFile = listOfFiles[0];
         for (int i = 1; i < listOfFiles.length; i++) {
             if (lastModifiedFile.lastModified() < listOfFiles[i].lastModified()) {
