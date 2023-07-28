@@ -58,24 +58,6 @@ public class Utils {
     }
 
 
-    public static File getTimestampedPNGFileForDirectory(File gameDirectory)
-    {
-        String s = DATE_FORMAT.format(new Date()).toString();
-        int i = 1;
-
-        while (true)
-        {
-            File file1 = new File(gameDirectory, s + (i == 1 ? "" : "_" + i) + ".png");
-
-            if (!file1.exists())
-            {
-                return file1;
-            }
-
-            ++i;
-        }
-    }
-
     public static void makeScreenPhone(int framebufferTextureId){
         Minecraft mc = Minecraft.getMinecraft();
 
@@ -117,26 +99,43 @@ public class Utils {
         ClientEventHandler.lastPhoneScreenshot = null;
     }
 
-    public static File getLastScreenInFolder(){
-        File folder = new File("phonescreenshots");
-        File[] listOfFiles = folder.listFiles();
-        File lastModifiedFile = listOfFiles[0];
-        for (int i = 1; i < listOfFiles.length; i++) {
-           if (lastModifiedFile.lastModified() < listOfFiles[i].lastModified()) {
-               lastModifiedFile = listOfFiles[i];
-           }
+    private static File getTimestampedPNGFileForDirectory(File gameDirectory)
+    {
+        String s = DATE_FORMAT.format(new Date()).toString();
+        int i = 1;
+
+        while (true)
+        {
+            File file1 = new File(gameDirectory, s + (i == 1 ? "" : "_" + i) + ".png");
+
+            if (!file1.exists())
+            {
+                return file1;
+            }
+
+            ++i;
         }
-        return lastModifiedFile;
     }
 
     public static File[] getAllPhoneScreenshots(){
         return new File("phonescreenshots").listFiles();
     }
 
-    public static CompletableFuture<BufferedImage> getImage(File file) {
+    public static CompletableFuture<BufferedImage> getLastPhoneImage() {
+
+        File folder = new File("phonescreenshots");
+        File[] listOfFiles = folder.listFiles();
+        File lastModifiedFile = listOfFiles[0];
+        for (int i = 1; i < listOfFiles.length; i++) {
+            if (lastModifiedFile.lastModified() < listOfFiles[i].lastModified()) {
+                lastModifiedFile = listOfFiles[i];
+            }
+        }
+
+        File finalLastModifiedFile = lastModifiedFile;
         return CompletableFuture.supplyAsync(() -> {
             try {
-                return ImageIO.read(file);
+                return ImageIO.read(finalLastModifiedFile);
             } catch (Exception e) {
                 e.printStackTrace();
             }
