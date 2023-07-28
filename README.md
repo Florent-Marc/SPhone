@@ -23,8 +23,8 @@ immersion in the Minecraft universe.
 - **SMS** with other players
 - **Call** with other players
 - **Weather** with prediction forcecast
-- **calculator** for small memory lapses
-
+- **Calculator** for small memory lapses
+- **Multi language** Currently, only French and English are ready.
 ## For Developers
 - **API** with **Events** and basic **UI**
 
