@@ -1,19 +1,18 @@
 package com.dev.sphone.mod.client.gui.phone;
 
+import com.dev.sphone.SPhone;
+import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.tempdata.PhoneSettings;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import com.dev.sphone.SPhone;
 import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.command.CommandLocate;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 
 import java.awt.*;
@@ -49,6 +48,10 @@ public class GuiBase extends GuiFrame {
 
     public void GuiInit(){
         init();
+        if(ClientEventHandler.hudcameraphone){
+            ClientEventHandler.hudcameraphone = false;
+            ClientEventHandler.lastPhoneScreenshot = null;
+        }
     }
 
     private void init(){
