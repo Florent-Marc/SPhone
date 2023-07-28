@@ -4,6 +4,7 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.InitAppEvent;
 import com.dev.sphone.mod.client.gui.phone.apps.calculator.GuiCalculator;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
+import com.dev.sphone.mod.client.gui.phone.apps.settings.GuiSettingList;
 import com.dev.sphone.mod.common.packets.server.PacketRequestData;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -83,6 +84,17 @@ public class AppManager {
         apps.add(new App(guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/calculator.png"),
                 "Calculatrice",
+                "1.0",
+                false,
+                false,
+                null
+        ));
+
+        guiSupplier = () -> new GuiSettingList(root).getGuiScreen();
+
+        apps.add(new App(guiSupplier,
+                new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings.png"),
+                "Paramètres",
                 "1.0",
                 false,
                 false,

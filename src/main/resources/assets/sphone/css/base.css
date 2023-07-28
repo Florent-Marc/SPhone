@@ -35,7 +35,7 @@
 }
 
 .case {
-    background-image: url("sphone:textures/ui/background/acsgui.png");
+    /*background-image: url("sphone:textures/ui/background/acsgui.png");*/
     left: 82%;
     width: 330px;
     height: 675px;

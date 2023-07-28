@@ -5,20 +5,28 @@
 
 package com.dev.sphone.mod.client.gui.phone;
 
+import com.dev.sphone.mod.client.tempdata.PhoneSettings;
+import com.dev.sphone.mod.common.items.ItemPhone;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import com.dev.sphone.SPhone;
+import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.command.CommandLocate;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class GuiBase extends GuiFrame {
 
@@ -54,9 +62,11 @@ public class GuiBase extends GuiFrame {
         this.flushRemovedComponents();
         style.setBackgroundColor(Color.TRANSLUCENT);
 
+
         setCssClass("home");
         GuiPanel Case = new GuiPanel();
         Case.setCssClass("case");
+        Case.getStyle().setTexture(new GuiTextureSprite(new ResourceLocation(SPhone.MOD_ID, "textures/ui/background/" + getSettings().getBackground() + ".png")));
         add(Case);
 
         Background = new GuiPanel();
@@ -93,8 +103,6 @@ public class GuiBase extends GuiFrame {
         } else {
             HomeBar.addClickListener((x,y,bu) -> {
                 Minecraft.getMinecraft().displayGuiScreen(parent);
-                //Minecraft.getMinecraft().displayGuiScreen(new GuiHome().guiScreen);
-
             });
         }
 
@@ -127,4 +135,20 @@ public class GuiBase extends GuiFrame {
     public boolean doesPauseGame() {
         return false;
     }
+
+    public PhoneSettings getSettings() {
+        PhoneSettings settings = new PhoneSettings("acsgui");
+        ItemStack stack = Minecraft.getMinecraft().player.getHeldItemMainhand();
+        if(stack != null) {
+            if(stack.getItem() instanceof ItemPhone) {
+
+                settings.deserializeNBT(Objects.requireNonNull(Minecraft.getMinecraft().player.getHeldItemMainhand().getTagCompound()).getCompoundTag("settings"));
+            } else {
+                Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("sphone.error.no_phone", new Object[0]));            }
+        } else {
+            Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("sphone.error.no_phone", new Object[0]));
+        }
+        return settings;
+    }
+
 }

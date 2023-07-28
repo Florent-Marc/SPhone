@@ -2,6 +2,7 @@ package com.dev.sphone.mod.common.items;
 
 import com.dev.sphone.api.events.CallEvent;
 import com.dev.sphone.api.events.SimRegisterEvent;
+import com.dev.sphone.mod.client.tempdata.PhoneSettings;
 import com.dev.sphone.mod.utils.Utils;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
@@ -63,6 +64,8 @@ public class ItemPhone extends Item {
                 if (isExist) {
                     MinecraftForge.EVENT_BUS.post(new SimRegisterEvent(player, String.valueOf(sim),String.valueOf(num)));
                     setSimCard(player, stack, sim);
+
+                    getTagCompound(stack).setTag("settings", new PhoneSettings("acsgui").serializeNBT());
                 }
             }
         }
