@@ -41,8 +41,9 @@ You can check [here](https://github.com/Florent-Marc/SPhone/wiki) the documentat
   ![image](https://media.discordapp.net/attachments/1133901552483049562/1134520212079792158/image.png)
 
 ## Libs
-- [AcsGui](https://discord.gg/DsaDZsHfjk) for render of gui
-- [Simple Voice Chat](https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat) for voice chat
+- ![AcsGUI](https://avatars.githubusercontent.com/u/20112572?s=20&v=4) [AcsGui](https://discord.gg/DsaDZsHfjk) for render of gui
+- ![SVC](https://cdn.discordapp.com/attachments/1133059122858827851/1134535127586844743/image.png) [Simple Voice Chat](https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat) for voice chat
+- ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white) MySQL for data saving
 ## Authors
 - [Sandji](https://github.com/SandjiGit) Original Developer
 - [MK](https://github.com/Florent-Marc) Original Developer
