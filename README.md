@@ -33,7 +33,7 @@ immersion in the Minecraft universe.
   ![image](https://cdn.discordapp.com/attachments/1133901552483049562/1134140238739030076/image.png)
   ![image](https://cdn.discordapp.com/attachments/1133901552483049562/1134220104624783370/image.png)
   ![image](https://cdn.discordapp.com/attachments/1133901552483049562/1134220602119561319/image.png)
-  ![image](https://media.discordapp.net/attachments/1133901552483049562/1134517855841423502/image.png)
+  ![image](https://media.discordapp.net/attachments/1133901552483049562/1134520212079792158/image.png)
 
 ## Libs
 - [AcsGui](https://discord.gg/DsaDZsHfjk) for render of gui
