@@ -33,9 +33,8 @@ immersion in the Minecraft universe.
   ![image](https://cdn.discordapp.com/attachments/1133901552483049562/1134140238739030076/image.png)
   ![image](https://cdn.discordapp.com/attachments/1133901552483049562/1134220104624783370/image.png)
   ![image](https://cdn.discordapp.com/attachments/1133901552483049562/1134220602119561319/image.png)
-  ![image](https://cdn.discordapp.com/attachments/1133059122858827851/1134494731997564928/image.png)
+  ![image](https://media.discordapp.net/attachments/1133901552483049562/1134517855841423502/image.png)
 
-)
 ## Libs
 - [AcsGui](https://discord.gg/DsaDZsHfjk) for render of gui
 - [Simple Voice Chat](https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat) for voice chat
