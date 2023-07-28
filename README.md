@@ -25,6 +25,11 @@ immersion in the Minecraft universe.
 - **Weather** with prediction forcecast
 - **Calculator** for small memory lapses
 - **Multi language** Currently, only French and English are ready.
+
+## Documentation
+
+You can check [https://github.com/Florent-Marc/SPhone/wiki](here the documentation). If you have any question you can ask them on our [https://discord.gg/WC9k6Zn3](Discord).
+
 ## For Developers
 - **API** with **Events** and basic **UI**
 
