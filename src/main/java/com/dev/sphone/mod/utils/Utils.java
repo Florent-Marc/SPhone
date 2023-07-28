@@ -124,6 +124,7 @@ public class Utils {
     public static CompletableFuture<BufferedImage> getLastPhoneImage() {
 
         File folder = new File("phonescreenshots");
+        if(!folder.exists()) folder.mkdir();
         File[] listOfFiles = folder.listFiles();
         File lastModifiedFile = listOfFiles[0];
         for (int i = 1; i < listOfFiles.length; i++) {
