@@ -2,15 +2,17 @@
   {
     "modid": "sphone",
     "name": "SPhone",
-    "description": "SPhone is a simple phone mod for roleplay server.",
+    "description": "SPhone is a simple phone mod and api for roleplay server.",
     "version": "",
     "mcversion": "${mcversion}",
-    "url": "",
+    "url": "https://discord.gg/R7FftKwERq",
     "updateUrl": "",
     "authorList": [
-      "0hSandji"
+      "0hSandji",
+      "MK",
+      "Gabidut76"
     ],
-    "credits": "",
+    "credits": "Yan36 for the design of Settings & Meteo Applications.",
     "logoFile": "",
     "screenshots": [],
     "dependencies": []
