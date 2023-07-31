@@ -3,6 +3,10 @@ package com.dev.sphone;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.SPhoneTab;
 import com.dev.sphone.mod.common.animations.RenderAnimations;
+import com.dev.sphone.mod.common.capa.CapabilityHandler;
+import com.dev.sphone.mod.common.capa.IStats;
+import com.dev.sphone.mod.common.capa.StatsStorage;
+import com.dev.sphone.mod.common.capa.maison;
 import com.dev.sphone.mod.common.packets.Network;
 import com.dev.sphone.mod.common.proxy.CommonProxy;
 import com.dev.sphone.mod.common.register.RegisterHandler;
@@ -11,6 +15,7 @@ import com.dev.sphone.mod.server.commands.CommandGivePhone;
 import com.dev.sphone.mod.server.commands.CommandGroup;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -33,6 +38,7 @@ public class SPhone {
     public static final String VERSION = "0.0.1";
     public static final boolean DEV_MOD = true;
 
+
     @SidedProxy(clientSide = "com.dev.sphone.mod.common.proxy.ClientProxy", serverSide = "com.dev.sphone.mod.common.proxy.CommonProxy")
     public static CommonProxy PROXY;
 
@@ -51,7 +57,10 @@ public class SPhone {
         MethodesBDDImpl.checkTable();
         MinecraftForge.EVENT_BUS.register(new RegisterHandler());
         MinecraftForge.EVENT_BUS.register(this);
+        CapabilityManager.INSTANCE.register(IStats.class, new CapabilityHandler.Storage(), () -> new StatsStorage(1,new maison("test",1)));
+
         logger = e.getModLog();
+
 
         if (e.getSide().isClient()) {
             MinecraftForge.EVENT_BUS.register(new ClientEventHandler());

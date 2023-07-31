@@ -1,8 +1,7 @@
 package com.dev.sphone.mod.client;
 
-import com.dev.sphone.api.events.CallEvent;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
-import com.dev.sphone.mod.common.animations.RenderAnimations;
+import com.dev.sphone.mod.common.capa.CapabilityHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -10,6 +9,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 public class ClientEventHandler {
 
     public static final Minecraft mc = Minecraft.getMinecraft();
+    public static CapabilityHandler c = new CapabilityHandler();
 
     /*
     @SubscribeEvent
@@ -30,8 +30,10 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void onPress(InputEvent.KeyInputEvent event) {
         if (SPhoneKeys.DEBUG.isPressed()) {
-            RenderAnimations.debug_anim = !RenderAnimations.debug_anim;
+            //RenderAnimations.debug_anim = !RenderAnimations.debug_anim;
             //ACsGuiApi.asyncLoadThenShowGui("GuiInit",new GuiContactsList(test));
+            //IProfils capa = Minecraft.getMinecraft().player.getCapability(CapabilityHandler.Profils_CAPABILITY, null);
+            //Minecraft.getMinecraft().player.sendChatMessage(capa.getMoney() + "");
         }
         if (SPhoneKeys.DEBUG_TWO.isPressed()) {
             Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());

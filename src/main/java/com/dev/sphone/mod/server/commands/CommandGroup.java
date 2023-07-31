@@ -5,10 +5,13 @@
 
 package com.dev.sphone.mod.server.commands;
 
+import com.dev.sphone.mod.common.capa.CapabilityHandler;
+import com.dev.sphone.mod.common.capa.IStats;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 
@@ -50,6 +53,15 @@ public class CommandGroup extends CommandBase {
                 EntityPlayer player = sender.getServer().getPlayerList().getPlayerByUsername(args[1]);
                 //SPhoneAddon.removeFromActualGroup(player);
                 sender.sendMessage(new TextComponentString("Vous avez retirer le joueur : " + args[1] + " de son Group Actuel"));
+            }
+        }
+        if (args[0].equals("test")) {
+            if (!args[1].isEmpty()) {
+                EntityPlayer player = (EntityPlayer) sender;
+                IStats stats = player.getCapability(CapabilityHandler.STATS, null);
+                stats.addMoney(Integer.parseInt(args[1]));
+                CapabilityHandler.syncPlayer(player, sender.getServer().getPlayerList().getPlayers());
+
             }
         }
     }

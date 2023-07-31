@@ -38,6 +38,7 @@ public class Network {
         packetFromServer(PacketEditNote.ServerHandler.class, PacketEditNote.class);
         packetFromServer(PacketEditContact.ServerHandler.class, PacketEditContact.class);
         packetFromServer(PacketGetUniqueConv.ServerHandler.class, PacketGetUniqueConv.class);
+        packetFromClient(PacketSyncCapa.Handler.class, PacketSyncCapa.class);
 
         // Contacts
         //packetFromServer(PacketGetContacts.ServerHandler.class, PacketGetContacts.class);
