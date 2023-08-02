@@ -179,6 +179,7 @@ public class MethodesBDDImpl {
     }
 
 
+
     public static List<Conversation> getConversations(int sim) {
         List<Conversation> conversations = new ArrayList<>();
         List<String> senders = new ArrayList<>();

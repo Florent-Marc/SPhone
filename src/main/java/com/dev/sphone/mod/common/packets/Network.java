@@ -39,6 +39,7 @@ public class Network {
         packetFromServer(PacketGetUniqueConv.ServerHandler.class, PacketGetUniqueConv.class);
 
         packetFromServer(PacketSetAnim.ServerHandler.class, PacketSetAnim.class);
+        packetFromServer(PacketSendMessage.ServerHandler.class, PacketSendMessage.class);
 
         // Contacts
         //packetFromServer(PacketGetContacts.ServerHandler.class, PacketGetContacts.class);

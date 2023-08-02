@@ -4,14 +4,17 @@
 
 package com.dev.sphone.mod.client.gui.phone.apps.message;
 
+import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.layout.CustomGridLayout;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
+import com.dev.sphone.mod.common.packets.server.PacketSendMessage;
+import com.dev.sphone.mod.common.phone.Conversation;
+import com.dev.sphone.mod.common.phone.Message;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
-import com.dev.sphone.mod.common.phone.Conversation;
-import com.dev.sphone.mod.common.phone.Message;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
@@ -39,12 +42,13 @@ public class GuiConv extends GuiBase {
         getBackground().add(AppTitle);
 
         GuiScrollPane contacts_list = new GuiScrollPane() {
-            public double max=0;
+            public double max = 0;
+
             @Override
             public void updateSlidersVisibility() {
                 super.updateSlidersVisibility();
                 if (ySlider == null) return;
-                if(max != ySlider.getMax()) {
+                if (max != ySlider.getMax()) {
                     max = ySlider.getMax();
                     ySlider.setValue(ySlider.getMax());
                 }
@@ -93,6 +97,9 @@ public class GuiConv extends GuiBase {
         GuiPanel send = new GuiPanel();
         send.setCssClass("send");
         send.addClickListener((mouseX, mouseY, mouseButton) -> {
+            SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv.getSender().getNumero()));
+            //close gui
+            Minecraft.getMinecraft().displayGuiScreen(null);
         });
         getBackground().add(send);
         contacts_list.getySlider().setValue(contacts_list.getySlider().getMax());

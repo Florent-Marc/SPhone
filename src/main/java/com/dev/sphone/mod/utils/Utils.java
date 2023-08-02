@@ -3,10 +3,12 @@ package com.dev.sphone.mod.utils;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.packets.server.PacketSetAnim;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.HttpUtil;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -59,6 +61,9 @@ public class Utils {
         Date d = new Date(date);
         return d;
     }
+
+    //get date and return long
+
 
 
     public static void makeScreenPhone(int framebufferTextureId){
@@ -164,5 +169,16 @@ public class Utils {
         if(isUsingMod("com.mrcrayfish.obfuscate.Obfuscate")) SPhone.network.sendToServer(new PacketSetAnim(false));
 
         if(returnHome) ClientEventHandler.mc.displayGuiScreen(new GuiHome().getGuiScreen());
+    }
+
+
+    public static boolean hasPhone(EntityPlayer player) {
+        return ItemPhone.getSimCard(player.getHeldItemMainhand()) != 0;
+    }
+
+   //get phone and return sim
+    public static int getSimCard(EntityPlayer p) {
+        ItemPhone phone = (ItemPhone) p.getHeldItemMainhand().getItem();
+        return p.getHeldItemMainhand().hasTagCompound() ? p.getHeldItemMainhand().getTagCompound().getInteger("simcard") : 0;
     }
 }
