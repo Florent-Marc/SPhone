@@ -139,16 +139,16 @@ public class MethodesBDDImpl {
         instance.execute("INSERT INTO message (sender, receiver, message, date) VALUES (?, ?, ?, ?)", message.getSender(), message.getReceiver(), message.getMessage(), message.getDate());
     }
 
-    public static int getNumero(int sim) {
+    public static String getNumero(int sim) {
         QueryResult qr = instance.getData("SELECT * FROM sim WHERE sim = ?", sim);
         if(qr.getRowsCount() > 0) {
-            return Integer.parseInt(qr.getValue(0, 2));
+            return qr.getValue(0, 2);
         }
-        return -1;
+        return null;
     }
 
     public static List<Message> getMessages(int sim) {
-        int number = getNumero(sim);
+        String number = getNumero(sim);
         List<Message> messages = new ArrayList<>();
         QueryResult qr = instance.getData("SELECT * FROM message WHERE sender = ? OR receiver = ?", number, number);
         for (int i = 0; i < qr.getRowsCount(); i++) {
@@ -157,7 +157,7 @@ public class MethodesBDDImpl {
         return messages;
     }
     public static List<Message> getMessage(int sim, String contactNumber) {
-        int number = getNumero(sim);
+        String number = getNumero(sim);
         List<Message> messages = new ArrayList<>();
         QueryResult qr = instance.getData("SELECT * FROM message WHERE (sender = ? AND receiver = ?) OR (sender = ? AND receiver = ?)", number, contactNumber, contactNumber, number);
         for (int i = 0; i < qr.getRowsCount(); i++) {
@@ -205,7 +205,7 @@ public class MethodesBDDImpl {
         return conversations;
     }
 
-    public static boolean checkNumber(int number) {
+    public static boolean checkNumber(String number) {
         QueryResult qr = instance.getData("SELECT * FROM sim WHERE number = ?", number);
         return qr.getRowsCount() != 0;
     }
@@ -215,7 +215,7 @@ public class MethodesBDDImpl {
         return qr.getRowsCount() != 0;
     }
 
-    public static boolean addSim(int sim, int number) {
+    public static boolean addSim(int sim, String number) {
         if (!checkNumber(number) && !checkSim(sim)) {
             instance.execute("INSERT INTO sim (sim, number) VALUES (?, ?)", sim, number);
             return true;

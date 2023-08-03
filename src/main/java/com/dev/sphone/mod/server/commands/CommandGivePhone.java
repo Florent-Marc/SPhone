@@ -1,6 +1,7 @@
 package com.dev.sphone.mod.server.commands;
 
 import com.dev.sphone.mod.common.items.ItemPhone;
+import com.dev.sphone.mod.common.register.ItemsRegister;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -26,15 +27,20 @@ public class CommandGivePhone extends CommandBase {
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         if (args.length == 1) {
             EntityPlayer player = (EntityPlayer) sender;
-            ItemStack stack = player.getHeldItemMainhand();
+            ItemStack stack = new ItemStack(ItemsRegister.ITEM_PHONE);
             //get tag of stack
             NBTTagCompound tag = stack.getTagCompound();
-            tag.setString("numero", args[0]);
+            tag.setInteger("simcard", Integer.parseInt(args[0]));
+
+            //tag.setInteger("numero", Integer.parseInt(args[1]));
             //set tag number to item
             stack.setTagCompound(tag);
+            //give item to player
+            player.addItemStackToInventory(stack);
+            //set simcard to item
 
             ItemPhone.setSimCard(player, stack, Integer.parseInt(args[0]));
         }

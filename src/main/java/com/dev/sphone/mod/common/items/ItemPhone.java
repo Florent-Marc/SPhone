@@ -1,13 +1,12 @@
 package com.dev.sphone.mod.common.items;
 
-import com.dev.sphone.api.events.CallEvent;
+import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.SimRegisterEvent;
 import com.dev.sphone.mod.client.tempdata.PhoneSettings;
-import com.dev.sphone.mod.utils.Utils;
-import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
 import com.dev.sphone.mod.common.register.ItemsRegister;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
+import com.dev.sphone.mod.utils.Utils;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,13 +45,13 @@ public class ItemPhone extends Item {
                 int sim = Utils.getRandomNumber(1000, 9999);
                 int num = Utils.getRandomNumber(10000, 99999);
                 boolean isExist = false;
-                if (MethodesBDDImpl.addSim(sim, num)) {
+                if (MethodesBDDImpl.addSim(sim, String.valueOf(num))) {
                     isExist = true;
                 } else {
                     for (int j = 0; j < 50; j++) {
                         sim = Utils.getRandomNumber(1000, 9999);
                         num = Utils.getRandomNumber(10000, 99999);
-                        if (MethodesBDDImpl.addSim(sim, num)) {
+                        if (MethodesBDDImpl.addSim(sim, String.valueOf(num))) {
                             isExist = true;
                             break;
                         }
@@ -62,7 +61,7 @@ public class ItemPhone extends Item {
                     }
                 }
                 if (isExist) {
-                    MinecraftForge.EVENT_BUS.post(new SimRegisterEvent(player, String.valueOf(sim),String.valueOf(num)));
+                    MinecraftForge.EVENT_BUS.post(new SimRegisterEvent(player, String.valueOf(sim), String.valueOf(num)));
                     setSimCard(player, stack, sim);
 
                     getTagCompound(stack).setTag("settings", new PhoneSettings("acsgui").serializeNBT());
@@ -74,7 +73,7 @@ public class ItemPhone extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flagIn) {
-        if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
             tooltip.add("");
             tooltip.add("-> Version du Téléphone : " + SPhone.VERSION);
             tooltip.add("-> Mode Développeur : " + SPhone.DEV_MOD);
@@ -92,28 +91,28 @@ public class ItemPhone extends Item {
         super.addInformation(stack, world, tooltip, flagIn);
     }
 
-    public static boolean isPhone(ItemStack stack){
+    public static boolean isPhone(ItemStack stack) {
         return stack.getItem() == ItemsRegister.ITEM_PHONE;
     }
 
-    public static NBTTagCompound getTagCompound(ItemStack stack){
+    public static NBTTagCompound getTagCompound(ItemStack stack) {
         NBTTagCompound nbt;
-        if(!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
+        if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
         nbt = stack.getTagCompound();
         return nbt;
     }
 
-    public static void setSimCard(EntityPlayer player, ItemStack stack, int sim){
-        if(!isPhone(stack)) return;
+    public static void setSimCard(EntityPlayer player, ItemStack stack, int sim) {
+        if (!isPhone(stack)) return;
         NBTTagCompound nbt = getTagCompound(stack);
         nbt.setInteger(SIM_KEY_TAG, sim);
         Utils.sendActionChat(player, "Vous avez injecté la carte sim : " + sim, false);
     }
 
-    public static int getSimCard(ItemStack stack){
-        if(isPhone(stack)) {
+    public static int getSimCard(ItemStack stack) {
+        if (isPhone(stack)) {
             NBTTagCompound nbt = getTagCompound(stack);
-            if(nbt.hasKey(SIM_KEY_TAG)) return nbt.getInteger(SIM_KEY_TAG);
+            if (nbt.hasKey(SIM_KEY_TAG)) return nbt.getInteger(SIM_KEY_TAG);
         }
         return 0;
     }

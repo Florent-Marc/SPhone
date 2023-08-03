@@ -44,7 +44,7 @@ public class AppManager {
         apps.add(new App(
                 null,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/weather_icon.png"),
-                "Messages",
+                "weather",
                 "1.0",
                 false,
                 false,

@@ -58,10 +58,10 @@ public class PacketSendMessage extends SerializablePacket implements IMessage {
                 }
                 String sender = String.valueOf(MethodesBDDImpl.getNumero(Utils.getSimCard(player)));
                 Message message1 = new Message(messageToSend, new Date().getTime(), sender, receiver.getSender().getNumero());
-                if (MinecraftForge.EVENT_BUS.post(new MessageEvent.Send(sender, message1))) {
-                    MethodesBDDImpl.addMessage(message1);
-                    SPhone.network.sendTo(new PacketOpenConvContact(MethodesBDDImpl.getConversations(Utils.getSimCard(player)), MethodesBDDImpl.getConversation(Utils.getSimCard(player), receiver.getSender())), (EntityPlayerMP) player);
-                }
+                MinecraftForge.EVENT_BUS.post(new MessageEvent.Send(sender, message1));
+                MethodesBDDImpl.addMessage(message1);
+                SPhone.network.sendTo(new PacketOpenConvContact(MethodesBDDImpl.getConversations(Utils.getSimCard(player)), MethodesBDDImpl.getConversation(Utils.getSimCard(player), receiver.getSender())), (EntityPlayerMP) player);
+
             }
 
             return null;
