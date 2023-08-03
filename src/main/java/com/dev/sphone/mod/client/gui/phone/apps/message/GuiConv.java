@@ -97,7 +97,7 @@ public class GuiConv extends GuiBase {
         GuiPanel send = new GuiPanel();
         send.setCssClass("send");
         send.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv.getSender().getNumero()));
+            SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv));
             //close gui
             Minecraft.getMinecraft().displayGuiScreen(null);
         });

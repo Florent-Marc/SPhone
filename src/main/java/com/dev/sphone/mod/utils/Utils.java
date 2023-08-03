@@ -8,7 +8,6 @@ import com.dev.sphone.mod.common.packets.server.PacketSetAnim;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.HttpUtil;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -35,7 +34,7 @@ public class Utils {
     }
 
     public static void sendActionChat(EntityPlayer player, String msg, Boolean actionbar) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.GREEN + msg), actionbar);
+        player.sendStatusMessage(new TextComponentString(TextFormatting.GREEN + msg), actionbar);
     }
 
     public static void sendErrorChat(EntityPlayer player, String msg, Boolean actionbar) {
@@ -44,7 +43,7 @@ public class Utils {
 
     public static String getCurrentDateFormat(String format, TimeUnit timeUnit, long additionalTime) {
         Date date = new Date();
-        if(additionalTime != 0 && additionalTime != -1) {
+        if (additionalTime != 0 && additionalTime != -1) {
             date.setTime(date.getTime() + timeUnit.toMillis(additionalTime));
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
@@ -65,8 +64,7 @@ public class Utils {
     //get date and return long
 
 
-
-    public static void makeScreenPhone(int framebufferTextureId){
+    public static void makeScreenPhone(int framebufferTextureId) {
         Minecraft mc = Minecraft.getMinecraft();
 
         File file1 = new File("phonescreenshots");
@@ -107,17 +105,14 @@ public class Utils {
         ClientEventHandler.lastPhoneScreenshot = null;
     }
 
-    private static File getTimestampedPNGFileForDirectory(File gameDirectory)
-    {
+    private static File getTimestampedPNGFileForDirectory(File gameDirectory) {
         String s = DATE_FORMAT.format(new Date()).toString();
         int i = 1;
 
-        while (true)
-        {
+        while (true) {
             File file1 = new File(gameDirectory, s + (i == 1 ? "" : "_" + i) + ".png");
 
-            if (!file1.exists())
-            {
+            if (!file1.exists()) {
                 return file1;
             }
 
@@ -125,7 +120,7 @@ public class Utils {
         }
     }
 
-    public static File[] getAllPhoneScreenshots(){
+    public static File[] getAllPhoneScreenshots() {
         return new File("phonescreenshots").listFiles();
     }
 
@@ -135,7 +130,7 @@ public class Utils {
         folder.mkdir();
         File[] listOfFiles = folder.listFiles();
         assert listOfFiles != null;
-        if(listOfFiles.length == 0) return null;
+        if (listOfFiles.length == 0) return null;
         File lastModifiedFile = listOfFiles[0];
         for (int i = 1; i < listOfFiles.length; i++) {
             if (lastModifiedFile.lastModified() < listOfFiles[i].lastModified()) {
@@ -155,7 +150,7 @@ public class Utils {
     }
 
     public static boolean isUsingMod(String mainClass) {
-        try{
+        try {
             Class.forName(mainClass);
             return true;
         } catch (ClassNotFoundException e) {
@@ -163,12 +158,12 @@ public class Utils {
         }
     }
 
-    public static void leaveCamera(boolean returnHome){
+    public static void leaveCamera(boolean returnHome) {
         ClientEventHandler.lastPhoneScreenshot = null;
         ClientEventHandler.isCameraActive = false;
-        if(isUsingMod("com.mrcrayfish.obfuscate.Obfuscate")) SPhone.network.sendToServer(new PacketSetAnim(false));
+        if (isUsingMod("com.mrcrayfish.obfuscate.Obfuscate")) SPhone.network.sendToServer(new PacketSetAnim(false));
 
-        if(returnHome) ClientEventHandler.mc.displayGuiScreen(new GuiHome().getGuiScreen());
+        if (returnHome) ClientEventHandler.mc.displayGuiScreen(new GuiHome().getGuiScreen());
     }
 
 
@@ -176,9 +171,8 @@ public class Utils {
         return ItemPhone.getSimCard(player.getHeldItemMainhand()) != 0;
     }
 
-   //get phone and return sim
+    //get phone and return sim
     public static int getSimCard(EntityPlayer p) {
-        ItemPhone phone = (ItemPhone) p.getHeldItemMainhand().getItem();
         return p.getHeldItemMainhand().hasTagCompound() ? p.getHeldItemMainhand().getTagCompound().getInteger("simcard") : 0;
     }
 }
