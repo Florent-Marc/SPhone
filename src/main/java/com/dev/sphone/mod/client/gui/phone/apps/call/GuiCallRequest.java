@@ -33,7 +33,7 @@ public class GuiCallRequest extends GuiHome {
         GuiPanel ButtonAccept = new GuiPanel();
         ButtonAccept.setCssClass("button_accept");
         ButtonAccept.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketCallRequest(true));
+            SPhone.network.sendToServer(new PacketCallRequest(true,number));
             mc.displayGuiScreen(new GuiCall(this.getGuiScreen(), number).getGuiScreen());
         });
         getBackground().add(ButtonAccept);
@@ -41,7 +41,7 @@ public class GuiCallRequest extends GuiHome {
         GuiPanel ButtonDecline = new GuiPanel();
         ButtonDecline.setCssClass("button_decline");
         ButtonDecline.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketCallRequest(false));
+            SPhone.network.sendToServer(new PacketCallRequest(false,number));
             mc.displayGuiScreen(new GuiCallEnd(this.getGuiScreen(), number).getGuiScreen());
         });
         getBackground().add(ButtonDecline);

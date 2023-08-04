@@ -1,5 +1,6 @@
 package com.dev.sphone;
 
+import com.dev.sphone.api.voicechat.VoiceNetwork;
 import com.dev.sphone.mod.client.ClientEventAnim;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.SPhoneTab;
@@ -52,6 +53,7 @@ public class SPhone {
         MethodesBDDImpl.checkFile();
         MethodesBDDImpl.checkTable();
         MinecraftForge.EVENT_BUS.register(new RegisterHandler());
+        MinecraftForge.EVENT_BUS.register(new VoiceNetwork());
         MinecraftForge.EVENT_BUS.register(this);
         logger = e.getModLog();
 

@@ -1,1 +1,12 @@
+sphone.meteo.cityname= Archipelle de Baltia
+
+
 itemGroup.tab=SPhone
+
+sphone.meteo.prevs=Prévisions météologiques
+sphone.meteo.types.thunder=Orage
+sphone.meteo.types.rain=Pluie
+sphone.meteo.types.sunny=Ensoleillé
+sphone.meteo.types.snow=Neige
+sphone.meteo.types.cloud=Nuageux
+sphone.meteo.types.sun=Soleil
