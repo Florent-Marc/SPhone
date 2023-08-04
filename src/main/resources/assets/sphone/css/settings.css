@@ -70,12 +70,25 @@
     width: 50%;
 }
 
+.home_bar {
+    height: 9px;
+    width: 150px;
+    left: 1665px;
+    top: 1019px;
+    background-color: #6f6f6f;
+    border-radius: 5px;
+    z-index: 10;
+}
+.home_bar:hover {
+    background-color: #90949F;
+}
+
 /* Customisation */
 
 .backgrounds  {
-    background-color: red;
+    background-color: white;
     width: 100%;
-    height: 75%;
+    height: 45%;
     top: 25%;
     left: 8%;
 }
@@ -87,10 +100,10 @@
 .background_label {
     left: auto;
     background-color: transparent;
-    color: white;
+    color: black;
     font-family: "dnx:montserratlow";
     font-size: 2;
-    top: 50%;
+    top: 85%;
     width: 100%;
 }
 .background_label_selected {
@@ -99,6 +112,7 @@
     color: green;
     font-family: "dnx:montserratlow";
     font-size: 2;
-    top: 50%;
+    top: 85%;
     width: 100%;
 }
+

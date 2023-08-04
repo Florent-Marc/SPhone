@@ -5,6 +5,9 @@ import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.packets.server.PacketSetAnim;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,9 +19,10 @@ import org.lwjgl.opengl.GL11;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -147,6 +151,90 @@ public class Utils {
             }
             return null;
         }, HttpUtil.DOWNLOADER_EXECUTOR);
+    }
+
+    /**
+     * @return String[] of all backgrounds (String[1] = background id, String[2] = background name)
+     */
+
+    public static String[] getBackgrounds() {
+        File folder = new File("config/sphone");
+        folder.mkdir();
+        File file = new File("config/sphone/backgrounds.json");
+        // if file doesn't exist, create it
+        if(!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // write default backgrounds
+            try {
+                OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()), StandardCharsets.UTF_8);
+                // TODO: Find better way to write this
+                writer.write(
+                        "{\n" +
+                            "  \"backgrounds\": [\n" +
+                            "    {\n" +
+                            "      \"id\":\"acsgui\",\n" +
+                            "      \"name\":\"ACS-GUI\"\n" +
+                            "    },\n" +
+                            "    {\n" +
+                            "      \"id\":\"deauville\",\n" +
+                            "      \"name\":\"Deauville\"\n" +
+                            "    },\n" +
+                            "    {\n" +
+                            "      \"id\":\"stmichel\",\n" +
+                            "      \"name\":\"St Michel\"\n" +
+                            "    },\n" +
+                            "    {\n" +
+                            "      \"id\":\"playa\",\n" +
+                            "      \"name\":\"Playa\"\n" +
+                            "    },\n" +
+                            "    {\n" +
+                            "      \"id\":\"oscuridad\",\n" +
+                            "      \"name\":\"Oscuridad\"\n" +
+                            "    },\n" +
+                            "    {\n" +
+                            "      \"id\":\"iluminacion\",\n" +
+                            "      \"name\":\"Illumination\"\n" +
+                            "    }\n" +
+                            "  ]\n" +
+                            "}"
+                );
+                writer.close();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // read file
+        String json = "";
+        try {
+            json = new String(Files.readAllBytes(file.toPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // parse json
+        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+        JsonArray backgrounds = jsonObject.getAsJsonArray("backgrounds");
+
+
+        String[] backgroundsArray = new String[backgrounds.size()];
+        for(int i = 0; i < backgrounds.size(); i++) {
+            JsonObject background = backgrounds.get(i).getAsJsonObject();
+            backgroundsArray[i] = background.get("id").getAsString();
+        }
+
+        // make double value : id -> name
+        for(int i = 0; i < backgrounds.size(); i++) {
+            JsonObject background = backgrounds.get(i).getAsJsonObject();
+            backgroundsArray[i] = background.get("id").getAsString() + ":" + background.get("name").getAsString();
+        }
+        return backgroundsArray;
+
     }
 
     public static boolean isUsingMod(String mainClass) {
