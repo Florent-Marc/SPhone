@@ -1,9 +1,6 @@
 package com.dev.sphone.mod.server.bdd;
 
-import com.dev.sphone.mod.common.phone.Contact;
-import com.dev.sphone.mod.common.phone.Conversation;
-import com.dev.sphone.mod.common.phone.Message;
-import com.dev.sphone.mod.common.phone.Note;
+import com.dev.sphone.mod.common.phone.*;
 import com.dev.sphone.mod.utils.Utils;
 
 import java.io.File;
@@ -80,6 +77,31 @@ public class MethodesBDDImpl {
                 "\t`name` VARCHAR(24) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
                 "\t`note` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
                 "\t`date` BIGINT(19) NULL DEFAULT NULL,\n" +
+                "\tPRIMARY KEY (`id`) USING BTREE\n" +
+                ")\n" +
+                "COLLATE='utf8mb3_general_ci'\n" +
+                "ENGINE=InnoDB\n" +
+                "AUTO_INCREMENT=0\n" +
+                ";\n");
+        instance.execute("CREATE TABLE IF NOT EXISTS `news_accounts` (\n" +
+                "\t`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,\n" +
+                "\t`sim` VARCHAR(10) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`username` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`password` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`creation_date` BIGINT(19) NULL DEFAULT NULL,\n" +
+                "\tPRIMARY KEY (`id`) USING BTREE\n" +
+                ")\n" +
+                "COLLATE='utf8mb3_general_ci'\n" +
+                "ENGINE=InnoDB\n" +
+                "AUTO_INCREMENT=0\n" +
+                ";\n");
+        instance.execute("CREATE TABLE IF NOT EXISTS `news` (\n" +
+                "\t`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,\n" +
+                "\t`title` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`content` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`image` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`date` BIGINT(19) NULL DEFAULT NULL,\n" +
+                "\t`author` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
                 "\tPRIMARY KEY (`id`) USING BTREE\n" +
                 ")\n" +
                 "COLLATE='utf8mb3_general_ci'\n" +
@@ -221,6 +243,28 @@ public class MethodesBDDImpl {
             return true;
         }
         return false;
+    }
+
+    public static void addNews(News news) {
+        instance.execute("INSERT INTO news (title, content, image, date, author) VALUES (?, ?, ?, ?, ?)", news.getTitle(), news.getContent(), news.getImage(), news.getDate(), news.getAuthor());
+    }
+    public static void editNews(News news) {
+        instance.execute("UPDATE news SET title = ?, content = ?, image = ?, date = ?, author = ? WHERE id = ?", news.getTitle(), news.getContent(), news.getImage(), news.getDate(), news.getAuthor(), news.getId());
+    }
+
+    public static void deleteNews(News news) {
+        instance.execute("DELETE FROM news WHERE id = ?", news.getId());
+    }
+
+    public static List<News> getNews() {
+        List<News> news = new ArrayList<>();
+        QueryResult qr = instance.getData("SELECT * FROM news");
+        for (int i = 0; i < qr.getRowsCount(); i++) {
+            news.add(
+                    new News(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3), Long.valueOf(qr.getValue(i, 4)), qr.getValue(i, 5))
+            );
+        }
+        return news;
     }
 
 }
