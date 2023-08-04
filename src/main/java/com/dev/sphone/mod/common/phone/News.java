@@ -52,16 +52,16 @@ public class News implements ISerializable, ISerializablePacket {
 
     @Override
     public Object[] getObjectsToSave() {
-        return new Object[]{};
+        return new Object[]{id, title, content, image, date, author};
     }
 
     @Override
     public void populateWithSavedObjects(Object[] objects) {
         id = (int) objects[0];
-        title = (String) objects[0];
-        content = (String) objects[1];
-        image = (String) objects[2];
-        date = (long) objects[3];
-        author = (String) objects[4];
+        title = (String) objects[1];
+        content = (String) objects[2];
+        image = (String) objects[3];
+        date = (long) objects[4];
+        author = (String) objects[5];
     }
 }
