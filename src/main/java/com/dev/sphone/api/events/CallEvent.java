@@ -23,7 +23,6 @@ public class CallEvent extends Event {
     }
 
 
-    @Cancelable
     public static class JoinCall extends CallEvent {
         public JoinCall(EntityPlayer player,String targetnumber) {
             super(player, targetnumber);
@@ -34,6 +33,12 @@ public class CallEvent extends Event {
     public static class LeaveCall extends CallEvent {
         public LeaveCall(EntityPlayer player, String callnumber) {
             super(player, callnumber);
+        }
+    }
+
+    public static class CreateCall extends CallEvent {
+        public CreateCall(EntityPlayer player, String number) {
+            super(player, number);
         }
     }
 }
