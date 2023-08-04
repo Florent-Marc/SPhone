@@ -1,9 +1,12 @@
 package com.dev.sphone.api.voicechat;
 
+import com.dev.sphone.SPhone;
+import com.dev.sphone.mod.common.packets.client.PacketPlayerHudState;
 import de.maxhenkel.voicechat.api.*;
 import de.maxhenkel.voicechat.api.events.EventRegistration;
 import de.maxhenkel.voicechat.api.events.VoicechatServerStartedEvent;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.Map;
 
@@ -71,6 +74,7 @@ public class VoiceAddon implements VoicechatPlugin {
             if (connection != null) {
                 Group g = GroupMap.get(name);
                 connection.setGroup(g);
+                SPhone.network.sendTo(new PacketPlayerHudState(false), (EntityPlayerMP) player);
             }
         }
     }
@@ -79,6 +83,7 @@ public class VoiceAddon implements VoicechatPlugin {
         VoicechatConnection connection = api.getConnectionOf(player.getUniqueID());
         if (connection != null) {
             connection.setGroup(null);
+            SPhone.network.sendTo(new PacketPlayerHudState(true), (EntityPlayerMP) player);
         }
     }
 
