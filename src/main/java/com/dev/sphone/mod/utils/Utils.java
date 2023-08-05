@@ -8,12 +8,15 @@ import com.dev.sphone.mod.common.packets.server.PacketSetAnim;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fr.aym.acsguis.api.ACsGuiApi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.HttpUtil;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.common.Loader;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -25,9 +28,14 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class Utils {
 
@@ -262,5 +270,25 @@ public class Utils {
     //get phone and return sim
     public static int getSimCard(EntityPlayer p) {
         return p.getHeldItemMainhand().hasTagCompound() ? p.getHeldItemMainhand().getTagCompound().getInteger("simcard") : 0;
+    }
+
+    public static void registerAllCssFiles() {
+        List<String> cssFiles = new ArrayList<>();
+        String resourcePath = "assets/" + SPhone.MOD_ID + "/css/";
+        InputStream stream = Utils.class.getClassLoader().getResourceAsStream(resourcePath);
+        if (stream != null) {
+            try (java.util.Scanner scanner = new java.util.Scanner(stream)) {
+                while (scanner.hasNextLine()) {
+                    String fileName = scanner.nextLine().trim();
+                    if (fileName.endsWith(".css")) {
+                        cssFiles.add(fileName);
+                    }
+                }
+            }
+        }
+        for (String fileName : cssFiles) {
+            ResourceLocation resourceLocation = new ResourceLocation(SPhone.MOD_ID, "css/" + fileName);
+            ACsGuiApi.registerStyleSheetToPreload(resourceLocation);
+        }
     }
 }
