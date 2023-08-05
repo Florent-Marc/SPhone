@@ -195,8 +195,8 @@ public class MethodesBDDImpl {
         messages.sort(Comparator.comparing(o -> Utils.getDate(o.getDate())));
 
         if (messages.size() == 0)
-            return new Conversation(messages, contact, new Message("", 0, "", ""));
-        return new Conversation(messages, contact, messages.get(messages.size() - 1));
+            return new Conversation(messages, contact);
+        return new Conversation(messages, contact);
 
     }
 
@@ -218,9 +218,9 @@ public class MethodesBDDImpl {
                 String firstSenderNumber = (!Objects.equals(message.getSender(), String.valueOf(getNumero(sim))) ? message.getSender() : message.getReceiver());
                 if (getContacts(sim).stream().anyMatch(c -> c.getNumero().equals(firstSenderNumber))) {
                     Contact contact = getContacts(sim).stream().filter(c -> c.getNumero().equals(firstSenderNumber)).findFirst().get();
-                    conversations.add(new Conversation(messages1, contact, messages1.get(messages1.size() - 1)));
+                    conversations.add(new Conversation(messages1, contact));
                 } else {
-                    conversations.add(new Conversation(messages1, new Contact(-1, firstSenderNumber, "", firstSenderNumber, ""), messages1.get(messages1.size() - 1)));
+                    conversations.add(new Conversation(messages1, new Contact(-1, firstSenderNumber, "", firstSenderNumber, "")));
                 }
             }
         }

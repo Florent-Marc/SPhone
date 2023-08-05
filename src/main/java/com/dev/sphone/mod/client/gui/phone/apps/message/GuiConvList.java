@@ -3,6 +3,8 @@ package com.dev.sphone.mod.client.gui.phone.apps.message;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import com.dev.sphone.mod.common.phone.Message;
+import com.dev.sphone.mod.utils.Utils;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
@@ -41,7 +43,8 @@ public class GuiConvList extends GuiBase {
         //conv.sort((o1, o2) -> getDate(o2.getLastUpdate()).compareTo(getDate(o1.getLastUpdate())));
 
         for (Conversation c : conv) {
-
+            List<Message> messages = c.getMessages();
+            Message lastMessage = messages.get(messages.size() -1);
             GuiPanel convpanel = new GuiPanel();
             convpanel.setCssClass("contact_background");
             convpanel.addClickListener((mouseX, mouseY, mouseButton) -> {
@@ -51,11 +54,11 @@ public class GuiConvList extends GuiBase {
             ContactName.setCssId("name");
             convpanel.add(ContactName);
 
-            GuiLabel ContactLastMessage = new GuiLabel(c.getLastMessage().getMessage());
+            GuiLabel ContactLastMessage = new GuiLabel(lastMessage.getMessage());
             ContactLastMessage.setCssId("lastmessage");
             convpanel.add(ContactLastMessage);
 
-            GuiLabel date = new GuiLabel(getDate(c.getLastMessage().getDate()));
+            GuiLabel date = new GuiLabel(Utils.getDateOf(lastMessage.getDate()));
             date.setCssId("date");
             convpanel.add(date);
 
@@ -65,12 +68,6 @@ public class GuiConvList extends GuiBase {
         getBackground().add(conversations_list);
     }
 
-    //get date with long
-    public String getDate(long date) {
-        Date d = new Date(date);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(d);
-    }
 
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
