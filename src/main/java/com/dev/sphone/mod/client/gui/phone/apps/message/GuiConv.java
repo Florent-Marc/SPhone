@@ -1,7 +1,3 @@
-/*
- * SPhone - Tous droits réservés. (by 0hSandji)
- */
-
 package com.dev.sphone.mod.client.gui.phone.apps.message;
 
 import com.dev.sphone.SPhone;
