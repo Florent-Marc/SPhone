@@ -3,6 +3,7 @@ package com.dev.sphone.mod.client;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.utils.Utils;
+import fr.aym.acsguis.api.ACsGuiApi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -143,7 +144,7 @@ public class ClientEventHandler {
     public void onPress(InputEvent.KeyInputEvent event) {
 
         if (SPhoneKeys.DEBUG_TWO.isPressed()) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
+            ACsGuiApi.asyncLoadThenShowGui("GuiHome", GuiHome::new);
         }
 
         if(isCameraActive){

@@ -1,15 +1,16 @@
 .contacts_list {
     width: 90%;
     height: 70%;
-    top: 20%;
+    top: 17%;
     left: 5%;
 }
 
 #app_title {
-    font-size: 25px;
-    left: 4%;
-    top: 10%;
-    height: 5%;
+    font-family: "dnx:arial";
+    font-size: 5px;
+    left: 8%;
+    top: 9%;
+    height: 7%;
     width: 50%;
 }
 
@@ -17,7 +18,8 @@
     height: 90%;
     width: 100%;
     padding-left: 5px;
-    font-size: 16px;
+    font-family: "dnx:arial";
+    font-size: 3px;
     text-align-vertical: top;
     padding-top: 15px;
 }
@@ -25,21 +27,29 @@
 #contact_background {
     background-color: #323232;
     width: 80%;
-    left: 5%;
+    left: 3%;
     /*min-height: 10%;*/
     height: auto;
     top: auto;
     border-radius: 10px;
 }
 
+#contact_background:hover {
+    background-color: #414141;
+}
+
 #contact_background_me{
     background-color: #0676f3;
     width: 80%;
-    right: 5%;
+    right: 3%;
     /*min-height: 10%;*/
     height: auto;
     top: auto;
     border-radius: 10px;
+}
+
+#contact_background_me:hover {
+    background-color: #348cf3;
 }
 
 #lastmessage {
@@ -61,16 +71,18 @@
 }
 
 .message {
-    width: 80%;
+    border-radius: 5px;
+    font-size: 15px;
+    width: 75%;
     height: 5%;
-    bottom: 5%;
-    left: 5%;
+    bottom: 6%;
+    left: 7%;
 }
 
 .send {
     background-image: url("sphone:textures/ui/icons/send.png");
     width: 10%;
     height: 5%;
-    bottom: 5%;
-    right: 5%;
+    bottom: 6%;
+    right: 7%;
 }

@@ -11,20 +11,21 @@
     z-index: 2;
 }
 
+
 #button_add {
     right: 4%;
     top: 8%;
     width: 24px;
     height: 26px;
     border-radius: 35%;
-    background-color: #086734;
+    background-color: #ffde3c;
     color: white;
     text-align: center;
     font-size: 25px;
     z-index: 2;
 }
 #button_add:hover {
-    background-color: #14AE5C;
+    background-color: #ffe355;
 }
 #button_del {
     right: 18%;

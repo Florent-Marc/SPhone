@@ -87,7 +87,7 @@ public class GuiConv extends GuiBase {
 
         GuiTextField message = new GuiTextField();
         message.setCssClass("message");
-        message.setHintText("➜ votre message");
+        message.setHintText("➜ Votre Message");
         getBackground().add(message);
 
         GuiPanel send = new GuiPanel();
@@ -117,6 +117,11 @@ public class GuiConv extends GuiBase {
         Date d = new Date(date);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         return sdf.format(d);
+    }
+
+    @Override
+    public boolean needsCssReload() {
+        return SPhone.DEV_MOD;
     }
 
     public List<ResourceLocation> getCssStyles() {

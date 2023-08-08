@@ -17,14 +17,14 @@
     width: 24px;
     height: 26px;
     border-radius: 35%;
-    background-color: #599AF8;
+    background-color: #ffde3c;
     color: white;
     text-align: center;
     font-size: 25px;
     z-index: 2;
 }
 #button_add:hover {
-    background-color: #59C2F8;
+    background-color: #ffe355;
 }
 
 #note {

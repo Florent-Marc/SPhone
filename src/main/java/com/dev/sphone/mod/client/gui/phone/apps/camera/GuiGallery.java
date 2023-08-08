@@ -1,4 +1,4 @@
-package com.dev.sphone.mod.client.gui.phone.apps.calculator;
+package com.dev.sphone.mod.client.gui.phone.apps.camera;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.utils.Utils;

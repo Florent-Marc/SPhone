@@ -16,14 +16,14 @@
     width: 24px;
     height: 26px;
     border-radius: 35%;
-    background-color: #599AF8;
+    background-color: #ffde3c;
     color: white;
     text-align: center;
     font-size: 25px;
     z-index: 2;
 }
 #button_add:hover {
-    background-color: #59C2F8;
+    background-color: #ffe355;
 }
 
 .contacts_list {
@@ -34,13 +34,14 @@
 }
 
 #lastmessage {
-    font-size: 10px;
+    text-shadow: none;
+    font-size: 13px;
     color: white;
     left: 0%;
-    top: 30%;
+    top: 40%;
     height: 40%;
     width: 100%;
-    z-index: 2;
+    z-index: 4;
 }
 
 #date {
@@ -55,7 +56,7 @@
 }
 
 .back {
-    background-color: #a79025;
+    background-color: #ffde3c;
     width: 90%;
     height: auto;
     left: 5%;
@@ -65,12 +66,12 @@
 }
 
 .back:hover {
-    background-color: #cbb654;
+    background-color: #ffe355;
 }
 
 #title {
     text-align: center;
-    font-size: 12px;
+    font-size: 20px;
     color: white;
     left: 0%;
     top: 10%;

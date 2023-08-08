@@ -1,15 +1,16 @@
 .contacts_list {
     width: 90%;
     height: 70%;
-    top: 20%;
+    top: 18%;
     left: 5%;
 }
 #app_title {
-    font-size: 25px;
+    font-family: "dnx:arial";
+    font-size: 6px;
     left: 8%;
-    top: 10%;
-    height: 5%;
-    width: 50%;
+    top: 9%;
+    height: 7%;
+    width: 80%;
 }
 .search_contact{
     width: 80%;
@@ -30,20 +31,22 @@
 }
 
 #name {
-    font-size: 20px;
+    font-family: "dnx:arial";
+    font-size: 4px;
     color: white;
     left: 2%;
-    top: 3%;
+    top: 2%;
     height: 40%;
     width: 90%;
 }
 
 #lastmessage {
-    font-size: 10px;
+    font-family: "dnx:arial";
+    font-size: 2px;
     color: white;
-    left: 0%;
-    top: 30%;
-    height: 40%;
+    left: 2%;
+    top: 37%;
+    height: 60%;
     width: 100%;
 }
 #date {

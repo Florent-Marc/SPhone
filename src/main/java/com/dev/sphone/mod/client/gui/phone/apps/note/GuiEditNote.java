@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GuiEditNote extends GuiBase {
@@ -27,7 +28,7 @@ public class GuiEditNote extends GuiBase {
 
         add(getRoot());
 
-        GuiLabel AppTitle = new GuiLabel("Modifier une note");
+        GuiLabel AppTitle = new GuiLabel("Modifier la note");
         AppTitle.setCssId("app_title");
         getRoot().add(AppTitle);
 
@@ -43,7 +44,7 @@ public class GuiEditNote extends GuiBase {
         noteField.setMaxTextLength(1000);
         getRoot().add(noteField);
 
-        GuiLabel buttonEdit = new GuiLabel("+");
+        GuiLabel buttonEdit = new GuiLabel("✎");
         buttonEdit.setCssId("button_add");
         buttonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
             SPhone.network.sendToServer(new PacketEditNote(new Note(note.getId(), titre.getText(), noteField.getText(), System.currentTimeMillis()), "edit"));
@@ -52,6 +53,7 @@ public class GuiEditNote extends GuiBase {
 
         GuiLabel buttonDel = new GuiLabel("-");
         buttonDel.setCssId("button_del");
+        buttonDel.setHoveringText(Collections.singletonList("Supprimer"));
         buttonDel.addClickListener((mouseX, mouseY, mouseButton) -> {
             SPhone.network.sendToServer(new PacketEditNote(new Note(note.getId(), titre.getText(), noteField.getText(), System.currentTimeMillis()), "delete"));
         });
