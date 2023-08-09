@@ -93,6 +93,9 @@ public class VoiceAddon implements VoicechatPlugin {
         if (connection == null) {
             return null;
         } else {
+            if (connection.getGroup() == null) {
+                return null;
+            }
             return connection.getGroup().getName();
         }
     }

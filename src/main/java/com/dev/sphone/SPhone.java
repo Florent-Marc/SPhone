@@ -11,8 +11,9 @@ import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.server.commands.CommandGivePhone;
 import com.dev.sphone.mod.server.commands.CommandGroup;
 import com.dev.sphone.mod.utils.ObfuscateUtils;
-import com.dev.sphone.mod.utils.Utils;
+import fr.aym.acsguis.api.ACsGuiApi;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -50,17 +51,32 @@ public class SPhone {
     public void preinit(FMLPreInitializationEvent e) {
         PROXY.preInit();
         Network.init();
-        MethodesBDDImpl.checkFile();
-        MethodesBDDImpl.checkTable();
+
         MinecraftForge.EVENT_BUS.register(new RegisterHandler());
         MinecraftForge.EVENT_BUS.register(new VoiceNetwork());
         MinecraftForge.EVENT_BUS.register(this);
         logger = e.getModLog();
 
         if (e.getSide().isClient()) {
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/base.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/home.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/contactslist.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/convlist.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/contacts.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/calculator.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/call.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/newcontact.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/conv.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/callrequest.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/weather.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/notelist.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/note.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/newnote.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/gallery.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/settings.css"));
             MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 
-            if(Utils.isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
+            if (isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
                 MinecraftForge.EVENT_BUS.register(new ClientEventAnim());
         }
     }
@@ -68,7 +84,7 @@ public class SPhone {
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
         PROXY.init();
-        if(Utils.isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
+        if (isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
             ObfuscateUtils.init();
     }
 
@@ -76,11 +92,22 @@ public class SPhone {
     public void onServerStart(FMLServerStartingEvent e) {
         e.registerServerCommand(new CommandGivePhone());
         e.registerServerCommand(new CommandGroup());
+        MethodesBDDImpl.checkFile();
+        MethodesBDDImpl.checkTable();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
 
+    }
+
+    public static boolean isUsingMod(String mainClass) {
+        try {
+            Class.forName(mainClass);
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 }

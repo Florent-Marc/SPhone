@@ -3,6 +3,7 @@ package com.dev.sphone.mod.client;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.api.ACsGuiApi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -53,7 +54,7 @@ public class ClientEventHandler {
 
             if(isCameraActive) {
                 if(!(mc.player.getHeldItemMainhand().getItem() instanceof ItemPhone)){
-                    Utils.leaveCamera(false);
+                    UtilsClient.leaveCamera(false);
                     return;
                 }
 
@@ -111,7 +112,7 @@ public class ClientEventHandler {
                 GlStateManager.popMatrix();
 
                 if (lastPhoneScreenshot == null) {
-                    CompletableFuture<BufferedImage> lastPhoneImage = Utils.getLastPhoneImage();
+                    CompletableFuture<BufferedImage> lastPhoneImage = UtilsClient.getLastPhoneImage();
                     if (lastPhoneImage == null) {
                         return;
                     }
@@ -151,10 +152,10 @@ public class ClientEventHandler {
             if (Keyboard.getEventKeyState()) {
                 int keycode = Keyboard.getEventKey();
                 if (keycode == Keyboard.KEY_BACK || keycode == Keyboard.KEY_DELETE || keycode == Keyboard.KEY_ESCAPE || keycode == Keyboard.KEY_E) {
-                    Utils.leaveCamera(true);
+                    UtilsClient.leaveCamera(true);
                 }
                 if (keycode == Keyboard.KEY_SPACE || keycode == Keyboard.KEY_RETURN) {
-                    Utils.makeScreenPhone(framebufferTextureId);
+                    UtilsClient.makeScreenPhone(framebufferTextureId);
                 }
             }
         }

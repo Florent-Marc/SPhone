@@ -113,7 +113,7 @@ public class AppManager {
                 false,
                 false,
                 () -> {
-                    if(Utils.isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
+                    if(SPhone.isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
                         SPhone.network.sendToServer(new PacketSetAnim(true));
                     ClientEventHandler.isCameraActive = true;
                     ClientEventHandler.mc.player.closeScreen();

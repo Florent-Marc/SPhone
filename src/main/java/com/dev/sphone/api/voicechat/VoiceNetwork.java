@@ -1,5 +1,6 @@
 package com.dev.sphone.api.voicechat;
 
+import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,11 +18,14 @@ public class VoiceNetwork {
     }
 
     public static void addPlayerToNetwork(EntityPlayer p) {
-        if (Utils.hasPhone(p)) {
+        if (hasPhone(p)) {
             network.put(p, MethodesBDDImpl.getNumero(Utils.getSimCard(p)));
         } else {
             System.out.println("Player " + p.getName() + " has no phone");
         }
+    }
+    public static boolean hasPhone(EntityPlayer player) {
+        return ItemPhone.getSimCard(player.getHeldItemMainhand()) != 0;
     }
 
     public static void removePlayerFromNetwork(EntityPlayer p) {

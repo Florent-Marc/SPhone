@@ -6,7 +6,6 @@ import com.dev.sphone.mod.client.tempdata.PhoneSettings;
 import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
 import com.dev.sphone.mod.common.register.ItemsRegister;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
-import com.dev.sphone.mod.utils.Utils;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +16,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
@@ -42,22 +43,22 @@ public class ItemPhone extends Item {
             if (stack.hasTagCompound() && stack.getTagCompound().hasKey("simcard")) {
                 SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) player);
             } else {
-                int sim = Utils.getRandomNumber(1000, 9999);
-                int num = Utils.getRandomNumber(10000, 99999);
+                int sim = getRandomNumber(1000, 9999);
+                int num = getRandomNumber(10000, 99999);
                 boolean isExist = false;
                 if (MethodesBDDImpl.addSim(sim, String.valueOf(num))) {
                     isExist = true;
                 } else {
                     for (int j = 0; j < 50; j++) {
-                        sim = Utils.getRandomNumber(1000, 9999);
-                        num = Utils.getRandomNumber(10000, 99999);
+                        sim = getRandomNumber(1000, 9999);
+                        num = getRandomNumber(10000, 99999);
                         if (MethodesBDDImpl.addSim(sim, String.valueOf(num))) {
                             isExist = true;
                             break;
                         }
                     }
                     if (!isExist) {
-                        Utils.sendErrorChat(player, "Il semblerai que la limite de sim soit atteinte, veuillez contacter un administrateur.", false);
+                        sendErrorChat(player, "Il semblerai que la limite de sim soit atteinte, veuillez contacter un administrateur.", false);
                     }
                 }
                 if (isExist) {
@@ -106,7 +107,7 @@ public class ItemPhone extends Item {
         if (!isPhone(stack)) return;
         NBTTagCompound nbt = getTagCompound(stack);
         nbt.setInteger(SIM_KEY_TAG, sim);
-        Utils.sendActionChat(player, "Vous avez injecté la carte sim : " + sim, false);
+        sendActionChat(player, "Vous avez injecté la carte sim : " + sim, false);
     }
 
     public static int getSimCard(ItemStack stack) {
@@ -117,4 +118,15 @@ public class ItemPhone extends Item {
         return 0;
     }
 
+    public static int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
+
+    public static void sendActionChat(EntityPlayer player, String msg, Boolean actionbar) {
+        player.sendStatusMessage(new TextComponentString(TextFormatting.GREEN + msg), actionbar);
+    }
+
+    public static void sendErrorChat(EntityPlayer player, String msg, Boolean actionbar) {
+        player.sendStatusMessage(new TextComponentString(TextFormatting.RED + msg), actionbar);
+    }
 }

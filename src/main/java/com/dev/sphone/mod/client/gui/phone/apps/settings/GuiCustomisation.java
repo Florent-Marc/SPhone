@@ -6,6 +6,7 @@ import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.tempdata.PhoneSettings;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.GuiComponent;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
@@ -53,7 +54,7 @@ public class GuiCustomisation extends GuiBase {
 
 
 
-        String[] backgroundsConfig = Utils.getBackgrounds();
+        String[] backgroundsConfig = UtilsClient.getBackgrounds();
 
         for (String s : backgroundsConfig) {
             String id = s.split(":")[0];

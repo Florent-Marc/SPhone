@@ -2,6 +2,7 @@ package com.dev.sphone.mod.client.gui.phone.apps.camera;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
@@ -36,7 +37,7 @@ public class GuiGallery extends GuiBase {
         screens_list.setCssClass("screens_list");
         screens_list.setLayout(new GridLayout(73, 120, 2, GridLayout.GridDirection.HORIZONTAL, 4));
 
-        for(File file : Utils.getAllPhoneScreenshots()){
+        for(File file : UtilsClient.getAllPhoneScreenshots()){
             DynamicTexture texture = new DynamicTexture(getImage(file).join());
             GuiPanel screen = new GuiPanel(){
                 @Override
