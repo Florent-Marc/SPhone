@@ -1,6 +1,7 @@
 package com.dev.sphone.mod.common.register;
 
 import com.dev.sphone.mod.common.items.ItemPhone;
+import com.dev.sphone.mod.common.items.ItemSim;
 import com.google.common.collect.Lists;
 import com.dev.sphone.SPhone;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -18,9 +19,11 @@ public class ItemsRegister {
     private List<Item> items;
 
     public static ItemPhone ITEM_PHONE;
+    public static ItemSim SIM_CARD;
 
     public void register() {
         ITEM_PHONE = new ItemPhone("phone", SPhone.SPHONE_TAB, 1);
+        SIM_CARD = new ItemSim("sim_card", SPhone.SPHONE_TAB, 1);
     }
 
     public void init() {
