@@ -17,14 +17,15 @@ public class PacketCall implements IMessage {
     private int id;
     private String number;
 
-    public PacketCall() {}
+    public PacketCall() {
+    }
 
     public PacketCall(int id) {
         this.id = id;
         this.number = "";
     }
 
-    public PacketCall(int id,String number) {
+    public PacketCall(int id, String number) {
         this.id = id;
         this.number = number;
     }
@@ -46,17 +47,15 @@ public class PacketCall implements IMessage {
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketCall message, MessageContext ctx) {
             int id = message.id;
-            if(id == 0){
-                Minecraft.getMinecraft().displayGuiScreen(new GuiCallEnd(new GuiHome().getGuiScreen(),"").getGuiScreen());
+            if (id == 0) {
+                Minecraft.getMinecraft().displayGuiScreen(new GuiCallEnd(new GuiHome().getGuiScreen(), "").getGuiScreen());
             }
-            if(id == 1){
+            if (id == 1) {
                 Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiHome().getGuiScreen(), message.number).getGuiScreen());
             }
-            if(id == 2){
-                //song and set call enter in tel
+            if (id == 2) {
                 Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.number).getGuiScreen());
             }
-
             return null;
         }
     }
