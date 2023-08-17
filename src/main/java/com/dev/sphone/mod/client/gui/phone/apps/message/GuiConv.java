@@ -91,6 +91,8 @@ public class GuiConv extends GuiBase {
         send.addClickListener((mouseX, mouseY, mouseButton) -> {
             if (message.getText().isEmpty()) return;
             conv.addMessage(new Message(message.getText(),  System.currentTimeMillis(), "",conv.getSender().getName()));
+            contacts_list.removeAllChilds();
+            contacts_list.flushComponentsQueue();
             contacts_list.flushRemovedComponents();
             initMessages(conv, contacts_list);
             SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv));
