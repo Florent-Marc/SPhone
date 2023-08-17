@@ -10,7 +10,9 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
+import fr.aym.acsguis.event.listeners.IKeyboardListener;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
@@ -63,7 +65,16 @@ public class GuiConv extends GuiBase {
 
             GuiLabel labelMessage = new GuiLabel("");
             labelMessage.setMaxTextLength(240);
-            labelMessage.setText(c.getMessage());
+            if (c.getMessage().startsWith("[{") && c.getMessage().endsWith("}]")) {
+                labelMessage.setText("Localisation de " + conv.getSender().getName());
+                if (!c.getSender().equals(conv.getSender().getNumero())) {
+                    labelMessage.setText("(Votre Position)");
+                } else {
+                    labelMessage.setText("[POSITION]");
+                }
+            } else {
+                labelMessage.setText(c.getMessage());
+            }
             labelMessage.setCssId("contact_message");
             messagePanel.add(labelMessage);
 
@@ -87,14 +98,32 @@ public class GuiConv extends GuiBase {
 
         GuiTextField message = new GuiTextField();
         message.setCssClass("message");
-        message.setHintText("➜ Votre Message");
+        message.setFocused(true);
+        message.addKeyboardListener(new IKeyboardListener() {
+            @Override
+            public void onKeyTyped(char c, int i) {
+                if (i == 28) {
+                    SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv));
+                    Minecraft.getMinecraft().displayGuiScreen(null);
+                }
+            }
+        });
         getBackground().add(message);
 
-        GuiPanel send = new GuiPanel();
+        GuiLabel position = new GuiLabel("❖");
+        position.setCssClass("position");
+        position.setHoveringText(Collections.singletonList("Envoyer votre Position (SOON)"));
+        position.addClickListener((x,y,bu) -> {
+            // Soon...
+            //SPhone.network.sendToServer(new PacketSendMessage("[{" + mc.player.posX + "," + mc.player.posY + "," + mc.player.posZ + "}]", conv));
+            //Minecraft.getMinecraft().displayGuiScreen(null);
+        });
+        getBackground().add(position);
+
+        GuiLabel send = new GuiLabel("➤");
         send.setCssClass("send");
         send.addClickListener((mouseX, mouseY, mouseButton) -> {
             SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv));
-            //close gui
             Minecraft.getMinecraft().displayGuiScreen(null);
         });
         getBackground().add(send);
