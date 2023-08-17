@@ -1,12 +1,12 @@
-
 package com.dev.sphone.mod.client.gui.phone.apps.contacts;
 
+import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
+import com.dev.sphone.mod.common.packets.server.PacketGetUniqueConv;
+import com.dev.sphone.mod.common.packets.server.call.PacketJoinCall;
+import com.dev.sphone.mod.common.phone.Contact;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import com.dev.sphone.SPhone;
-import com.dev.sphone.mod.common.packets.server.PacketGetUniqueConv;
-import com.dev.sphone.mod.common.phone.Contact;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -50,15 +50,17 @@ public class GuiViewContact extends GuiBase {
         GuiPanel call = new GuiPanel();
         call.setCssClass("call");
         getRoot().add(call);
+        call.addClickListener((mouseX, mouseY, mouseButton) -> {
+            SPhone.network.sendToServer(new PacketJoinCall(contact.getNumero()));
+        });
 
         GuiLabel contactAvatar = new GuiLabel("");
         contactAvatar.setCssId("view_contact_avatar");
-        //String cssCode = "background-image: url(\"https://mc-heads.net/avatar/" + "Steve" + "\");";
         String cssCode = "background-image: url(\"sphone:textures/ui/icons/nohead.png\");";
         contactAvatar.setCssCode("view_contact_avatar", cssCode);
         getRoot().add(contactAvatar);
 
-        GuiLabel name = new GuiLabel("Nom : "+contact.getName());
+        GuiLabel name = new GuiLabel("Nom : " + contact.getName());
         name.setCssId("name");
         getRoot().add(name);
 
@@ -66,11 +68,11 @@ public class GuiViewContact extends GuiBase {
         lastname.setCssId("lastname");
         getRoot().add(lastname);
 
-        GuiLabel phone = new GuiLabel("Numéro : "+contact.getNumero());
+        GuiLabel phone = new GuiLabel("Numéro : " + contact.getNumero());
         phone.setCssId("phone");
         getRoot().add(phone);
 
-        if(!contact.getNotes().isEmpty()) {
+        if (!contact.getNotes().isEmpty()) {
             GuiLabel notes = new GuiLabel("Note : " + contact.getNotes());
             notes.setCssId("notes");
             getRoot().add(notes);
