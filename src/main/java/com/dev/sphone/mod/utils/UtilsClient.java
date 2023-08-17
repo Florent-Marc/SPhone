@@ -70,7 +70,9 @@ public class UtilsClient {
 
 
     public static File[] getAllPhoneScreenshots() {
-        return new File("phonescreenshots").listFiles();
+        File folder = new File("phonescreenshots");
+        folder.mkdir();
+        return folder.listFiles();
     }
 
     public static CompletableFuture<BufferedImage> getLastPhoneImage() {
