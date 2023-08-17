@@ -50,7 +50,7 @@ public class GuiCall extends GuiBase {
     @Override
     public void guiClose() {
         super.guiClose();
-        SPhone.network.sendToServer(new PacketQuitCall());
+        SPhone.network.sendToServer(new PacketQuitCall(s));
     }
 
 
