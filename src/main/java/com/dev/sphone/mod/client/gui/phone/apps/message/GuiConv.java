@@ -6,6 +6,8 @@ import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.common.packets.server.PacketSendMessage;
 import com.dev.sphone.mod.common.phone.Conversation;
 import com.dev.sphone.mod.common.phone.Message;
+import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
@@ -93,9 +95,10 @@ public class GuiConv extends GuiBase {
         GuiPanel send = new GuiPanel();
         send.setCssClass("send");
         send.addClickListener((mouseX, mouseY, mouseButton) -> {
+            if (message.getText().isEmpty()) return;
+            conv.addMessage(new Message(message.getText(),  System.currentTimeMillis(), "",conv.getSender().getName()));
             SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv));
-            //close gui
-            Minecraft.getMinecraft().displayGuiScreen(null);
+            message.setText("");
         });
         getBackground().add(send);
         contacts_list.getySlider().setValue(contacts_list.getySlider().getMax());

@@ -49,4 +49,8 @@ public class Conversation implements ISerializable, ISerializablePacket {
         messages = (List<Message>) objects[0];
         sender = (Contact) objects[1];
     }
+
+    public void addMessage(Message message) {
+        messages.add(message);
+    }
 }
