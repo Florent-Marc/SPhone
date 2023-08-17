@@ -37,7 +37,7 @@ public class GuiCallEnd extends GuiBase {
     public void tick() {
         super.tick();
         //wait 2 seconds
-        if (Minecraft.getMinecraft().world.getTotalWorldTime() % 40 == 0) {
+        if (Minecraft.getMinecraft().world.getTotalWorldTime() % 80 == 0) {
             Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
         }
     }
