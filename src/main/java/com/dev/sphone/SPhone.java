@@ -4,6 +4,7 @@ import com.dev.sphone.api.voicechat.VoiceNetwork;
 import com.dev.sphone.mod.client.ClientEventAnim;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.SPhoneTab;
+import com.dev.sphone.mod.common.GuiHandler;
 import com.dev.sphone.mod.common.packets.Network;
 import com.dev.sphone.mod.common.proxy.CommonProxy;
 import com.dev.sphone.mod.common.register.RegisterHandler;
@@ -20,6 +21,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
 
@@ -56,7 +58,7 @@ public class SPhone {
         MinecraftForge.EVENT_BUS.register(new VoiceNetwork());
         MinecraftForge.EVENT_BUS.register(this);
         logger = e.getModLog();
-
+        NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, new GuiHandler());
         if (e.getSide().isClient()) {
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/base.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/home.css"));

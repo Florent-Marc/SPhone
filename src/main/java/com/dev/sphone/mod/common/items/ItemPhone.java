@@ -4,11 +4,8 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.SimRegisterEvent;
 import com.dev.sphone.mod.client.tempdata.PhoneSettings;
 import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
-import com.dev.sphone.mod.common.packets.client.PacketOpenSIMGui;
 import com.dev.sphone.mod.common.register.ItemsRegister;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
-import com.dev.sphone.mod.utils.Utils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,7 +40,8 @@ public class ItemPhone extends Item {
         if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
             if(player.isSneaking()) {
                 if(player.getHeldItem(hand).hasTagCompound() && player.getHeldItem(hand).getTagCompound().hasKey("simcard")) {
-                    SPhone.network.sendTo(new PacketOpenSIMGui(player.getHeldItem(hand).getTagCompound().getInteger("simcard")), (EntityPlayerMP) player);
+                    //SPhone.network.sendTo(new PacketOpenSIMGui(player.getHeldItem(hand).getTagCompound().getInteger("simcard")), (EntityPlayerMP) player);
+                    player.openGui(SPhone.INSTANCE, 7, world, 0, 0, 0);
                 } else {
                     sendErrorChat(player, "Vous n'avez pas de carte sim dans votre téléphone.", false);
                 }
