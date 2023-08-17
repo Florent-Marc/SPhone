@@ -80,9 +80,31 @@
 }
 
 .send {
-    background-image: url("sphone:textures/ui/icons/send.png");
-    width: 10%;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 17px;
+    background-color: #1957d3;
+    width: 9%;
     height: 5%;
     bottom: 6%;
-    right: 7%;
+    right: 8%;
+}
+
+.send:hover {
+    background-color: #2a67e1;
+}
+
+.position {
+    border-radius: 10px;
+    background-color: #1957d3;
+    width: 10%;
+    height: 5%;
+    font-size: 25px;
+    left: 82%;
+    top: 10%;
+    text-align: center;
+}
+
+.position:hover {
+    background-color: #2a67e1;
 }

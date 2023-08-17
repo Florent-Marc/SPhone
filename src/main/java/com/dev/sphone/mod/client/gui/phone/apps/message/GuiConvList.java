@@ -36,7 +36,7 @@ public class GuiConvList extends GuiBase {
 
         GuiScrollPane conversations_list = new GuiScrollPane();
         conversations_list.setCssClass("contacts_list");
-        conversations_list.setLayout(new GridLayout(-1, 80, 6, GridLayout.GridDirection.HORIZONTAL, 1));
+        conversations_list.setLayout(new GridLayout(-1, 80, 5, GridLayout.GridDirection.HORIZONTAL, 1));
 
 
         //trier les conversations par date de dernier message
@@ -67,7 +67,6 @@ public class GuiConvList extends GuiBase {
 
         getBackground().add(conversations_list);
     }
-
 
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
