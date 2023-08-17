@@ -74,30 +74,33 @@ public class ClientEventHandler {
         }
         if (mc.world != null) {
             GlStateManager.pushMatrix();
+
             Vector3f lastPos = null;
 
             Entity entity = mc.getRenderViewEntity();
-            double d3 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) event.getPartialTicks();
-            double d4 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) event.getPartialTicks();
-            double d5 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) event.getPartialTicks();
+            double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) event.getPartialTicks();
+            double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) event.getPartialTicks();
+            double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) event.getPartialTicks();
+            GlStateManager.translate(-d0, -d1, -d2);
 
             GlStateManager.disableLighting();
             GlStateManager.disableColorMaterial();
             GlStateManager.enableBlend();
-
-            GlStateManager.glLineWidth(2.0F);
             GlStateManager.disableTexture2D();
             GlStateManager.depthMask(false);
-
-            GlStateManager.translate(-d3, -d4, -d5);
-
 
             for (Point pos : test) {
                 if (lastPos == null) {
                     lastPos = new Vector3f(pos.getPos());
-                    DynamXRenderUtils.drawSphere(lastPos, 0.5f, 10, Color.GREEN);
+                    if (test.indexOf(pos) == index) {
+                        DynamXRenderUtils.drawSphere(lastPos, 0.5f, 10, Color.CYAN);
+                    } else {
+                        DynamXRenderUtils.drawSphere(lastPos, 0.5f, 10, Color.GREEN);
+                    }
                 } else {
-                    drawLine(lastPos, new Vector3f(pos.getPos()), Color.white);
+
+                    drawLine(lastPos, pos.getPos(), Color.red);
+
                     lastPos = new Vector3f(pos.getPos());
                     if (test.indexOf(pos) == index) {
                         DynamXRenderUtils.drawSphere(lastPos, 0.5f, 10, Color.CYAN);
@@ -107,7 +110,7 @@ public class ClientEventHandler {
                         DynamXRenderUtils.drawSphere(new Vector3f(pos.getPos()), 0.3f, 10, Color.blue);
                     }
                 }
-                //draw text
+
                 drawText("Point " + test.indexOf(pos), pos.getPos(), Color.white);
 
             }
@@ -115,16 +118,25 @@ public class ClientEventHandler {
             GlStateManager.depthMask(true);
             GlStateManager.enableTexture2D();
             GlStateManager.disableBlend();
-            GlStateManager.enableLighting();
             GlStateManager.enableColorMaterial();
+            GlStateManager.enableLighting();
             GlStateManager.popMatrix();
         }
     }
 
+    public void drawLine(Vector3f start, Vector3f end, Color color) {
+        GlStateManager.pushMatrix();
+        GlStateManager.color(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F);
+        GlStateManager.glLineWidth(2.0F);
+        GlStateManager.glBegin(GL11.GL_LINES);
+        GL11.glVertex3d(start.x, start.y, start.z);
+        GL11.glVertex3d(end.x, end.y, end.z);
+        GlStateManager.glEnd();
+        GlStateManager.color(1.0F, 1.0F, 1.0F);
+        GlStateManager.popMatrix();
+    }
 
-
-    //methode pour dessiner un text
-    public static void drawText(String text, Vector3f pos, Color color) {
+    public void drawText(String text, Vector3f pos, Color color) {
         GlStateManager.pushMatrix();
         FontRenderer fontRenderer = mc.fontRenderer;
         GlStateManager.translate(pos.x, pos.y + 1, pos.z);
@@ -138,25 +150,5 @@ public class ClientEventHandler {
         GlStateManager.disableTexture2D();
         GlStateManager.popMatrix();
     }
-
-    //draw line
-    public static void drawLine(Vector3f pos1, Vector3f pos2, Color color) {
-        GlStateManager.pushMatrix();
-        GlStateManager.disableTexture2D();
-        GlStateManager.disableLighting();
-        GlStateManager.disableDepth();
-        GlStateManager.glLineWidth(2.0F);
-        GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-        GlStateManager.glBegin(GL11.GL_LINES);
-        GL11.glVertex3d(pos1.x, pos1.y, pos1.z);
-        GL11.glVertex3d(pos2.x, pos2.y, pos2.z);
-        GlStateManager.glEnd();
-        GlStateManager.enableDepth();
-        GlStateManager.enableLighting();
-        GlStateManager.enableTexture2D();
-        GlStateManager.color(1.0F, 1.0F, 1.0F);
-        GlStateManager.popMatrix();
-    }
-
 
 }
