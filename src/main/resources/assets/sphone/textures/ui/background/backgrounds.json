@@ -1,0 +1,28 @@
+{
+  "backgrounds": [
+    {
+      "id":"acsgui",
+      "name":"ACS-GUI"
+    },
+    {
+      "id":"deauville",
+      "name":"Deauville"
+    },
+    {
+      "id":"stmichel",
+      "name":"St Michel"
+    },
+    {
+      "id":"playa",
+      "name":"Playa"
+    },
+    {
+      "id":"oscuridad",
+      "name":"Oscuridad"
+    },
+    {
+      "id":"iluminacion",
+      "name":"Illumination"
+    }
+  ]
+}

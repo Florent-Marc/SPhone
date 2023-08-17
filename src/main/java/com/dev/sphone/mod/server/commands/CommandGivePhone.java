@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentString;
 
 public class CommandGivePhone extends CommandBase {
     @Override
@@ -28,6 +29,13 @@ public class CommandGivePhone extends CommandBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
+        if(args[0].equals("test")) {
+            EntityPlayer player = (EntityPlayer) sender;
+            ItemStack stack = player.getHeldItem(player.getActiveHand());
+
+            sender.sendMessage(new TextComponentString(stack.serializeNBT().toString()));
+            return;
+        }
         if (args.length == 1) {
             EntityPlayer player = (EntityPlayer) sender;
             ItemStack stack = new ItemStack(ItemsRegister.ITEM_PHONE);

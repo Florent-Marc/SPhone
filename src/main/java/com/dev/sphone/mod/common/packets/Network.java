@@ -26,6 +26,7 @@ public class Network {
         packetFromClient(PacketOpenContacts.Handler.class, PacketOpenContacts.class);
         packetFromClient(PacketOpenConvContact.Handler.class, PacketOpenConvContact.class);
         packetFromClient(PacketPlayerHudState.Handler.class, PacketPlayerHudState.class);
+        packetFromClient(PacketOpenSIMGui.Handler.class, PacketOpenSIMGui.class);
 
         // *** SERVERS *** //
 

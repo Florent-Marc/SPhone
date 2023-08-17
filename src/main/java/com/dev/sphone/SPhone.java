@@ -27,7 +27,7 @@ import org.apache.logging.log4j.Logger;
         modid = SPhone.MOD_ID,
         name = SPhone.MOD_NAME,
         version = SPhone.VERSION,
-        dependencies = "after: voicechat"
+        dependencies = "after: voicechat; required-after: voicechat@[1.12.2-2.4.13,); required-after: acslib@[1.2.2,);"
 )
 
 public class SPhone {
