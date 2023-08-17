@@ -58,6 +58,49 @@ public class GuiConv extends GuiBase {
         //trier les conversations par date de dernier message
         //conv.sort((o1, o2) -> getDate(o2.getLastUpdate()).compareTo(getDate(o1.getLastUpdate())));
 
+        initMessages(conv, contacts_list);
+
+        getBackground().add(contacts_list);
+
+        GuiTextField message = new GuiTextField();
+        message.setCssClass("message");
+        message.setFocused(true);
+        message.addKeyboardListener(new IKeyboardListener() {
+            @Override
+            public void onKeyTyped(char c, int i) {
+                if (i == 28) {
+                    SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv));
+                    Minecraft.getMinecraft().displayGuiScreen(null);
+                }
+            }
+        });
+        getBackground().add(message);
+
+        GuiLabel position = new GuiLabel("❖");
+        position.setCssClass("position");
+        position.setHoveringText(Collections.singletonList("Envoyer votre Position (SOON)"));
+        position.addClickListener((x,y,bu) -> {
+            // Soon...
+            //SPhone.network.sendToServer(new PacketSendMessage("[{" + mc.player.posX + "," + mc.player.posY + "," + mc.player.posZ + "}]", conv));
+            //Minecraft.getMinecraft().displayGuiScreen(null);
+        });
+        getBackground().add(position);
+
+        GuiLabel send = new GuiLabel("➤");
+        send.setCssClass("send");
+        send.addClickListener((mouseX, mouseY, mouseButton) -> {
+            if (message.getText().isEmpty()) return;
+            conv.addMessage(new Message(message.getText(),  System.currentTimeMillis(), "",conv.getSender().getName()));
+            contacts_list.flushRemovedComponents();
+            initMessages(conv, contacts_list);
+            SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv));
+            message.setText("");
+        });
+        getBackground().add(send);
+        contacts_list.getySlider().setValue(contacts_list.getySlider().getMax());
+    }
+
+    private void initMessages(Conversation conv, GuiScrollPane contacts_list) {
         for (Message c : conv.getMessages()) {
 
             GuiPanel messagePanel = new GuiPanel();
@@ -92,43 +135,6 @@ public class GuiConv extends GuiBase {
             contacts_list.add(messagePanel);
 
         }
-
-        getBackground().add(contacts_list);
-
-        GuiTextField message = new GuiTextField();
-        message.setCssClass("message");
-        message.setFocused(true);
-        message.addKeyboardListener(new IKeyboardListener() {
-            @Override
-            public void onKeyTyped(char c, int i) {
-                if (i == 28) {
-                    SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv));
-                    Minecraft.getMinecraft().displayGuiScreen(null);
-                }
-            }
-        });
-        getBackground().add(message);
-
-        GuiLabel position = new GuiLabel("❖");
-        position.setCssClass("position");
-        position.setHoveringText(Collections.singletonList("Envoyer votre Position (SOON)"));
-        position.addClickListener((x,y,bu) -> {
-            // Soon...
-            //SPhone.network.sendToServer(new PacketSendMessage("[{" + mc.player.posX + "," + mc.player.posY + "," + mc.player.posZ + "}]", conv));
-            //Minecraft.getMinecraft().displayGuiScreen(null);
-        });
-        getBackground().add(position);
-
-        GuiLabel send = new GuiLabel("➤");
-        send.setCssClass("send");
-        send.addClickListener((mouseX, mouseY, mouseButton) -> {
-            if (message.getText().isEmpty()) return;
-            conv.addMessage(new Message(message.getText(),  System.currentTimeMillis(), "",conv.getSender().getName()));
-            SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv));
-            message.setText("");
-        });
-        getBackground().add(send);
-        contacts_list.getySlider().setValue(contacts_list.getySlider().getMax());
     }
 
     //get date et si c'est aujourd'hui on affiche l'heure
