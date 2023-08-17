@@ -52,12 +52,15 @@ public class PacketJoinCall implements IMessage {
                         //TODO verif le nombre de personne dans le groupe pour savoir si le joueur est occuper
                         MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(player, message.number));
                         VoiceAddon.addToGroup(message.number, player);
+                        SPhone.network.sendTo(new PacketCall(1, message.number), (EntityPlayerMP) VoiceNetwork.getPlayerFromNumber(message.number));
+                        SPhone.network.sendTo(new PacketCall(1, message.number), (EntityPlayerMP) player);
                     } else {
                         MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(player, message.number));
                         MinecraftForge.EVENT_BUS.post(new CallEvent.CreateCall(player, message.number));
                         VoiceAddon.createGroup(message.number, false, Group.Type.ISOLATED);
                         VoiceAddon.addToGroup(message.number, player);
                         SPhone.network.sendTo(new PacketCall(2, MethodesBDDImpl.getNumero(Utils.getSimCard(player))), (EntityPlayerMP) VoiceNetwork.getPlayerFromNumber(message.number));
+                        SPhone.network.sendTo(new PacketCall(1, message.number), (EntityPlayerMP) player);
                     }
                 } else {
                     MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(player, message.number));

@@ -44,6 +44,9 @@ public class PacketRequestData implements IMessage {
         @Override
         public IMessage onMessage(PacketRequestData message, MessageContext ctx) {
             EntityPlayerMP player = ctx.getServerHandler().player;
+            if (!(player.getHeldItemMainhand().getItem() instanceof ItemPhone)) {
+                return null;
+            }
             int sim = ItemPhone.getSimCard(player.getHeldItemMainhand());
             if (sim == 0) {
                 return null;

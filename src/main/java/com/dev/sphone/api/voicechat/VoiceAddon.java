@@ -8,13 +8,14 @@ import de.maxhenkel.voicechat.api.events.VoicechatServerStartedEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @ForgeVoicechatPlugin
 public class VoiceAddon implements VoicechatPlugin {
 
     public static VoicechatServerApi api;
-    private static Map<String, Group> GroupMap;
+    private static Map<String, Group> GroupMap = new HashMap<>();
 
     public static EntityPlayer getCallerInGroup(String callNumber,EntityPlayer except){
         for (EntityPlayer p : VoiceNetwork.getPlayers()) {
@@ -83,7 +84,7 @@ public class VoiceAddon implements VoicechatPlugin {
         VoicechatConnection connection = api.getConnectionOf(player.getUniqueID());
         if (connection != null) {
             connection.setGroup(null);
-            SPhone.network.sendTo(new PacketPlayerHudState(true), (EntityPlayerMP) player);
+            //SPhone.network.sendTo(new PacketPlayerHudState(true), (EntityPlayerMP) player);
         }
     }
 

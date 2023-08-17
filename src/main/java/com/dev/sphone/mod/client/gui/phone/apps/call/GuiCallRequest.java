@@ -22,6 +22,7 @@ public class GuiCallRequest extends GuiHome {
     @Override
     public void GuiInit() {
         super.GuiInit();
+        getBackground().removeAllChilds();
         GuiLabel label = new GuiLabel("Appel entrant");
         label.setCssId("app_title");
         getBackground().add(label);
@@ -50,6 +51,7 @@ public class GuiCallRequest extends GuiHome {
     @Override
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
+        styles.add(new ResourceLocation("sphone:css/home.css"));
         styles.add(new ResourceLocation("sphone:css/base.css"));
         styles.add(new ResourceLocation("sphone:css/callrequest.css"));
         return styles;

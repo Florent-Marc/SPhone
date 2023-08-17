@@ -4,12 +4,11 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.InitAppEvent;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.gui.phone.apps.calculator.GuiCalculator;
-import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
+import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCallRequest;
 import com.dev.sphone.mod.client.gui.phone.apps.camera.GuiGallery;
 import com.dev.sphone.mod.client.gui.phone.apps.settings.GuiSettingList;
 import com.dev.sphone.mod.common.packets.server.PacketRequestData;
 import com.dev.sphone.mod.common.packets.server.PacketSetAnim;
-import com.dev.sphone.mod.utils.Utils;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -51,7 +50,7 @@ public class AppManager {
                 () -> SPhone.network.sendToServer(new PacketRequestData("weather"))
         ));
 
-        guiSupplier = () -> new GuiCall(root, "t").getGuiScreen();
+        guiSupplier = () -> new GuiCallRequest("46545").getGuiScreen();
 
         apps.add(new App(guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/call.png"),

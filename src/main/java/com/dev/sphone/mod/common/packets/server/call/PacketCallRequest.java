@@ -58,10 +58,14 @@ public class PacketCallRequest implements IMessage {
                 SPhone.network.sendTo(new PacketCall(1, CallNumber), (EntityPlayerMP) receiver);
             } else {
                 MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(caller, CallNumber));
-                VoiceAddon.removeFromActualGroup(caller);
-                VoiceAddon.removeGroup(CallNumber);
-                SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) caller);
-                SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) receiver);
+                if (caller!=null){
+                    VoiceAddon.removeFromActualGroup(caller);
+                    SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) caller);
+                }
+                if (receiver!=null){
+                    VoiceAddon.removeFromActualGroup(receiver);
+                    SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) receiver);
+                };
             }
 
             return null;
