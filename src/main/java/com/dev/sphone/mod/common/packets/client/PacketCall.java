@@ -4,6 +4,7 @@ import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCallEnd;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCallRequest;
+import com.dev.sphone.mod.client.gui.phone.apps.call.GuiWaitCall;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -58,6 +59,11 @@ public class PacketCall implements IMessage {
             if (id == 2) {
                 Minecraft.getMinecraft().addScheduledTask(() -> {
                     Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.number).getGuiScreen());
+                });
+            }
+            if (id == 3) {
+                Minecraft.getMinecraft().addScheduledTask(() -> {
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiHome().getGuiScreen(), message.number).getGuiScreen());
                 });
             }
             return null;

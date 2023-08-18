@@ -60,7 +60,7 @@ public class PacketJoinCall implements IMessage {
                         VoiceAddon.createGroup(message.number, false, Group.Type.ISOLATED);
                         VoiceAddon.addToGroup(message.number, player);
                         SPhone.network.sendTo(new PacketCall(2, MethodesBDDImpl.getNumero(Utils.getSimCard(player))), (EntityPlayerMP) VoiceNetwork.getPlayerFromNumber(message.number));
-                        SPhone.network.sendTo(new PacketCall(1, message.number), (EntityPlayerMP) player);
+                        SPhone.network.sendTo(new PacketCall(3, message.number), (EntityPlayerMP) player);
                     }
                 } else {
                     MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(player, message.number));
