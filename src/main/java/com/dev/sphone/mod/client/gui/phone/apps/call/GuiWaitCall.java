@@ -26,6 +26,7 @@ public class GuiWaitCall extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
+        getBackground().removeAllChilds();
         time = new GuiLabel("Appel en cours");
         time.setCssId("time");
         getBackground().add(time);
