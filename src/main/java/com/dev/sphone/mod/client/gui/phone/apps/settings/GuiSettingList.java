@@ -4,6 +4,7 @@ package com.dev.sphone.mod.client.gui.phone.apps.settings;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
@@ -41,8 +42,7 @@ public class GuiSettingList extends GuiBase {
         settings_list.setCssClass("settings_list");
         settings_list.setLayout(new GridLayout(-1, 80, 1, GridLayout.GridDirection.HORIZONTAL, 1));
 
-
-
+        GuiButton caca = new GuiButton("Caca");
 
         GuiLabel customisation_desc = new GuiLabel("Préfénrences");
         customisation_desc.setCssClass("settings_element_desc");

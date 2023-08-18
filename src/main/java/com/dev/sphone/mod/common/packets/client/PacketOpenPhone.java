@@ -1,6 +1,7 @@
 package com.dev.sphone.mod.common.packets.client;
 
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import com.dev.sphone.mod.client.gui.phone.GuiNoSIM;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IThreadListener;
@@ -48,6 +49,10 @@ public class PacketOpenPhone implements IMessage {
                     {
                         Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
                     }
+                });
+            } else if (message.action.equals("nosim")) {
+                Minecraft.getMinecraft().addScheduledTask(() -> {
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiNoSIM(message.content).getGuiScreen());
                 });
             }
             return null;

@@ -10,6 +10,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,13 +21,16 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.items.ItemStackHandler;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ItemPhone extends Item {
 
     public static final String SIM_KEY_TAG = "simcard";
+    private static ItemStackHandler handler;
 
     public ItemPhone(String name, CreativeTabs creativeTabs, int stackcount) {
         this.setTranslationKey(name);
@@ -39,12 +43,7 @@ public class ItemPhone extends Item {
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
             if(player.isSneaking()) {
-                if(player.getHeldItem(hand).hasTagCompound() && player.getHeldItem(hand).getTagCompound().hasKey("simcard")) {
-                    //SPhone.network.sendTo(new PacketOpenSIMGui(player.getHeldItem(hand).getTagCompound().getInteger("simcard")), (EntityPlayerMP) player);
-                    player.openGui(SPhone.INSTANCE, 7, world, 0, 0, 0);
-                } else {
-                    sendErrorChat(player, "Vous n'avez pas de carte sim dans votre téléphone.", false);
-                }
+                player.openGui(SPhone.INSTANCE, 7, world, 0, 0, 0);
                 return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
             }
             ItemStack stack = player.getHeldItem(hand);
@@ -52,29 +51,22 @@ public class ItemPhone extends Item {
             if (stack.hasTagCompound() && stack.getTagCompound().hasKey("simcard")) {
                 SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) player);
             } else {
-                int sim = getRandomNumber(1000, 9999);
-                int num = getRandomNumber(10000, 99999);
-                boolean isExist = false;
-                if (MethodesBDDImpl.addSim(sim, String.valueOf(num))) {
-                    isExist = true;
-                } else {
-                    for (int j = 0; j < 50; j++) {
-                        sim = getRandomNumber(1000, 9999);
-                        num = getRandomNumber(10000, 99999);
-                        if (MethodesBDDImpl.addSim(sim, String.valueOf(num))) {
-                            isExist = true;
-                            break;
-                        }
-                    }
-                    if (!isExist) {
-                        sendErrorChat(player, "Il semblerai que la limite de sim soit atteinte, veuillez contacter un administrateur.", false);
-                    }
-                }
-                if (isExist) {
-                    MinecraftForge.EVENT_BUS.post(new SimRegisterEvent(player, String.valueOf(sim), String.valueOf(num)));
-                    setSimCard(player, stack, sim);
+                SPhone.network.sendTo(new PacketOpenPhone("nosim", ""), (EntityPlayerMP) player);
+            }
 
-                    getTagCompound(stack).setTag("settings", new PhoneSettings("acsgui").serializeNBT());
+            if (stack.getTagCompound().hasKey("inventory")) {
+                handler = new ItemStackHandler(1);
+                handler.deserializeNBT(stack.getTagCompound().getCompoundTag("inventory"));
+
+                if(handler.getStackInSlot(0).getItem() == Items.AIR) {
+                    SPhone.network.sendTo(new PacketOpenPhone("nosim", ""), (EntityPlayerMP) player);
+                } else if (handler.getStackInSlot(0).getTagCompound().getInteger(ItemSim.SIM_KEY_TAG) == 0) {
+                    SPhone.network.sendTo(new PacketOpenPhone("nosim", "unregistred"), (EntityPlayerMP) player);
+                } else {
+                    SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) player);
+                    if(getTagCompound(stack).hasKey("settings")) {
+                        getTagCompound(stack).setTag("settings", new PhoneSettings("acsgui").serializeNBT());
+                    }
                 }
             }
         }
@@ -91,6 +83,8 @@ public class ItemPhone extends Item {
         } else {
             if (getSimCard(stack) == 0) {
                 tooltip.add("-> Aucune Carte Sim Injecté");
+            } else if (getSimCard(stack) == -1) {
+                tooltip.add("-> Carte Sim : Non Enregistré");
             } else {
                 tooltip.add("-> Carte Sim : " + getSimCard(stack));
             }
@@ -121,8 +115,15 @@ public class ItemPhone extends Item {
 
     public static int getSimCard(ItemStack stack) {
         if (isPhone(stack)) {
-            NBTTagCompound nbt = getTagCompound(stack);
-            if (nbt.hasKey(SIM_KEY_TAG)) return nbt.getInteger(SIM_KEY_TAG);
+            if(!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
+
+            handler = new ItemStackHandler(1);
+            handler.deserializeNBT(stack.getTagCompound().getCompoundTag("inventory"));
+
+            if(handler.getStackInSlot(0).getItem() == Items.AIR) return 0;
+            if(Objects.requireNonNull(handler.getStackInSlot(0).getTagCompound()).getInteger(ItemSim.SIM_KEY_TAG) == 0) return -1;
+
+            return Objects.requireNonNull(handler.getStackInSlot(0).getTagCompound()).getInteger(ItemSim.SIM_KEY_TAG);
         }
         return 0;
     }

@@ -4,7 +4,6 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.tempdata.PhoneSettings;
 import com.dev.sphone.mod.common.items.ItemPhone;
-import com.dev.sphone.mod.utils.Utils;
 import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
@@ -29,6 +28,7 @@ public class GuiBase extends GuiFrame {
     private final GuiScreen parent;
     private GuiPanel Background;
     private GuiPanel root;
+    private boolean isInfosHidden = false;
 
     public GuiBase(GuiScreen parent) {
         super(new GuiScaler.AdjustFullScreen());
@@ -48,14 +48,14 @@ public class GuiBase extends GuiFrame {
         this.GuiInit();
     }
 
-    public void GuiInit(){
+    public void GuiInit() {
         init();
-        if(ClientEventHandler.isCameraActive){
+        if (ClientEventHandler.isCameraActive) {
             UtilsClient.leaveCamera(false);
         }
     }
 
-    private void init(){
+    private void init() {
         this.removeAllChilds();
         this.flushComponentsQueue();
         this.flushRemovedComponents();
@@ -76,34 +76,39 @@ public class GuiBase extends GuiFrame {
         root.setCssId("root");
 
 
-        GuiLabel TopClock = new GuiLabel("");
-        TopClock.setCssId("top_clock");
-        TopClock.addTickListener(() -> {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-            Date date = new Date();
-            TopClock.setText(dateFormat.format(date));
-        });
-        add(TopClock);
-
-        GuiPanel TopIcons = new GuiPanel();
-        TopIcons.setCssClass("top_icons");
-        add(TopIcons);
-
-        GuiPanel camera = new GuiPanel();
-        camera.setCssClass("camera");
-        Case.add(camera);
-
-        GuiPanel HomeBar = new GuiPanel();
-        HomeBar.setCssClass("home_bar");
-        add(HomeBar);
-        if (parent == null) {
-            HomeBar.setVisible(false);
-
-        } else {
-            HomeBar.addClickListener((x,y,bu) -> {
-                Minecraft.getMinecraft().displayGuiScreen(parent);
+        if (!isInfosHidden) {
+            GuiLabel TopClock = new GuiLabel("");
+            TopClock.setCssId("top_clock");
+            TopClock.addTickListener(() -> {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                Date date = new Date();
+                TopClock.setText(dateFormat.format(date));
             });
+            add(TopClock);
+
+            GuiPanel TopIcons = new GuiPanel();
+            TopIcons.setCssClass("top_icons");
+            add(TopIcons);
+
+            GuiPanel camera = new GuiPanel();
+            camera.setCssClass("camera");
+            Case.add(camera);
+
+            GuiPanel HomeBar = new GuiPanel();
+            HomeBar.setCssClass("home_bar");
+            add(HomeBar);
+
+            if (parent == null) {
+                HomeBar.setVisible(false);
+
+            } else {
+                HomeBar.addClickListener((x, y, bu) -> {
+                    Minecraft.getMinecraft().displayGuiScreen(parent);
+                });
+            }
         }
+
+
 
     }
 
@@ -135,15 +140,20 @@ public class GuiBase extends GuiFrame {
         return false;
     }
 
+    public void setInfosHidden(boolean infosHidden) {
+        isInfosHidden = infosHidden;
+    }
+
     public PhoneSettings getSettings() {
         PhoneSettings settings = new PhoneSettings("acsgui");
         ItemStack stack = Minecraft.getMinecraft().player.getHeldItemMainhand();
-        if(stack != null) {
-            if(stack.getItem() instanceof ItemPhone) {
+        if (stack != null) {
+            if (stack.getItem() instanceof ItemPhone) {
 
                 settings.deserializeNBT(Objects.requireNonNull(Minecraft.getMinecraft().player.getHeldItemMainhand().getTagCompound()).getCompoundTag("settings"));
             } else {
-                Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("sphone.error.no_phone", new Object[0]));            }
+                Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("sphone.error.no_phone", new Object[0]));
+            }
         } else {
             Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("sphone.error.no_phone", new Object[0]));
         }
