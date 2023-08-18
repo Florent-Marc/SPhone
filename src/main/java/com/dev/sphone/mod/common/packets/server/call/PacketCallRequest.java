@@ -48,24 +48,34 @@ public class PacketCallRequest implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketCallRequest message, MessageContext ctx) {
             //todo security
-            EntityPlayer receiver = ctx.getServerHandler().player;
+            EntityPlayerMP receiver = ctx.getServerHandler().player;
             EntityPlayer caller = VoiceNetwork.getPlayerFromNumber(message.numero);
             String CallNumber = MethodesBDDImpl.getNumero(Utils.getSimCard(receiver));
             if (message.accept) {
-                MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(receiver, CallNumber));
-                VoiceAddon.addToGroup(CallNumber, receiver);
-                SPhone.network.sendTo(new PacketCall(1, CallNumber), (EntityPlayerMP) caller);
-                SPhone.network.sendTo(new PacketCall(1, CallNumber), (EntityPlayerMP) receiver);
+                if (caller == null) {
+                    System.out.println("Caller is null" + message.numero);
+                } else if (CallNumber == null) {
+                    System.out.println("CallNumber is null" + message.numero);
+                } else {
+                    MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(receiver, CallNumber));
+                    VoiceAddon.addToGroup(CallNumber, receiver);
+                    SPhone.network.sendTo(new PacketCall(1, CallNumber), (EntityPlayerMP) caller);
+                    SPhone.network.sendTo(new PacketCall(1, CallNumber), receiver);
+                }
             } else {
                 MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(caller, CallNumber));
-                if (caller!=null){
+                if (caller == null) {
+                    System.out.println("Caller is null" + message.numero);
+                } else {
                     VoiceAddon.removeFromActualGroup(caller);
                     SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) caller);
                 }
-                if (receiver!=null){
+                if (receiver == null) {
+                    System.out.println("Receiver is null" + message.numero);
+                } else {
                     VoiceAddon.removeFromActualGroup(receiver);
-                    SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) receiver);
-                };
+                    SPhone.network.sendTo(new PacketCall(0), receiver);
+                }
             }
 
             return null;

@@ -20,6 +20,7 @@ public class VoiceNetwork {
     public static void addPlayerToNetwork(EntityPlayer p) {
         if (hasPhone(p)) {
             network.put(p, MethodesBDDImpl.getNumero(Utils.getSimCard(p)));
+            System.out.println("Player " + p.getName() + " is now in the network with numero " + MethodesBDDImpl.getNumero(Utils.getSimCard(p)) );
         } else {
             System.out.println("Player " + p.getName() + " has no phone");
         }
@@ -30,6 +31,7 @@ public class VoiceNetwork {
 
     public static void removePlayerFromNetwork(EntityPlayer p) {
         network.remove(p);
+        System.out.println("Player " + p.getName() + " is now out of the network");
     }
 
     public static boolean hasNumberInNetwork(String number) {

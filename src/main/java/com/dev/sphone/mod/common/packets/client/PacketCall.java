@@ -51,10 +51,14 @@ public class PacketCall implements IMessage {
                 Minecraft.getMinecraft().displayGuiScreen(new GuiCallEnd(new GuiHome().getGuiScreen(), "").getGuiScreen());
             }
             if (id == 1) {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiHome().getGuiScreen(), message.number).getGuiScreen());
+                Minecraft.getMinecraft().addScheduledTask(() -> {
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiHome().getGuiScreen(), message.number).getGuiScreen());
+                });
             }
             if (id == 2) {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.number).getGuiScreen());
+                Minecraft.getMinecraft().addScheduledTask(() -> {
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.number).getGuiScreen());
+                });
             }
             return null;
         }

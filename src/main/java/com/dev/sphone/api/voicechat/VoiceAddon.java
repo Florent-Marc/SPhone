@@ -76,6 +76,7 @@ public class VoiceAddon implements VoicechatPlugin {
                 Group g = GroupMap.get(name);
                 connection.setGroup(g);
                 SPhone.network.sendTo(new PacketPlayerHudState(false), (EntityPlayerMP) player);
+                System.out.println("Player " + player.getName() + " is now in group " + name);
             }
         }
     }
@@ -83,6 +84,7 @@ public class VoiceAddon implements VoicechatPlugin {
     public static void removeFromActualGroup(EntityPlayer player) {
         VoicechatConnection connection = api.getConnectionOf(player.getUniqueID());
         if (connection != null) {
+            System.out.println("Player " + player.getName() + " is now out of group " + getGroup(player));
             connection.setGroup(null);
             //SPhone.network.sendTo(new PacketPlayerHudState(true), (EntityPlayerMP) player);
         }
