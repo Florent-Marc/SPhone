@@ -2,6 +2,7 @@ package com.dev.sphone.mod.common.packets.server;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.MessageEvent;
+import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.packets.client.PacketOpenConvContact;
 import com.dev.sphone.mod.common.phone.Conversation;
 import com.dev.sphone.mod.common.phone.Message;
@@ -52,15 +53,14 @@ public class PacketSendMessage extends SerializablePacket implements IMessage {
             EntityPlayer player = ctx.getServerHandler().player;
             String messageToSend = message.message;
             Conversation receiver = (Conversation) message.getObjectsIn()[0];
-            if (Utils.hasPhone(player)) {
-                if (Utils.getSimCard(player) == 0) {
-                    return null;
-                }
-                String sender = String.valueOf(MethodesBDDImpl.getNumero(Utils.getSimCard(player)));
-                Message message1 = new Message(messageToSend, new Date().getTime(), sender, receiver.getSender().getNumero());
-                MinecraftForge.EVENT_BUS.post(new MessageEvent.Send(sender, message1));
-                MethodesBDDImpl.addMessage(message1);
+            int sim = ItemPhone.getSimCard(player.getHeldItemMainhand());
+            if (sim == 0) {
+                return null;
             }
+            String sender = String.valueOf(MethodesBDDImpl.getNumero(Utils.getSimCard(player)));
+            Message message1 = new Message(messageToSend, new Date().getTime(), sender, receiver.getSender().getNumero());
+            MinecraftForge.EVENT_BUS.post(new MessageEvent.Send(sender, message1));
+            MethodesBDDImpl.addMessage(message1);
 
             return null;
         }
