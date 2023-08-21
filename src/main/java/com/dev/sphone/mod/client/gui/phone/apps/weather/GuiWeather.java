@@ -2,20 +2,17 @@ package com.dev.sphone.mod.client.gui.phone.apps.weather;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.common.phone.Weather;
-import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsServer;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.utils.GuiTextureSprite;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentTranslation;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class GuiWeather extends GuiBase {
@@ -38,7 +35,7 @@ public class GuiWeather extends GuiBase {
         city.setCssId("city");
         getRoot().add(city);
 
-        GuiLabel date = new GuiLabel(Utils.getCurrentDateFormat("dd/MM/yyyy", null, 0));
+        GuiLabel date = new GuiLabel(UtilsServer.getCurrentDateFormat("dd/MM/yyyy", null, 0));
         date.setCssId("date");
         getRoot().add(date);
 
@@ -112,19 +109,19 @@ public class GuiWeather extends GuiBase {
                 current = "thunder";
                 if(rainTime < thunderTime) {
                     after = "sun";
-                    afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
+                    afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
                 }else{
                     after = "rain";
-                    afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, thunderTime / 20);
+                    afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, thunderTime / 20);
                 }
             }else{
                 current = "rain";
                 if(thunderTime > rainTime) {
                     after = "sun";
-                    afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
+                    afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
                 }else{
                     after = "thunder";
-                    afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, thunderTime / 20);
+                    afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, thunderTime / 20);
                 }
             }
         }else{
@@ -132,11 +129,11 @@ public class GuiWeather extends GuiBase {
                 if (clearTime / (20 * 60) <= 10) {
                     current = "clear";
                     after = "rain";
-                    afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, clearTime / 20);
+                    afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, clearTime / 20);
                 } else {
                     current = "sunny";
                     after = "rain";
-                    afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, clearTime / 20);
+                    afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, clearTime / 20);
                 }
             }else{
                 if(rainTime < thunderTime){
@@ -146,7 +143,7 @@ public class GuiWeather extends GuiBase {
                         current = "sunny";
                     }
                     after = "rain";
-                    afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
+                    afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
                 }else{
                     if(thunderTime / (20*60) <= 10) {
                         current = "clear";
@@ -154,7 +151,7 @@ public class GuiWeather extends GuiBase {
                         current = "sunny";
                     }
                     after = "thunder";
-                    afterTime = Utils.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, thunderTime / 20);
+                    afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, thunderTime / 20);
                 }
             }
         }

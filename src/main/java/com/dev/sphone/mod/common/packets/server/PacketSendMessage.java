@@ -1,17 +1,14 @@
 package com.dev.sphone.mod.common.packets.server;
 
-import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.MessageEvent;
 import com.dev.sphone.mod.common.items.ItemPhone;
-import com.dev.sphone.mod.common.packets.client.PacketOpenConvContact;
 import com.dev.sphone.mod.common.phone.Conversation;
 import com.dev.sphone.mod.common.phone.Message;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
-import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsServer;
 import fr.aym.acslib.utils.packetserializer.SerializablePacket;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -57,7 +54,7 @@ public class PacketSendMessage extends SerializablePacket implements IMessage {
             if (sim == 0) {
                 return null;
             }
-            String sender = String.valueOf(MethodesBDDImpl.getNumero(Utils.getSimCard(player)));
+            String sender = String.valueOf(MethodesBDDImpl.getNumero(UtilsServer.getSimCard(player)));
             Message message1 = new Message(messageToSend, new Date().getTime(), sender, receiver.getSender().getNumero());
             MinecraftForge.EVENT_BUS.post(new MessageEvent.Send(sender, message1));
             MethodesBDDImpl.addMessage(message1);

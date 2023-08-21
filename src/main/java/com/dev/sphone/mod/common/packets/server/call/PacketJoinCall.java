@@ -6,7 +6,7 @@ import com.dev.sphone.api.voicechat.VoiceAddon;
 import com.dev.sphone.api.voicechat.VoiceNetwork;
 import com.dev.sphone.mod.common.packets.client.PacketCall;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
-import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsServer;
 import de.maxhenkel.voicechat.api.Group;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,7 +46,7 @@ public class PacketJoinCall implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketJoinCall message, MessageContext ctx) {
             EntityPlayer player = ctx.getServerHandler().player;
-            if (Utils.hasPhone(player)) {
+            if (UtilsServer.hasPhone(player)) {
                 if (VoiceNetwork.hasNumberInNetwork(message.number)) {
                     if (VoiceAddon.groupExists(message.number)) {
                         //TODO verif le nombre de personne dans le groupe pour savoir si le joueur est occuper
@@ -59,7 +59,7 @@ public class PacketJoinCall implements IMessage {
                         MinecraftForge.EVENT_BUS.post(new CallEvent.CreateCall(player, message.number));
                         VoiceAddon.createGroup(message.number, false, Group.Type.ISOLATED);
                         VoiceAddon.addToGroup(message.number, player);
-                        SPhone.network.sendTo(new PacketCall(2, MethodesBDDImpl.getNumero(Utils.getSimCard(player))), (EntityPlayerMP) VoiceNetwork.getPlayerFromNumber(message.number));
+                        SPhone.network.sendTo(new PacketCall(2, MethodesBDDImpl.getNumero(UtilsServer.getSimCard(player))), (EntityPlayerMP) VoiceNetwork.getPlayerFromNumber(message.number));
                         SPhone.network.sendTo(new PacketCall(3, message.number), (EntityPlayerMP) player);
                     }
                 } else {

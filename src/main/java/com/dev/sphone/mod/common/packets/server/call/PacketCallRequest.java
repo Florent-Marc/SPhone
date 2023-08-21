@@ -6,7 +6,7 @@ import com.dev.sphone.api.voicechat.VoiceAddon;
 import com.dev.sphone.api.voicechat.VoiceNetwork;
 import com.dev.sphone.mod.common.packets.client.PacketCall;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
-import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsServer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -50,7 +50,7 @@ public class PacketCallRequest implements IMessage {
             //todo security
             EntityPlayerMP receiver = ctx.getServerHandler().player;
             EntityPlayer caller = VoiceNetwork.getPlayerFromNumber(message.numero);
-            String CallNumber = MethodesBDDImpl.getNumero(Utils.getSimCard(receiver));
+            String CallNumber = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(receiver));
             if (message.accept) {
                 if (caller == null) {
                     System.out.println("Caller is null" + message.numero);

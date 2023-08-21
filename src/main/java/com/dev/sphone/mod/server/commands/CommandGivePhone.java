@@ -1,56 +1,85 @@
 package com.dev.sphone.mod.server.commands;
 
 import com.dev.sphone.mod.common.items.ItemPhone;
-import com.dev.sphone.mod.common.register.ItemsRegister;
+import com.dev.sphone.mod.common.items.ItemSim;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class CommandGivePhone extends CommandBase {
     @Override
     public String getName() {
-        return "givephone";
+        return "phone";
     }
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return "/givephone <simcode>";
+        return "/phone <simcode>";
     }
 
     @Override
     public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-        return true;
+        return sender.canUseCommand(4, "phone");
     }
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        if(args[0].equals("test")) {
-            EntityPlayer player = (EntityPlayer) sender;
-            ItemStack stack = player.getHeldItem(player.getActiveHand());
-
-            sender.sendMessage(new TextComponentString(stack.serializeNBT().toString()));
+        EntityPlayer p = (EntityPlayer) sender;
+        ItemPhone item;
+        if (p.getHeldItemMainhand().getItem() instanceof ItemPhone) {
+            item = (ItemPhone) p.getHeldItemMainhand().getItem();
+        } else {
+            p.sendMessage(new TextComponentTranslation("sphone.error.no_phone"));
             return;
         }
-        if (args.length == 1) {
-            EntityPlayer player = (EntityPlayer) sender;
-            ItemStack stack = new ItemStack(ItemsRegister.ITEM_PHONE);
-            //get tag of stack
-            NBTTagCompound tag = stack.getTagCompound();
-            tag.setInteger("simcard", Integer.parseInt(args[0]));
-
-            //tag.setInteger("numero", Integer.parseInt(args[1]));
-            //set tag number to item
-            stack.setTagCompound(tag);
-            //give item to player
-            player.addItemStackToInventory(stack);
-            //set simcard to item
-
-            ItemPhone.setSimCard(player, stack, Integer.parseInt(args[0]));
+        ItemSim sim = item.getSimCardItem(p.getHeldItemMainhand());
+        String para = args[0];
+        if (para.equals("setsim")) {
+            if (args.length == 2) {
+                if (sim == null) {
+                    p.sendMessage(new TextComponentTranslation("sphone.error.no_sim"));
+                } else {
+                    sim.setSimCard(p, p.getHeldItemMainhand(), Integer.parseInt(args[1]));
+                }
+            } else {
+                p.sendMessage(new TextComponentTranslation("sphone.error.no_sim"));
+            }
         }
+        if (para.equals("setnumero")) {
+            if (args.length == 2) {
+                if (sim == null) {
+                    p.sendMessage(new TextComponentTranslation("sphone.error.no_sim"));
+                } else {
+                    sim.setNumero(p, p.getHeldItemMainhand(), args[1]);
+                }
+            } else {
+                p.sendMessage(new TextComponentTranslation("sphone.error.no_sim"));
+            }
+        }
+        if (para.equals("call")) {
+            p.sendMessage(new TextComponentTranslation("sphone.feature.later"));
+        }
+        if (para.equals("quitcall")) {
+            p.sendMessage(new TextComponentTranslation("sphone.feature.later"));
+        }
+        if (para.equals("sendmessage")) {
+            p.sendMessage(new TextComponentTranslation("sphone.feature.later"));
+        }
+    }
+
+    @Override
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        //setsim,setnumero,call,quitcall,sendmessage
+        if (args.length == 1) {
+            return getListOfStringsMatchingLastWord(args, "setsim", "setnumero", "call", "quitcall", "sendmessage");
+        }
+
+        return super.getTabCompletions(server, sender, args, targetPos);
     }
 }

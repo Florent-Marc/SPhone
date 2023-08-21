@@ -1,11 +1,9 @@
 package com.dev.sphone.mod.common.items;
 
 import com.dev.sphone.SPhone;
-import com.dev.sphone.api.events.SimRegisterEvent;
 import com.dev.sphone.mod.client.tempdata.PhoneSettings;
 import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
 import com.dev.sphone.mod.common.register.ItemsRegister;
-import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,7 +18,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.items.ItemStackHandler;
 import org.lwjgl.input.Keyboard;
 
@@ -126,6 +123,22 @@ public class ItemPhone extends Item {
             return Objects.requireNonNull(handler.getStackInSlot(0).getTagCompound()).getInteger(ItemSim.SIM_KEY_TAG);
         }
         return 0;
+    }
+
+    //return item sim
+    public static ItemSim getSimCardItem(ItemStack stack) {
+        if (isPhone(stack)) {
+            if(!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
+
+            handler = new ItemStackHandler(1);
+            handler.deserializeNBT(stack.getTagCompound().getCompoundTag("inventory"));
+
+            if(handler.getStackInSlot(0).getItem() == Items.AIR) return null;
+            if(Objects.requireNonNull(handler.getStackInSlot(0).getTagCompound()).getInteger(ItemSim.SIM_KEY_TAG) == 0) return null;
+
+            return (ItemSim) handler.getStackInSlot(0).getItem();
+        }
+        return null;
     }
 
     public static int getRandomNumber(int min, int max) {

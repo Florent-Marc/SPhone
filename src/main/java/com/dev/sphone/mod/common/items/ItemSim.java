@@ -3,7 +3,7 @@ package com.dev.sphone.mod.common.items;
 import com.dev.sphone.api.events.SimRegisterEvent;
 import com.dev.sphone.mod.common.register.ItemsRegister;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
-import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsServer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +21,7 @@ import java.util.List;
 public class ItemSim extends Item {
 
     public static final String SIM_KEY_TAG = "simcard";
+    public static final String NUM_KEY_TAG = "numero";
 
     public ItemSim(String name, CreativeTabs creativeTabs, int stackcount) {
         this.setTranslationKey(name);
@@ -36,27 +37,28 @@ public class ItemSim extends Item {
             ItemStack stack = player.getHeldItem(hand);
 
             if (!stack.hasTagCompound() || !stack.getTagCompound().hasKey("simcard")) {
-                int sim = Utils.getRandomNumber(1000, 9999);
-                int num = Utils.getRandomNumber(10000, 99999);
+                int sim = UtilsServer.getRandomNumber(1000, 9999);
+                int num = UtilsServer.getRandomNumber(10000, 99999);
                 boolean isExist = false;
                 if (MethodesBDDImpl.addSim(sim, String.valueOf(num))) {
                     isExist = true;
                 } else {
                     for (int j = 0; j < 50; j++) {
-                        sim = Utils.getRandomNumber(1000, 9999);
-                        num = Utils.getRandomNumber(10000, 99999);
+                        sim = UtilsServer.getRandomNumber(1000, 9999);
+                        num = UtilsServer.getRandomNumber(10000, 99999);
                         if (MethodesBDDImpl.addSim(sim, String.valueOf(num))) {
                             isExist = true;
                             break;
                         }
                     }
                     if (!isExist) {
-                        Utils.sendErrorChat(player, "Il semblerai que la limite de sim soit atteinte, veuillez contacter un administrateur.", false);
+                        UtilsServer.sendErrorChat(player, "Il semblerai que la limite de sim soit atteinte, veuillez contacter un administrateur.", false);
                     }
                 }
                 if (isExist) {
                     MinecraftForge.EVENT_BUS.post(new SimRegisterEvent(player, String.valueOf(sim), String.valueOf(num)));
                     setSimCard(player, stack, sim);
+                    setNumero(player, stack, String.valueOf(num));
 
                 }
             }
@@ -88,7 +90,7 @@ public class ItemSim extends Item {
         if (!isSIM(stack)) return;
         NBTTagCompound nbt = getTagCompound(stack);
         nbt.setInteger(SIM_KEY_TAG, sim);
-        Utils.sendActionChat(player, "Vous avez injecté la carte sim : " + sim, false);
+        UtilsServer.sendActionChat(player, "Vous avez injecté la carte sim : " + sim, false);
     }
 
     public static int getSimCard(ItemStack stack) {
@@ -99,4 +101,18 @@ public class ItemSim extends Item {
         return 0;
     }
 
+    public void setNumero(EntityPlayer player, ItemStack stack, String s) {
+        if (!isSIM(stack)) return;
+        NBTTagCompound nbt = getTagCompound(stack);
+        nbt.setString(NUM_KEY_TAG, s);
+        UtilsServer.sendActionChat(player, "Vous avez injecté le numéro : " + s, false);
+    }
+
+    public static String getNumero(ItemStack stack) {
+        if (isSIM(stack)) {
+            NBTTagCompound nbt = getTagCompound(stack);
+            if (nbt.hasKey(NUM_KEY_TAG)) return nbt.getString(NUM_KEY_TAG);
+        }
+        return null;
+    }
 }

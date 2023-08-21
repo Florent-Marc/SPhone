@@ -2,7 +2,7 @@ package com.dev.sphone.api.voicechat;
 
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
-import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsServer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -19,8 +19,8 @@ public class VoiceNetwork {
 
     public static void addPlayerToNetwork(EntityPlayer p) {
         if (hasPhone(p)) {
-            network.put(p, MethodesBDDImpl.getNumero(Utils.getSimCard(p)));
-            System.out.println("Player " + p.getName() + " is now in the network with numero " + MethodesBDDImpl.getNumero(Utils.getSimCard(p)) );
+            network.put(p, MethodesBDDImpl.getNumero(UtilsServer.getSimCard(p)));
+            System.out.println("Player " + p.getName() + " is now in the network with numero " + MethodesBDDImpl.getNumero(UtilsServer.getSimCard(p)) );
         } else {
             System.out.println("Player " + p.getName() + " has no phone");
         }
@@ -69,7 +69,7 @@ public class VoiceNetwork {
      */
     public static void updateNetwork(EntityPlayer p) {
         if (isPlayerInNetwork(p)) {
-            network.replace(p, MethodesBDDImpl.getNumero(Utils.getSimCard(p)));
+            network.replace(p, MethodesBDDImpl.getNumero(UtilsServer.getSimCard(p)));
         } else {
             addPlayerToNetwork(p);
         }

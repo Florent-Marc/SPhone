@@ -4,10 +4,7 @@ package com.dev.sphone.mod.client.gui.phone.apps.settings;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.tempdata.PhoneSettings;
-import com.dev.sphone.mod.common.items.ItemPhone;
-import com.dev.sphone.mod.utils.Utils;
 import com.dev.sphone.mod.utils.UtilsClient;
-import fr.aym.acsguis.component.GuiComponent;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
@@ -17,15 +14,10 @@ import fr.aym.acsguis.utils.GuiConstants;
 import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class GuiCustomisation extends GuiBase {
 

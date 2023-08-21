@@ -10,7 +10,6 @@ import com.dev.sphone.mod.common.proxy.CommonProxy;
 import com.dev.sphone.mod.common.register.RegisterHandler;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.server.commands.CommandGivePhone;
-import com.dev.sphone.mod.server.commands.CommandGroup;
 import com.dev.sphone.mod.utils.ObfuscateUtils;
 import fr.aym.acsguis.api.ACsGuiApi;
 import net.minecraft.creativetab.CreativeTabs;
@@ -93,7 +92,6 @@ public class SPhone {
     @Mod.EventHandler
     public void onServerStart(FMLServerStartingEvent e) {
         e.registerServerCommand(new CommandGivePhone());
-        e.registerServerCommand(new CommandGroup());
         MethodesBDDImpl.checkFile();
         MethodesBDDImpl.checkTable();
         try {

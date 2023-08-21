@@ -2,7 +2,6 @@ package com.dev.sphone.mod.client;
 
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.common.items.ItemPhone;
-import com.dev.sphone.mod.utils.Utils;
 import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.api.ACsGuiApi;
 import net.minecraft.client.Minecraft;

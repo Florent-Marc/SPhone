@@ -4,7 +4,7 @@ package com.dev.sphone.mod.client.gui.phone.apps.message;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.common.phone.Message;
-import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsServer;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
@@ -13,9 +13,7 @@ import com.dev.sphone.mod.common.phone.Conversation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class GuiConvList extends GuiBase {
@@ -58,7 +56,7 @@ public class GuiConvList extends GuiBase {
             ContactLastMessage.setCssId("lastmessage");
             convpanel.add(ContactLastMessage);
 
-            GuiLabel date = new GuiLabel(Utils.getDateOf(lastMessage.getDate()));
+            GuiLabel date = new GuiLabel(UtilsServer.getDateOf(lastMessage.getDate()));
             date.setCssId("date");
             convpanel.add(date);
 

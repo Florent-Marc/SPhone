@@ -1,7 +1,7 @@
 package com.dev.sphone.mod.server.bdd;
 
 import com.dev.sphone.mod.common.phone.*;
-import com.dev.sphone.mod.utils.Utils;
+import com.dev.sphone.mod.utils.UtilsServer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -192,7 +192,7 @@ public class MethodesBDDImpl {
     public static Conversation getConversation(int sim, Contact contact) {
 
         List<Message> messages = getMessage(sim, contact.getNumero());
-        messages.sort(Comparator.comparing(o -> Utils.getDate(o.getDate())));
+        messages.sort(Comparator.comparing(o -> UtilsServer.getDate(o.getDate())));
 
         if (messages.size() == 0)
             return new Conversation(messages, contact);
@@ -213,7 +213,7 @@ public class MethodesBDDImpl {
 
                 List<Message> messages1 = messages.stream().filter(m -> (m.getSender().equals(message.getSender()) && m.getReceiver().equals(message.getReceiver())) || (m.getSender().equals(message.getReceiver()) && m.getReceiver().equals(message.getSender()))).collect(Collectors.toList());
 
-                messages1.sort(Comparator.comparing(o -> Utils.getDate(o.getDate())));
+                messages1.sort(Comparator.comparing(o -> UtilsServer.getDate(o.getDate())));
 
                 String firstSenderNumber = (!Objects.equals(message.getSender(), String.valueOf(getNumero(sim))) ? message.getSender() : message.getReceiver());
                 if (getContacts(sim).stream().anyMatch(c -> c.getNumero().equals(firstSenderNumber))) {

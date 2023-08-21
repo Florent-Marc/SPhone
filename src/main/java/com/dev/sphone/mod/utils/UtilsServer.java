@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class Utils {
+public class UtilsServer {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
 
@@ -67,7 +67,7 @@ public class Utils {
     public static void registerAllCssFiles() {
         List<String> cssFiles = new ArrayList<>();
         String resourcePath = "assets/" + SPhone.MOD_ID + "/css/";
-        InputStream stream = Utils.class.getClassLoader().getResourceAsStream(resourcePath);
+        InputStream stream = UtilsServer.class.getClassLoader().getResourceAsStream(resourcePath);
         if (stream != null) {
             try (java.util.Scanner scanner = new java.util.Scanner(stream)) {
                 while (scanner.hasNextLine()) {

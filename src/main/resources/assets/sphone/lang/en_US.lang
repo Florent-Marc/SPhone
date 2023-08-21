@@ -11,3 +11,5 @@ sphone.meteo.types.snow=Snow
 sphone.meteo.types.cloud=cloudy
 sphone.meteo.types.sun=Sun
 sphone.error.no_phone=You don't have a phone
+sphone.error.no_sim=You don't have a sim in your phone
+sphone.feature.later=Later

@@ -1,7 +1,6 @@
 package com.dev.sphone.mod.client.gui.phone.apps.camera;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
-import com.dev.sphone.mod.utils.Utils;
 import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
