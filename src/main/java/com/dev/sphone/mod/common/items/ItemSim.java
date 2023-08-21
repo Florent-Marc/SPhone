@@ -1,15 +1,12 @@
 package com.dev.sphone.mod.common.items;
 
-import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.SimRegisterEvent;
-import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
 import com.dev.sphone.mod.common.register.ItemsRegister;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.Utils;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,9 +35,7 @@ public class ItemSim extends Item {
         if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
             ItemStack stack = player.getHeldItem(hand);
 
-            if (stack.hasTagCompound() && stack.getTagCompound().hasKey("simcard")) {
-                SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) player);
-            } else {
+            if (!stack.hasTagCompound() || !stack.getTagCompound().hasKey("simcard")) {
                 int sim = Utils.getRandomNumber(1000, 9999);
                 int num = Utils.getRandomNumber(10000, 99999);
                 boolean isExist = false;
