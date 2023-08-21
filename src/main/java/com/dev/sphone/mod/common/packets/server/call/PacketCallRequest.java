@@ -57,6 +57,7 @@ public class PacketCallRequest implements IMessage {
                 } else if (CallNumber == null) {
                     System.out.println("CallNumber is null" + message.numero);
                 } else {
+                    System.out.println("CallNumber is " + CallNumber);
                     MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(receiver, CallNumber));
                     VoiceAddon.addToGroup(CallNumber, receiver);
                     SPhone.network.sendTo(new PacketCall(1, CallNumber), (EntityPlayerMP) caller);

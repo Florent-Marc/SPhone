@@ -1,13 +1,13 @@
 
 package com.dev.sphone.mod.client.gui.phone.apps.contacts;
 
+import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
+import com.dev.sphone.mod.common.packets.server.PacketEditContact;
+import com.dev.sphone.mod.common.phone.Contact;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
-import com.dev.sphone.SPhone;
-import com.dev.sphone.mod.common.packets.server.PacketEditContact;
-import com.dev.sphone.mod.common.phone.Contact;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
@@ -21,6 +21,7 @@ public class GuiNewContact extends GuiBase {
     public GuiNewContact(GuiScreen parent) {
         super(parent);
     }
+    private GuiTextField numero;
 
     @Override
     public void GuiInit() {
@@ -46,11 +47,11 @@ public class GuiNewContact extends GuiBase {
         lastName.setHintText("Prénom");
         getRoot().add(lastName);
 
-        GuiTextField numero = new GuiTextField();
+         numero = new GuiTextField();
         numero.setCssClass("textarea");
         numero.setCssId("numero");
         numero.setHintText("555-1234");
-        //numero.setRegexPattern(Pattern.compile("^-?\\d+$"));
+
         getRoot().add(numero);
 
         GuiTextField notes = new GuiTextField();
@@ -68,6 +69,7 @@ public class GuiNewContact extends GuiBase {
         });
         getRoot().add(ButtonAdd);
     }
+
 
     private boolean isValidInput(String input) {
         // Expression régulière : ^-?\d+$

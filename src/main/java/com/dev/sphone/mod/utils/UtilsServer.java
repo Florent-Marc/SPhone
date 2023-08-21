@@ -61,7 +61,8 @@ public class UtilsServer {
 
     //get phone and return sim
     public static int getSimCard(EntityPlayer p) {
-        return p.getHeldItemMainhand().hasTagCompound() ? p.getHeldItemMainhand().getTagCompound().getInteger("simcard") : 0;
+        ItemPhone itemPhone = (ItemPhone) p.getHeldItemMainhand().getItem();
+        return itemPhone.getSimCard(p.getHeldItemMainhand());
     }
 
     public static void registerAllCssFiles() {

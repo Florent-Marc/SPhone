@@ -50,6 +50,7 @@ public class PacketQuitCall implements IMessage {
             VoiceAddon.removeFromActualGroup(caller);
             MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(receiver, CallNumber));
             MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(caller, CallNumber));
+
             SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) receiver);
             SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) caller);
             return null;

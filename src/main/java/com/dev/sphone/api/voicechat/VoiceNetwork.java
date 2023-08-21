@@ -19,6 +19,11 @@ public class VoiceNetwork {
 
     public static void addPlayerToNetwork(EntityPlayer p) {
         if (hasPhone(p)) {
+            String numero = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(p));
+            if (numero == null) {
+                System.out.println("Numero is null");
+                return;
+            }
             network.put(p, MethodesBDDImpl.getNumero(UtilsServer.getSimCard(p)));
             System.out.println("Player " + p.getName() + " is now in the network with numero " + MethodesBDDImpl.getNumero(UtilsServer.getSimCard(p)) );
         } else {
