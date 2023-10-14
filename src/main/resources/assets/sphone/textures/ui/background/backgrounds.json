@@ -23,6 +23,10 @@
     {
       "id":"iluminacion",
       "name":"Illumination"
+    },
+    {
+      "id":"geometry",
+      "name":"geometry"
     }
   ]
 }
