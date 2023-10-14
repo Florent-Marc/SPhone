@@ -48,6 +48,8 @@ public class GuiCustomisation extends GuiBase {
 
         String[] backgroundsConfig = UtilsClient.getBackgrounds();
 
+
+        int index = 0;
         for (String s : backgroundsConfig) {
             String id = s.split(":")[0];
             String name = s.split(":")[1];
@@ -58,13 +60,18 @@ public class GuiCustomisation extends GuiBase {
             GuiLabel oscuridadLabel=  new GuiLabel(name);
             oscuridadLabel.setCssClass("background_label" + (settings.getBackground().equals(id) ? "_selected" : ""));
             backgrounds.add(oscuridadLabel);
+            if(index % 2 == 0) {
+                oscuridadLabel.getStyle().setBackgroundColor(0xFF00FFFF);
+            } else {
+                oscuridadLabel.getStyle().setBackgroundColor(0x00FFFFFF);
+            }
             backgroundpanel.addClickListener((mouseX, mouseY, mouseButton) -> {
                 settings.setBackground(id);
                 Minecraft.getMinecraft().player.getHeldItemMainhand().getTagCompound().setTag("settings", settings.serializeNBT());
                 Minecraft.getMinecraft().displayGuiScreen(getRoot().getGui());
             });
             backgrounds.add(backgroundpanel);
-
+            index++;
         }
 
         app_container.add(backgrounds);

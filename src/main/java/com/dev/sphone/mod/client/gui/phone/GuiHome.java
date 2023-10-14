@@ -1,5 +1,7 @@
 package com.dev.sphone.mod.client.gui.phone;
 
+import com.dev.sphone.api.loaders.AppDetails;
+import com.dev.sphone.api.loaders.AppType;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
@@ -12,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GuiHome extends GuiBase {
@@ -21,7 +24,7 @@ public class GuiHome extends GuiBase {
     }
 
     @Override
-    public void GuiInit(){
+    public void GuiInit() {
         super.GuiInit();
 
         AppManager.reloadApps(this.getGuiScreen());
@@ -58,26 +61,44 @@ public class GuiHome extends GuiBase {
         AtomicInteger displayedBottomApps = new AtomicInteger();
         AppManager.getApps().forEach((app) -> {
 
+            if (!Objects.isNull(app.getGui())) {
+                if (!app.getGui().getClass().isAnnotationPresent(AppDetails.class)) {
+                    SPhone.logger.warn("App " + app.name + " is missing AppDetails annotation.");
+
+                    AppDetails[] appType = app.getGui().getClass().getAnnotationsByType(AppDetails.class);
+
+                    if(appType.length != 0) {
+                        if (appType[0].type().equals(AppType.DOWNLOADABLE)) return;
+                        if (appType[0].isAlwaysHidden()) return;
+                    }
+
+
+                }
+
+            }
+
+
             GuiPanel appPanel = new GuiPanel();
             appPanel.setCssClass(app.getDefaultInAppBar() ? "app_bottom" : "app");
             appPanel.getStyle().setTexture(new GuiTextureSprite(app.getIcon()));
             appPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
-                if(app.getGui() != null) {
+                if (app.getGui() != null) {
                     Minecraft.getMinecraft().displayGuiScreen(app.getGui());
                 }
-                if(app.getRunnable() != null){
+                if (app.getRunnable() != null) {
                     app.getRunnable().run();
                 }
             });
 
-            if(app.getDefaultInAppBar()) appBottomPanel.add(appPanel); else appListPanel.add(appPanel);
+            if (app.getDefaultInAppBar()) appBottomPanel.add(appPanel);
+            else appListPanel.add(appPanel);
 
-            if(displayedBottomApps.get() >= 4) {
+            if (displayedBottomApps.get() >= 4) {
                 SPhone.logger.warn("Too many apps in bottom bar, some will be hidden");
             }
 
 
-            if(app.getDefaultInAppBar()) displayedBottomApps.getAndIncrement();
+            if (app.getDefaultInAppBar()) displayedBottomApps.getAndIncrement();
         });
 
         getBackground().add(appListPanel);

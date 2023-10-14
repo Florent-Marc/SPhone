@@ -1,5 +1,7 @@
 package com.dev.sphone.mod.client.gui.phone.apps.weather;
 
+import com.dev.sphone.api.loaders.AppDetails;
+import com.dev.sphone.api.loaders.AppType;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.common.phone.Weather;
 import com.dev.sphone.mod.utils.UtilsServer;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@AppDetails(type = AppType.DEFAULT)
 public class GuiWeather extends GuiBase {
 
     private final Weather weather;

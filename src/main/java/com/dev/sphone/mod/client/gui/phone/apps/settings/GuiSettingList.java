@@ -2,6 +2,8 @@
 package com.dev.sphone.mod.client.gui.phone.apps.settings;
 
 import com.dev.sphone.SPhone;
+import com.dev.sphone.api.loaders.AppDetails;
+import com.dev.sphone.api.loaders.AppType;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import fr.aym.acsguis.component.button.GuiButton;
@@ -18,7 +20,7 @@ import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@AppDetails(type = AppType.SYSTEM)
 public class GuiSettingList extends GuiBase {
 
     public GuiSettingList(GuiScreen parent) {

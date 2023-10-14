@@ -95,24 +95,25 @@
 .background {
     left: auto;
     width: auto;
+    top: 120px;
     height: 120px;
 }
 .background_label {
     left: auto;
-    background-color: transparent;
+    background-color: blue;
     color: black;
     font-family: "dnx:montserratlow";
     font-size: 2;
     top: 85%;
-    width: 100%;
+    width: 30%;
 }
 .background_label_selected {
     left: auto;
-    background-color: transparent;
+    background-color: red;
     color: green;
     font-family: "dnx:montserratlow";
     font-size: 2;
     top: 85%;
-    width: 100%;
+    width: 30%;
 }
 

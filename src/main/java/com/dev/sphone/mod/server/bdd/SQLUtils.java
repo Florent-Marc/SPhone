@@ -2,10 +2,13 @@ package com.dev.sphone.mod.server.bdd;
 
 
 
+import com.dev.sphone.mod.utils.exceptions.DatabaseException;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Objects;
 import java.util.Properties;
 
 public class SQLUtils {
@@ -51,6 +54,9 @@ public class SQLUtils {
         getInstance();
         Statement s = null;
         try {
+            if(Objects.isNull(c)) {
+                throw new DatabaseException("Database connection is null, Please check is the database is running. (c is null.)");
+            }
             s = c.createStatement();
             if(s == null){
                 throw new IllegalArgumentException("s is null silly");
@@ -58,6 +64,8 @@ public class SQLUtils {
             s.execute(query);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (DatabaseException e) {
+            throw new RuntimeException(e);
         }
 
     }
