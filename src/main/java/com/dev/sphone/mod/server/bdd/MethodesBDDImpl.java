@@ -1,113 +1,65 @@
 package com.dev.sphone.mod.server.bdd;
 
+import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.phone.*;
+import com.dev.sphone.mod.server.bdd.sql.MySQL;
+import com.dev.sphone.mod.server.bdd.sqlite.SQLite;
 import com.dev.sphone.mod.utils.UtilsServer;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MethodesBDDImpl {
 
-    static SQLUtils instance = new SQLUtils();
+    static DatabaseType instance;
+
+    public static void init() {
+        Properties props = new Properties();
+        try {
+            props.load(new FileReader("bdd.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        if(props.getProperty("dbtype").equals("mysql")) {
+            instance = new MySQL();
+        }
+        if(props.getProperty("dbtype").equals("sqlite")) {
+            instance = new SQLite();
+        }
+    }
 
     public static void checkFile() {
         if (!new File("bdd.properties").exists()) {
-            if (!new File("bdd.properties").exists()) {
-                try {
-                    File f = new File("bdd.properties");
-                    f.createNewFile();
-                    //write default values url, user, password
-                    FileWriter fw = new FileWriter(f);
-                    fw.write("url=jdbc:mysql://127.0.0.1:3306/phone?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true\n");
-                    fw.write("user=root\n");
-                    fw.write("password=\n");
-                    fw.close();
+            try {
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+                File f = new File("bdd.properties");
+                boolean fileCt = f.createNewFile();
+                if(!fileCt) {
+                    SPhone.logger.fatal("Can't create bdd.properties file");
+                    return;
                 }
+                FileWriter fw = new FileWriter(f);
+                fw.write("dbtype=mysql");
+                fw.write("url=jdbc:mysql://127.0.0.1:3306/phone?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true\n");
+                fw.write("user=root\n");
+                fw.write("password=\n");
+                fw.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
         }
     }
 
     public static void checkTable() {
-        instance.execute("CREATE TABLE IF NOT EXISTS `contact` (\n" +
-                "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
-                "\t`sim` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`name` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`lastname` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`numero` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`note` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\tPRIMARY KEY (`id`) USING BTREE\n" +
-                ")\n" +
-                "COLLATE='utf8mb3_general_ci'\n" +
-                "ENGINE=InnoDB\n" +
-                "AUTO_INCREMENT=0\n" +
-                ";\n");
-
-        instance.execute("CREATE TABLE IF NOT EXISTS `message` (\n" +
-                "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
-                "\t`sender` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n" +
-                "\t`receiver` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n" +
-                "\t`message` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n" +
-                "\t`date` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n" +
-                "\tPRIMARY KEY (`id`) USING BTREE\n" +
-                ")\n" +
-                "ENGINE=InnoDB\n" +
-                ";");
-        instance.execute("CREATE TABLE IF NOT EXISTS `sim` (\n" +
-                "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
-                "\t`sim` TEXT NOT NULL COLLATE 'utf8_general_ci',\n" +
-                "\t`number` TEXT NOT NULL COLLATE 'utf8_general_ci',\n" +
-                "\tPRIMARY KEY (`id`) USING BTREE\n" +
-                ")\n" +
-                "COLLATE='utf8_general_ci'\n" +
-                "ENGINE=InnoDB\n" +
-                "AUTO_INCREMENT=0\n" +
-                ";\n");
-        instance.execute("CREATE TABLE IF NOT EXISTS `notes` (\n" +
-                "\t`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,\n" +
-                "\t`sim` VARCHAR(10) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`name` VARCHAR(24) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`note` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`date` BIGINT(19) NULL DEFAULT NULL,\n" +
-                "\tPRIMARY KEY (`id`) USING BTREE\n" +
-                ")\n" +
-                "COLLATE='utf8mb3_general_ci'\n" +
-                "ENGINE=InnoDB\n" +
-                "AUTO_INCREMENT=0\n" +
-                ";\n");
-        instance.execute("CREATE TABLE IF NOT EXISTS `news_accounts` (\n" +
-                "\t`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,\n" +
-                "\t`sim` VARCHAR(10) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`username` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`password` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`creation_date` BIGINT(19) NULL DEFAULT NULL,\n" +
-                "\tPRIMARY KEY (`id`) USING BTREE\n" +
-                ")\n" +
-                "COLLATE='utf8mb3_general_ci'\n" +
-                "ENGINE=InnoDB\n" +
-                "AUTO_INCREMENT=0\n" +
-                ";\n");
-        instance.execute("CREATE TABLE IF NOT EXISTS `news` (\n" +
-                "\t`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,\n" +
-                "\t`title` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`content` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`image` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\t`date` BIGINT(19) NULL DEFAULT NULL,\n" +
-                "\t`author` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
-                "\tPRIMARY KEY (`id`) USING BTREE\n" +
-                ")\n" +
-                "COLLATE='utf8mb3_general_ci'\n" +
-                "ENGINE=InnoDB\n" +
-                "AUTO_INCREMENT=0\n" +
-                ";\n");
+        instance.checktables();
     }
 
     public static void addContact(int sim, Contact contact) {
@@ -126,7 +78,7 @@ public class MethodesBDDImpl {
     public static List<Contact> getContacts(int sim) {
         List<Contact> contacts = new ArrayList<>();
         QueryResult qr = instance.getData("SELECT * FROM contact WHERE sim = ?", sim);
-        if(qr != null) {
+        if (qr != null) {
             for (int i = 0; i < qr.getRowsCount(); i++) {
                 contacts.add(new Contact(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 2), qr.getValue(i, 3), qr.getValue(i, 4), qr.getValue(i, 5)));
             }
@@ -140,7 +92,7 @@ public class MethodesBDDImpl {
         for (int i = 0; i < qr.getRowsCount(); i++) {
             //get the current date in a long format
             notes.add(
-                    new Note(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 2), qr.getValue(i, 3), Long.parseLong(qr.getValue(i, 4)) )
+                    new Note(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 2), qr.getValue(i, 3), Long.parseLong(qr.getValue(i, 4)))
             );
         }
         return notes;
@@ -149,6 +101,7 @@ public class MethodesBDDImpl {
     public static void addNote(int sim, Note note) {
         instance.execute("INSERT INTO notes (sim, name, note, date) VALUES (?, ?, ?, ?)", sim, note.getTitle(), note.getText(), note.getDate());
     }
+
     public static void editNote(Note note) {
         instance.execute("UPDATE notes SET name = ?, note = ?, date = ? WHERE id = ?", note.getTitle(), note.getText(), note.getDate(), note.getId());
     }
@@ -163,7 +116,7 @@ public class MethodesBDDImpl {
 
     public static String getNumero(int sim) {
         QueryResult qr = instance.getData("SELECT * FROM sim WHERE sim = ?", sim);
-        if(qr.getRowsCount() > 0) {
+        if (qr.getRowsCount() > 0) {
             return qr.getValue(0, 2);
         }
         return null;
@@ -178,6 +131,7 @@ public class MethodesBDDImpl {
         }
         return messages;
     }
+
     public static List<Message> getMessage(int sim, String contactNumber) {
         String number = getNumero(sim);
         List<Message> messages = new ArrayList<>();
@@ -199,7 +153,6 @@ public class MethodesBDDImpl {
         return new Conversation(messages, contact);
 
     }
-
 
 
     public static List<Conversation> getConversations(int sim) {
@@ -248,6 +201,7 @@ public class MethodesBDDImpl {
     public static void addNews(News news) {
         instance.execute("INSERT INTO news (title, content, image, date, author) VALUES (?, ?, ?, ?, ?)", news.getTitle(), news.getContent(), news.getImage(), news.getDate(), news.getAuthor());
     }
+
     public static void editNews(News news) {
         instance.execute("UPDATE news SET title = ?, content = ?, image = ?, date = ?, author = ? WHERE id = ?", news.getTitle(), news.getContent(), news.getImage(), news.getDate(), news.getAuthor(), news.getId());
     }

@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class QueryResult {
     private Statement s;
     private ResultSet r;
     private int colsCount;
     private List<String[]> result;
-    private List<String> colsNames;
     public QueryResult(Statement s, ResultSet r) {
         this.s = s;
         this.r = r;
@@ -27,7 +27,6 @@ public class QueryResult {
         ResultSetMetaData metaData = r.getMetaData();
         colsCount = metaData.getColumnCount();
         result = new ArrayList<>();
-        colsNames = new ArrayList<>();
         while(r.next()){
             String[] row = new String[colsCount];
             for (int i = 1; i <= colsCount ; i++) {
@@ -35,9 +34,6 @@ public class QueryResult {
                 row[i - 1] = (o == null) ? null : o.toString();
             }
             result.add(row);
-        }
-        for (int i = 1; i <= colsCount; i++) {
-            colsNames.add(metaData.getColumnName(i));
         }
     }
 
@@ -62,26 +58,6 @@ public class QueryResult {
             throw new IndexOutOfBoundsException("La colonne "+ column+ " est en dehors des limites du résultat (0 - "+colsCount+")!");
         }
         return getRow(ligne)[column];
-    }
-
-    public String getValue(int row, String column){
-        return getValue(row, getColumnIdByName(column));
-    }
-
-    public String getColumnName(int column){
-        if(column < 0 || column > colsCount){
-            throw new IndexOutOfBoundsException("La colonne "+ column+ " est en dehors des limites du résultat (0 - "+colsCount+")!");
-        }
-        return colsNames.get(column);
-    }
-
-    public int getColumnIdByName(String name){
-        for (int i = 0; i <colsNames.size(); i++) {
-            if(name.equals(colsNames.get(i))){
-                return i;
-            }
-        }
-        throw new IllegalArgumentException("Le résultat ne contient aucune colonne nommée '"+name+"'!");
     }
 
     public Statement getStatement() {

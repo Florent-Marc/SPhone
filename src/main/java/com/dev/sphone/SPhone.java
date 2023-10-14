@@ -93,6 +93,8 @@ public class SPhone {
     public void onServerStart(FMLServerStartingEvent e) {
         e.registerServerCommand(new CommandGivePhone());
         MethodesBDDImpl.checkFile();
+
+        MethodesBDDImpl.init();
         MethodesBDDImpl.checkTable();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
