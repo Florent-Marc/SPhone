@@ -1,5 +1,7 @@
 package com.dev.sphone.mod.client.gui.phone.apps.camera;
 
+import com.dev.sphone.api.loaders.AppDetails;
+import com.dev.sphone.api.loaders.AppType;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.layout.GridLayout;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+@AppDetails(type = AppType.DEFAULT)
 public class GuiGallery extends GuiBase {
 
     public GuiGallery(GuiScreen parent) {

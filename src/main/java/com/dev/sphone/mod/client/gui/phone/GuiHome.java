@@ -62,9 +62,7 @@ public class GuiHome extends GuiBase {
         AppManager.getApps().forEach((app) -> {
 
             if (!Objects.isNull(app.getGui())) {
-                if (!app.getGui().getClass().isAnnotationPresent(AppDetails.class)) {
-                    SPhone.logger.warn("App " + app.name + " is missing AppDetails annotation.");
-                } else {
+                if (app.getGui().getClass().isAnnotationPresent(AppDetails.class)) {
 
                     AppDetails[] appType = app.getGui().getClass().getAnnotationsByType(AppDetails.class);
 
@@ -72,6 +70,8 @@ public class GuiHome extends GuiBase {
                         if (appType[0].type().equals(AppType.DOWNLOADABLE)) return;
                         if (appType[0].isAlwaysHidden()) return;
                     }
+                } else {
+                    SPhone.logger.warn("App " + app.name + " is missing AppDetails annotation.");
                 }
             }
 

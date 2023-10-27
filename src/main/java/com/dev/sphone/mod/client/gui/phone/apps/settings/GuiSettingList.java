@@ -5,22 +5,18 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.api.loaders.AppDetails;
 import com.dev.sphone.api.loaders.AppType;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
-import com.dev.sphone.mod.client.gui.phone.GuiHome;
-import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
-import fr.aym.acsguis.component.textarea.GuiFloatField;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
 import java.util.List;
-@AppDetails(type = AppType.SYSTEM)
+@AppDetails(type = AppType.DEFAULT)
 public class GuiSettingList extends GuiBase {
 
     public GuiSettingList(GuiScreen parent) {
@@ -43,8 +39,6 @@ public class GuiSettingList extends GuiBase {
         GuiScrollPane settings_list = new GuiScrollPane();
         settings_list.setCssClass("settings_list");
         settings_list.setLayout(new GridLayout(-1, 80, 1, GridLayout.GridDirection.HORIZONTAL, 1));
-
-        GuiButton caca = new GuiButton("Caca");
 
         GuiLabel customisation_desc = new GuiLabel("Préfénrences");
         customisation_desc.setCssClass("settings_element_desc");
