@@ -18,11 +18,10 @@ import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
 import java.util.List;
-@AppDetails(type = AppType.SYSTEM)
+@AppDetails(type = AppType.DEFAULT)
 public class GuiSettingList extends GuiBase {
 
     public GuiSettingList(GuiScreen parent) {
@@ -45,8 +44,6 @@ public class GuiSettingList extends GuiBase {
         GuiScrollPane settings_list = new GuiScrollPane();
         settings_list.setCssClass("settings_list");
         settings_list.setLayout(new GridLayout(-1, 80, 1, GridLayout.GridDirection.HORIZONTAL, 1));
-
-        GuiButton caca = new GuiButton("Caca");
 
         GuiLabel customisation_desc = new GuiLabel("Préfénrences");
         customisation_desc.setCssClass("settings_element_desc");

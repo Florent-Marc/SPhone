@@ -1,5 +1,7 @@
 package com.dev.sphone.mod.client.gui.phone.apps.calculator;
 
+import com.dev.sphone.api.loaders.AppDetails;
+import com.dev.sphone.api.loaders.AppType;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
@@ -10,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
+@AppDetails(type = AppType.DEFAULT)
 public class GuiCalculator extends GuiBase {
 
     public GuiCalculator(GuiScreen parent) {
