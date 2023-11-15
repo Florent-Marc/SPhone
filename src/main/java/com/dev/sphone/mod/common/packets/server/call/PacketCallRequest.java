@@ -2,8 +2,8 @@ package com.dev.sphone.mod.common.packets.server.call;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.CallEvent;
-import com.dev.sphone.api.voicechat.VoiceAddon;
-import com.dev.sphone.api.voicechat.VoiceNetwork;
+import com.dev.sphone.api.voicemanager.voicechat.VoiceAddon;
+import com.dev.sphone.api.voicemanager.voicechat.VoiceNetwork;
 import com.dev.sphone.mod.common.packets.client.PacketCall;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.UtilsServer;
@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Objects;
 
 public class PacketCallRequest implements IMessage {
 
@@ -47,9 +49,8 @@ public class PacketCallRequest implements IMessage {
         @Override
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketCallRequest message, MessageContext ctx) {
-            //todo security
             EntityPlayerMP receiver = ctx.getServerHandler().player;
-            EntityPlayer caller = VoiceNetwork.getPlayerFromNumber(message.numero);
+            EntityPlayer caller = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numero);
             String CallNumber = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(receiver));
             if (message.accept) {
                 if (caller == null) {

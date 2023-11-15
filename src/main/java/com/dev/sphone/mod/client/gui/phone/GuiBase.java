@@ -12,6 +12,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -79,8 +80,15 @@ public class GuiBase extends GuiFrame {
         if (!isInfosHidden) {
             GuiLabel TopClock = new GuiLabel("");
             TopClock.setCssId("top_clock");
+            String dateS = I18n.format("sphone.timeformat");
+            // if not set
+            if (dateS.equals("sphone.timeformat")) {
+                dateS = "HH:mm";
+            }
+            String finalDateS = dateS;
             TopClock.addTickListener(() -> {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat(finalDateS);
                 Date date = new Date();
                 TopClock.setText(dateFormat.format(date));
             });

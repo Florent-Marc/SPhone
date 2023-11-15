@@ -1,0 +1,18 @@
+{
+  "composition": {
+    "subtitle": "sphone.subtitle.composition",
+    "sounds": [ "sphone:composition" ]
+  },
+  "nonattrib": {
+    "subtitle": "sphone.subtitle.nonattrib",
+    "sounds": [ "sphone:nonattrib" ]
+  },
+  "unjoinable": {
+    "subtitle": "sphone.subtitle.unjoinable",
+    "sounds": [ "sphone:unjoinable" ]
+  },
+  "ringtone": {
+    "subtitle": "sphone.subtitle.ringtone",
+    "sounds": [ "sphone:ringtone" ]
+  }
+}

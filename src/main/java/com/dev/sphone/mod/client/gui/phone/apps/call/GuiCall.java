@@ -2,6 +2,7 @@ package com.dev.sphone.mod.client.gui.phone.apps.call;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import com.dev.sphone.mod.common.register.SoundRegister;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import com.dev.sphone.SPhone;
@@ -9,6 +10,7 @@ import com.dev.sphone.mod.common.packets.server.call.PacketQuitCall;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ public class GuiCall extends GuiBase {
     private GuiLabel time;
 
     public GuiCall(GuiScreen parent, String s) {
-        super(parent);
+        super(new GuiHome().getGuiScreen());
         this.s = s;
     }
 
@@ -28,29 +30,34 @@ public class GuiCall extends GuiBase {
     public void GuiInit() {
         super.GuiInit();
         Timestart = System.currentTimeMillis();
-
-        time = new GuiLabel("00:00");
+        time = new GuiLabel("Appel terminé");
         time.setCssId("time");
+        time.setCssCode("color: red;");
         getBackground().add(time);
-
-        GuiPanel close = new GuiPanel();
-        close.setCssClass("close");
-        getBackground().add(close);
-        close.addClickListener((p, m, b) -> {
-            SPhone.network.sendToServer(new PacketQuitCall(s));
-            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
-        });
-
 
         GuiLabel number = new GuiLabel(s);
         number.setCssId("number");
         getBackground().add(number);
+
+        GuiPanel exit = new GuiPanel();
+        exit.setCssClass("exit");
+        exit.addClickListener((mouseX, mouseY, mouseButton) -> {
+            if (mouseButton == 0) {
+                Minecraft.getMinecraft().getSoundHandler().stop("sphone:nonattrib", SoundCategory.MASTER);
+                Minecraft.getMinecraft().getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
+                Minecraft.getMinecraft().getSoundHandler().stop("sphone:unjoinable", SoundCategory.MASTER);
+                Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
+            }
+        });
+        getBackground().add(exit);
     }
 
     @Override
     public void guiClose() {
         super.guiClose();
-        SPhone.network.sendToServer(new PacketQuitCall(s));
+        Minecraft.getMinecraft().getSoundHandler().stop("sphone:nonattrib", SoundCategory.MASTER);
+        Minecraft.getMinecraft().getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
+        Minecraft.getMinecraft().getSoundHandler().stop("sphone:unjoinable", SoundCategory.MASTER);
     }
 
 

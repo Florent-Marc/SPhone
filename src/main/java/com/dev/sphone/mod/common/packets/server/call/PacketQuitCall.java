@@ -2,8 +2,8 @@ package com.dev.sphone.mod.common.packets.server.call;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.CallEvent;
-import com.dev.sphone.api.voicechat.VoiceAddon;
-import com.dev.sphone.api.voicechat.VoiceNetwork;
+import com.dev.sphone.api.voicemanager.voicechat.VoiceAddon;
+import com.dev.sphone.api.voicemanager.voicechat.VoiceNetwork;
 import com.dev.sphone.mod.common.packets.client.PacketCall;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,19 +40,19 @@ public class PacketQuitCall implements IMessage {
         @Override
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketQuitCall message, MessageContext ctx) {
-            String CallNumber = message.numero;
-            EntityPlayer receiver = VoiceNetwork.getPlayerFromNumber(CallNumber);
-            EntityPlayer caller = VoiceAddon.getCallerInGroup(CallNumber, receiver);
-            if (receiver == null || caller == null) {
-                return null;
-            }
-            VoiceAddon.removeFromActualGroup(receiver);
-            VoiceAddon.removeFromActualGroup(caller);
-            MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(receiver, CallNumber));
-            MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(caller, CallNumber));
-
-            SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) receiver);
-            SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) caller);
+//            String CallNumber = message.numero;
+//            EntityPlayer receiver = VoiceNetwork.getPlayerFromNumber(CallNumber);
+//            EntityPlayer caller = VoiceAddon.getCallerInGroup(CallNumber, receiver);
+//            if (receiver == null || caller == null) {
+//                return null;
+//            }
+//            VoiceAddon.removeFromActualGroup(receiver);
+//            VoiceAddon.removeFromActualGroup(caller);
+//            MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(receiver, CallNumber));
+//            MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(caller, CallNumber));
+//
+//            SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) receiver);
+//            SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) caller);
             return null;
         }
     }

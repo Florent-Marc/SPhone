@@ -6,6 +6,8 @@ import com.dev.sphone.api.loaders.AppDetails;
 import com.dev.sphone.api.loaders.AppType;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import com.dev.sphone.mod.utils.UtilsClient;
+import com.dev.sphone.mod.utils.UtilsServer;
 import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
@@ -66,7 +68,6 @@ public class GuiSettingList extends GuiBase {
 
         app_container.add(settings_list);
         app_container.add(appTitle);
-
 
         getRoot().add(app_container);
     }

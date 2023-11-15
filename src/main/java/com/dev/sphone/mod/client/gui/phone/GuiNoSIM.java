@@ -9,6 +9,7 @@ import fr.aym.acsguis.cssengine.positionning.Size;
 import fr.aym.acsguis.utils.GuiConstants;
 import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -33,20 +34,20 @@ public class GuiNoSIM extends GuiBase {
         setInfosHidden(true);
 
 
-        GuiLabel appTitle = new GuiLabel("Erreur carte SIM");
+        GuiLabel appTitle = new GuiLabel(I18n.format("sphone.error.sim"));
         appTitle.setCssId("app_title");
 
         GuiPanel icon = new GuiPanel();
         icon.setCssId("app_icon");
 
-        GuiLabel appDesc = new GuiLabel("Une erreur est survenue");
+        GuiLabel appDesc = new GuiLabel(I18n.format("sphone.error.desc"));
         appDesc.setCssId("app_desc");
 
         if(reason.equals("unregistred")) {
-            appDesc.setText("Votre carte SIM n'est pas enregistrée");
+            appDesc.setText(I18n.format("sphone.error.unregistred"));
             getRoot().add(appDesc);
         } else {
-            appDesc.setText("Aucune carte SIM n'est insérée");
+            appDesc.setText(I18n.format("sphone.error.notinserted"));
         }
         getRoot().add(appDesc);
         getRoot().add(appTitle);

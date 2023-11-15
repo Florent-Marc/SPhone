@@ -7,6 +7,7 @@ import com.dev.sphone.mod.common.phone.Note;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class GuiEditNote extends GuiBase {
 
         add(getRoot());
 
-        GuiLabel AppTitle = new GuiLabel("Modifier la note");
+        GuiLabel AppTitle = new GuiLabel(I18n.format("sphone.notes.edit"));
         AppTitle.setCssId("app_title");
         getRoot().add(AppTitle);
 
@@ -53,7 +54,7 @@ public class GuiEditNote extends GuiBase {
 
         GuiLabel buttonDel = new GuiLabel("-");
         buttonDel.setCssId("button_del");
-        buttonDel.setHoveringText(Collections.singletonList("Supprimer"));
+        buttonDel.setHoveringText(Collections.singletonList(I18n.format("sphone.notes.remove")));
         buttonDel.addClickListener((mouseX, mouseY, mouseButton) -> {
             SPhone.network.sendToServer(new PacketEditNote(new Note(note.getId(), titre.getText(), noteField.getText(), System.currentTimeMillis()), "delete"));
         });

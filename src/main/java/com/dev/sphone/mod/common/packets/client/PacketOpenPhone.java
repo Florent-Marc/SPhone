@@ -1,7 +1,10 @@
 package com.dev.sphone.mod.common.packets.client;
 
+import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.client.gui.phone.GuiNoSIM;
+import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
+import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCallRequest;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IThreadListener;
@@ -53,6 +56,20 @@ public class PacketOpenPhone implements IMessage {
             } else if (message.action.equals("nosim")) {
                 Minecraft.getMinecraft().addScheduledTask(() -> {
                     Minecraft.getMinecraft().displayGuiScreen(new GuiNoSIM(message.content).getGuiScreen());
+                });
+            } else if (message.action.equals("dontexists"))  {
+                Minecraft.getMinecraft().addScheduledTask(() -> {
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
+                });
+            } else if (message.action.equals("recievecall"))  {
+                Minecraft.getMinecraft().addScheduledTask(() -> {
+                    System.out.println("content: " + message.content);
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content).getGuiScreen());
+                });
+            } else if (message.action.equals("sendcall"))  {
+                Minecraft.getMinecraft().addScheduledTask(() -> {
+                    System.out.println("content: " + message.content);
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
                 });
             }
             return null;

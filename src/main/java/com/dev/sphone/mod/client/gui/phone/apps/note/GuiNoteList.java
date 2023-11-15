@@ -8,6 +8,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import com.dev.sphone.mod.common.phone.Note;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 import java.text.SimpleDateFormat;
@@ -30,7 +31,7 @@ public class GuiNoteList extends GuiBase {
 
         add(getRoot());
 
-        GuiLabel appTitle2 = new GuiLabel("Notes");
+        GuiLabel appTitle2 = new GuiLabel(I18n.format("sphone.notes.title"));
         appTitle2.setCssId("app_title");
         getRoot().add(appTitle2);
 

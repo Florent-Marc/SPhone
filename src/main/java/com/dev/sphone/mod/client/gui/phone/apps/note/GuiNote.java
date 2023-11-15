@@ -12,11 +12,11 @@ import java.util.List;
 
 public class GuiNote extends GuiBase {
 
-    private final Note contact;
+    private final Note note;
 
-    public GuiNote(GuiScreen parent, Note contact) {
+    public GuiNote(GuiScreen parent, Note note) {
         super(parent);
-        this.contact = contact;
+        this.note = note;
     }
 
     @Override
@@ -25,19 +25,19 @@ public class GuiNote extends GuiBase {
 
         add(getRoot());
 
-        GuiLabel AppTitle = new GuiLabel(contact.getTitle());
+        GuiLabel AppTitle = new GuiLabel(note.getTitle());
         AppTitle.setCssId("app_title");
         getRoot().add(AppTitle);
 
         GuiLabel buttonEdit = new GuiLabel("✎");
         buttonEdit.setCssId("button_add");
         buttonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiEditNote(this.getGuiScreen(), contact).getGuiScreen());
+            Minecraft.getMinecraft().displayGuiScreen(new GuiEditNote(this.getGuiScreen(), note).getGuiScreen());
         });
         getRoot().add(buttonEdit);
 
 
-        GuiLabel note = new GuiLabel("Note : "+contact.getText());
+        GuiLabel note = new GuiLabel("Note : "+ this.note.getText());
         note.setCssId("note");
         getRoot().add(note);
     }

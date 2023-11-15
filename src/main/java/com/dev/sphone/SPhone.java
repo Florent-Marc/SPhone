@@ -1,6 +1,7 @@
 package com.dev.sphone;
 
-import com.dev.sphone.api.voicechat.VoiceNetwork;
+import com.dev.sphone.api.voicemanager.VoiceManager;
+import com.dev.sphone.api.voicemanager.voicechat.VoiceNetwork;
 import com.dev.sphone.mod.client.ClientEventAnim;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.SPhoneTab;
@@ -8,6 +9,7 @@ import com.dev.sphone.mod.common.GuiHandler;
 import com.dev.sphone.mod.common.packets.Network;
 import com.dev.sphone.mod.common.proxy.CommonProxy;
 import com.dev.sphone.mod.common.register.RegisterHandler;
+import com.dev.sphone.mod.common.register.SoundRegister;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.server.commands.CommandGivePhone;
 import com.dev.sphone.mod.utils.ObfuscateUtils;
@@ -80,6 +82,8 @@ public class SPhone {
             if (isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
                 MinecraftForge.EVENT_BUS.register(new ClientEventAnim());
         }
+        SoundRegister.registerSounds();
+        VoiceManager.init(e.getSide());
     }
 
     @Mod.EventHandler

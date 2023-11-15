@@ -4,7 +4,7 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.InitAppEvent;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.gui.phone.apps.calculator.GuiCalculator;
-import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCallRequest;
+import com.dev.sphone.mod.client.gui.phone.apps.call.GuiMakeCall;
 import com.dev.sphone.mod.client.gui.phone.apps.camera.GuiGallery;
 import com.dev.sphone.mod.client.gui.phone.apps.settings.GuiSettingList;
 import com.dev.sphone.mod.common.packets.server.PacketRequestData;
@@ -50,7 +50,7 @@ public class AppManager {
                 () -> SPhone.network.sendToServer(new PacketRequestData("weather"))
         ));
 
-        guiSupplier = () -> new GuiCallRequest("46545").getGuiScreen();
+        guiSupplier = () -> new GuiMakeCall(root).getGuiScreen();
 
         apps.add(new App(guiSupplier,
                 new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/call.png"),

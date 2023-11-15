@@ -1,5 +1,9 @@
-.close{
-    background-image: url("sphone:textures/ui/icons/close.png");
+#root{
+    background-color: #000000;
+}
+
+.call{
+    background-image: url("sphone:textures/ui/icons/tel.png");
     width: 50px;
     height: 50px;
     left: 44%;
@@ -8,17 +12,94 @@
 #number{
     width: 100%;
     height: 5%;
-    font-size: 15px;
     text-align: center;
     color: white;
     top: 10%;
+    font-family: "dnx:montserratlow";
+    font-size: 5px;
 }
 
 #time{
     width: 100%;
     height: 5%;
-    font-size: 15px;
     text-align: center;
     color: white;
     bottom: 20%;
+    font-family: "dnx:montserratlow";
+    font-size: 5px;
+}
+
+.buttons {
+    background-color: black;
+    width: 90%;
+    left: 50%;
+    right: 50%;
+
+    height: 70%;
+    top: 20%;
+
+}
+
+.button {
+    width: auto;
+    height: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+
+    background-image: url("sphone:textures/ui/icons/call/numberframe.png");
+}
+
+.buttonspe {
+    horizontal-position: center;
+    width: auto;
+    height: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    background-image: url("sphone:textures/ui/icons/call/numberframe.png");
+}
+
+.callzone {
+    background-color: black;
+    width: 80%;
+    left: 10%;
+
+    height: 70%;
+    top: 10%;
+}
+
+.label {
+    font-family: "dnx:montserratlow";
+    font-size: 5px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    text-align-vertical: center;
+    background-color: transparent;
+}
+
+.nbinput {
+    font-family: "dnx:montserratlow";
+    font-size: 5px;
+    width: 80%;
+    height: 10%;
+    left: 10%;
+    text-align: center;
+    text-align-vertical: center;
+    background-color: transparent;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+    border-color: white;
+    border-width: 2px;
+}
+
+.exit {
+    background-image: url("sphone:textures/ui/icons/close.png");
+    width: 50px;
+    height: 50px;
+    left: 50%;
+    right: 50%;
+    top: 85%;
 }

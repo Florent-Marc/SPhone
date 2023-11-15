@@ -2,15 +2,19 @@ package com.dev.sphone.mod.server.commands;
 
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.items.ItemSim;
+import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
+import com.dev.sphone.mod.utils.UtilsServer;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 
 public class CommandGivePhone extends CommandBase {
     @Override
@@ -61,6 +65,9 @@ public class CommandGivePhone extends CommandBase {
             } else {
                 p.sendMessage(new TextComponentTranslation("sphone.error.no_sim"));
             }
+        }
+        if (para.equals("getnumero")) {
+            p.sendMessage(new TextComponentString(Objects.requireNonNull(MethodesBDDImpl.getNumero(UtilsServer.getSimCard(p)))));
         }
         if (para.equals("call")) {
             p.sendMessage(new TextComponentTranslation("sphone.feature.later"));

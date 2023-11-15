@@ -7,6 +7,7 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.packets.server.PacketEditNote;
 import com.dev.sphone.mod.common.phone.Note;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -24,13 +25,13 @@ public class GuiNewNote extends GuiBase {
 
         add(getRoot());
 
-        GuiLabel AppTitle = new GuiLabel("Ajouter Une Note");
+        GuiLabel AppTitle = new GuiLabel(I18n.format("sphone.notes.add"));
         AppTitle.setCssId("app_title");
         getRoot().add(AppTitle);
 
         GuiTextField titre = new GuiTextField();
         titre.setCssClass("titre");
-        titre.setHintText("➜ Titre");
+        titre.setHintText(I18n.format("sphone.notes.newtitle"));
         titre.setMaxTextLength(20);
         getRoot().add(titre);
 
@@ -42,7 +43,7 @@ public class GuiNewNote extends GuiBase {
         };
 
         note.setCssClass("note");
-        note.setHintText("➜ Note");
+        note.setHintText(I18n.format("sphone.notes.newcontent"));
         note.setMaxTextLength(1000);
         getRoot().add(note);
 

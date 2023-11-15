@@ -3,6 +3,16 @@ sphone.meteo.cityname= Baltia's Archipelago
 
 itemGroup.tab=SPhone
 
+item.sim_card.name=SIM Card
+item.phone.name=SPhone 1
+
+sphone.timeformat=HH:mm
+
+sphone.error.sim=SIM Card Error
+sphone.error.desc=An error has occured
+sphone.error.unregistred=Your SIM is not registred
+sphone.error.notinserted=Your SIM is not inserted
+
 sphone.meteo.prevs=Meteorological previsions
 sphone.meteo.types.thunder=Thunderstorm
 sphone.meteo.types.rain=Rain
@@ -10,6 +20,14 @@ sphone.meteo.types.sunny=Sunny
 sphone.meteo.types.snow=Snow
 sphone.meteo.types.cloud=cloudy
 sphone.meteo.types.sun=Sun
+
 sphone.error.no_phone=You don't have a phone
 sphone.error.no_sim=You don't have a sim in your phone
 sphone.feature.later=Later
+
+sphone.notes.title=Notes
+sphone.notes.add=Add a note
+sphone.notes.edit=Edit the note
+sphone.notes.newtitle=➜ Title
+sphone.notes.newcontent=➜ Note
+sphone.notes.remove=Delete

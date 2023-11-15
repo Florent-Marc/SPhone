@@ -1,12 +1,6 @@
 package com.dev.sphone.mod.common.packets.client;
 
-import com.dev.sphone.mod.client.gui.phone.GuiHome;
-import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
-import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCallEnd;
-import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCallRequest;
-import com.dev.sphone.mod.client.gui.phone.apps.call.GuiWaitCall;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -48,24 +42,24 @@ public class PacketCall implements IMessage {
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketCall message, MessageContext ctx) {
             int id = message.id;
-            if (id == 0) {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiCallEnd(new GuiHome().getGuiScreen(), "").getGuiScreen());
-            }
-            if (id == 1) {
-                Minecraft.getMinecraft().addScheduledTask(() -> {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiHome().getGuiScreen(), message.number).getGuiScreen());
-                });
-            }
-            if (id == 2) {
-                Minecraft.getMinecraft().addScheduledTask(() -> {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.number).getGuiScreen());
-                });
-            }
-            if (id == 3) {
-                Minecraft.getMinecraft().addScheduledTask(() -> {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiHome().getGuiScreen(), message.number).getGuiScreen());
-                });
-            }
+//            if (id == 0) {
+//                Minecraft.getMinecraft().displayGuiScreen(new GuiCallEnd(new GuiHome().getGuiScreen(), "").getGuiScreen());
+//            }
+//            if (id == 1) {
+//                Minecraft.getMinecraft().addScheduledTask(() -> {
+//                    Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiHome().getGuiScreen(), message.number).getGuiScreen());
+//                });
+//            }
+//            if (id == 2) {
+//                Minecraft.getMinecraft().addScheduledTask(() -> {
+//                    Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.number).getGuiScreen());
+//                });
+//            }
+//            if (id == 3) {
+//                Minecraft.getMinecraft().addScheduledTask(() -> {
+//                    Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiHome().getGuiScreen(), message.number).getGuiScreen());
+//                });
+//            }
             return null;
         }
     }

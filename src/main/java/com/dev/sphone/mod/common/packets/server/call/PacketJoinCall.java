@@ -2,8 +2,8 @@ package com.dev.sphone.mod.common.packets.server.call;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.CallEvent;
-import com.dev.sphone.api.voicechat.VoiceAddon;
-import com.dev.sphone.api.voicechat.VoiceNetwork;
+import com.dev.sphone.api.voicemanager.voicechat.VoiceAddon;
+import com.dev.sphone.api.voicemanager.voicechat.VoiceNetwork;
 import com.dev.sphone.mod.common.packets.client.PacketCall;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.UtilsServer;
@@ -46,29 +46,6 @@ public class PacketJoinCall implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketJoinCall message, MessageContext ctx) {
             EntityPlayer player = ctx.getServerHandler().player;
-            if (UtilsServer.hasPhone(player)) {
-                if (VoiceNetwork.hasNumberInNetwork(message.number)) {
-                    if (VoiceAddon.groupExists(message.number)) {
-                        //TODO verif le nombre de personne dans le groupe pour savoir si le joueur est occuper
-                        MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(player, message.number));
-                        VoiceAddon.addToGroup(message.number, player);
-                        SPhone.network.sendTo(new PacketCall(1, message.number), (EntityPlayerMP) VoiceNetwork.getPlayerFromNumber(message.number));
-                        SPhone.network.sendTo(new PacketCall(1, message.number), (EntityPlayerMP) player);
-                    } else {
-                        MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(player, message.number));
-                        MinecraftForge.EVENT_BUS.post(new CallEvent.CreateCall(player, message.number));
-                        VoiceAddon.createGroup(message.number, false, Group.Type.ISOLATED);
-                        VoiceAddon.addToGroup(message.number, player);
-                        SPhone.network.sendTo(new PacketCall(2, MethodesBDDImpl.getNumero(UtilsServer.getSimCard(player))), (EntityPlayerMP) VoiceNetwork.getPlayerFromNumber(message.number));
-                        SPhone.network.sendTo(new PacketCall(3, message.number), (EntityPlayerMP) player);
-                    }
-                } else {
-                    MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(player, message.number));
-                    SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) player);
-                }
-            } else {
-                player.sendMessage(new TextComponentTranslation("sphone.error.no_phone"));
-            }
 
             return null;
         }

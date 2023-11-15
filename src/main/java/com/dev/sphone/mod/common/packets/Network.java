@@ -10,6 +10,8 @@ import com.dev.sphone.mod.common.packets.server.call.PacketJoinCall;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
 import com.dev.sphone.mod.common.packets.server.call.PacketQuitCall;
+import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketAcceptRequest;
+import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketSendRequestCall;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -34,6 +36,7 @@ public class Network {
         packetFromServer(PacketQuitCall.ServerHandler.class, PacketQuitCall.class);
         packetFromClient(PacketCall.Handler.class, PacketCall.class);
         packetFromServer(PacketCallRequest.ServerHandler.class, PacketCallRequest.class);
+        packetFromServer(PacketSendRequestCall.ServerHandler.class, PacketSendRequestCall.class);
 
         packetFromServer(PacketRequestData.ServerHandler.class, PacketRequestData.class);
         packetFromServer(PacketEditNote.ServerHandler.class, PacketEditNote.class);
@@ -42,6 +45,7 @@ public class Network {
 
         packetFromServer(PacketSetAnim.ServerHandler.class, PacketSetAnim.class);
         packetFromServer(PacketSendMessage.ServerHandler.class, PacketSendMessage.class);
+        packetFromServer(PacketAcceptRequest.ServerHandler.class, PacketAcceptRequest.class);
 
         // Contacts
         //packetFromServer(PacketGetContacts.ServerHandler.class, PacketGetContacts.class);

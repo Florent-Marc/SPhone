@@ -1,7 +1,7 @@
 package com.dev.sphone.mod.common.packets.server;
 
 
-import com.dev.sphone.api.voicechat.VoiceNetwork;
+import com.dev.sphone.api.voicemanager.voicechat.VoiceNetwork;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.packets.client.PacketOpenNotes;
 import com.dev.sphone.SPhone;
@@ -51,7 +51,6 @@ public class PacketRequestData implements IMessage {
             if (sim == 0) {
                 return null;
             }
-            VoiceNetwork.updateNetwork(player);
             String request = message.type;
 
             if (request.equals("contacts")) {

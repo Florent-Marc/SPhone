@@ -2,8 +2,11 @@ package com.dev.sphone.mod.utils;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.items.ItemPhone;
+import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import fr.aym.acsguis.api.ACsGuiApi;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -84,4 +87,40 @@ public class UtilsServer {
             ACsGuiApi.registerStyleSheetToPreload(resourceLocation);
         }
     }
+
+    public static EntityPlayerMP getPlayerFromNumber(MinecraftServer server, String number) {
+        List<EntityPlayerMP> players = new ArrayList<>();
+        for (EntityPlayerMP player : server.getPlayerList().getPlayers()) {
+            if(player.inventory != null) {
+                if (hasPhone(player)) {
+                    List<String> numbers = getAllPhonesNumbersFromInventory(player);
+                    if (numbers.contains(number)) {
+                        players.add(player);
+                    }
+                }
+            }
+        }
+
+        if(players.size() == 0) {
+            return null;
+        }
+
+        if(players.size() > 1) {
+            SPhone.logger.warn("More than one player with the same number");
+            return players.get(0);
+        }
+
+        return players.get(0);
+    }
+
+    public static List<String> getAllPhonesNumbersFromInventory(EntityPlayerMP entityPlayerMP) {
+        List<String> numbers = new ArrayList<>();
+        for (int i = 0; i < entityPlayerMP.inventory.getSizeInventory(); i++) {
+            if (ItemPhone.getSimCard(entityPlayerMP.inventory.getStackInSlot(i)) != 0) {
+                numbers.add(MethodesBDDImpl.getNumero(ItemPhone.getSimCard(entityPlayerMP.inventory.getStackInSlot(i))));
+            }
+        }
+        return numbers;
+    }
+
 }
