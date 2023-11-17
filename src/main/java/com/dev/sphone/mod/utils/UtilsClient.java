@@ -135,10 +135,6 @@ public class UtilsClient {
                                 "      \"name\":\"St Michel\"\n" +
                                 "    },\n" +
                                 "    {\n" +
-                                "      \"id\":\"playa\",\n" +
-                                "      \"name\":\"Playa\"\n" +
-                                "    },\n" +
-                                "    {\n" +
                                 "      \"id\":\"oscuridad\",\n" +
                                 "      \"name\":\"Oscuridad\"\n" +
                                 "    },\n" +

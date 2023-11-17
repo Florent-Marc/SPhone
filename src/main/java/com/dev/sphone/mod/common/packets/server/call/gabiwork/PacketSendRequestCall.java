@@ -50,8 +50,19 @@ public class PacketSendRequestCall implements IMessage {
             //todo security
             EntityPlayerMP sender = ctx.getServerHandler().player;
 
-
+            boolean isUnknown = false;
             String targetPhoneNum = message.numberTarget;
+
+            if(targetPhoneNum.startsWith("#")) {
+                // get 4 first chars
+                String targetPhoneNumPrefix = targetPhoneNum.substring(0, 4);
+                if(targetPhoneNumPrefix.equals("#31#")) {
+                    targetPhoneNum = targetPhoneNum.substring(4);
+                    isUnknown = true;
+                }
+            }
+
+
 
             if(Objects.equals(targetPhoneNum, "")) {
                 return null;
@@ -104,7 +115,8 @@ public class PacketSendRequestCall implements IMessage {
 
             VoiceManager.requestCallMap.put(playercalling, targetPhoneNum);
 
-            SPhone.network.sendTo(new PacketOpenPhone("recievecall", playercalling), receiver); // accept or deny message so, target
+
+            SPhone.network.sendTo(new PacketOpenPhone("recievecall", isUnknown ? "Unknown" : playercalling ), receiver); // accept or deny message so, target
             SPhone.network.sendTo(new PacketOpenPhone("sendcall", targetPhoneNum), sender); // player who wait
 
             return null;

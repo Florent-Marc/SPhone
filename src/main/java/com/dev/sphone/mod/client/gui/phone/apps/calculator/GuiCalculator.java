@@ -23,10 +23,12 @@ public class GuiCalculator extends GuiBase {
     int y = 0;
     String operator = "";
     boolean checkEqual = false;
+    boolean error = false;
 
     @Override
     public void GuiInit() {
         super.GuiInit();
+
 
         add(this.getRoot());
 
@@ -45,6 +47,7 @@ public class GuiCalculator extends GuiBase {
                     labelTotal.setText(x + operator + y);
                 }
             }
+            if(error) labelTotal.setText("Error");
         });
         getRoot().add(labelTotal);
 
@@ -89,91 +92,97 @@ public class GuiCalculator extends GuiBase {
             }
             buttons_list.add(buttonLabel);
             buttonLabel.addClickListener((xB, yB, b) -> {
-                switch (button) {
-                    case "C":
-                        if (checkEqual) {
-                            y = 0;
-                            operator = "";
-                            checkEqual = false;
-                        }
-
-                        x = 0;
-                        y = 0;
-                        operator = "";
-                        break;
-                    case "del":
-                        if (checkEqual) {
-                            y = 0;
-                            operator = "";
-                            checkEqual = false;
-                        }
-
-                        if (operator.isEmpty()) {
-                            x = Integer.parseInt(String.valueOf(x).length() > 1 ? String.valueOf(x).substring(0, String.valueOf(x).length() - 1) : String.valueOf(0));
-                        } else if (y != 0) {
-                            y = Integer.parseInt(String.valueOf(y).length() > 1 ? String.valueOf(y).substring(0, String.valueOf(y).length() - 1) : String.valueOf(0));
-                        } else {
-                            operator = "";
-                        }
-
-                        break;
-                    case "%":
-                    case "/":
-                    case "*":
-                    case "-":
-                    case "+":
-
-                    case "^":
-                        if (checkEqual) {
-                            y = 0;
-                            operator = "";
-                            checkEqual = false;
-                        }
-
-                        operator = button;
-                        break;
-                    case "=":
-                        checkEqual = true;
-                        if (operator.equals("+")) x = (x + y);
-                        if (operator.equals("-")) x = (x - y);
-                        if (operator.equals("*")) x = (x * y);
-                        if (operator.equals("/")) x = (x / y);
-                        if (operator.equals("%")) x = (x % y);
-                        if (operator.equals("^")) x = (int) Math.pow(x, y);
-                        break;
-
-                    case "0":
-                    case "1":
-                    case "2":
-                    case "3":
-                    case "4":
-                    case "5":
-                    case "6":
-                    case "7":
-                    case "8":
-                    case "9":
-                        if (operator.isEmpty()) {
-                            if (String.valueOf(x).length() < 5) {
-                                if (checkEqual) {
-                                    y = 0;
-                                    operator = "";
-                                    checkEqual = false;
-                                }
-                                x = Integer.parseInt(x + button);
-                            }
-                        } else {
+                try {
+                    switch (button) {
+                        case "C":
                             if (checkEqual) {
                                 y = 0;
                                 operator = "";
                                 checkEqual = false;
                             }
-                            if (String.valueOf(y).length() < 5) {
-                                y = Integer.parseInt(y + button);
-                            }
-                        }
-                        break;
 
+                            x = 0;
+                            y = 0;
+                            operator = "";
+                            break;
+                        case "del":
+                            if (checkEqual) {
+                                y = 0;
+                                operator = "";
+                                checkEqual = false;
+                            }
+
+                            if (operator.isEmpty()) {
+                                x = Integer.parseInt(String.valueOf(x).length() > 1 ? String.valueOf(x).substring(0, String.valueOf(x).length() - 1) : String.valueOf(0));
+                            } else if (y != 0) {
+                                y = Integer.parseInt(String.valueOf(y).length() > 1 ? String.valueOf(y).substring(0, String.valueOf(y).length() - 1) : String.valueOf(0));
+                            } else {
+                                operator = "";
+                            }
+
+                            break;
+                        case "%":
+                        case "/":
+                        case "*":
+                        case "-":
+                        case "+":
+
+                        case "^":
+                            if (checkEqual) {
+                                y = 0;
+                                operator = "";
+                                checkEqual = false;
+                            }
+
+                            operator = button;
+                            break;
+                        case "=":
+                            checkEqual = true;
+                            if (operator.equals("+")) x = (x + y);
+                            if (operator.equals("-")) x = (x - y);
+                            if (operator.equals("*")) x = (x * y);
+                            if (operator.equals("/")) x = (x / y);
+                            if (operator.equals("%")) x = (x % y);
+                            if (operator.equals("^")) x = (int) Math.pow(x, y);
+                            break;
+
+                        case "0":
+                        case "1":
+                        case "2":
+                        case "3":
+                        case "4":
+                        case "5":
+                        case "6":
+                        case "7":
+                        case "8":
+                        case "9":
+                            if (operator.isEmpty()) {
+                                if (String.valueOf(x).length() < 5) {
+                                    if (checkEqual) {
+                                        y = 0;
+                                        operator = "";
+                                        checkEqual = false;
+                                    }
+                                    x = Integer.parseInt(x + button);
+                                }
+                            } else {
+                                if (checkEqual) {
+                                    y = 0;
+                                    operator = "";
+                                    checkEqual = false;
+                                }
+                                if (String.valueOf(y).length() < 5) {
+                                    y = Integer.parseInt(y + button);
+                                }
+                            }
+                            break;
+
+                    }
+                } catch (Exception e) {
+                    error = true;
+                    e.printStackTrace();
                 }
+
             });
         }
 

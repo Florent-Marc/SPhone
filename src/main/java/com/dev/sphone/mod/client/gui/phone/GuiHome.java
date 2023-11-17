@@ -70,8 +70,6 @@ public class GuiHome extends GuiBase {
                         if (appType[0].type().equals(AppType.DOWNLOADABLE)) return;
                         if (appType[0].isAlwaysHidden()) return;
                     }
-                } else {
-                    SPhone.logger.warn("App " + app.name + " is missing AppDetails annotation.");
                 }
             }
 

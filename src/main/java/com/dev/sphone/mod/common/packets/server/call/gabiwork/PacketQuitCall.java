@@ -6,6 +6,7 @@ import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.UtilsServer;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketCustomSound;
 import net.minecraft.util.SoundCategory;
@@ -16,20 +17,18 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
 import java.util.Objects;
 
-public class PacketAcceptRequest implements IMessage {
+public class PacketQuitCall implements IMessage {
 
     public String numberTarget = "";
-    public Boolean isAccepted = false;
 
-    public PacketAcceptRequest() {
+    public PacketQuitCall() {
         this.numberTarget = "";
-
     }
 
-    public PacketAcceptRequest(Boolean isAccepted, String numberTarget) {
-        this.isAccepted = isAccepted;
+    public PacketQuitCall(String numberTarget) {
         this.numberTarget = numberTarget;
     }
 
@@ -37,31 +36,36 @@ public class PacketAcceptRequest implements IMessage {
     public void fromBytes(ByteBuf buf) {
 
         this.numberTarget = ByteBufUtils.readUTF8String(buf);
-        this.isAccepted = buf.readBoolean();
+        System.out.println("fromBytes : " + this.numberTarget);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         System.out.println(buf);
         ByteBufUtils.writeUTF8String(buf, this.numberTarget);
-        buf.writeBoolean(this.isAccepted);
     }
 
-    public static class ServerHandler implements IMessageHandler<PacketAcceptRequest, IMessage> {
+    public static class ServerHandler implements IMessageHandler<PacketQuitCall, IMessage> {
         @Override
         @SideOnly(Side.SERVER)
-        public IMessage onMessage(PacketAcceptRequest message, MessageContext ctx) {
-            if (message.isAccepted) {
-                if (VoiceManager.requestCallMap.containsKey(message.numberTarget)) {
-                    VoiceManager.voiceManager.addPlayertoCall(ctx.getServerHandler().player, message.numberTarget);
-                    VoiceManager.voiceManager.addPlayertoCall(UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numberTarget), message.numberTarget);
-                }
-            } else {
-                if (VoiceManager.requestCallMap.containsKey(message.numberTarget)) {
-                    SPhone.network.sendTo(new PacketOpenPhone("dontexists", message.numberTarget), UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numberTarget));
-                    VoiceManager.requestCallMap.remove(message.numberTarget);
+        public IMessage onMessage(PacketQuitCall message, MessageContext ctx) {
+            EntityPlayerMP player = ctx.getServerHandler().player;
+            if(VoiceManager.callMap.containsKey(message.numberTarget)) {
+                List<EntityPlayerMP> players = VoiceManager.callMap.get(message.numberTarget);
+                if(players.contains(player)) {
+                    VoiceManager.callMap.remove(message.numberTarget);
+                    VoiceManager.voiceManager.removePlayerFromCall(player);
+                    for(EntityPlayerMP p : players) {
+                        if(p != player) {
+                            VoiceManager.voiceManager.removePlayerFromCall(p);
+                        }
+                    }
                 }
             }
+
+
+
+
             return null;
         }
     }

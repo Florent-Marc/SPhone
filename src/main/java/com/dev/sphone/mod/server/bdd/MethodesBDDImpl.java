@@ -5,6 +5,7 @@ import com.dev.sphone.mod.common.phone.*;
 import com.dev.sphone.mod.server.bdd.sql.MySQL;
 import com.dev.sphone.mod.server.bdd.sqlite.SQLite;
 import com.dev.sphone.mod.utils.UtilsServer;
+import com.dev.sphone.mod.utils.exceptions.DatabaseException;
 
 import java.io.File;
 import java.io.FileReader;
@@ -58,7 +59,7 @@ public class MethodesBDDImpl {
         }
     }
 
-    public static void checkTable() {
+    public static void checkTable() throws DatabaseException {
         instance.checktables();
     }
 

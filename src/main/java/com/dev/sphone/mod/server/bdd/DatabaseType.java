@@ -8,5 +8,5 @@ public interface DatabaseType {
     void execute(String query, Object... args);
     QueryResult getData(String query);
     QueryResult getData(String query, Object... args);
-    void checktables();
+    void checktables() throws DatabaseException;
 }

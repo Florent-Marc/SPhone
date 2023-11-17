@@ -24,7 +24,9 @@ public class GuiMakeCall extends GuiBase {
     }
 
 
-    /**@apiNote DON'T USE THIS CODE TO DUPLICATE THE CALL APP.
+    /**
+     *
+     * @apiNote DON'T USE THIS CODE TO DUPLICATE THE CALL APP.
      *
      */
     @Override
@@ -84,6 +86,30 @@ public class GuiMakeCall extends GuiBase {
             });
 
             buttons.add(button);
+
+            GuiPanel starButton = new GuiPanel();
+            starButton.setCssClass("buttonspe");
+            GuiLabel starLabel = new GuiLabel("*");
+            starLabel.setCssClass("label");
+            starButton.add(starLabel);
+            starButton.addClickListener((mouseX, mouseY, mouseButton) -> {
+                numberinput += "*";
+                nbInput.setText(numberinput);
+            });
+            buttons.add(starButton);
+
+            GuiPanel diezButton = new GuiPanel();
+            diezButton.setCssClass("buttonspe");
+            GuiLabel diezLabel = new GuiLabel("#");
+            diezLabel.setCssClass("label");
+            diezButton.add(diezLabel);
+            diezButton.addClickListener((mouseX, mouseY, mouseButton) -> {
+                numberinput += "#";
+                nbInput.setText(numberinput);
+            });
+            buttons.add(diezButton);
+
+
 
         callZone.add(buttons);
         getRoot().add(callZone);

@@ -25,10 +25,9 @@
 }
 .settings_element {
     width: auto;
-    height: auto;
+    height: 70px;
     left: auto;
     top: auto;
-    background-color: white;
 }
 .settings_element_icon {
     width: 40px;
@@ -100,21 +99,20 @@
 }
 .background_label {
     left: auto;
-    background-color: blue;
+    color: black;
+    font-family: "dnx:montserratlow";
+    font-size: 2;
+    top: 85%;
+    width: 33%;
+}
+.background_label_selected {
+    left: auto;
     color: black;
     font-family: "dnx:montserratlow";
     font-size: 2;
     top: 85%;
     width: 30%;
-}
-.background_label_selected {
-    left: auto;
-    background-color: red;
     color: green;
-    font-family: "dnx:montserratlow";
-    font-size: 2;
-    top: 85%;
-    width: 30%;
 }
 
 #app_version {
@@ -124,7 +122,9 @@
     width: 80%;
     color: black;
     height: 15%;
-    top: 82%;
+    top: 20%;
+    z-index: 900;
+    background-color: transparent;
 }
 .nbtel {
     font-family: "dnx:montserratlow";
@@ -132,6 +132,8 @@
     left: 8%;
     width: 80%;
     color: black;
+    top: 25%;
     height: 15%;
-    top: 72%;
+    z-index: 900;
+    background-color: transparent;
 }

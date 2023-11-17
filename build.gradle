@@ -146,6 +146,7 @@ shadowJar {
     relocate "com.neovisionaries.ws.client", "com.dev.sphone.repack.com.neovisionaries.ws.client"
     relocate "com.iwebpp.crypto", "com.dev.sphone.repack.com.iwebpp.crypto"
     relocate "com.fasterxml.jackson", "com.dev.sphone.repack.com.fasterxml.jackson"
+    relocate "com.google.gson", "com.dev.sphone.repack.com.google.gson"
     relocate "org.json", "com.dev.sphone.repack.org.json"
     relocate "okio", "com.dev.sphone.repack.okio"
     relocate "okhttp3", "com.dev.sphone.repack.okhttp3"
@@ -156,7 +157,7 @@ shadowJar {
     exclude 'assets/**/*.psd'
     exclude 'assets/sphone/fivem/**'
     exclude 'org/sqlite/**'
-    exclude 'com/google/**'
+    exclude 'com/google/protobuf/**'
 }
 
 reobf {

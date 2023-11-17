@@ -40,7 +40,7 @@ public class GuiCustomisation extends GuiBase {
 
         GuiScrollPane backgrounds = new GuiScrollPane();
         backgrounds.setCssId("scroll");
-        backgrounds.setLayout(new GridLayout(new Size.SizeValue(50, GuiConstants.ENUM_SIZE.ABSOLUTE), new Size.SizeValue(150, GuiConstants.ENUM_SIZE.ABSOLUTE), new Size.SizeValue(20, GuiConstants.ENUM_SIZE.ABSOLUTE), GridLayout.GridDirection.VERTICAL, 2));
+        backgrounds.setLayout(new GridLayout(new Size.SizeValue(70, GuiConstants.ENUM_SIZE.ABSOLUTE), new Size.SizeValue(180, GuiConstants.ENUM_SIZE.ABSOLUTE), new Size.SizeValue(20, GuiConstants.ENUM_SIZE.ABSOLUTE), GridLayout.GridDirection.VERTICAL, 2));
 
         setEnableDebugPanel(true);
 

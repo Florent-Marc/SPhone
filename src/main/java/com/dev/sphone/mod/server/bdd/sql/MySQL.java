@@ -130,9 +130,14 @@ public class MySQL implements DatabaseType {
     }
 
     @Override
-    public void checktables() {
+    public void checktables() throws DatabaseException {
         DatabaseType instance = null;
         instance = getInstance();
+
+        if(instance == null){
+            throw new DatabaseException("Database connection is null, Please check is the database is running. (instance is null.)");
+        }
+
         instance.execute("CREATE TABLE IF NOT EXISTS `contact` (\n" +
                 "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
                 "\t`sim` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +

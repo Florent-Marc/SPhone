@@ -66,8 +66,15 @@ public class GuiBase extends GuiFrame {
         setCssClass("home");
         GuiPanel Case = new GuiPanel();
         Case.setCssClass("case");
+
+
         Case.getStyle().setTexture(new GuiTextureSprite(new ResourceLocation(SPhone.MOD_ID, "textures/ui/background/" + getSettings().getBackground() + ".png")));
         add(Case);
+
+
+        if(getSettings().getBackground().equals("")) {
+            Case.getStyle().setTexture(new GuiTextureSprite(new ResourceLocation(SPhone.MOD_ID, "textures/ui/background/acsgui.png")));
+        }
 
         Background = new GuiPanel();
         Background.setCssClass("background");

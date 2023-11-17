@@ -37,8 +37,6 @@ public class GuiSettingList extends GuiBase {
         super.GuiInit();
         add(getRoot());
 
-        System.out.println("test");
-
         GuiPanel app_container = new GuiPanel();
         app_container.setCssClass("app_container");
 
@@ -53,12 +51,28 @@ public class GuiSettingList extends GuiBase {
         customisation_desc.setCssClass("settings_element_desc");
         settings_list.add(customisation_desc);
 
-        settings_list.add(getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings/custom.png"), "Customisation")).addClickListener(
+        GuiPanel customisation = getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings/custom.png"), "Customisation");
+
+        customisation.addClickListener(
                 (mouseX, mouseY, mouseButton) -> {
+                    System.out.println("a");
                     Minecraft.getMinecraft().displayGuiScreen(new GuiCustomisation(this.getGuiScreen()).getGuiScreen());
                 }
         );
-        settings_list.add(getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings/general.png"), "Général"));
+
+        settings_list.add(customisation);
+
+        GuiPanel general = getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings/general.png"), "Général");
+        general.addClickListener(
+                (mouseX, mouseY, mouseButton) -> {
+                    System.out.println("b");
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiGeneralSettings(this.getGuiScreen()).getGuiScreen());
+                }
+        );
+
+
+
+        settings_list.add(general);
 
         GuiLabel infos_desc = new GuiLabel("Appareil");
         infos_desc.setCssClass("settings_element_desc");
@@ -70,31 +84,6 @@ public class GuiSettingList extends GuiBase {
         app_container.add(settings_list);
         app_container.add(appTitle);
 
-        GuiLabel appVersion = new GuiLabel("Version : " + SPhone.VERSION);
-        appVersion.setCssId("app_version");
-        getRoot().add(appVersion);
-
-        EntityPlayer player = Minecraft.getMinecraft().player;
-
-        if(player.getHeldItemMainhand().getItem() instanceof ItemPhone) {
-            ItemStackHandler handler = null;
-            ItemStack hold = (player.getHeldItemMainhand());
-            if (hold.hasTagCompound()) {
-                if (hold.getTagCompound().hasKey("inventory")) {
-                    handler = new ItemStackHandler(1);
-                    handler.deserializeNBT(hold.getTagCompound().getCompoundTag("inventory"));
-                } else {
-                    handler = new ItemStackHandler(1);
-                    hold.getTagCompound().setTag("inventory", handler.serializeNBT());
-                }
-
-                GuiLabel phoneNumber = new GuiLabel("Numéro de téléphone : " + handler.getStackInSlot(0).getTagCompound().getString("numero"));
-                phoneNumber.setCssClass("nbtel");
-                getRoot().add(phoneNumber);
-            }
-
-
-        }
 
         getRoot().add(app_container);
     }
