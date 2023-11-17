@@ -66,8 +66,12 @@ public class CommandGivePhone extends CommandBase {
                 p.sendMessage(new TextComponentTranslation("sphone.error.no_sim"));
             }
         }
+
         if (para.equals("getnumero")) {
             p.sendMessage(new TextComponentString(Objects.requireNonNull(MethodesBDDImpl.getNumero(UtilsServer.getSimCard(p)))));
+        }
+        if (para.equals("nbt")) {
+            p.sendMessage(new TextComponentString(p.getHeldItemMainhand().getTagCompound().toString()));
         }
         if (para.equals("call")) {
             p.sendMessage(new TextComponentTranslation("sphone.feature.later"));

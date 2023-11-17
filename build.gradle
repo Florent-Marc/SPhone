@@ -117,6 +117,16 @@ minecraft {
             ])
         }
 
+        from {
+            configurations.compile
+                    .filter {
+                        !it.name.endsWith('.psd') ||
+                        !it.name.contains('fivem')
+
+                    }
+                    .collect { it.isDirectory() ? it : zipTree(it) }
+        }
+
     }
 
 
@@ -141,6 +151,12 @@ shadowJar {
     relocate "okhttp3", "com.dev.sphone.repack.okhttp3"
     relocate "okhttp3", "com.dev.sphone.repack.okhttp3"
     relocate "org.slf4j", "com.dev.sphone.repack.org.slf4j"
+
+
+    exclude 'assets/**/*.psd'
+    exclude 'assets/sphone/fivem/**'
+    exclude 'org/sqlite/**'
+    exclude 'com/google/**'
 }
 
 reobf {
