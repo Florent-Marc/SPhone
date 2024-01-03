@@ -78,11 +78,15 @@ public class GuiConv extends GuiBase {
 
         GuiLabel position = new GuiLabel("❖");
         position.setCssClass("position");
-        position.setHoveringText(Collections.singletonList("Envoyer votre Position (SOON)"));
+        position.setHoveringText(Collections.singletonList("Envoyer votre Position"));
         position.addClickListener((x,y,bu) -> {
-            // Soon...
-            //SPhone.network.sendToServer(new PacketSendMessage("[{" + mc.player.posX + "," + mc.player.posY + "," + mc.player.posZ + "}]", conv));
-            //Minecraft.getMinecraft().displayGuiScreen(null);
+            String pos = this.mc.player.getPosition().getX() + " " + this.mc.player.getPosition().getY() + " " + this.mc.player.getPosition().getZ();
+            conv.addMessage(new Message(pos,  System.currentTimeMillis(), "",conv.getSender().getName()));
+            contacts_list.removeAllChilds();
+            contacts_list.flushComponentsQueue();
+            contacts_list.flushRemovedComponents();
+            initMessages(conv, contacts_list);
+            SPhone.network.sendToServer(new PacketSendMessage(pos, conv));
         });
         getBackground().add(position);
 
