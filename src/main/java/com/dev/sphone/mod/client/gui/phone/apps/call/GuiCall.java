@@ -44,10 +44,10 @@ public class GuiCall extends GuiBase {
         exit.setCssClass("exit");
         exit.addClickListener((mouseX, mouseY, mouseButton) -> {
             if (mouseButton == 0) {
-                Minecraft.getMinecraft().getSoundHandler().stop("sphone:nonattrib", SoundCategory.MASTER);
-                Minecraft.getMinecraft().getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
-                Minecraft.getMinecraft().getSoundHandler().stop("sphone:unjoinable", SoundCategory.MASTER);
-                Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
+                mc.getSoundHandler().stop("sphone:nonattrib", SoundCategory.MASTER);
+                mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
+                mc.getSoundHandler().stop("sphone:unjoinable", SoundCategory.MASTER);
+                mc.displayGuiScreen(new GuiHome().getGuiScreen());
                 SPhone.network.sendToServer(new PacketQuitCall());
             }
         });
@@ -57,12 +57,10 @@ public class GuiCall extends GuiBase {
     @Override
     public void guiClose() {
         super.guiClose();
-        Minecraft.getMinecraft().getSoundHandler().stop("sphone:nonattrib", SoundCategory.MASTER);
+        mc.getSoundHandler().stop("sphone:nonattrib", SoundCategory.MASTER);
         Minecraft.getMinecraft().getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
         Minecraft.getMinecraft().getSoundHandler().stop("sphone:unjoinable", SoundCategory.MASTER);
     }
-
-
 
     @Override
     public void tick() {

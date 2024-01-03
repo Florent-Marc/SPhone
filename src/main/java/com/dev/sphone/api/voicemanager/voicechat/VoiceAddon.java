@@ -1,6 +1,7 @@
 package com.dev.sphone.api.voicemanager.voicechat;
 
 import com.dev.sphone.SPhone;
+import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
 import com.dev.sphone.mod.common.packets.client.PacketPlayerHudState;
 import de.maxhenkel.voicechat.Voicechat;
 import de.maxhenkel.voicechat.api.*;
@@ -86,12 +87,20 @@ public class VoiceAddon implements VoicechatPlugin {
 
                     PlayerStateManager manager = server.getPlayerStateManager();
                     if (manager.getStates().stream().anyMatch(state -> state.hasGroup() && state.getGroup().equals(groupId))) {
-                        connection.setGroup(null);
+                        VoicechatConnection target = api.getConnectionOf(player.getUniqueID());
+                        if (target != null && target.getGroup() != null) {
+                            api.removeGroup(target.getGroup().getId());
+                            target.setGroup(null);
+                            if(target.getPlayer().getPlayer() instanceof EntityPlayer) {
+                                EntityPlayer targetPlayer = (EntityPlayer) target.getPlayer().getPlayer();
+                                SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) targetPlayer);
+                            }
+
+                        }
                     }
 
                     broadcastRemoveGroup(server, groupId);
                 }
-                //groupManager.removeGroup()
             }
 
             if(connection.getGroup() != null) {
