@@ -5,6 +5,8 @@ import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.client.gui.phone.GuiNoSIM;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCallRequest;
+import com.dev.sphone.mod.common.phone.Contact;
+import fr.aym.acslib.utils.packetserializer.SerializablePacket;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IThreadListener;
@@ -16,7 +18,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PacketOpenPhone implements IMessage {
+public class PacketOpenPhone extends SerializablePacket implements IMessage {
 
     private String action;
     private String content;
@@ -24,18 +26,28 @@ public class PacketOpenPhone implements IMessage {
     public PacketOpenPhone() {}
 
     public PacketOpenPhone(String action, String content) {
+        super(new Object[0]);
         this.action = action;
         this.content = content;
     }
 
+    public PacketOpenPhone(String action, String content, Contact contact) {
+        super(contact);
+        this.action = action;
+        this.content = content;
+
+    }
+
     @Override
     public void fromBytes(ByteBuf buf) {
+        super.fromBytes(buf);
         this.action = ByteBufUtils.readUTF8String(buf);
         this.content = ByteBufUtils.readUTF8String(buf);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
+        super.toBytes(buf);
         ByteBufUtils.writeUTF8String(buf, this.action);
         ByteBufUtils.writeUTF8String(buf, this.content);
     }
@@ -64,7 +76,8 @@ public class PacketOpenPhone implements IMessage {
             } else if (message.action.equals("recievecall"))  {
                 Minecraft.getMinecraft().addScheduledTask(() -> {
                     System.out.println("content: " + message.content);
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content).getGuiScreen());
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, (Contact) message.getObjectsIn()[0]).getGuiScreen());
+
                 });
             } else if (message.action.equals("sendcall"))  {
                 Minecraft.getMinecraft().addScheduledTask(() -> {

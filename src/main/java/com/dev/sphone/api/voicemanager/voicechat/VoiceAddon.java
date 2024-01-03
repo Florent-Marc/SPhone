@@ -15,7 +15,7 @@ import java.util.Map;
 public class VoiceAddon implements VoicechatPlugin {
 
     public static VoicechatServerApi api;
-    private static Map<String, Group> GroupMap = new HashMap<>();
+    private static final Map<String, Group> GroupMap = new HashMap<>();
 
     @Override
     public String getPluginId() {

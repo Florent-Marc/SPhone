@@ -2,6 +2,7 @@ package com.dev.sphone.mod.client.gui.phone.apps.call;
 
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketAcceptRequest;
+import com.dev.sphone.mod.common.phone.Contact;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import com.dev.sphone.SPhone;
@@ -16,10 +17,12 @@ import java.util.List;
 public class GuiCallRequest extends GuiHome {
 
     private final String number;
+    private final Contact contact;
 
-    public GuiCallRequest(String number) {
+    public GuiCallRequest(String number, Contact contact) {
         super();
         this.number = number;
+        this.contact = contact;
         System.out.println("number : " + number);
 
 
@@ -35,8 +38,11 @@ public class GuiCallRequest extends GuiHome {
         GuiLabel label = new GuiLabel("Appel entrant");
         label.setCssId("app_title");
         getBackground().add(label);
-
         GuiLabel numberLabel = new GuiLabel(number);
+        if(contact.getId() != -1) {
+            numberLabel.setText(contact.getName() + " " + contact.getLastname());
+        }
+
         numberLabel.setCssId("number");
         getBackground().add(numberLabel);
 

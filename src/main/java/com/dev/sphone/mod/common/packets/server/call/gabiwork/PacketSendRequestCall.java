@@ -3,6 +3,7 @@ package com.dev.sphone.mod.common.packets.server.call.gabiwork;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.api.voicemanager.VoiceManager;
 import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
+import com.dev.sphone.mod.common.phone.Contact;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.UtilsServer;
 import io.netty.buffer.ByteBuf;
@@ -16,8 +17,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
 import java.util.Objects;
-
+// Becareful, Packet suicide.
 public class PacketSendRequestCall implements IMessage {
 
     public String numberTarget = "";
@@ -116,7 +118,16 @@ public class PacketSendRequestCall implements IMessage {
             VoiceManager.requestCallMap.put(playercalling, targetPhoneNum);
 
 
-            SPhone.network.sendTo(new PacketOpenPhone("recievecall", isUnknown ? "Unknown" : playercalling ), receiver); // accept or deny message so, target
+            List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(receiver));
+            Contact contact = new Contact(-1, "Unknown", targetPhoneNum, "", "");
+            for (Contact cont : contacts) {
+                if(cont.getNumero().equals(playercalling) && !isUnknown) {
+                    contact = cont;
+                    break;
+                }
+            }
+
+            SPhone.network.sendTo(new PacketOpenPhone("recievecall", isUnknown ? "Unknown" : playercalling, contact ), receiver); // accept or deny message so, target
             SPhone.network.sendTo(new PacketOpenPhone("sendcall", targetPhoneNum), sender); // player who wait
 
             return null;
