@@ -43,7 +43,7 @@ public class GuiCall extends GuiBase {
         exit.addClickListener((mouseX, mouseY, mouseButton) -> {
             if (mouseButton == 0) {
                 mc.getSoundHandler().stop("sphone:nonattrib", SoundCategory.MASTER);
-                mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
+                //mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
                 mc.getSoundHandler().stop("sphone:unjoinable", SoundCategory.MASTER);
                 mc.displayGuiScreen(new GuiHome().getGuiScreen());
                 SPhone.network.sendToServer(new PacketQuitCall());

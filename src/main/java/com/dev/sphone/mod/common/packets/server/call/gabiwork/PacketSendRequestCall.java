@@ -100,10 +100,18 @@ public class PacketSendRequestCall implements IMessage {
             }
 
             receiver.world.playSound(receiver, receiver.getPosition(), SoundRegister.RINGTONE, SoundCategory.MASTER, 1F, 1F);
+            receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone",
+                    SoundCategory.MASTER,
+                    sender.getPosition().getX(),
+                    sender.getPosition().getY(),
+                    sender.getPosition().getZ(),
+                    1f,
+                    1f
+            ));
 
             //VoiceManager.requestCallMap.put(playercalling, targetPhoneNum);
 
-            List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(receiver));
+            List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(sender));
             Contact contact = new Contact(-1, "Unknown", targetPhoneNum, targetPhoneNum, "");
             for (Contact cont : contacts) {
                 if(cont.getNumero().equals(playerCalling) && !isUnknown) {
@@ -112,8 +120,17 @@ public class PacketSendRequestCall implements IMessage {
                 }
             }
 
+            List<Contact> contactsReceiver = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(receiver));
+            Contact contactReceiver = new Contact(-1, "Unknown", targetPhoneNum, targetPhoneNum, "");
+            for (Contact cont : contactsReceiver) {
+                if(cont.getNumero().equals(playerCalling) && !isUnknown) {
+                    contactReceiver = cont;
+                    break;
+                }
+            }
+
             playerCalling = playerCalling.equals("") ? "Unknown" : playerCalling;
-            SPhone.network.sendTo(new PacketOpenPhone("recievecall", isUnknown ? "Unknown" : playerCalling, contact ), receiver); // accept or deny message so, target
+            SPhone.network.sendTo(new PacketOpenPhone("recievecall", isUnknown ? "Unknown" : playerCalling, contactReceiver ), receiver); // accept or deny message so, target
             SPhone.network.sendTo(new PacketOpenPhone("sendcall", contact.getName() + " " + contact.getLastname()), sender); // player who wait
 
             return null;
