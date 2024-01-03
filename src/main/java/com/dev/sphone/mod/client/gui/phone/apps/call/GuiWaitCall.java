@@ -9,6 +9,7 @@ import com.dev.sphone.mod.common.packets.server.call.PacketQuitCall;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class GuiWaitCall extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
+        mc.player.sendMessage(new TextComponentString("E"));
         getBackground().removeAllChilds();
         time = new GuiLabel("Appel en cours");
         time.setCssId("time");

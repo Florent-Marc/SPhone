@@ -10,6 +10,7 @@ import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class GuiCallRequest extends GuiHome {
     @Override
     public void GuiInit() {
         super.GuiInit();
+        mc.player.sendMessage(new TextComponentString("C"));
         getBackground().removeAllChilds();
         GuiLabel label = new GuiLabel("Appel entrant");
         label.setCssId("app_title");
