@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -55,6 +56,7 @@ public class ClientEventHandler {
             if (event.getGui() != null) {
                 if(event.getGui() instanceof GuiFrame.APIGuiScreen){
                     mc.player.sendMessage(new TextComponentString(((GuiFrame.APIGuiScreen)event.getGui()).getFrame().toString()));
+                    mc.player.sendMessage(new TextComponentString(TextFormatting.GOLD + ((GuiFrame.APIGuiScreen)event.getGui()).getFrame().getGui().toString()));
                 }
             }
         }
