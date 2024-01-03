@@ -14,6 +14,7 @@ import de.maxhenkel.voicechat.voice.server.Server;
 import de.maxhenkel.voicechat.voice.server.ServerGroupManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,7 +94,10 @@ public class VoiceAddon implements VoicechatPlugin {
                             target.setGroup(null);
                             if(target.getPlayer().getPlayer() instanceof EntityPlayer) {
                                 EntityPlayer targetPlayer = (EntityPlayer) target.getPlayer().getPlayer();
+                                targetPlayer.sendMessage(new TextComponentString("Fermeture du téléphone"));
                                 SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) targetPlayer);
+                            }else{
+                                player.sendMessage(new TextComponentString("target is null"));
                             }
 
                         }
