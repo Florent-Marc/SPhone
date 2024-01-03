@@ -84,7 +84,6 @@ public class VoiceAddon implements VoicechatPlugin {
                 ServerGroupManager groupManager = server.getGroupManager();
                 if(connection.getGroup() != null) {
                     UUID groupId = connection.getGroup().getId();
-                    groupManager.removeGroup(groupId);
 
                     PlayerStateManager manager = server.getPlayerStateManager();
                     if (manager.getStates().stream().anyMatch(state -> state.hasGroup() && state.getGroup().equals(groupId))) {
@@ -102,6 +101,8 @@ public class VoiceAddon implements VoicechatPlugin {
 
                         }
                     }
+
+                    groupManager.removeGroup(groupId);
 
                     broadcastRemoveGroup(server, groupId);
                 }
