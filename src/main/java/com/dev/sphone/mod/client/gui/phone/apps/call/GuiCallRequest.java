@@ -25,7 +25,6 @@ public class GuiCallRequest extends GuiHome {
         this.number = number;
         this.contact = contact;
         //mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
-
     }
 
     @Override
@@ -47,7 +46,7 @@ public class GuiCallRequest extends GuiHome {
         ButtonAccept.setCssClass("button_accept");
         ButtonAccept.addClickListener((mouseX, mouseY, mouseButton) -> {
             SPhone.network.sendToServer(new PacketAcceptRequest(true, this.number));
-            mc.displayGuiScreen(new GuiCall(this.getGuiScreen(), number).getGuiScreen());
+            mc.displayGuiScreen(new GuiCall(this.getGuiScreen(), contact.getName() + " " + contact.getLastname()).getGuiScreen());
         });
         getBackground().add(ButtonAccept);
 

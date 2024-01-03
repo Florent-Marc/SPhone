@@ -104,7 +104,7 @@ public class PacketSendRequestCall implements IMessage {
             //VoiceManager.requestCallMap.put(playercalling, targetPhoneNum);
 
             List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(receiver));
-            Contact contact = new Contact(-1, "Unknown", targetPhoneNum, "", "");
+            Contact contact = new Contact(-1, "Unknown", targetPhoneNum, targetPhoneNum, "");
             for (Contact cont : contacts) {
                 if(cont.getNumero().equals(playerCalling) && !isUnknown) {
                     contact = cont;
@@ -114,7 +114,7 @@ public class PacketSendRequestCall implements IMessage {
 
             playerCalling = playerCalling.equals("") ? "Unknown" : playerCalling;
             SPhone.network.sendTo(new PacketOpenPhone("recievecall", isUnknown ? "Unknown" : playerCalling, contact ), receiver); // accept or deny message so, target
-            SPhone.network.sendTo(new PacketOpenPhone("sendcall", targetPhoneNum), sender); // player who wait
+            SPhone.network.sendTo(new PacketOpenPhone("sendcall", contact.getName() + " " + contact.getLastname()), sender); // player who wait
 
             return null;
         }
