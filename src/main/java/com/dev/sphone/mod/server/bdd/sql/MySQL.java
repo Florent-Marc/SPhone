@@ -35,9 +35,6 @@ public class MySQL implements DatabaseType {
         url = props.getProperty("url");
         log = props.getProperty("user");
         pwd = props.getProperty("password");
-        System.out.println("using url: " + url);
-        System.out.println("using log: " + log);
-        System.out.println("using pwd: " + pwd);
     }
 
     public MySQL getInstance(){
