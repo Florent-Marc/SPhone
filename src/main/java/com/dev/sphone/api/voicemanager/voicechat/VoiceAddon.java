@@ -2,14 +2,21 @@ package com.dev.sphone.api.voicemanager.voicechat;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.packets.client.PacketPlayerHudState;
+import de.maxhenkel.voicechat.Voicechat;
 import de.maxhenkel.voicechat.api.*;
 import de.maxhenkel.voicechat.api.events.EventRegistration;
 import de.maxhenkel.voicechat.api.events.VoicechatServerStartedEvent;
+import de.maxhenkel.voicechat.net.NetManager;
+import de.maxhenkel.voicechat.net.RemoveGroupPacket;
+import de.maxhenkel.voicechat.voice.server.PlayerStateManager;
+import de.maxhenkel.voicechat.voice.server.Server;
+import de.maxhenkel.voicechat.voice.server.ServerGroupManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @ForgeVoicechatPlugin
 public class VoiceAddon implements VoicechatPlugin {
@@ -68,11 +75,36 @@ public class VoiceAddon implements VoicechatPlugin {
             String getGroup = getGroup(player);
             System.out.println("Player " + player.getName() + " is now out of group " + getGroup);
             removeGroup(getGroup);
-            if(connection.getGroup() != null)
+
+
+            Server server = Voicechat.SERVER.getServer();
+            if(server != null) {
+                ServerGroupManager groupManager = server.getGroupManager();
+                if(connection.getGroup() != null) {
+                    UUID groupId = connection.getGroup().getId();
+                    groupManager.removeGroup(groupId);
+
+                    PlayerStateManager manager = server.getPlayerStateManager();
+                    if (manager.getStates().stream().anyMatch(state -> state.hasGroup() && state.getGroup().equals(groupId))) {
+                        connection.setGroup(null);
+                    }
+
+                    broadcastRemoveGroup(server, groupId);
+                }
+                //groupManager.removeGroup()
+            }
+
+            if(connection.getGroup() != null) {
                 api.removeGroup(connection.getGroup().getId());
-            connection.setGroup(null);
+                connection.setGroup(null);
+            }
             //SPhone.network.sendTo(new PacketPlayerHudState(true), (EntityPlayerMP) player);
         }
+    }
+
+    private static void broadcastRemoveGroup(Server server, UUID group) {
+        RemoveGroupPacket packet = new RemoveGroupPacket(group);
+        server.getServer().getPlayerList().getPlayers().forEach(p -> NetManager.sendToClient(p, packet));
     }
 
     public static String getGroup(EntityPlayer player) {
