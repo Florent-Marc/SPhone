@@ -48,7 +48,6 @@ public class VoiceAddon implements VoicechatPlugin {
                 .setPassword(password.toString())
                 .build();
         GroupMap.put(name, g);
-
     }
 
     public static void addToGroup(String name, EntityPlayer player) {
@@ -57,7 +56,7 @@ public class VoiceAddon implements VoicechatPlugin {
             if (connection != null) {
                 Group g = GroupMap.get(name);
                 connection.setGroup(g);
-                SPhone.network.sendTo(new PacketPlayerHudState(false), (EntityPlayerMP) player);
+                SPhone.network.sendTo(new PacketPlayerHudState(true), (EntityPlayerMP) player);
                 System.out.println("Player " + player.getName() + " is now in group " + name);
             }
         }
@@ -67,6 +66,8 @@ public class VoiceAddon implements VoicechatPlugin {
         VoicechatConnection connection = api.getConnectionOf(player.getUniqueID());
         if (connection != null) {
             System.out.println("Player " + player.getName() + " is now out of group " + getGroup(player));
+            if(connection.getGroup() != null)
+                api.removeGroup(connection.getGroup().getId());
             connection.setGroup(null);
             //SPhone.network.sendTo(new PacketPlayerHudState(true), (EntityPlayerMP) player);
         }
