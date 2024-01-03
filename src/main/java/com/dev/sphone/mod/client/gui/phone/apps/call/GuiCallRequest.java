@@ -24,7 +24,7 @@ public class GuiCallRequest extends GuiHome {
         super();
         this.number = number;
         this.contact = contact;
-        mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
+        //mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
 
     }
 
