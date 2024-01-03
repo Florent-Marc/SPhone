@@ -11,7 +11,6 @@ import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.aym.acsguis.event.listeners.IKeyboardListener;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
@@ -69,8 +68,14 @@ public class GuiConv extends GuiBase {
             @Override
             public void onKeyTyped(char c, int i) {
                 if (i == 28) {
+                    if (message.getText().isEmpty()) return;
+                    conv.addMessage(new Message(message.getText(),  System.currentTimeMillis(), "",conv.getSender().getName()));
+                    contacts_list.removeAllChilds();
+                    contacts_list.flushComponentsQueue();
+                    contacts_list.flushRemovedComponents();
+                    initMessages(conv, contacts_list);
                     SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv));
-                    Minecraft.getMinecraft().displayGuiScreen(null);
+                    message.setText("");
                 }
             }
         });
