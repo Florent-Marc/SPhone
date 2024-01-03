@@ -65,7 +65,9 @@ public class VoiceAddon implements VoicechatPlugin {
     public static void removeFromActualGroup(EntityPlayer player) {
         VoicechatConnection connection = api.getConnectionOf(player.getUniqueID());
         if (connection != null) {
-            System.out.println("Player " + player.getName() + " is now out of group " + getGroup(player));
+            String getGroup = getGroup(player);
+            System.out.println("Player " + player.getName() + " is now out of group " + getGroup);
+            removeGroup(getGroup);
             if(connection.getGroup() != null)
                 api.removeGroup(connection.getGroup().getId());
             connection.setGroup(null);
@@ -86,9 +88,7 @@ public class VoiceAddon implements VoicechatPlugin {
     }
 
     public static void removeGroup(String name) {
-        if (GroupMap.containsKey(name)) {
-            GroupMap.remove(name);
-        }
+        GroupMap.remove(name);
     }
 
     public static boolean groupExists(String name) {
