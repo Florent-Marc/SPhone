@@ -62,6 +62,7 @@ public class UtilsServer {
     //get phone and return sim
 
     public static int getSimCard(EntityPlayer p) {
+        if (p.getHeldItemMainhand().isEmpty() || !(p.getHeldItemMainhand().getItem() instanceof ItemPhone)) return 0;
         ItemPhone itemPhone = (ItemPhone) p.getHeldItemMainhand().getItem();
         return itemPhone.getSimCard(p.getHeldItemMainhand());
     }
