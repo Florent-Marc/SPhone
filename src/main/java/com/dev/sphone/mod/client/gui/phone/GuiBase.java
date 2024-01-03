@@ -15,7 +15,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentTranslation;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -167,10 +166,8 @@ public class GuiBase extends GuiFrame {
 
                 settings.deserializeNBT(Objects.requireNonNull(Minecraft.getMinecraft().player.getHeldItemMainhand().getTagCompound()).getCompoundTag("settings"));
             } else {
-                Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("sphone.error.no_phone", new Object[0]));
             }
         } else {
-            Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("sphone.error.no_phone", new Object[0]));
         }
         return settings;
     }
