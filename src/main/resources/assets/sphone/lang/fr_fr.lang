@@ -6,10 +6,7 @@ itemGroup.tab=SPhone
 item.sim_card.name=SIM Card
 item.phone.name=SPhone 1
 
-
 sphone.timeformat=HH:mm
-
-
 
 sphone.error.sim=Erreur SIM
 sphone.error.desc=Une erreur est survenue.
@@ -21,12 +18,17 @@ sphone.meteo.types.thunder=Orage
 sphone.meteo.types.rain=Pluie
 sphone.meteo.types.sunny=Ensoleillé
 sphone.meteo.types.snow=Neige
+sphone.meteo.types.clear=Ciel dégagé
 sphone.meteo.types.cloud=Nuageux
 sphone.meteo.types.sun=Soleil
+
+sphone.error.no_phone=You don't have a phone
+sphone.error.no_sim=You don't have a sim in your phone
+sphone.feature.later=Latersphone.notes.remove
 
 sphone.notes.title=Notes
 sphone.notes.add=Ajouter une note
 sphone.notes.edit=Modifier la note
 sphone.notes.newtitle=➜ Titre
 sphone.notes.newcontent=➜ Note
-sphone.notes.remove=Supprimer
+sphone.notes.remove=Supprimer la note
