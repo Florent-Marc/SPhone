@@ -24,14 +24,11 @@ public class PacketQuitCall implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-
         this.numberTarget = ByteBufUtils.readUTF8String(buf);
-        System.out.println("fromBytes : " + this.numberTarget);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        System.out.println(buf);
         ByteBufUtils.writeUTF8String(buf, this.numberTarget);
     }
 
@@ -41,23 +38,6 @@ public class PacketQuitCall implements IMessage {
         public IMessage onMessage(PacketQuitCall message, MessageContext ctx) {
             EntityPlayerMP player = ctx.getServerHandler().player;
             VoiceAddon.removeFromActualGroup(player);
-            /*
-            if(VoiceManager.callMap.containsKey(message.numberTarget)) {
-                List<EntityPlayerMP> players = VoiceManager.callMap.get(message.numberTarget);
-                if(players.contains(player)) {
-                    VoiceManager.callMap.remove(message.numberTarget);
-                    VoiceManager.voiceManager.removePlayerFromCall(player);
-                    for(EntityPlayerMP p : players) {
-                        if(p != player) {
-                            VoiceManager.voiceManager.removePlayerFromCall(p);
-                        }
-                    }
-                }
-            }*/
-
-
-
-
             return null;
         }
     }

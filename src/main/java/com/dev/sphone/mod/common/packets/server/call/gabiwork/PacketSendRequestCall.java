@@ -4,6 +4,7 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.api.voicemanager.VoiceManager;
 import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
 import com.dev.sphone.mod.common.phone.Contact;
+import com.dev.sphone.mod.common.register.SoundRegister;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.UtilsServer;
 import io.netty.buffer.ByteBuf;
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Objects;
-// Becareful, Packet suicide.
+
 public class PacketSendRequestCall implements IMessage {
 
     public String numberTarget = "";
@@ -34,14 +35,11 @@ public class PacketSendRequestCall implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-
         this.numberTarget = ByteBufUtils.readUTF8String(buf);
-        System.out.println("fromBytes : " + this.numberTarget);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        System.out.println(buf);
         ByteBufUtils.writeUTF8String(buf, this.numberTarget);
     }
 
@@ -64,8 +62,6 @@ public class PacketSendRequestCall implements IMessage {
                 }
             }
 
-
-
             if(Objects.equals(targetPhoneNum, "")) {
                 return null;
             }
@@ -80,7 +76,6 @@ public class PacketSendRequestCall implements IMessage {
                         1f
                 ));
                 SPhone.network.sendTo(new PacketOpenPhone("dontexists", message.numberTarget), sender);
-
                 return null;
             }
 
@@ -88,9 +83,7 @@ public class PacketSendRequestCall implements IMessage {
                 return null;
             }
 
-
-
-            String playercalling = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(sender));
+            String playerCalling = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(sender));
             EntityPlayerMP receiver = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), targetPhoneNum);
             if(receiver == null) {
                 sender.connection.sendPacket(new SPacketCustomSound("sphone:unjoinable",
@@ -106,28 +99,21 @@ public class PacketSendRequestCall implements IMessage {
                 return null;
             }
 
-            receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone",
-                    SoundCategory.MASTER,
-                    receiver.getPosition().getX(),
-                    receiver.getPosition().getY(),
-                    receiver.getPosition().getZ(),
-                    1f,
-                    1f
-            ));
+            receiver.world.playSound(receiver, receiver.getPosition(), SoundRegister.RINGTONE, SoundCategory.MASTER, 1F, 1F);
 
-            VoiceManager.requestCallMap.put(playercalling, targetPhoneNum);
-
+            //VoiceManager.requestCallMap.put(playercalling, targetPhoneNum);
 
             List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(receiver));
             Contact contact = new Contact(-1, "Unknown", targetPhoneNum, "", "");
             for (Contact cont : contacts) {
-                if(cont.getNumero().equals(playercalling) && !isUnknown) {
+                if(cont.getNumero().equals(playerCalling) && !isUnknown) {
                     contact = cont;
                     break;
                 }
             }
 
-            SPhone.network.sendTo(new PacketOpenPhone("recievecall", isUnknown ? "Unknown" : playercalling, contact ), receiver); // accept or deny message so, target
+            playerCalling = playerCalling.equals("") ? "Unknown" : playerCalling;
+            SPhone.network.sendTo(new PacketOpenPhone("recievecall", isUnknown ? "Unknown" : playerCalling, contact ), receiver); // accept or deny message so, target
             SPhone.network.sendTo(new PacketOpenPhone("sendcall", targetPhoneNum), sender); // player who wait
 
             return null;

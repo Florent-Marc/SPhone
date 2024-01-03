@@ -35,14 +35,12 @@ public class PacketAcceptRequest implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-
         this.numberTarget = ByteBufUtils.readUTF8String(buf);
         this.isAccepted = buf.readBoolean();
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        System.out.println(buf);
         ByteBufUtils.writeUTF8String(buf, this.numberTarget);
         buf.writeBoolean(this.isAccepted);
     }
@@ -52,15 +50,10 @@ public class PacketAcceptRequest implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketAcceptRequest message, MessageContext ctx) {
             if (message.isAccepted) {
-                if (VoiceManager.requestCallMap.containsKey(message.numberTarget)) {
-                    VoiceManager.voiceManager.addPlayertoCall(ctx.getServerHandler().player, message.numberTarget);
-                    VoiceManager.voiceManager.addPlayertoCall(UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numberTarget), message.numberTarget);
-                }
+                VoiceManager.voiceManager.addPlayertoCall(ctx.getServerHandler().player, message.numberTarget);
+                VoiceManager.voiceManager.addPlayertoCall(UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numberTarget), message.numberTarget);
             } else {
-                if (VoiceManager.requestCallMap.containsKey(message.numberTarget)) {
-                    SPhone.network.sendTo(new PacketOpenPhone("dontexists", message.numberTarget), UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numberTarget));
-                    VoiceManager.requestCallMap.remove(message.numberTarget);
-                }
+                SPhone.network.sendTo(new PacketOpenPhone("dontexists", message.numberTarget), UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numberTarget));
             }
             return null;
         }

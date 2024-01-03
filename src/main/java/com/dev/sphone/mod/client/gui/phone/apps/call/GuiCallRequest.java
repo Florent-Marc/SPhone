@@ -24,18 +24,13 @@ public class GuiCallRequest extends GuiHome {
         super();
         this.number = number;
         this.contact = contact;
-        System.out.println("number : " + number);
-
-
-
-        Minecraft.getMinecraft().getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
+        mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
 
     }
 
     @Override
     public void GuiInit() {
         super.GuiInit();
-        mc.player.sendMessage(new TextComponentString("C"));
         getBackground().removeAllChilds();
         GuiLabel label = new GuiLabel("Appel entrant");
         label.setCssId("app_title");

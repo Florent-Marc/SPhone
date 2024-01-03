@@ -75,13 +75,11 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
                 });
             } else if (message.action.equals("recievecall"))  {
                 Minecraft.getMinecraft().addScheduledTask(() -> {
-                    System.out.println("content: " + message.content);
                     Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, (Contact) message.getObjectsIn()[0]).getGuiScreen());
 
                 });
             } else if (message.action.equals("sendcall"))  {
                 Minecraft.getMinecraft().addScheduledTask(() -> {
-                    System.out.println("content: " + message.content);
                     Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
                 });
             }

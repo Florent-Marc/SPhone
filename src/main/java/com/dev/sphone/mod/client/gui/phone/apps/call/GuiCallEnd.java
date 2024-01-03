@@ -24,7 +24,6 @@ public class GuiCallEnd extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
-        mc.player.sendMessage(new TextComponentString("B"));
         time = new GuiLabel("Appel terminé");
         time.setCssId("time");
         time.setCssCode("color: red;");
@@ -39,8 +38,8 @@ public class GuiCallEnd extends GuiBase {
     public void tick() {
         super.tick();
         //wait 2 seconds
-        if (Minecraft.getMinecraft().world.getTotalWorldTime() % 80 == 0) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
+        if (mc.world.getTotalWorldTime() % 80 == 0) {
+            mc.displayGuiScreen(new GuiHome().getGuiScreen());
         }
     }
 

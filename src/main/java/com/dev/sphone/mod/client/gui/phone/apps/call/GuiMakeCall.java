@@ -33,7 +33,6 @@ public class GuiMakeCall extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
-        mc.player.sendMessage(new TextComponentString("D"));
         add(getRoot());
         GuiPanel call = new GuiPanel();
         call.setCssClass("call");

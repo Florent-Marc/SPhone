@@ -120,7 +120,7 @@ public class MethodesBDDImpl {
         if (qr.getRowsCount() > 0) {
             return qr.getValue(0, 2);
         }
-        return null;
+        return "";
     }
     public static String getNumeroFromNumber(int number) {
         QueryResult qr = instance.getData("SELECT * FROM sim WHERE number = ?", number);
