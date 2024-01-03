@@ -51,7 +51,8 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
         if(mc.player != null)
-            mc.player.sendMessage(new TextComponentString(event.getGui().toString()));
+            if(event.getGui() != null)
+                mc.player.sendMessage(new TextComponentString(event.getGui().toString()));
     }
 
     @SubscribeEvent
