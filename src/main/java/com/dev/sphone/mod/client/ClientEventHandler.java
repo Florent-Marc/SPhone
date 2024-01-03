@@ -4,6 +4,7 @@ import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.api.ACsGuiApi;
+import fr.aym.acsguis.component.panel.GuiFrame;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -50,9 +51,13 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
-        if(mc.player != null)
-            if(event.getGui() != null)
-                mc.player.sendMessage(new TextComponentString(event.getGui().toString()));
+        if(mc.player != null) {
+            if (event.getGui() != null) {
+                if(event.getGui() instanceof GuiFrame.APIGuiScreen){
+                    mc.player.sendMessage(new TextComponentString(((GuiFrame.APIGuiScreen)event.getGui()).getFrame().toString()));
+                }
+            }
+        }
     }
 
     @SubscribeEvent
