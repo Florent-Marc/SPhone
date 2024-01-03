@@ -4,6 +4,7 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.common.packets.server.PacketGetUniqueConv;
 import com.dev.sphone.mod.common.packets.server.call.PacketJoinCall;
+import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketSendRequestCall;
 import com.dev.sphone.mod.common.phone.Contact;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
@@ -51,7 +52,7 @@ public class GuiViewContact extends GuiBase {
         call.setCssClass("call");
         getRoot().add(call);
         call.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketJoinCall(contact.getNumero()));
+            SPhone.network.sendToServer(new PacketSendRequestCall(contact.getNumero()));
         });
 
         GuiLabel contactAvatar = new GuiLabel("");
