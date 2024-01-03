@@ -1,12 +1,8 @@
 package com.dev.sphone.api.voicemanager.voicechat;
 
 import com.dev.sphone.api.voicemanager.IVoiceManager;
-import com.dev.sphone.api.voicemanager.VoiceManager;
 import de.maxhenkel.voicechat.api.Group;
 import net.minecraft.entity.player.EntityPlayerMP;
-
-import java.util.Collections;
-import java.util.Objects;
 
 public class VoiceNetwork implements IVoiceManager {
 
@@ -23,11 +19,12 @@ public class VoiceNetwork implements IVoiceManager {
             VoiceAddon.createGroup(callNumber, false, Group.Type.ISOLATED);
             VoiceAddon.addToGroup(callNumber, player);
         }
+        /*
         if(VoiceManager.callMap.containsKey(callNumber)) {
             VoiceManager.callMap.get(callNumber).add(player);
         } else {
             VoiceManager.callMap.put(callNumber, Collections.singletonList(player));
-        }
+        }*/
     }
 
     @Override

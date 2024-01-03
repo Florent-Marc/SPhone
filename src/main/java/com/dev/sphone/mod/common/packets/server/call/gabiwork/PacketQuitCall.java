@@ -50,6 +50,9 @@ public class PacketQuitCall implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketQuitCall message, MessageContext ctx) {
             EntityPlayerMP player = ctx.getServerHandler().player;
+            VoiceManager.voiceManager.removePlayerFromCall(player);
+
+            /*
             if(VoiceManager.callMap.containsKey(message.numberTarget)) {
                 List<EntityPlayerMP> players = VoiceManager.callMap.get(message.numberTarget);
                 if(players.contains(player)) {
@@ -61,7 +64,7 @@ public class PacketQuitCall implements IMessage {
                         }
                     }
                 }
-            }
+            }*/
 
 
 
