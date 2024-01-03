@@ -2,11 +2,8 @@ package com.dev.sphone.mod.client.gui.phone.apps.call;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
-import com.dev.sphone.mod.common.register.SoundRegister;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import com.dev.sphone.SPhone;
-import com.dev.sphone.mod.common.packets.server.call.PacketQuitCall;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
