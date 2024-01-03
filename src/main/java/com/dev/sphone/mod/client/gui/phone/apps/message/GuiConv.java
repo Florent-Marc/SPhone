@@ -120,16 +120,9 @@ public class GuiConv extends GuiBase {
 
             GuiLabel labelMessage = new GuiLabel("");
             labelMessage.setMaxTextLength(240);
-            if (c.getMessage().startsWith("[{") && c.getMessage().endsWith("}]")) {
-                labelMessage.setText("Localisation de " + conv.getSender().getName());
-                if (!c.getSender().equals(conv.getSender().getNumero())) {
-                    labelMessage.setText("(Votre Position)");
-                } else {
-                    labelMessage.setText("[POSITION]");
-                }
-            } else {
-                labelMessage.setText(c.getMessage());
-            }
+
+            labelMessage.setText(c.getMessage());
+
             labelMessage.setCssId("contact_message");
             messagePanel.add(labelMessage);
 
