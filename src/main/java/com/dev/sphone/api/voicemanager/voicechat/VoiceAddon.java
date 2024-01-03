@@ -9,6 +9,7 @@ import de.maxhenkel.voicechat.api.events.EventRegistration;
 import de.maxhenkel.voicechat.api.events.VoicechatServerStartedEvent;
 import de.maxhenkel.voicechat.net.NetManager;
 import de.maxhenkel.voicechat.net.RemoveGroupPacket;
+import de.maxhenkel.voicechat.voice.common.PlayerState;
 import de.maxhenkel.voicechat.voice.server.PlayerStateManager;
 import de.maxhenkel.voicechat.voice.server.Server;
 import de.maxhenkel.voicechat.voice.server.ServerGroupManager;
@@ -86,21 +87,25 @@ public class VoiceAddon implements VoicechatPlugin {
                     UUID groupId = connection.getGroup().getId();
 
                     PlayerStateManager manager = server.getPlayerStateManager();
-                    if (manager.getStates().stream().anyMatch(state -> state.hasGroup() && state.getGroup().equals(groupId))) {
-                        VoicechatConnection target = api.getConnectionOf(player.getUniqueID());
-                        if (target != null && target.getGroup() != null) {
-                            api.removeGroup(target.getGroup().getId());
-                            target.setGroup(null);
-                            if(target.getPlayer().getPlayer() instanceof EntityPlayer) {
-                                EntityPlayer targetPlayer = (EntityPlayer) target.getPlayer().getPlayer();
-                                targetPlayer.sendMessage(new TextComponentString("Fermeture du téléphone"));
-                                SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) targetPlayer);
-                            }else{
-                                player.sendMessage(new TextComponentString("target is null"));
+                    for(PlayerState state : manager.getStates()){
+                        if(state.hasGroup() && state.getGroup().equals(groupId)){
+                            VoicechatConnection target = api.getConnectionOf(state.getUuid());
+                            if (target != null && target.getGroup() != null) {
+                                api.removeGroup(target.getGroup().getId());
+                                target.setGroup(null);
+
+                                if (target.getPlayer().getPlayer() instanceof EntityPlayer) {
+                                    EntityPlayer targetPlayer = (EntityPlayer) target.getPlayer().getPlayer();
+                                    targetPlayer.sendMessage(new TextComponentString("Fermeture du téléphone"));
+                                    SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) targetPlayer);
+                                } else {
+                                    player.sendMessage(new TextComponentString("target is null"));
+                                }
                             }
 
                         }
                     }
+
 
                     groupManager.removeGroup(groupId);
 
