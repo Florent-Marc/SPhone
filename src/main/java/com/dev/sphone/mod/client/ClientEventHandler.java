@@ -51,20 +51,6 @@ public class ClientEventHandler {
     public static DynamicTexture lastPhoneScreenshot;
 
     @SubscribeEvent
-    public void onGuiOpen(GuiOpenEvent event) {
-        if(mc.player != null) {
-            if (event.getGui() != null) {
-                if(event.getGui() instanceof GuiFrame.APIGuiScreen){
-                    mc.player.sendMessage(new TextComponentString(((GuiFrame.APIGuiScreen)event.getGui()).getFrame().toString()));
-                    mc.player.sendMessage(new TextComponentString(TextFormatting.GOLD + ((GuiFrame.APIGuiScreen)event.getGui()).getFrame().getGui().toString()));
-                    mc.player.sendMessage(new TextComponentString(TextFormatting.RED + event.getGui().getClass().toString()));
-                    mc.player.sendMessage(new TextComponentString(TextFormatting.YELLOW + ((GuiFrame.APIGuiScreen)event.getGui()).getFrame().getGuiScreen().toString()));
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Pre event) {
         if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
 
