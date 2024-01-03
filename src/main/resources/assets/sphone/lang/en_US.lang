@@ -18,6 +18,7 @@ sphone.meteo.types.thunder=Thunderstorm
 sphone.meteo.types.rain=Rain
 sphone.meteo.types.sunny=Sunny
 sphone.meteo.types.snow=Snow
+sphone.meteo.types.clear=Clear
 sphone.meteo.types.cloud=cloudy
 sphone.meteo.types.sun=Sun
 

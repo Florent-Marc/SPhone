@@ -6,6 +6,7 @@ import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import fr.aym.acsguis.api.ACsGuiApi;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
@@ -58,16 +59,13 @@ public class UtilsServer {
     //get date and return long
 
 
-    public static boolean hasPhone(EntityPlayer player) {
-        return ItemPhone.getSimCard(player.getHeldItemMainhand()) != 0;
-    }
-
     //get phone and return sim
+
     public static int getSimCard(EntityPlayer p) {
+        if (p.getHeldItemMainhand().isEmpty() || !(p.getHeldItemMainhand().getItem() instanceof ItemPhone)) return 0;
         ItemPhone itemPhone = (ItemPhone) p.getHeldItemMainhand().getItem();
         return itemPhone.getSimCard(p.getHeldItemMainhand());
     }
-
     public static void registerAllCssFiles() {
         List<String> cssFiles = new ArrayList<>();
         String resourcePath = "assets/" + SPhone.MOD_ID + "/css/";
@@ -89,29 +87,28 @@ public class UtilsServer {
     }
 
     public static EntityPlayerMP getPlayerFromNumber(MinecraftServer server, String number) {
-        List<EntityPlayerMP> players = new ArrayList<>();
-        for (EntityPlayerMP player : server.getPlayerList().getPlayers()) {
-            if(player.inventory != null) {
-                if (hasPhone(player)) {
-                    List<String> numbers = getAllPhonesNumbersFromInventory(player);
-                    if (numbers.contains(number)) {
-                        players.add(player);
-                    }
-                }
-            }
-        }
-
-        if(players.size() == 0) {
-            return null;
-        }
-
-        if(players.size() > 1) {
-            SPhone.logger.warn("More than one player with the same number");
-            return players.get(0);
-        }
-
-        return players.get(0);
+        return server.getPlayerList().getPlayers().stream().filter(player -> getListOfPhoneInPlayer(player).contains(number)).findFirst().orElse(null);
     }
+
+   public static List<String> getListOfPhoneInPlayer(EntityPlayer player) {
+       List<String> numbers = new ArrayList<>();
+       int inventorySize = player.inventory.getSizeInventory();
+
+       for (int i = 0; i < inventorySize; i++) {
+           ItemStack itemStack = player.inventory.getStackInSlot(i);
+
+           if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemPhone) {
+               int simCard = ItemPhone.getSimCard(itemStack);
+
+               if (simCard != 0) {
+                   numbers.add(MethodesBDDImpl.getNumero(simCard));
+               }
+           }
+       }
+
+       return numbers;
+   }
+
 
     public static List<String> getAllPhonesNumbersFromInventory(EntityPlayerMP entityPlayerMP) {
         List<String> numbers = new ArrayList<>();
