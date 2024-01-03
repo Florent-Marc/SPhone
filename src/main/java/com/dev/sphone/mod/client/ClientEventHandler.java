@@ -57,6 +57,8 @@ public class ClientEventHandler {
                 if(event.getGui() instanceof GuiFrame.APIGuiScreen){
                     mc.player.sendMessage(new TextComponentString(((GuiFrame.APIGuiScreen)event.getGui()).getFrame().toString()));
                     mc.player.sendMessage(new TextComponentString(TextFormatting.GOLD + ((GuiFrame.APIGuiScreen)event.getGui()).getFrame().getGui().toString()));
+                    mc.player.sendMessage(new TextComponentString(TextFormatting.RED + event.getClass().toString()));
+                    mc.player.sendMessage(new TextComponentString(TextFormatting.YELLOW + ((GuiFrame.APIGuiScreen)event.getGui()).getFrame().getGuiScreen().toString()));
                 }
             }
         }
