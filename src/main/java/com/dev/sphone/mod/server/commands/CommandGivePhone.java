@@ -39,7 +39,6 @@ public class CommandGivePhone extends CommandBase {
         if (p.getHeldItemMainhand().getItem() instanceof ItemPhone) {
             item = (ItemPhone) p.getHeldItemMainhand().getItem();
         } else {
-            p.sendMessage(new TextComponentTranslation("sphone.error.no_phone"));
             return;
         }
         ItemSim sim = item.getSimCardItem(p.getHeldItemMainhand());
