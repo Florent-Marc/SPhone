@@ -11,7 +11,6 @@ import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.aym.acsguis.event.listeners.IKeyboardListener;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
@@ -69,8 +68,14 @@ public class GuiConv extends GuiBase {
             @Override
             public void onKeyTyped(char c, int i) {
                 if (i == 28) {
+                    if (message.getText().isEmpty()) return;
+                    conv.addMessage(new Message(message.getText(),  System.currentTimeMillis(), "",conv.getSender().getName()));
+                    contacts_list.removeAllChilds();
+                    contacts_list.flushComponentsQueue();
+                    contacts_list.flushRemovedComponents();
+                    initMessages(conv, contacts_list);
                     SPhone.network.sendToServer(new PacketSendMessage(message.getText(), conv));
-                    Minecraft.getMinecraft().displayGuiScreen(null);
+                    message.setText("");
                 }
             }
         });
@@ -78,11 +83,15 @@ public class GuiConv extends GuiBase {
 
         GuiLabel position = new GuiLabel("❖");
         position.setCssClass("position");
-        position.setHoveringText(Collections.singletonList("Envoyer votre Position (SOON)"));
+        position.setHoveringText(Collections.singletonList("Envoyer votre Position"));
         position.addClickListener((x,y,bu) -> {
-            // Soon...
-            //SPhone.network.sendToServer(new PacketSendMessage("[{" + mc.player.posX + "," + mc.player.posY + "," + mc.player.posZ + "}]", conv));
-            //Minecraft.getMinecraft().displayGuiScreen(null);
+            String pos = this.mc.player.getPosition().getX() + " " + this.mc.player.getPosition().getY() + " " + this.mc.player.getPosition().getZ();
+            conv.addMessage(new Message(pos,  System.currentTimeMillis(), "",conv.getSender().getName()));
+            contacts_list.removeAllChilds();
+            contacts_list.flushComponentsQueue();
+            contacts_list.flushRemovedComponents();
+            initMessages(conv, contacts_list);
+            SPhone.network.sendToServer(new PacketSendMessage(pos, conv));
         });
         getBackground().add(position);
 
