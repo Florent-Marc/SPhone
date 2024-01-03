@@ -9,6 +9,8 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -47,9 +49,14 @@ public class ClientEventHandler {
     public static DynamicTexture lastPhoneScreenshot;
 
     @SubscribeEvent
+    public void onGuiOpen(GuiOpenEvent event) {
+        if(mc.player != null)
+            mc.player.sendMessage(new TextComponentString(event.getGui().toString()));
+    }
+
+    @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Pre event) {
         if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
-
 
             if(isCameraActive) {
                 if(!(mc.player.getHeldItemMainhand().getItem() instanceof ItemPhone)){
