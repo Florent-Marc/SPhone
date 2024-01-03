@@ -66,7 +66,7 @@ public class VoiceAddon implements VoicechatPlugin {
             if (connection != null) {
                 Group g = GroupMap.get(name);
                 connection.setGroup(g);
-                SPhone.network.sendTo(new PacketPlayerHudState(true), (EntityPlayerMP) player);
+                SPhone.network.sendTo(new PacketPlayerHudState(false), (EntityPlayerMP) player);
             }
         }
     }
