@@ -1,18 +1,7 @@
 package com.dev.sphone.mod.common.packets.server.call;
 
-import com.dev.sphone.SPhone;
-import com.dev.sphone.api.events.CallEvent;
-import com.dev.sphone.api.voicemanager.voicechat.VoiceAddon;
-import com.dev.sphone.api.voicemanager.voicechat.VoiceNetwork;
-import com.dev.sphone.mod.common.packets.client.PacketCall;
-import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
-import com.dev.sphone.mod.utils.UtilsServer;
-import de.maxhenkel.voicechat.api.Group;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
