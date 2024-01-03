@@ -1,7 +1,9 @@
 package com.dev.sphone.mod.client.gui.phone.apps.call;
 
+import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketQuitCall;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
@@ -46,6 +48,7 @@ public class GuiCall extends GuiBase {
                 Minecraft.getMinecraft().getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
                 Minecraft.getMinecraft().getSoundHandler().stop("sphone:unjoinable", SoundCategory.MASTER);
                 Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
+                SPhone.network.sendToServer(new PacketQuitCall());
             }
         });
         getBackground().add(exit);
