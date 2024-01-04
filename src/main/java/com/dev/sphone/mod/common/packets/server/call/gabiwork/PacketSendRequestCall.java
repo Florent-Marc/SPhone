@@ -9,8 +9,6 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketCustomSound;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -24,13 +22,21 @@ import java.util.Objects;
 public class PacketSendRequestCall implements IMessage {
 
     public String numberTarget = "";
+    public String contactName = "";
 
     public PacketSendRequestCall() {
         this.numberTarget = "";
+        this.contactName = "";
     }
 
     public PacketSendRequestCall(String numberTarget) {
         this.numberTarget = numberTarget;
+        this.contactName = "";
+    }
+
+    public PacketSendRequestCall(String numberTarget, String contactName) {
+        this.numberTarget = numberTarget;
+        this.contactName = numberTarget;
     }
 
     @Override
@@ -81,18 +87,21 @@ public class PacketSendRequestCall implements IMessage {
             EntityPlayerMP receiver = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), targetNum);
             if(receiver == null) {
                 sender.connection.sendPacket(new SPacketCustomSound("sphone:unjoinable", SoundCategory.MASTER, sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ(), 1f, 1f));
-                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.DONT_EXISTS, message.numberTarget), sender);
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.DONT_EXISTS, message.contactName.isEmpty() ? message.numberTarget : message.contactName), sender);
                 return null;
             }
 
             receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone", SoundCategory.MASTER, receiver.getPosition().getX(), receiver.getPosition().getY(), receiver.getPosition().getZ(), 1f, 1f));
 
-            List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(sender));
+
             Contact contact = new Contact(-1, "Unknown", "", targetNum, "");
-            for (Contact cont : contacts) {
-                if(cont.getNumero().equals(targetNum) && !isUnknown) {
-                    contact = cont;
-                    break;
+            if(message.contactName.isEmpty()) {
+                List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(sender));
+                for (Contact cont : contacts) {
+                    if (cont.getNumero().equals(targetNum) && !isUnknown) {
+                        contact = cont;
+                        break;
+                    }
                 }
             }
 
@@ -106,7 +115,7 @@ public class PacketSendRequestCall implements IMessage {
             }
 
             SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.RECEIVE_CALL, senderNum, contactReceiver), receiver); // accept or deny message so, target
-            SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.WAIT_CALL, contact.getName() + " " + contact.getLastname()), sender); // player who wait
+            SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.WAIT_CALL, message.contactName.isEmpty() ? contact.getName() + " " + contact.getLastname() : message.contactName), sender); // player who wait
 
             return null;
         }

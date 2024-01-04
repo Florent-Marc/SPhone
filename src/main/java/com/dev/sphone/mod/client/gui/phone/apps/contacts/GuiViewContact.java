@@ -52,7 +52,7 @@ public class GuiViewContact extends GuiBase {
         call.setCssClass("call");
         getRoot().add(call);
         call.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketSendRequestCall(contact.getNumero()));
+            SPhone.network.sendToServer(new PacketSendRequestCall(contact.getNumero(), contact.getName() + " " + contact.getLastname()));
         });
 
         GuiLabel contactAvatar = new GuiLabel("");
