@@ -1,27 +1,26 @@
 package com.dev.sphone.mod.client.gui.phone.apps.call;
 
+import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketQuitCall;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import com.dev.sphone.SPhone;
-import com.dev.sphone.mod.common.packets.server.call.PacketQuitCall;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GuiWaitCall extends GuiBase {
 
-    private final String s;
+    private final String name;
     private GuiLabel time;
 
-    public GuiWaitCall(GuiScreen parent, String s) {
+    public GuiWaitCall(GuiScreen parent, String name) {
         super(parent);
-        this.s = s;
+        this.name = name;
     }
 
     @Override
@@ -36,12 +35,12 @@ public class GuiWaitCall extends GuiBase {
         close.setCssClass("close");
         getBackground().add(close);
         close.addClickListener((p, m, b) -> {
-            SPhone.network.sendToServer(new PacketQuitCall(s));
+            SPhone.network.sendToServer(new PacketQuitCall(name));
             Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
         });
 
 
-        GuiLabel number = new GuiLabel(s);
+        GuiLabel number = new GuiLabel(name);
         number.setCssId("number");
         getBackground().add(number);
     }
@@ -49,7 +48,7 @@ public class GuiWaitCall extends GuiBase {
     @Override
     public void guiClose() {
         super.guiClose();
-        SPhone.network.sendToServer(new PacketQuitCall(s));
+        //SPhone.network.sendToServer(new PacketQuitCall(name));
     }
 
     @Override
