@@ -26,10 +26,10 @@ public class SIMInventory implements IInventory
         ItemStack sim = new ItemStack(ItemsRegister.SIM_CARD);
         NBTTagCompound comp = new NBTTagCompound();
         System.out.println(container);
-        if(container.getTagCompound().getInteger(ItemPhone.SIM_KEY_TAG) == 0) {
+        if(container.getTagCompound().getInteger(ItemSim.SIM_KEY_TAG) == 0) {
             this.content = Collections.singletonList(new ItemStack(Items.AIR)).toArray(new ItemStack[size]);
         } else {
-            comp.setInteger(ItemSim.SIM_KEY_TAG, container.getTagCompound().getInteger(ItemPhone.SIM_KEY_TAG));
+            comp.setInteger(ItemSim.SIM_KEY_TAG, container.getTagCompound().getInteger(ItemSim.SIM_KEY_TAG));
             sim.setTagCompound(comp);
             this.content = Collections.singletonList(sim).toArray(new ItemStack[size]);
         }
