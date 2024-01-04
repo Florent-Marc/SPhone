@@ -39,7 +39,7 @@ public class PacketSendRequestCall implements IMessage {
 
     public PacketSendRequestCall(String numberTarget, String contactName) {
         this.numberTarget = numberTarget;
-        this.contactName = numberTarget;
+        this.contactName = contactName;
     }
 
     @Override
