@@ -10,20 +10,18 @@ import com.dev.sphone.mod.common.phone.Contact;
 import fr.aym.acslib.utils.packetserializer.SerializablePacket;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.IThreadListener;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketOpenPhone extends SerializablePacket implements IMessage {
 
     private String action;
     private String content;
     private String contactTargetName;
+    private String receiver;
 
     public PacketOpenPhone() {}
 
@@ -32,6 +30,7 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         this.action = action.name();
         this.content = "";
         this.contactTargetName = "";
+        this.receiver = "";
     }
 
     public PacketOpenPhone(EnumAction action, String content) {
@@ -39,6 +38,15 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         this.action = action.name();
         this.content = content;
         this.contactTargetName = "";
+        this.receiver = "";
+    }
+
+    public PacketOpenPhone(EnumAction action, String content, String receiver) {
+        super(new Object[0]);
+        this.action = action.name();
+        this.content = content;
+        this.contactTargetName = "";
+        this.receiver = receiver;
     }
 
     public PacketOpenPhone(EnumAction action, String content, String contactTargetName, Contact contact) {
@@ -46,6 +54,7 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         this.action = action.name();
         this.content = content;
         this.contactTargetName = contactTargetName;
+        this.receiver = "";
     }
 
     @Override
@@ -62,11 +71,15 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         ByteBufUtils.writeUTF8String(buf, this.action);
         ByteBufUtils.writeUTF8String(buf, this.content);
         ByteBufUtils.writeUTF8String(buf, this.contactTargetName);
+        ByteBufUtils.writeUTF8String(buf, this.receiver);
     }
 
     public static class Handler implements IMessageHandler<PacketOpenPhone, IMessage> {
         @Override
         public IMessage onMessage(PacketOpenPhone message, MessageContext ctx) {
+
+            EntityPlayer receiver = Minecraft.getMinecraft().world.getPlayerEntityByName(message.receiver);
+
             Minecraft.getMinecraft().addScheduledTask(new Runnable() {
                 @Override
                 public void run() {
@@ -83,10 +96,10 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
                             Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
                             break;
                         case WAIT_CALL:
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiBase().getGuiScreen(), message.content, receiver).getGuiScreen());
                             break;
                         case RECEIVE_CALL:
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0]).getGuiScreen());
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0], receiver).getGuiScreen());
                             break;
                     }
                 }

@@ -96,7 +96,6 @@ public class PacketSendRequestCall implements IMessage {
             EntityPlayerMP receiver = receiverTuple.getFirst();
             ItemStack receiverPhone = receiverTuple.getSecond();
 
-
             receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone", SoundCategory.MASTER, receiver.getPosition().getX(), receiver.getPosition().getY(), receiver.getPosition().getZ(), 1f, 1f));
 
             Contact contact = new Contact(-1, "Unknown", "", targetNum, "");
@@ -112,7 +111,7 @@ public class PacketSendRequestCall implements IMessage {
             ItemPhone.setCall(receiverPhone, senderNum, contact.getName() + " " + contact.getLastname(), isUnknown);
 
             //SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.RECEIVE_CALL, senderNum, contactReceiver), receiver);
-            SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.WAIT_CALL, message.contactName.isEmpty() ? contact.getName() + " " + contact.getLastname() : message.contactName), sender); // player who wait
+            SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.WAIT_CALL, message.contactName.isEmpty() ? contact.getName() + " " + contact.getLastname() : message.contactName, receiver.getName()), sender); // player who wait
 
             return null;
         }

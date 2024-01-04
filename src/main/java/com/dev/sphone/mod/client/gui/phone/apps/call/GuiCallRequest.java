@@ -8,6 +8,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextComponentString;
@@ -20,12 +21,14 @@ public class GuiCallRequest extends GuiHome {
     private final String number;
     private final String contactTargetName;
     private final Contact contact;
+    private final EntityPlayer receiver;
 
-    public GuiCallRequest(String number, String targetName, Contact contact) {
+    public GuiCallRequest(String number, String targetName, Contact contact, EntityPlayer receiver) {
         super();
         this.number = number;
         this.contactTargetName = targetName;
         this.contact = contact;
+        this.receiver = receiver;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class GuiCallRequest extends GuiHome {
         GuiPanel ButtonDecline = new GuiPanel();
         ButtonDecline.setCssClass("button_decline");
         ButtonDecline.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketCallRequest(false, number));
+            SPhone.network.sendToServer(new PacketCallRequest(false, receiver.getName()));
             mc.displayGuiScreen(new GuiCallEnd(this.getGuiScreen(), number).getGuiScreen());
         });
         getBackground().add(ButtonDecline);

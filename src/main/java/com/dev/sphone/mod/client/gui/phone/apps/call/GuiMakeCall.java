@@ -2,16 +2,12 @@ package com.dev.sphone.mod.client.gui.phone.apps.call;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
-import com.dev.sphone.mod.client.gui.phone.GuiHome;
-import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketSendRequestCall;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
 import java.util.List;

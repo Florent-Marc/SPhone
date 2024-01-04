@@ -3,13 +3,15 @@ package com.dev.sphone.mod.common.packets.server.call;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.CallEvent;
 import com.dev.sphone.api.voicemanager.voicechat.VoiceAddon;
-import com.dev.sphone.api.voicemanager.voicechat.VoiceNetwork;
-import com.dev.sphone.mod.common.packets.client.PacketCall;
+import com.dev.sphone.mod.common.items.ItemPhone;
+import com.dev.sphone.mod.common.packets.client.PacketStopSound;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.UtilsServer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -23,60 +25,71 @@ import java.util.Objects;
 public class PacketCallRequest implements IMessage {
 
     private boolean accept;
-    private String numero;
+    private String targetName;
+    private boolean response;
 
     public PacketCallRequest() {
     }
 
-    public PacketCallRequest(boolean accept, String numero) {
-        this.numero = numero;
+    public PacketCallRequest(boolean accept, String targetName) {
         this.accept = accept;
+        this.targetName = targetName;
+        this.response = false;
+    }
+
+    public PacketCallRequest(boolean accept, String targetName, boolean response) {
+        this.accept = accept;
+        this.targetName = targetName;
+        this.response = response;
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
         this.accept = buf.readBoolean();
-        this.numero = ByteBufUtils.readUTF8String(buf);
+        this.targetName = ByteBufUtils.readUTF8String(buf);
+        this.response = buf.readBoolean();
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeBoolean(this.accept);
-        ByteBufUtils.writeUTF8String(buf, this.numero);
+        ByteBufUtils.writeUTF8String(buf, this.targetName);
+        buf.writeBoolean(this.response);
     }
 
     public static class ServerHandler implements IMessageHandler<PacketCallRequest, IMessage> {
         @Override
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketCallRequest message, MessageContext ctx) {
-            EntityPlayerMP receiver = ctx.getServerHandler().player;
-            EntityPlayer caller = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numero);
-            String CallNumber = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(receiver));
+            EntityPlayerMP player = ctx.getServerHandler().player;
+            EntityPlayer caller = player.world.getPlayerEntityByName(message.targetName);
             if (message.accept) {
-                if (caller == null) {
-                    System.out.println("Caller is null" + message.numero);
-                } else if (CallNumber == null) {
-                    System.out.println("CallNumber is null" + message.numero);
-                } else {
-                    System.out.println("CallNumber is " + CallNumber);
-                    MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(receiver, CallNumber));
-                    VoiceAddon.addToGroup(CallNumber, receiver);
-                    SPhone.network.sendTo(new PacketCall(1, CallNumber), (EntityPlayerMP) caller);
-                    SPhone.network.sendTo(new PacketCall(1, CallNumber), receiver);
+
+                String callNumber = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(player));
+                if (caller != null && callNumber != null) {
+                    MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(player, callNumber));
+                    VoiceAddon.addToGroup(callNumber, player);
                 }
             } else {
-                MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(caller, CallNumber));
-                if (caller == null) {
-                    System.out.println("Caller is null" + message.numero);
-                } else {
-                    VoiceAddon.removeFromActualGroup(caller);
-                    SPhone.network.sendTo(new PacketCall(0), (EntityPlayerMP) caller);
-                }
-                if (receiver == null) {
-                    System.out.println("Receiver is null" + message.numero);
-                } else {
-                    VoiceAddon.removeFromActualGroup(receiver);
-                    SPhone.network.sendTo(new PacketCall(0), receiver);
+                if(!message.response) {
+
+                    String callNumber = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(player));
+                    MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(caller, callNumber));
+                    if (caller != null) {
+                        VoiceAddon.removeFromActualGroup(caller);
+                    }
+                    VoiceAddon.removeFromActualGroup(player);
+                }else{
+                    if(caller != null) {
+                        String targetNum = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(caller));
+                        Tuple<EntityPlayerMP, ItemStack> senderTuple = UtilsServer.getPlayerPhone(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), targetNum);
+                        if (senderTuple == null) {
+                            return null;
+                        }
+                        ItemStack receiverPhone = senderTuple.getSecond();
+                        ItemPhone.setCall(receiverPhone, null, null, false);
+                        SPhone.network.sendTo(new PacketStopSound("sphone:ringtone"), player);
+                    }
                 }
             }
 
