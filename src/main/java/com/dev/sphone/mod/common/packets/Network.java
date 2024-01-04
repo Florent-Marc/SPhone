@@ -9,8 +9,8 @@ import com.dev.sphone.mod.common.packets.client.*;
 import com.dev.sphone.mod.common.packets.server.*;
 import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
 import com.dev.sphone.mod.common.packets.server.call.PacketJoinCall;
-import com.dev.sphone.mod.common.packets.server.call.PacketQuitCall;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketAcceptRequest;
+import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketQuitCall;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketSendRequestCall;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,7 +33,6 @@ public class Network {
         // *** SERVERS *** //
 
         packetFromServer(PacketJoinCall.ServerHandler.class, PacketJoinCall.class);
-        packetFromServer(PacketQuitCall.ServerHandler.class, PacketQuitCall.class);
         packetFromClient(PacketCall.Handler.class, PacketCall.class);
         packetFromServer(PacketCallRequest.ServerHandler.class, PacketCallRequest.class);
         packetFromServer(PacketSendRequestCall.ServerHandler.class, PacketSendRequestCall.class);
@@ -47,7 +46,7 @@ public class Network {
         packetFromServer(PacketSendMessage.ServerHandler.class, PacketSendMessage.class);
         packetFromServer(PacketAcceptRequest.ServerHandler.class, PacketAcceptRequest.class);
 
-        packetFromServer(com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketQuitCall.ServerHandler.class, com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketQuitCall.class);
+        packetFromServer(PacketQuitCall.ServerHandler.class, PacketQuitCall.class);
 
         // Contacts
         //packetFromServer(PacketGetContacts.ServerHandler.class, PacketGetContacts.class);
