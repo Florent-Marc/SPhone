@@ -105,19 +105,10 @@ public class UtilsServer {
                }
            }
        }
-
        return numbers;
    }
 
 
-    public static List<String> getAllPhonesNumbersFromInventory(EntityPlayerMP entityPlayerMP) {
-        List<String> numbers = new ArrayList<>();
-        for (int i = 0; i < entityPlayerMP.inventory.getSizeInventory(); i++) {
-            if (ItemPhone.getSimCard(entityPlayerMP.inventory.getStackInSlot(i)) != 0) {
-                numbers.add(MethodesBDDImpl.getNumero(ItemPhone.getSimCard(entityPlayerMP.inventory.getStackInSlot(i))));
-            }
-        }
-        return numbers;
-    }
+
 
 }
