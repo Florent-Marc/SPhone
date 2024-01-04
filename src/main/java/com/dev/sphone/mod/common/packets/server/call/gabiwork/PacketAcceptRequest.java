@@ -53,7 +53,7 @@ public class PacketAcceptRequest implements IMessage {
                 VoiceManager.voiceManager.addPlayertoCall(ctx.getServerHandler().player, message.numberTarget);
                 VoiceManager.voiceManager.addPlayertoCall(UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numberTarget), message.numberTarget);
             } else {
-                SPhone.network.sendTo(new PacketOpenPhone("dontexists", message.numberTarget), UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numberTarget));
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.DONT_EXISTS, message.numberTarget), UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numberTarget));
             }
             return null;
         }

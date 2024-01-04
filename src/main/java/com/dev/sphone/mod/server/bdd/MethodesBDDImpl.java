@@ -122,6 +122,7 @@ public class MethodesBDDImpl {
         }
         return "";
     }
+
     public static String getNumeroFromNumber(int number) {
         QueryResult qr = instance.getData("SELECT * FROM sim WHERE number = ?", number);
         if (qr.getRowsCount() > 0) {

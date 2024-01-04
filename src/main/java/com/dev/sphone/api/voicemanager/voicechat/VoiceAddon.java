@@ -93,7 +93,7 @@ public class VoiceAddon implements VoicechatPlugin {
                                 target.setGroup(null);
                                 if (target.getPlayer().getPlayer() instanceof EntityPlayer) {
                                     EntityPlayer targetPlayer = (EntityPlayer) target.getPlayer().getPlayer();
-                                    SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) targetPlayer);
+                                    SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.HOME), (EntityPlayerMP) targetPlayer);
                                 }
                             }
 

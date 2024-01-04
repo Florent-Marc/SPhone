@@ -25,15 +25,21 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
 
     public PacketOpenPhone() {}
 
-    public PacketOpenPhone(String action, String content) {
+    public PacketOpenPhone(EnumAction action) {
         super(new Object[0]);
-        this.action = action;
+        this.action = action.name();
+        this.content = "";
+    }
+
+    public PacketOpenPhone(EnumAction action, String content) {
+        super(new Object[0]);
+        this.action = action.name();
         this.content = content;
     }
 
-    public PacketOpenPhone(String action, String content, Contact contact) {
+    public PacketOpenPhone(EnumAction action, String content, Contact contact) {
         super(contact);
-        this.action = action;
+        this.action = action.name();
         this.content = content;
 
     }
@@ -56,36 +62,44 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenPhone message, MessageContext ctx) {
-            if (message.action.equals("home")) {
-                IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
-                thread.addScheduledTask(new Runnable()
-                {
-                    public void run()
-                    {
-                        Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
-                    }
-                });
-            } else if (message.action.equals("nosim")) {
-                Minecraft.getMinecraft().addScheduledTask(() -> {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiNoSIM(message.content).getGuiScreen());
-                });
-            } else if (message.action.equals("dontexists"))  {
-                Minecraft.getMinecraft().addScheduledTask(() -> {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
-                });
-            } else if (message.action.equals("recievecall"))  {
-                Minecraft.getMinecraft().addScheduledTask(() -> {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, (Contact) message.getObjectsIn()[0]).getGuiScreen());
-
-                });
-            } else if (message.action.equals("sendcall"))  {
-                Minecraft.getMinecraft().addScheduledTask(() -> {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
-                });
+            EnumAction action = EnumAction.valueOf(message.action);
+            switch (action) {
+                case HOME:
+                    IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
+                    thread.addScheduledTask(new Runnable() {
+                        public void run() {
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
+                        }
+                    });
+                    break;
+                case NOSIM:
+                    Minecraft.getMinecraft().addScheduledTask(() -> {
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiNoSIM(message.content).getGuiScreen());
+                    });
+                    break;
+                case DONT_EXISTS:
+                case SEND_CALL:
+                    Minecraft.getMinecraft().addScheduledTask(() -> {
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
+                    });
+                    break;
+                case RECEIVE_CALL:
+                    Minecraft.getMinecraft().addScheduledTask(() -> {
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, (Contact) message.getObjectsIn()[0]).getGuiScreen());
+                    });
+                    break;
             }
             return null;
         }
     }
 
+    public enum EnumAction {
+        HOME,
+        NOSIM,
+        DONT_EXISTS,
+        RECEIVE_CALL,
+        SEND_CALL;
+
+    }
 }
 

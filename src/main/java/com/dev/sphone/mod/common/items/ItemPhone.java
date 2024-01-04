@@ -46,9 +46,9 @@ public class ItemPhone extends Item {
             ItemStack stack = player.getHeldItem(hand);
 
             if (stack.hasTagCompound() && stack.getTagCompound().hasKey("simcard")) {
-                SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) player);
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.HOME), (EntityPlayerMP) player);
             } else {
-                SPhone.network.sendTo(new PacketOpenPhone("nosim", ""), (EntityPlayerMP) player);
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.NOSIM), (EntityPlayerMP) player);
             }
 
             if (stack.getTagCompound().hasKey("inventory")) {
@@ -56,11 +56,11 @@ public class ItemPhone extends Item {
                 handler.deserializeNBT(stack.getTagCompound().getCompoundTag("inventory"));
 
                 if(handler.getStackInSlot(0).getItem() == Items.AIR) {
-                    SPhone.network.sendTo(new PacketOpenPhone("nosim", ""), (EntityPlayerMP) player);
+                    SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.NOSIM), (EntityPlayerMP) player);
                 } else if (handler.getStackInSlot(0).getTagCompound().getInteger(ItemSim.SIM_KEY_TAG) == 0) {
-                    SPhone.network.sendTo(new PacketOpenPhone("nosim", "unregistred"), (EntityPlayerMP) player);
+                    SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.NOSIM, "unregistred"), (EntityPlayerMP) player);
                 } else {
-                    SPhone.network.sendTo(new PacketOpenPhone("home", ""), (EntityPlayerMP) player);
+                    SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.HOME), (EntityPlayerMP) player);
                     if(getTagCompound(stack).hasKey("settings")) {
                         getTagCompound(stack).setTag("settings", new PhoneSettings("acsgui").serializeNBT());
                     }
