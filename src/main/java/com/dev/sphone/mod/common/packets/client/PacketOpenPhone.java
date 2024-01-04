@@ -95,12 +95,10 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
                             break;
 
                         case WAIT_CALL:
-                            EntityPlayer receiver = Minecraft.getMinecraft().world.getPlayerEntityByName(message.receiver);
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiBase().getGuiScreen(), message.content, receiver).getGuiScreen());
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiBase().getGuiScreen(), message.content, message.receiver).getGuiScreen());
                             break;
                         case RECEIVE_CALL:
-                            EntityPlayer receiver1 = Minecraft.getMinecraft().world.getPlayerEntityByName(message.receiver);
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0], receiver1).getGuiScreen());
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0], message.receiver).getGuiScreen());
                             break;
                     }
                 }

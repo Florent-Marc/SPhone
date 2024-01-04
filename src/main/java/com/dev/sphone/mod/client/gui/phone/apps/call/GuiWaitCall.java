@@ -18,11 +18,11 @@ import java.util.List;
 public class GuiWaitCall extends GuiBase {
 
     private final String name;
-    private final EntityPlayer receiver;
+    private final String receiver;
     private GuiLabel time;
     private int tick = 0;
 
-    public GuiWaitCall(GuiScreen parent, String name, EntityPlayer receiver) {
+    public GuiWaitCall(GuiScreen parent, String name, String receiver) {
         super(parent);
         this.name = name;
         this.receiver = receiver;
@@ -42,7 +42,7 @@ public class GuiWaitCall extends GuiBase {
         ButtonDecline.setCssClass("button_decline");
         ButtonDecline.addClickListener((mouseX, mouseY, mouseButton) -> {
             Minecraft.getMinecraft().displayGuiScreen(this.getParent().getGui());
-            SPhone.network.sendToServer(new PacketCallRequest(false, receiver.getName(), true));
+            SPhone.network.sendToServer(new PacketCallRequest(false, receiver, true));
         });
         getBackground().add(ButtonDecline);
 

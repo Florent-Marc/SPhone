@@ -21,9 +21,9 @@ public class GuiCallRequest extends GuiHome {
     private final String number;
     private final String contactTargetName;
     private final Contact contact;
-    private final EntityPlayer receiver;
+    private final String receiver;
 
-    public GuiCallRequest(String number, String targetName, Contact contact, EntityPlayer receiver) {
+    public GuiCallRequest(String number, String targetName, Contact contact, String receiver) {
         super();
         this.number = number;
         this.contactTargetName = targetName;
@@ -57,7 +57,7 @@ public class GuiCallRequest extends GuiHome {
         GuiPanel ButtonDecline = new GuiPanel();
         ButtonDecline.setCssClass("button_decline");
         ButtonDecline.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketCallRequest(false, receiver.getName()));
+            SPhone.network.sendToServer(new PacketCallRequest(false, receiver));
             mc.displayGuiScreen(new GuiCallEnd(this.getGuiScreen(), number).getGuiScreen());
         });
         getBackground().add(ButtonDecline);
