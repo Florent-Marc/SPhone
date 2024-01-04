@@ -65,17 +65,18 @@ public class PacketSendRequestCall implements IMessage {
             if(Objects.equals(targetNum, "")) {
                 return null;
             }
+            if(targetNum.equals(senderNum)){
+                return null;
+            }
 
-            String numSim = MethodesBDDImpl.getNumeroFromNumber(Integer.parseInt(targetNum));
+            String simReceiver = MethodesBDDImpl.getSimFromNum(Integer.parseInt(targetNum));
 
-            if(numSim == null){
+            if(simReceiver == null){
                 sender.connection.sendPacket(new SPacketCustomSound("sphone:nonattrib", SoundCategory.MASTER, sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ(), 1f, 1f));
                 SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.DONT_EXISTS, message.numberTarget), sender);
                 return null;
             }
-            if(numSim.equals(senderNum)){
-                return null;
-            }
+
 
             EntityPlayerMP receiver = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), targetNum);
             if(receiver == null) {
@@ -86,22 +87,21 @@ public class PacketSendRequestCall implements IMessage {
 
             receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone", SoundCategory.MASTER, receiver.getPosition().getX(), receiver.getPosition().getY(), receiver.getPosition().getZ(), 1f, 1f));
 
-            sender.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche contacts de SIM : " + UtilsServer.getSimCard(sender)));
             List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(sender));
             Contact contact = new Contact(-1, "Unknown", targetNum, targetNum, "");
             for (Contact cont : contacts) {
-                sender.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche: " + targetNum + TextFormatting.YELLOW +" ==> " + cont.toString()));
                 if(cont.getNumero().equals(targetNum) && !isUnknown) {
                     contact = cont;
                     break;
                 }
             }
 
+
             receiver.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche contacts de SIM : " + UtilsServer.getSimCard(receiver)));
-            List<Contact> contactsReceiver = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(receiver));
+            List<Contact> contactsReceiver = MethodesBDDImpl.getContacts(Integer.parseInt(simReceiver));
             Contact contactReceiver = new Contact(-1, "Unknown", senderNum, senderNum, "");
             for (Contact cont : contactsReceiver) {
-                receiver.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche: " + senderNum + TextFormatting.YELLOW +" ==> " + cont.toString()));
+                receiver.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche: " + senderNum + TextFormatting.YELLOW +" ==> " + cont.getNumero()));
                 if(cont.getNumero().equals(senderNum) && !isUnknown) {
                     contactReceiver = cont;
                     break;
