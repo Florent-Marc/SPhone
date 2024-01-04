@@ -11,12 +11,13 @@ public class SoundRegister {
     public static SoundEvent UNJOINABLE;
     public static SoundEvent RINGTONE;
     public static SoundEvent NOTIF;
+    public static SoundEvent CALL;
     public static void registerSounds() {
         COMPOSITION = registerSound("composition");
         NONATTRIB = registerSound("nonattrib");
         UNJOINABLE = registerSound("unjoinable");
         RINGTONE = registerSound("ringtone");
-        NOTIF = registerSound("notif");
+        CALL = registerSound("call");
     }
 
     private static SoundEvent registerSound(String name) {

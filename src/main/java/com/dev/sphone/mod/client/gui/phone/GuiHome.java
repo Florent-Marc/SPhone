@@ -27,7 +27,6 @@ public class GuiHome extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
-        mc.player.sendMessage(new TextComponentString("RAF"));
         AppManager.reloadApps(this.getGuiScreen());
 
         GuiScrollPane appListPanel = new GuiScrollPane();

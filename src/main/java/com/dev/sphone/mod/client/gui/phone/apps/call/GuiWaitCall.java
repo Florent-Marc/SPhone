@@ -1,9 +1,8 @@
 package com.dev.sphone.mod.client.gui.phone.apps.call;
 
-import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
-import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketQuitCall;
+import com.dev.sphone.mod.common.register.SoundRegister;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
@@ -71,6 +70,9 @@ public class GuiWaitCall extends GuiBase {
             } else if (time.getText().equals(d)) {
                 time.setText(a);
             }
+        }
+        if (Minecraft.getMinecraft().world.getTotalWorldTime() % 20*3 == 0) {
+            mc.player.playSound(SoundRegister.CALL, 1, 1);
         }
 
     }

@@ -18,5 +18,9 @@
   "notif": {
     "subtitle": "sphone.subtitle.notif",
     "sounds": [ "sphone:notif" ]
+  },
+  "call": {
+    "subtitle": "sphone.subtitle.call",
+    "sounds": [ "sphone:call" ]
   }
 }
