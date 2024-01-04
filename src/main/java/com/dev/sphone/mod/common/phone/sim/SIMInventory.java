@@ -1,7 +1,5 @@
 package com.dev.sphone.mod.common.phone.sim;
 
-import com.dev.sphone.SPhone;
-import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.items.ItemSim;
 import com.dev.sphone.mod.common.register.ItemsRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +11,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 public class SIMInventory implements IInventory
