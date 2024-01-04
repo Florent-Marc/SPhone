@@ -65,7 +65,9 @@ public class PacketSendMessage extends SerializablePacket implements IMessage {
 
             if(player.getServer() != null) {
                 EntityPlayerMP receiverTarget = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), receiverConv.getSender().getNumero());
-                receiverTarget.world.playSound(receiverTarget, receiverTarget.getPosition(), SoundRegister.NOTIF, SoundCategory.MASTER, 1F, 1F);
+                if(receiverTarget != null) {
+                    receiverTarget.world.playSound(receiverTarget, receiverTarget.getPosition(), SoundRegister.NOTIF, SoundCategory.MASTER, 1F, 1F);
+                }
             }
 
 
