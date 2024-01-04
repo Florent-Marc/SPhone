@@ -50,10 +50,11 @@ public class ItemPhone extends Item {
             }
             ItemStack stack = player.getHeldItem(hand);
 
+
             String senderNum = getCallSender(stack);
             if (getSimCard(stack) == 0) {
                 SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.NOSIM), (EntityPlayerMP) player);
-            } else if(senderNum != null) {
+            } else if(senderNum != null && !senderNum.isEmpty()) {
                 List<Contact> contactsReceiver = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(player));
                 Contact contactReceiver = new Contact(-1, "Unknown", "", senderNum, "");
                 for (Contact cont : contactsReceiver) {

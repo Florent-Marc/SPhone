@@ -11,6 +11,7 @@ import fr.aym.acsguis.utils.GuiTextureSprite;
 import com.dev.sphone.SPhone;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class GuiHome extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
-
+        mc.player.sendMessage(new TextComponentString("RAF"));
         AppManager.reloadApps(this.getGuiScreen());
 
         GuiScrollPane appListPanel = new GuiScrollPane();

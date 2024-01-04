@@ -29,6 +29,7 @@ public class GuiCallRequest extends GuiHome {
     @Override
     public void GuiInit() {
         super.GuiInit();
+        mc.player.sendMessage(new TextComponentString("Appel entrant de :::" + number));
         getBackground().removeAllChilds();
         GuiLabel label = new GuiLabel("Appel entrant");
         label.setCssId("app_title");
