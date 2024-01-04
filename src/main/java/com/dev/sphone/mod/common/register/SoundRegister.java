@@ -9,13 +9,14 @@ public class SoundRegister {
     public static SoundEvent COMPOSITION;
     public static SoundEvent NONATTRIB;
     public static SoundEvent UNJOINABLE;
-
     public static SoundEvent RINGTONE;
+    public static SoundEvent NOTIF;
     public static void registerSounds() {
         COMPOSITION = registerSound("composition");
         NONATTRIB = registerSound("nonattrib");
         UNJOINABLE = registerSound("unjoinable");
         RINGTONE = registerSound("ringtone");
+        NOTIF = registerSound("notif");
     }
 
     private static SoundEvent registerSound(String name) {

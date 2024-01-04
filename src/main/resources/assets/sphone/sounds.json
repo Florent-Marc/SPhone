@@ -14,5 +14,9 @@
   "ringtone": {
     "subtitle": "sphone.subtitle.ringtone",
     "sounds": [ "sphone:ringtone" ]
+  },
+  "notif": {
+    "subtitle": "sphone.subtitle.notif",
+    "sounds": [ "sphone:notif" ]
   }
 }
