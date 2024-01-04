@@ -1,12 +1,14 @@
 package com.dev.sphone.mod.client.gui.phone.apps.call;
 
+import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
-import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
 import com.dev.sphone.mod.common.register.SoundRegister;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 
@@ -16,11 +18,15 @@ import java.util.List;
 public class GuiWaitCall extends GuiBase {
 
     private final String name;
+    private final EntityPlayer receiver;
     private GuiLabel time;
+    private int tick = 0;
 
-    public GuiWaitCall(GuiScreen parent, String name) {
+    public GuiWaitCall(GuiScreen parent, String name, EntityPlayer receiver) {
         super(parent);
         this.name = name;
+        this.receiver = receiver;
+        tick = 0;
     }
 
     @Override
@@ -31,15 +37,14 @@ public class GuiWaitCall extends GuiBase {
         time.setCssId("time");
         getBackground().add(time);
         mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
-        mc.getSoundHandler().stop("sphone:call", SoundCategory.MASTER);
-        GuiPanel close = new GuiPanel();
-        close.setCssClass("close");
-        getBackground().add(close);
-        close.addClickListener((p, m, b) -> {
-            //SPhone.network.sendToServer(new PacketQuitCall(name));
-            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
-        });
 
+        GuiPanel ButtonDecline = new GuiPanel();
+        ButtonDecline.setCssClass("button_decline");
+        ButtonDecline.addClickListener((mouseX, mouseY, mouseButton) -> {
+            Minecraft.getMinecraft().displayGuiScreen(this.getParent().getGui());
+            SPhone.network.sendToServer(new PacketCallRequest(false, receiver.getName(), true));
+        });
+        getBackground().add(ButtonDecline);
 
         GuiLabel number = new GuiLabel(name);
         number.setCssId("number");
@@ -48,21 +53,20 @@ public class GuiWaitCall extends GuiBase {
 
     @Override
     public void guiClose() {
-        super.guiClose();
         //SPhone.network.sendToServer(new PacketQuitCall(name));
     }
 
     @Override
     public void tick() {
         super.tick();
-
+        tick ++;
         String a = "Appel en cours";
         String b = "Appel en cours.";
         String c = "Appel en cours..";
         String d = "Appel en cours...";
 
         //tous les 10 ticks
-        if (Minecraft.getMinecraft().world.getTotalWorldTime() % 10 == 0) {
+        if (tick % 10 == 0) {
             if (time.getText().equals(a)) {
                 time.setText(b);
             } else if (time.getText().equals(b)) {
@@ -73,7 +77,7 @@ public class GuiWaitCall extends GuiBase {
                 time.setText(a);
             }
         }
-        if (Minecraft.getMinecraft().world.getTotalWorldTime() % 50*3 == 0) {
+        if (tick % 45*3 == 0) {
             mc.player.playSound(SoundRegister.CALL, 1, 1);
         }
 
@@ -84,6 +88,7 @@ public class GuiWaitCall extends GuiBase {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(new ResourceLocation("sphone:css/base.css"));
         styles.add(new ResourceLocation("sphone:css/call.css"));
+        styles.add(new ResourceLocation("sphone:css/callrequest.css"));
         return styles;
     }
 }
