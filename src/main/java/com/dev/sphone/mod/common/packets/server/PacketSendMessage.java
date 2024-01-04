@@ -4,13 +4,13 @@ import com.dev.sphone.api.events.MessageEvent;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.phone.Conversation;
 import com.dev.sphone.mod.common.phone.Message;
-import com.dev.sphone.mod.common.register.SoundRegister;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.UtilsServer;
 import fr.aym.acslib.utils.packetserializer.SerializablePacket;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.play.server.SPacketCustomSound;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -66,7 +66,7 @@ public class PacketSendMessage extends SerializablePacket implements IMessage {
             if(player.getServer() != null) {
                 EntityPlayerMP receiverTarget = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), receiverConv.getSender().getNumero());
                 if(receiverTarget != null) {
-                    receiverTarget.world.playSound(receiverTarget, receiverTarget.getPosition(), SoundRegister.NOTIF, SoundCategory.MASTER, 1F, 1F);
+                    receiverTarget.connection.sendPacket(new SPacketCustomSound("sphone:notif", SoundCategory.MASTER, receiverTarget.getPosition().getX(), receiverTarget.getPosition().getY(), receiverTarget.getPosition().getZ(), 1f, 1f));
                 }
             }
 
