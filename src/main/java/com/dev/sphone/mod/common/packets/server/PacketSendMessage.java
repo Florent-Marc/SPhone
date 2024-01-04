@@ -70,7 +70,6 @@ public class PacketSendMessage extends SerializablePacket implements IMessage {
                 }
             }
 
-
             return null;
         }
     }

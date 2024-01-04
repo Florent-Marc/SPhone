@@ -86,6 +86,7 @@ public class PacketSendRequestCall implements IMessage {
 
             receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone", SoundCategory.MASTER, receiver.getPosition().getX(), receiver.getPosition().getY(), receiver.getPosition().getZ(), 1f, 1f));
 
+            sender.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche contacts de SIM : " + UtilsServer.getSimCard(sender)));
             List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(sender));
             Contact contact = new Contact(-1, "Unknown", targetNum, targetNum, "");
             for (Contact cont : contacts) {
@@ -96,6 +97,7 @@ public class PacketSendRequestCall implements IMessage {
                 }
             }
 
+            receiver.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche contacts de SIM : " + UtilsServer.getSimCard(receiver)));
             List<Contact> contactsReceiver = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(receiver));
             Contact contactReceiver = new Contact(-1, "Unknown", senderNum, senderNum, "");
             for (Contact cont : contactsReceiver) {
