@@ -110,8 +110,6 @@ public class GuiMakeCall extends GuiBase {
             });
             buttons.add(diezButton);
 
-
-
         callZone.add(buttons);
         getRoot().add(callZone);
         getRoot().add(call);

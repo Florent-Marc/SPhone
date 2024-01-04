@@ -99,7 +99,7 @@ public class PacketSendRequestCall implements IMessage {
                 return null;
             }
 
-            receiver.world.playSound(receiver, receiver.getPosition(), SoundRegister.RINGTONE, SoundCategory.MASTER, 1F, 1F);
+            receiver.world.playSound(null, receiver.getPosition(), SoundRegister.RINGTONE, SoundCategory.MASTER, 1F, 1F);
             receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone",
                     SoundCategory.MASTER,
                     sender.getPosition().getX(),
@@ -112,16 +112,17 @@ public class PacketSendRequestCall implements IMessage {
             //VoiceManager.requestCallMap.put(playercalling, targetPhoneNum);
 
             List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(sender));
-            Contact contact = new Contact(-1, "Unknown", targetPhoneNum, targetPhoneNum, "");
+            Contact contact = new Contact(-1, "Unknown", targetPhoneNum, "", "");
             for (Contact cont : contacts) {
-                if(cont.getNumero().equals(playerCalling) && !isUnknown) {
+                if(cont.getNumero().equals(targetPhoneNum) && !isUnknown) {
                     contact = cont;
                     break;
                 }
             }
 
+
             List<Contact> contactsReceiver = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(receiver));
-            Contact contactReceiver = new Contact(-1, "Unknown", targetPhoneNum, targetPhoneNum, "");
+            Contact contactReceiver = new Contact(-1, "Unknown", targetPhoneNum, "", "");
             for (Contact cont : contactsReceiver) {
                 if(cont.getNumero().equals(playerCalling) && !isUnknown) {
                     contactReceiver = cont;
