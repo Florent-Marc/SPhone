@@ -61,40 +61,31 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
 
     public static class Handler implements IMessageHandler<PacketOpenPhone, IMessage> {
         @Override
-        @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenPhone message, MessageContext ctx) {
-            EnumAction action = EnumAction.valueOf(message.action);
-            switch (action) {
-                case HOME:
-                    IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
-                    thread.addScheduledTask(new Runnable() {
-                        public void run() {
+            Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+                @Override
+                public void run() {
+                    EnumAction action = EnumAction.valueOf(message.action);
+                    switch (action) {
+                        case HOME:
                             Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
-                        }
-                    });
-                    break;
-                case NOSIM:
-                    Minecraft.getMinecraft().addScheduledTask(() -> {
-                        Minecraft.getMinecraft().displayGuiScreen(new GuiNoSIM(message.content).getGuiScreen());
-                    });
-                    break;
-                case DONT_EXISTS:
-                case SEND_CALL:
-                    Minecraft.getMinecraft().addScheduledTask(() -> {
-                        Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
-                    });
-                    break;
-                case WAIT_CALL:
-                    Minecraft.getMinecraft().addScheduledTask(() -> {
-                        Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
-                    });
-                    break;
-                case RECEIVE_CALL:
-                    Minecraft.getMinecraft().addScheduledTask(() -> {
-                        Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, (Contact) message.getObjectsIn()[0]).getGuiScreen());
-                    });
-                    break;
-            }
+                            break;
+                        case NOSIM:
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiNoSIM(message.content).getGuiScreen());
+                            break;
+                        case DONT_EXISTS:
+                        case SEND_CALL:
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
+                            break;
+                        case WAIT_CALL:
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
+                            break;
+                        case RECEIVE_CALL:
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, (Contact) message.getObjectsIn()[0]).getGuiScreen());
+                            break;
+                    }
+                }
+            });
             return null;
         }
     }

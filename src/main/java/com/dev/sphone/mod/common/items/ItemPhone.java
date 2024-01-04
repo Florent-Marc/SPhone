@@ -1,7 +1,6 @@
 package com.dev.sphone.mod.common.items;
 
 import com.dev.sphone.SPhone;
-import com.dev.sphone.mod.client.tempdata.PhoneSettings;
 import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
 import com.dev.sphone.mod.common.phone.Contact;
 import com.dev.sphone.mod.common.register.ItemsRegister;
@@ -15,9 +14,10 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -42,14 +42,16 @@ public class ItemPhone extends Item {
         ItemsRegister.INSTANCE.getItems().add(this);
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        if(hand == EnumHand.MAIN_HAND && !world.isRemote) {
             if(player.isSneaking()) {
                 player.openGui(SPhone.INSTANCE, 7, world, 0, 0, 0);
-                return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+                return EnumActionResult.SUCCESS;
             }
-            ItemStack stack = player.getHeldItem(hand);
 
+            ItemStack stack = player.getHeldItem(hand);
 
             String senderNum = getCallSender(stack);
             if (getSimCard(stack) == 0) {
@@ -72,6 +74,7 @@ public class ItemPhone extends Item {
                 SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.HOME), (EntityPlayerMP) player);
             }
 
+            /*
             if (stack.getTagCompound().hasKey("inventory")) {
                 handler = new ItemStackHandler(1);
                 handler.deserializeNBT(stack.getTagCompound().getCompoundTag("inventory"));
@@ -86,9 +89,9 @@ public class ItemPhone extends Item {
                         getTagCompound(stack).setTag("settings", new PhoneSettings("acsgui").serializeNBT());
                     }
                 }
-            }
+            }*/
         }
-        return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        return EnumActionResult.SUCCESS;
     }
 
     @Override
