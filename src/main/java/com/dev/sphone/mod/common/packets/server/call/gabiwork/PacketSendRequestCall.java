@@ -51,88 +51,61 @@ public class PacketSendRequestCall implements IMessage {
             EntityPlayerMP sender = ctx.getServerHandler().player;
 
             boolean isUnknown = false;
-            String targetPhoneNum = message.numberTarget;
+            String senderNum = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(sender));
+            String targetNum = message.numberTarget;
 
-            if(targetPhoneNum.startsWith("#")) {
+            if(targetNum.startsWith("#")) {
                 // get 4 first chars
-                String targetPhoneNumPrefix = targetPhoneNum.substring(0, 4);
+                String targetPhoneNumPrefix = targetNum.substring(0, 4);
                 if(targetPhoneNumPrefix.equals("#31#")) {
-                    targetPhoneNum = targetPhoneNum.substring(4);
+                    targetNum = targetNum.substring(4);
                     isUnknown = true;
                 }
             }
-
-            if(Objects.equals(targetPhoneNum, "")) {
+            if(Objects.equals(targetNum, "")) {
                 return null;
             }
 
-            if(MethodesBDDImpl.getNumeroFromNumber(Integer.parseInt(targetPhoneNum)) == null){
-                sender.connection.sendPacket(new SPacketCustomSound("sphone:nonattrib",
-                        SoundCategory.MASTER,
-                        sender.getPosition().getX(),
-                        sender.getPosition().getY(),
-                        sender.getPosition().getZ(),
-                        1f,
-                        1f
-                ));
-                SPhone.network.sendTo(new PacketOpenPhone("dontexists", message.numberTarget), sender);
+            String numSim = MethodesBDDImpl.getNumeroFromNumber(Integer.parseInt(targetNum));
+
+            if(numSim == null){
+                sender.connection.sendPacket(new SPacketCustomSound("sphone:nonattrib", SoundCategory.MASTER, sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ(), 1f, 1f));
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.DONT_EXISTS, message.numberTarget), sender);
+                return null;
+            }
+            if(numSim.equals(senderNum)){
                 return null;
             }
 
-            if(MethodesBDDImpl.getNumeroFromNumber(Integer.parseInt(targetPhoneNum)).equals(MethodesBDDImpl.getNumero(UtilsServer.getSimCard(sender)))){
-                return null;
-            }
-
-            String playerCalling = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(sender));
-            EntityPlayerMP receiver = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), targetPhoneNum);
+            EntityPlayerMP receiver = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), targetNum);
             if(receiver == null) {
-                sender.connection.sendPacket(new SPacketCustomSound("sphone:unjoinable",
-                        SoundCategory.MASTER,
-                        sender.getPosition().getX(),
-                        sender.getPosition().getY(),
-                        sender.getPosition().getZ(),
-                        1f,
-                        1f
-                ));
-                SPhone.network.sendTo(new PacketOpenPhone("dontexists", message.numberTarget), sender);
-
+                sender.connection.sendPacket(new SPacketCustomSound("sphone:nonattrib", SoundCategory.MASTER, sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ(), 1f, 1f));
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.DONT_EXISTS, message.numberTarget), sender);
                 return null;
             }
 
-            receiver.world.playSound(null, receiver.getPosition(), SoundRegister.RINGTONE, SoundCategory.MASTER, 1F, 1F);
-            receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone",
-                    SoundCategory.MASTER,
-                    sender.getPosition().getX(),
-                    sender.getPosition().getY(),
-                    sender.getPosition().getZ(),
-                    1f,
-                    1f
-            ));
-
-            //VoiceManager.requestCallMap.put(playercalling, targetPhoneNum);
+            receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone", SoundCategory.MASTER, sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ(), 1f, 1f));
 
             List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(sender));
-            Contact contact = new Contact(-1, "Unknown", targetPhoneNum, "", "");
+            Contact contact = new Contact(-1, "Unknown", targetNum, targetNum, "");
             for (Contact cont : contacts) {
-                if(cont.getNumero().equals(targetPhoneNum) && !isUnknown) {
+                if(cont.getNumero().equals(targetNum) && !isUnknown) {
                     contact = cont;
                     break;
                 }
             }
 
-
             List<Contact> contactsReceiver = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(receiver));
-            Contact contactReceiver = new Contact(-1, "Unknown", targetPhoneNum, "", "");
+            Contact contactReceiver = new Contact(-1, "Unknown", senderNum, senderNum, "");
             for (Contact cont : contactsReceiver) {
-                if(cont.getNumero().equals(playerCalling) && !isUnknown) {
+                if(cont.getNumero().equals(senderNum) && !isUnknown) {
                     contactReceiver = cont;
                     break;
                 }
             }
 
-            playerCalling = playerCalling.equals("") ? "Unknown" : playerCalling;
-            SPhone.network.sendTo(new PacketOpenPhone("recievecall", isUnknown ? "Unknown" : playerCalling, contactReceiver ), receiver); // accept or deny message so, target
-            SPhone.network.sendTo(new PacketOpenPhone("sendcall", contact.getName() + " " + contact.getLastname()), sender); // player who wait
+            SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.RECEIVE_CALL, senderNum, contactReceiver), receiver); // accept or deny message so, target
+            SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.SEND_CALL, contact.getName() + " " + contact.getLastname()), sender); // player who wait
 
             return null;
         }
