@@ -156,7 +156,7 @@ public class ClientEventHandler {
                 if (keycode == Keyboard.KEY_BACK || keycode == Keyboard.KEY_DELETE || keycode == Keyboard.KEY_ESCAPE || keycode == Keyboard.KEY_E) {
                     UtilsClient.leaveCamera(true);
                 }
-                if (keycode == Keyboard.KEY_SPACE || keycode == Keyboard.KEY_RETURN) {
+                if (keycode == Keyboard.KEY_RETURN) {
                     UtilsClient.makeScreenPhone(framebufferTextureId);
                 }
             }
