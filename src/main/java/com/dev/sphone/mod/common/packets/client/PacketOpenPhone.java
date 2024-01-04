@@ -78,8 +78,6 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         @Override
         public IMessage onMessage(PacketOpenPhone message, MessageContext ctx) {
 
-            EntityPlayer receiver = message.receiver.equals("") ? null : Minecraft.getMinecraft().world.getPlayerEntityByName(message.receiver);
-
             Minecraft.getMinecraft().addScheduledTask(new Runnable() {
                 @Override
                 public void run() {
@@ -97,11 +95,12 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
                             break;
 
                         case WAIT_CALL:
-
+                            EntityPlayer receiver = Minecraft.getMinecraft().world.getPlayerEntityByName(message.receiver);
                             Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiBase().getGuiScreen(), message.content, receiver).getGuiScreen());
                             break;
                         case RECEIVE_CALL:
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0], receiver).getGuiScreen());
+                            EntityPlayer receiver1 = Minecraft.getMinecraft().world.getPlayerEntityByName(message.receiver);
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0], receiver1).getGuiScreen());
                             break;
                     }
                 }
