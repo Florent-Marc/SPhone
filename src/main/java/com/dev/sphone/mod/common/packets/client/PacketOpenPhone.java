@@ -23,6 +23,7 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
 
     private String action;
     private String content;
+    private String contactTargetName;
 
     public PacketOpenPhone() {}
 
@@ -30,19 +31,21 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         super(new Object[0]);
         this.action = action.name();
         this.content = "";
+        this.contactTargetName = "";
     }
 
     public PacketOpenPhone(EnumAction action, String content) {
         super(new Object[0]);
         this.action = action.name();
         this.content = content;
+        this.contactTargetName = "";
     }
 
-    public PacketOpenPhone(EnumAction action, String content, Contact contact) {
+    public PacketOpenPhone(EnumAction action, String content, String contactTargetName, Contact contact) {
         super(contact);
         this.action = action.name();
         this.content = content;
-
+        this.contactTargetName = contactTargetName;
     }
 
     @Override
@@ -50,6 +53,7 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         super.fromBytes(buf);
         this.action = ByteBufUtils.readUTF8String(buf);
         this.content = ByteBufUtils.readUTF8String(buf);
+        this.contactTargetName = ByteBufUtils.readUTF8String(buf);
     }
 
     @Override
@@ -57,6 +61,7 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         super.toBytes(buf);
         ByteBufUtils.writeUTF8String(buf, this.action);
         ByteBufUtils.writeUTF8String(buf, this.content);
+        ByteBufUtils.writeUTF8String(buf, this.contactTargetName);
     }
 
     public static class Handler implements IMessageHandler<PacketOpenPhone, IMessage> {
@@ -81,7 +86,7 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
                             Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
                             break;
                         case RECEIVE_CALL:
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, (Contact) message.getObjectsIn()[0]).getGuiScreen());
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0]).getGuiScreen());
                             break;
                     }
                 }

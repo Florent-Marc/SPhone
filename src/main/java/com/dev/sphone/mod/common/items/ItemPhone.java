@@ -30,6 +30,7 @@ import java.util.Objects;
 public class ItemPhone extends Item {
 
     public static final String CALLER_KEY_TAG = "callSender";
+    public static final String CALLER_TARGETNAME_KEY_TAG = "callSenderTargetName";
     public static final String CALL_UNKNOWN_KEY_TAG = "CALL_UNKNOWN";
     private static ItemStackHandler handler;
 
@@ -52,6 +53,7 @@ public class ItemPhone extends Item {
             ItemStack stack = player.getHeldItem(hand);
 
             String senderNum = getCallSender(stack);
+            String targetContactName = getCallSenderTargetName(stack);
             if (getSimCard(stack) == 0) {
                 SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.NOSIM), (EntityPlayerMP) player);
             } else if(senderNum != null && !senderNum.isEmpty()) {
@@ -60,15 +62,12 @@ public class ItemPhone extends Item {
                 for (Contact cont : contactsReceiver) {
                     if(cont.getNumero().equals(senderNum) && !isUnknown(stack)) {
                         contactReceiver = cont;
-                        player.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche :" + senderNum + " ==> " +TextFormatting.GREEN + contactReceiver.getNumero()));
                         break;
                     }
                 }
-                player.sendMessage(new TextComponentString(TextFormatting.GREEN + "Appel de : " + senderNum));
-                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.RECEIVE_CALL, senderNum, contactReceiver), (EntityPlayerMP) player);
-                setCall(stack, null, false);
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.RECEIVE_CALL, senderNum, targetContactName == null ? "Unknown--" : targetContactName, contactReceiver), (EntityPlayerMP) player);
+                setCall(stack, null, null, false);
             }else{
-                player.sendMessage(new TextComponentString(TextFormatting.GREEN + "Ouverture du téléphone -> Aucun appel en cours"));
                 SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.HOME), (EntityPlayerMP) player);
             }
 
@@ -125,17 +124,18 @@ public class ItemPhone extends Item {
         return nbt;
     }
 
-    public static void setCall(ItemStack stack, @Nullable String callSender, boolean unknown) {
+    public static void setCall(ItemStack stack, @Nullable String callSender, @Nullable String callSenderTargetName, boolean unknown) {
         if (!isPhone(stack)) return;
         NBTTagCompound nbt = getTagCompound(stack);
-        if(callSender == null) {
+        if(callSender == null || callSenderTargetName == null) {
             nbt.removeTag(CALLER_KEY_TAG);
+            nbt.removeTag(CALLER_TARGETNAME_KEY_TAG);
             nbt.removeTag(CALL_UNKNOWN_KEY_TAG);
             return;
         }
         nbt.setString(CALLER_KEY_TAG, callSender);
+        nbt.setString(CALLER_TARGETNAME_KEY_TAG, callSenderTargetName);
         nbt.setBoolean(CALL_UNKNOWN_KEY_TAG, unknown);
-
     }
 
     public static String getCallSender(ItemStack stack) {
@@ -145,6 +145,15 @@ public class ItemPhone extends Item {
         }
         return null;
     }
+
+    public static String getCallSenderTargetName(ItemStack stack) {
+        if (isPhone(stack)) {
+            NBTTagCompound nbt = getTagCompound(stack);
+            return nbt.getString(CALLER_TARGETNAME_KEY_TAG);
+        }
+        return null;
+    }
+
 
     public static boolean isUnknown(ItemStack stack) {
         if (isPhone(stack)) {

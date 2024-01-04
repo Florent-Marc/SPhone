@@ -18,18 +18,19 @@ import java.util.List;
 public class GuiCallRequest extends GuiHome {
 
     private final String number;
+    private final String contactTargetName;
     private final Contact contact;
 
-    public GuiCallRequest(String number, Contact contact) {
+    public GuiCallRequest(String number, String targetName, Contact contact) {
         super();
         this.number = number;
+        this.contactTargetName = targetName;
         this.contact = contact;
     }
 
     @Override
     public void GuiInit() {
         super.GuiInit();
-        mc.player.sendMessage(new TextComponentString("Appel entrant de :::" + number));
         getBackground().removeAllChilds();
         GuiLabel label = new GuiLabel("Appel entrant");
         label.setCssId("app_title");
@@ -45,7 +46,7 @@ public class GuiCallRequest extends GuiHome {
         GuiPanel ButtonAccept = new GuiPanel();
         ButtonAccept.setCssClass("button_accept");
         ButtonAccept.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketAcceptRequest(true, number, contact.getName() + " " + contact.getLastname()));
+            SPhone.network.sendToServer(new PacketAcceptRequest(true, number, contactTargetName));
             mc.displayGuiScreen(new GuiCall(this.getGuiScreen(), contact.getName() + " " + contact.getLastname()).getGuiScreen());
         });
         getBackground().add(ButtonAccept);

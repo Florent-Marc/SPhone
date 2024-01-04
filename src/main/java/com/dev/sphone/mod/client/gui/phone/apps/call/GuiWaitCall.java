@@ -8,6 +8,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,8 @@ public class GuiWaitCall extends GuiBase {
         time = new GuiLabel("Appel en cours");
         time.setCssId("time");
         getBackground().add(time);
-
+        mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
+        mc.getSoundHandler().stop("sphone:call", SoundCategory.MASTER);
         GuiPanel close = new GuiPanel();
         close.setCssClass("close");
         getBackground().add(close);
@@ -71,7 +73,7 @@ public class GuiWaitCall extends GuiBase {
                 time.setText(a);
             }
         }
-        if (Minecraft.getMinecraft().world.getTotalWorldTime() % 20*3 == 0) {
+        if (Minecraft.getMinecraft().world.getTotalWorldTime() % 50*3 == 0) {
             mc.player.playSound(SoundRegister.CALL, 1, 1);
         }
 
