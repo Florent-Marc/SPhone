@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 
@@ -86,26 +87,36 @@ public class UtilsServer {
         }
     }
 
-    public static EntityPlayerMP getPlayerFromNumber(MinecraftServer server, String number) {
-        return server.getPlayerList().getPlayers().stream().filter(player -> getListOfPhoneInPlayer(player).contains(number)).findFirst().orElse(null);
+    public static Tuple<EntityPlayerMP, ItemStack> getPlayerPhone(MinecraftServer server, String number) {
+        for (EntityPlayerMP player : server.getPlayerList().getPlayers()) {
+            ItemStack phone = getPhone(player, number);
+            if (phone != null) return new Tuple<>(player, phone);
+        }
+        return null;
     }
 
-   public static List<String> getListOfPhoneInPlayer(EntityPlayer player) {
-       List<String> numbers = new ArrayList<>();
-       int inventorySize = player.inventory.getSizeInventory();
+    public static EntityPlayerMP getPlayerFromNumber(MinecraftServer server, String number) {
+        Tuple<EntityPlayerMP, ItemStack> playerPhone = getPlayerPhone(server, number);
+        if (playerPhone != null) return playerPhone.getFirst();
+        return null;
+    }
 
-       for (int i = 0; i < inventorySize; i++) {
-           ItemStack itemStack = player.inventory.getStackInSlot(i);
+    public static ItemStack getPhone(EntityPlayer player, String number) {
+        int inventorySize = player.inventory.getSizeInventory();
 
-           if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemPhone) {
-               int simCard = ItemPhone.getSimCard(itemStack);
+        for (int i = 0; i < inventorySize; i++) {
+            ItemStack itemStack = player.inventory.getStackInSlot(i);
 
-               if (simCard != 0) {
-                   numbers.add(MethodesBDDImpl.getNumero(simCard));
-               }
-           }
-       }
-       return numbers;
-   }
+            if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemPhone) {
+                int simCard = ItemPhone.getSimCard(itemStack);
+                if (simCard != 0) {
+                    if(MethodesBDDImpl.getNumero(simCard).equals(number)){
+                        return itemStack;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
 }
