@@ -1,16 +1,16 @@
 package com.dev.sphone.mod.common.packets.server.call.gabiwork;
 
 import com.dev.sphone.SPhone;
-import com.dev.sphone.api.voicemanager.VoiceManager;
 import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
 import com.dev.sphone.mod.common.phone.Contact;
-import com.dev.sphone.mod.common.register.SoundRegister;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.UtilsServer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketCustomSound;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -89,6 +89,7 @@ public class PacketSendRequestCall implements IMessage {
             List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(sender));
             Contact contact = new Contact(-1, "Unknown", targetNum, targetNum, "");
             for (Contact cont : contacts) {
+                sender.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche: " + targetNum + TextFormatting.YELLOW +" ==> " + cont.toString()));
                 if(cont.getNumero().equals(targetNum) && !isUnknown) {
                     contact = cont;
                     break;
@@ -98,6 +99,7 @@ public class PacketSendRequestCall implements IMessage {
             List<Contact> contactsReceiver = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(receiver));
             Contact contactReceiver = new Contact(-1, "Unknown", senderNum, senderNum, "");
             for (Contact cont : contactsReceiver) {
+                receiver.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche: " + senderNum + TextFormatting.YELLOW +" ==> " + cont.toString()));
                 if(cont.getNumero().equals(senderNum) && !isUnknown) {
                     contactReceiver = cont;
                     break;
