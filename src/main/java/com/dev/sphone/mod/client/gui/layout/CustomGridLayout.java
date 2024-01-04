@@ -142,7 +142,7 @@ public class CustomGridLayout implements PanelLayout<ComponentStyleManager> {
 
         for(Object componentChild : ((GuiPanel)target.getOwner()).getChildComponents()){
             if(componentChild instanceof GuiLabel){
-                int len = 5 + (Math.max(21, ((GuiLabel)componentChild).getText().length()));
+                int len = 10 + (Math.max(21, ((GuiLabel)componentChild).getText().length()));
                 height += len;
             }
         }
