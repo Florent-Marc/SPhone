@@ -18,28 +18,33 @@ import java.util.Objects;
 public class PacketAcceptRequest implements IMessage {
 
     public String numberTarget = "";
+    public String contactName = "";
     public Boolean isAccepted = false;
 
     public PacketAcceptRequest() {
         this.numberTarget = "";
+        this.contactName = "";
 
     }
 
-    public PacketAcceptRequest(Boolean isAccepted, String numberTarget) {
+    public PacketAcceptRequest(Boolean isAccepted, String numberTarget, String contactName) {
         this.isAccepted = isAccepted;
         this.numberTarget = numberTarget;
+        this.contactName = contactName;
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        this.numberTarget = ByteBufUtils.readUTF8String(buf);
         this.isAccepted = buf.readBoolean();
+        this.numberTarget = ByteBufUtils.readUTF8String(buf);
+        this.contactName = ByteBufUtils.readUTF8String(buf);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        ByteBufUtils.writeUTF8String(buf, this.numberTarget);
         buf.writeBoolean(this.isAccepted);
+        ByteBufUtils.writeUTF8String(buf, this.numberTarget);
+        ByteBufUtils.writeUTF8String(buf, this.contactName);
     }
 
     public static class ServerHandler implements IMessageHandler<PacketAcceptRequest, IMessage> {
@@ -50,7 +55,7 @@ public class PacketAcceptRequest implements IMessage {
             if (message.isAccepted) {
                 VoiceManager.voiceManager.addPlayertoCall(ctx.getServerHandler().player, message.numberTarget);
                 VoiceManager.voiceManager.addPlayertoCall(target, message.numberTarget);
-                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.SEND_CALL, message.numberTarget), target);
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.SEND_CALL, message.contactName), target);
             } else {
                 SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.DONT_EXISTS, message.numberTarget), target);
             }
