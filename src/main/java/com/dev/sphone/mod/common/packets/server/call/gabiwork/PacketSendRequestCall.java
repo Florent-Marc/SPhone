@@ -88,7 +88,7 @@ public class PacketSendRequestCall implements IMessage {
             receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone", SoundCategory.MASTER, receiver.getPosition().getX(), receiver.getPosition().getY(), receiver.getPosition().getZ(), 1f, 1f));
 
             List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(sender));
-            Contact contact = new Contact(-1, "Unknown", targetNum, targetNum, "");
+            Contact contact = new Contact(-1, "Unknown", "", "", "");
             for (Contact cont : contacts) {
                 if(cont.getNumero().equals(targetNum) && !isUnknown) {
                     contact = cont;
@@ -96,12 +96,9 @@ public class PacketSendRequestCall implements IMessage {
                 }
             }
 
-
-            receiver.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche contacts de SIM : " + UtilsServer.getSimCard(receiver)));
             List<Contact> contactsReceiver = MethodesBDDImpl.getContacts(Integer.parseInt(simReceiver));
-            Contact contactReceiver = new Contact(-1, "Unknown", senderNum, senderNum, "");
+            Contact contactReceiver = new Contact(-1, "Unknown", "", "", "");
             for (Contact cont : contactsReceiver) {
-                receiver.sendMessage(new TextComponentString(TextFormatting.RED + "Cherche: " + senderNum + TextFormatting.YELLOW +" ==> " + cont.getNumero()));
                 if(cont.getNumero().equals(senderNum) && !isUnknown) {
                     contactReceiver = cont;
                     break;
@@ -109,7 +106,7 @@ public class PacketSendRequestCall implements IMessage {
             }
 
             SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.RECEIVE_CALL, senderNum, contactReceiver), receiver); // accept or deny message so, target
-            SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.SEND_CALL, contact.getName() + " " + contact.getLastname()), sender); // player who wait
+            SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.WAIT_CALL, contact.getName() + " " + contact.getLastname()), sender); // player who wait
 
             return null;
         }

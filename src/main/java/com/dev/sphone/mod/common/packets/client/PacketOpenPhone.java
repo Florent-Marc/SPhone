@@ -5,6 +5,7 @@ import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.client.gui.phone.GuiNoSIM;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCallRequest;
+import com.dev.sphone.mod.client.gui.phone.apps.call.GuiWaitCall;
 import com.dev.sphone.mod.common.phone.Contact;
 import fr.aym.acslib.utils.packetserializer.SerializablePacket;
 import io.netty.buffer.ByteBuf;
@@ -83,6 +84,11 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
                         Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
                     });
                     break;
+                case WAIT_CALL:
+                    Minecraft.getMinecraft().addScheduledTask(() -> {
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
+                    });
+                    break;
                 case RECEIVE_CALL:
                     Minecraft.getMinecraft().addScheduledTask(() -> {
                         Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, (Contact) message.getObjectsIn()[0]).getGuiScreen());
@@ -98,6 +104,7 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         NOSIM,
         DONT_EXISTS,
         RECEIVE_CALL,
+        WAIT_CALL,
         SEND_CALL;
 
     }
