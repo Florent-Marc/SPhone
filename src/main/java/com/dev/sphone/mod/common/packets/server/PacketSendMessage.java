@@ -4,11 +4,14 @@ import com.dev.sphone.api.events.MessageEvent;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.phone.Conversation;
 import com.dev.sphone.mod.common.phone.Message;
+import com.dev.sphone.mod.common.register.SoundRegister;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.UtilsServer;
 import fr.aym.acslib.utils.packetserializer.SerializablePacket;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.SoundCategory;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -16,6 +19,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class PacketSendMessage extends SerializablePacket implements IMessage {
 
@@ -49,15 +53,22 @@ public class PacketSendMessage extends SerializablePacket implements IMessage {
         public IMessage onMessage(PacketSendMessage message, MessageContext ctx) {
             EntityPlayer player = ctx.getServerHandler().player;
             String messageToSend = message.message;
-            Conversation receiver = (Conversation) message.getObjectsIn()[0];
+            Conversation receiverConv = (Conversation) message.getObjectsIn()[0];
             int sim = ItemPhone.getSimCard(player.getHeldItemMainhand());
             if (sim == 0) {
                 return null;
             }
             String sender = String.valueOf(MethodesBDDImpl.getNumero(UtilsServer.getSimCard(player)));
-            Message message1 = new Message(messageToSend, new Date().getTime(), sender, receiver.getSender().getNumero());
+            Message message1 = new Message(messageToSend, new Date().getTime(), sender, receiverConv.getSender().getNumero());
             MinecraftForge.EVENT_BUS.post(new MessageEvent.Send(sender, message1));
             MethodesBDDImpl.addMessage(message1);
+
+            if(player.getServer() != null) {
+                EntityPlayerMP receiverTarget = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), receiverConv.getSender().getNumero());
+                receiverTarget.playSound(SoundRegister.RINGTONE, 1.0F, 1.0F);
+                receiverTarget.world.playSound(null, receiverTarget.getPosition(), SoundRegister.RINGTONE, SoundCategory.MASTER, 1F, 1F);
+            }
+
 
             return null;
         }
