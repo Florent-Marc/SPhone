@@ -79,12 +79,12 @@ public class PacketSendRequestCall implements IMessage {
 
             EntityPlayerMP receiver = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), targetNum);
             if(receiver == null) {
-                sender.connection.sendPacket(new SPacketCustomSound("sphone:nonattrib", SoundCategory.MASTER, sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ(), 1f, 1f));
+                sender.connection.sendPacket(new SPacketCustomSound("sphone:unjoinable", SoundCategory.MASTER, sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ(), 1f, 1f));
                 SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.DONT_EXISTS, message.numberTarget), sender);
                 return null;
             }
 
-            receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone", SoundCategory.MASTER, sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ(), 1f, 1f));
+            receiver.connection.sendPacket(new SPacketCustomSound("sphone:ringtone", SoundCategory.MASTER, receiver.getPosition().getX(), receiver.getPosition().getY(), receiver.getPosition().getZ(), 1f, 1f));
 
             List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(sender));
             Contact contact = new Contact(-1, "Unknown", targetNum, targetNum, "");
