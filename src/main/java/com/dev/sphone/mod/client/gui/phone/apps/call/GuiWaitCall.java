@@ -35,7 +35,7 @@ public class GuiWaitCall extends GuiBase {
         close.setCssClass("close");
         getBackground().add(close);
         close.addClickListener((p, m, b) -> {
-            SPhone.network.sendToServer(new PacketQuitCall(name));
+            //SPhone.network.sendToServer(new PacketQuitCall(name));
             Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
         });
 
