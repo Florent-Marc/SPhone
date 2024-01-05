@@ -2,13 +2,13 @@ package com.dev.sphone.mod.client.gui.phone.apps.call;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
-import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
+import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import com.dev.sphone.mod.common.packets.server.call.PacketCallResponse;
 import com.dev.sphone.mod.common.register.SoundRegister;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 
@@ -41,8 +41,8 @@ public class GuiWaitCall extends GuiBase {
         GuiPanel ButtonDecline = new GuiPanel();
         ButtonDecline.setCssClass("button_decline");
         ButtonDecline.addClickListener((mouseX, mouseY, mouseButton) -> {
-            Minecraft.getMinecraft().displayGuiScreen(this.getParent().getGui());
-            SPhone.network.sendToServer(new PacketCallRequest(false, receiver, true));
+            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
+            SPhone.network.sendToServer(new PacketCallResponse(receiver));
         });
         getBackground().add(ButtonDecline);
 
@@ -88,7 +88,6 @@ public class GuiWaitCall extends GuiBase {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(new ResourceLocation("sphone:css/base.css"));
         styles.add(new ResourceLocation("sphone:css/call.css"));
-        styles.add(new ResourceLocation("sphone:css/callrequest.css"));
         return styles;
     }
 }
