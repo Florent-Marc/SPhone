@@ -78,7 +78,7 @@ public class PacketSendRequestCall implements IMessage {
                 return null;
             }
 
-            String simReceiver = MethodesBDDImpl.getSimFromNum(Integer.parseInt(targetNum));
+            String simReceiver = MethodesBDDImpl.getSimFromNum(targetNum);
 
             if(simReceiver == null){
                 sender.connection.sendPacket(new SPacketCustomSound("sphone:nonattrib", SoundCategory.MASTER, sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ(), 1f, 1f));
@@ -108,10 +108,12 @@ public class PacketSendRequestCall implements IMessage {
                     }
                 }
             }
-            ItemPhone.setCall(receiverPhone, senderNum, contact.getName() + " " + contact.getLastname(), isUnknown);
 
+            ItemPhone.setCall(receiverPhone, senderNum, contact.getName() + " " + contact.getLastname(), isUnknown);
             //SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.RECEIVE_CALL, senderNum, contactReceiver), receiver);
-            SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.WAIT_CALL, message.contactName.isEmpty() ? contact.getName() + " " + contact.getLastname() : message.contactName, receiver.getName()), sender); // player who wait
+
+            String contactName = contact.getName() + " " + contact.getLastname();
+            SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.WAIT_CALL, (message.contactName.isEmpty() ? contactName : message.contactName), receiver.getName()), sender); // player who wait
 
             return null;
         }
