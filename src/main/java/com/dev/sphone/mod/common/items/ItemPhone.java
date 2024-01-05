@@ -65,7 +65,7 @@ public class ItemPhone extends Item {
                         break;
                     }
                 }
-                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.RECEIVE_CALL, senderNum, targetContactName == null ? "Unknown--" : targetContactName, contactReceiver), (EntityPlayerMP) player);
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.RECEIVE_CALL, senderNum, targetContactName == null ? "Unknown" : targetContactName, contactReceiver), (EntityPlayerMP) player);
                 setCall(stack, null, null, false);
             }else{
                 SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.HOME), (EntityPlayerMP) player);

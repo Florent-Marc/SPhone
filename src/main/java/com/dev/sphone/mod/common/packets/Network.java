@@ -8,7 +8,7 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.packets.client.*;
 import com.dev.sphone.mod.common.packets.server.*;
 import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
-import com.dev.sphone.mod.common.packets.server.call.PacketJoinCall;
+import com.dev.sphone.mod.common.packets.server.call.PacketCallResponse;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketAcceptRequest;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketQuitCall;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketSendRequestCall;
@@ -33,9 +33,9 @@ public class Network {
 
         // *** SERVERS *** //
 
-        packetFromServer(PacketJoinCall.ServerHandler.class, PacketJoinCall.class);
         packetFromClient(PacketCall.Handler.class, PacketCall.class);
         packetFromServer(PacketCallRequest.ServerHandler.class, PacketCallRequest.class);
+        packetFromServer(PacketCallResponse.ServerHandler.class, PacketCallResponse.class);
         packetFromServer(PacketSendRequestCall.ServerHandler.class, PacketSendRequestCall.class);
 
         packetFromServer(PacketRequestData.ServerHandler.class, PacketRequestData.class);
