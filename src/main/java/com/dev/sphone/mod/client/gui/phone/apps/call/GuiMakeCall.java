@@ -72,39 +72,38 @@ public class GuiMakeCall extends GuiBase {
             buttons.add(button);
         }
 
-            GuiPanel button = new GuiPanel();
-            button.setCssClass("buttonspe");
-            GuiLabel label = new GuiLabel("0");
-            label.setCssClass("label");
-            button.add(label);
-            button.addClickListener((mouseX, mouseY, mouseButton) -> {
-                numberinput += "0";
-                nbInput.setText(numberinput);
-            });
+        GuiPanel delButton = new GuiPanel();
+        delButton.setCssClass("buttonspe");
+        GuiLabel starLabel = new GuiLabel("del");
+        starLabel.setCssClass("label");
+        delButton.add(starLabel);
+        delButton.addClickListener((mouseX, mouseY, mouseButton) -> {
+            numberinput = String.valueOf(numberinput).length() > 1 ? String.valueOf(numberinput).substring(0, String.valueOf(numberinput).length() - 1) : "";
+            nbInput.setText(numberinput);
+        });
+        buttons.add(delButton);
 
-            buttons.add(button);
+        GuiPanel button = new GuiPanel();
+        button.setCssClass("buttonspe");
+        GuiLabel label = new GuiLabel("0");
+        label.setCssClass("label");
+        button.add(label);
+        button.addClickListener((mouseX, mouseY, mouseButton) -> {
+            numberinput += "0";
+            nbInput.setText(numberinput);
+        });
+        buttons.add(button);
 
-            GuiPanel starButton = new GuiPanel();
-            starButton.setCssClass("buttonspe");
-            GuiLabel starLabel = new GuiLabel("*");
-            starLabel.setCssClass("label");
-            starButton.add(starLabel);
-            starButton.addClickListener((mouseX, mouseY, mouseButton) -> {
-                numberinput += "*";
-                nbInput.setText(numberinput);
-            });
-            buttons.add(starButton);
-
-            GuiPanel diezButton = new GuiPanel();
-            diezButton.setCssClass("buttonspe");
-            GuiLabel diezLabel = new GuiLabel("#");
-            diezLabel.setCssClass("label");
-            diezButton.add(diezLabel);
-            diezButton.addClickListener((mouseX, mouseY, mouseButton) -> {
-                numberinput += "#";
-                nbInput.setText(numberinput);
-            });
-            buttons.add(diezButton);
+        GuiPanel diezButton = new GuiPanel();
+        diezButton.setCssClass("buttonspe");
+        GuiLabel diezLabel = new GuiLabel("#");
+        diezLabel.setCssClass("label");
+        diezButton.add(diezLabel);
+        diezButton.addClickListener((mouseX, mouseY, mouseButton) -> {
+            numberinput += "#";
+            nbInput.setText(numberinput);
+        });
+        buttons.add(diezButton);
 
         callZone.add(buttons);
         getRoot().add(callZone);
