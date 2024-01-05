@@ -123,15 +123,7 @@ public class MethodesBDDImpl {
         return "";
     }
 
-    public static String getNumeroFromNumber(int number) {
-        QueryResult qr = instance.getData("SELECT * FROM sim WHERE number = ?", number);
-        if (qr.getRowsCount() > 0) {
-            return qr.getValue(0, 2);
-        }
-        return null;
-    }
-
-    public static String getSimFromNum(int num) {
+    public static String getSimFromNum(String num) {
         QueryResult qr = instance.getData("SELECT * FROM sim WHERE number = ?", num);
         if (qr.getRowsCount() > 0) {
             return qr.getValue(0, 1);
