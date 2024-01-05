@@ -7,10 +7,10 @@ import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCall;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiCallRequest;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiWaitCall;
 import com.dev.sphone.mod.common.phone.Contact;
+import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acslib.utils.packetserializer.SerializablePacket;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -63,6 +63,7 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         this.action = ByteBufUtils.readUTF8String(buf);
         this.content = ByteBufUtils.readUTF8String(buf);
         this.contactTargetName = ByteBufUtils.readUTF8String(buf);
+        this.receiver = ByteBufUtils.readUTF8String(buf);
     }
 
     @Override
@@ -78,27 +79,41 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         @Override
         public IMessage onMessage(PacketOpenPhone message, MessageContext ctx) {
 
-            Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+            Minecraft mc = Minecraft.getMinecraft();
+            mc.addScheduledTask(new Runnable() {
                 @Override
                 public void run() {
                     EnumAction action = EnumAction.valueOf(message.action);
+                    System.out.println(message.action + " " + message.content + " " + message.contactTargetName + " " + message.receiver);
                     switch (action) {
                         case HOME:
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiHome().getGuiScreen());
+                            mc.displayGuiScreen(new GuiHome().getGuiScreen());
                             break;
                         case NOSIM:
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiNoSIM(message.content).getGuiScreen());
+                            mc.displayGuiScreen(new GuiNoSIM(message.content).getGuiScreen());
                             break;
                         case DONT_EXISTS:
-                        case SEND_CALL:
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiCall(new GuiBase().getGuiScreen(), message.content).getGuiScreen());
+                        case OPEN_CALL:
+                            mc.displayGuiScreen(new GuiCall(new GuiHome().getGuiScreen(), message.content).getGuiScreen());
                             break;
 
                         case WAIT_CALL:
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiWaitCall(new GuiBase().getGuiScreen(), message.content, message.receiver).getGuiScreen());
+                            mc.displayGuiScreen(new GuiWaitCall(new GuiHome().getGuiScreen(), message.content, message.receiver).getGuiScreen());
                             break;
                         case RECEIVE_CALL:
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0], message.receiver).getGuiScreen());
+                            mc.displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0], message.receiver).getGuiScreen());
+                            break;
+                        case CLOSED_SENDER:
+                            if(mc.currentScreen instanceof GuiFrame.APIGuiScreen && ((GuiFrame.APIGuiScreen)mc.currentScreen).getFrame() instanceof GuiCallRequest){
+                                mc.displayGuiScreen(new GuiHome().getGuiScreen());
+                            }
+                            break;
+                        case SEND_CALL:
+                            if(mc.currentScreen instanceof GuiFrame.APIGuiScreen && ((GuiFrame.APIGuiScreen)mc.currentScreen).getFrame() instanceof GuiBase){
+                                mc.displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0], message.receiver).getGuiScreen());
+                            }else{
+
+                            }
                             break;
                     }
                 }
@@ -113,7 +128,9 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
         DONT_EXISTS,
         RECEIVE_CALL,
         WAIT_CALL,
-        SEND_CALL;
+        CLOSED_SENDER,
+        SEND_CALL,
+        OPEN_CALL;
 
     }
 }
