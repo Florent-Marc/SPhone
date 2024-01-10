@@ -78,6 +78,7 @@ public class SPhone {
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/newnote.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/gallery.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/settings.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/nosim.css"));
             MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 
             if (isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
