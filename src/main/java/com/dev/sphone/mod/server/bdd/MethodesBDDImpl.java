@@ -232,4 +232,8 @@ public class MethodesBDDImpl {
         return news;
     }
 
+    public static boolean isSimExist(int sim) {
+        QueryResult qr = instance.getData("SELECT * FROM sim WHERE sim = ?", sim);
+        return qr.getRowsCount() != 0;
+    }
 }
