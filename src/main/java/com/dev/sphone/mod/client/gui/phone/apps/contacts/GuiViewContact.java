@@ -3,7 +3,6 @@ package com.dev.sphone.mod.client.gui.phone.apps.contacts;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.common.packets.server.PacketGetUniqueConv;
-import com.dev.sphone.mod.common.packets.server.call.PacketJoinCall;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketSendRequestCall;
 import com.dev.sphone.mod.common.phone.Contact;
 import com.dev.sphone.mod.utils.UtilsClient;
@@ -57,7 +56,7 @@ public class GuiViewContact extends GuiBase {
         call.setCssClass("call");
         getRoot().add(call);
         call.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketSendRequestCall(contact.getNumero()));
+            SPhone.network.sendToServer(new PacketSendRequestCall(contact.getNumero(), contact.getName() + " " + contact.getLastname()));
         });
 
 

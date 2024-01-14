@@ -1,12 +1,11 @@
 package com.dev.sphone.mod.common.packets.server;
 
 
-import com.dev.sphone.api.voicemanager.voicechat.VoiceNetwork;
-import com.dev.sphone.mod.common.items.ItemPhone;
-import com.dev.sphone.mod.common.packets.client.PacketOpenNotes;
 import com.dev.sphone.SPhone;
+import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.packets.client.PacketOpenContacts;
 import com.dev.sphone.mod.common.packets.client.PacketOpenListConv;
+import com.dev.sphone.mod.common.packets.client.PacketOpenNotes;
 import com.dev.sphone.mod.common.packets.client.PacketSendWeather;
 import com.dev.sphone.mod.common.phone.Weather;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
@@ -49,6 +48,9 @@ public class PacketRequestData implements IMessage {
             }
             int sim = ItemPhone.getSimCard(player.getHeldItemMainhand());
             if (sim == 0) {
+                return null;
+            }
+            if (!MethodesBDDImpl.isSimExist(sim)) {
                 return null;
             }
             String request = message.type;

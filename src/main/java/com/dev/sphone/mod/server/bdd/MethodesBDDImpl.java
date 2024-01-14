@@ -125,13 +125,14 @@ public class MethodesBDDImpl {
         return "";
     }
 
-    public static String getNumeroFromNumber(int number) {
-        QueryResult qr = instance.getData("SELECT * FROM sim WHERE number = ?", number);
+    public static String getSimFromNum(String num) {
+        QueryResult qr = instance.getData("SELECT * FROM sim WHERE number = ?", num);
         if (qr.getRowsCount() > 0) {
-            return qr.getValue(0, 2);
+            return qr.getValue(0, 1);
         }
         return null;
     }
+
 
 
     public static List<Message> getMessages(int sim) {
@@ -233,4 +234,8 @@ public class MethodesBDDImpl {
         return news;
     }
 
+    public static boolean isSimExist(int sim) {
+        QueryResult qr = instance.getData("SELECT * FROM sim WHERE sim = ?", sim);
+        return qr.getRowsCount() != 0;
+    }
 }

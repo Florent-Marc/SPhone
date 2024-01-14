@@ -2,16 +2,12 @@ package com.dev.sphone.mod.client.gui.phone.apps.call;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
-import com.dev.sphone.mod.client.gui.phone.GuiHome;
-import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketSendRequestCall;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,39 +72,38 @@ public class GuiMakeCall extends GuiBase {
             buttons.add(button);
         }
 
-            GuiPanel button = new GuiPanel();
-            button.setCssClass("buttonspe");
-            GuiLabel label = new GuiLabel("0");
-            label.setCssClass("label");
-            button.add(label);
-            button.addClickListener((mouseX, mouseY, mouseButton) -> {
-                numberinput += "0";
-                nbInput.setText(numberinput);
-            });
+        GuiPanel delButton = new GuiPanel();
+        delButton.setCssClass("buttonspe");
+        GuiLabel starLabel = new GuiLabel("del");
+        starLabel.setCssClass("label");
+        delButton.add(starLabel);
+        delButton.addClickListener((mouseX, mouseY, mouseButton) -> {
+            numberinput = String.valueOf(numberinput).length() > 1 ? String.valueOf(numberinput).substring(0, String.valueOf(numberinput).length() - 1) : "";
+            nbInput.setText(numberinput);
+        });
+        buttons.add(delButton);
 
-            buttons.add(button);
+        GuiPanel button = new GuiPanel();
+        button.setCssClass("buttonspe");
+        GuiLabel label = new GuiLabel("0");
+        label.setCssClass("label");
+        button.add(label);
+        button.addClickListener((mouseX, mouseY, mouseButton) -> {
+            numberinput += "0";
+            nbInput.setText(numberinput);
+        });
+        buttons.add(button);
 
-            GuiPanel starButton = new GuiPanel();
-            starButton.setCssClass("buttonspe");
-            GuiLabel starLabel = new GuiLabel("*");
-            starLabel.setCssClass("label");
-            starButton.add(starLabel);
-            starButton.addClickListener((mouseX, mouseY, mouseButton) -> {
-                numberinput += "*";
-                nbInput.setText(numberinput);
-            });
-            buttons.add(starButton);
-
-            GuiPanel diezButton = new GuiPanel();
-            diezButton.setCssClass("buttonspe");
-            GuiLabel diezLabel = new GuiLabel("#");
-            diezLabel.setCssClass("label");
-            diezButton.add(diezLabel);
-            diezButton.addClickListener((mouseX, mouseY, mouseButton) -> {
-                numberinput += "#";
-                nbInput.setText(numberinput);
-            });
-            buttons.add(diezButton);
+        GuiPanel diezButton = new GuiPanel();
+        diezButton.setCssClass("buttonspe");
+        GuiLabel diezLabel = new GuiLabel("#");
+        diezLabel.setCssClass("label");
+        diezButton.add(diezLabel);
+        diezButton.addClickListener((mouseX, mouseY, mouseButton) -> {
+            numberinput += "#";
+            nbInput.setText(numberinput);
+        });
+        buttons.add(diezButton);
 
         callZone.add(buttons);
         getRoot().add(callZone);

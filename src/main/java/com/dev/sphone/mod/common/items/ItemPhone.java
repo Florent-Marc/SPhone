@@ -1,9 +1,11 @@
 package com.dev.sphone.mod.common.items;
 
 import com.dev.sphone.SPhone;
-import com.dev.sphone.mod.client.tempdata.PhoneSettings;
 import com.dev.sphone.mod.common.packets.client.PacketOpenPhone;
+import com.dev.sphone.mod.common.phone.Contact;
 import com.dev.sphone.mod.common.register.ItemsRegister;
+import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
+import com.dev.sphone.mod.utils.UtilsServer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,12 +23,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import org.lwjgl.input.Keyboard;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
 public class ItemPhone extends Item {
 
-    public static final String SIM_KEY_TAG = "simcard";
+    public static final String CALLER_KEY_TAG = "callSender";
+    public static final String CALLER_TARGETNAME_KEY_TAG = "callSenderTargetName";
+    public static final String CALL_UNKNOWN_KEY_TAG = "CALL_UNKNOWN";
     private static ItemStackHandler handler;
 
     public ItemPhone(String name, CreativeTabs creativeTabs, int stackcount) {
@@ -37,20 +42,36 @@ public class ItemPhone extends Item {
         ItemsRegister.INSTANCE.getItems().add(this);
     }
 
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
+        if(hand == EnumHand.MAIN_HAND && !world.isRemote) {
             if(player.isSneaking()) {
                 player.openGui(SPhone.INSTANCE, 7, world, 0, 0, 0);
                 return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
             }
+
             ItemStack stack = player.getHeldItem(hand);
 
-            if (stack.hasTagCompound() && stack.getTagCompound().hasKey("simcard")) {
-                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.HOME), (EntityPlayerMP) player);
-            } else {
+            String senderNum = getCallSender(stack);
+            String targetContactName = getCallSenderTargetName(stack);
+            if (getSimCard(stack) == 0) {
                 SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.NOSIM), (EntityPlayerMP) player);
+            } else if(senderNum != null && !senderNum.isEmpty()) {
+                List<Contact> contactsReceiver = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(player));
+                Contact contactReceiver = new Contact(-1, "Unknown", "", senderNum, "");
+                for (Contact cont : contactsReceiver) {
+                    if(cont.getNumero().equals(senderNum) && !isUnknown(stack)) {
+                        contactReceiver = cont;
+                        break;
+                    }
+                }
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.RECEIVE_CALL, senderNum, targetContactName == null ? "Unknown" : targetContactName, contactReceiver), (EntityPlayerMP) player);
+                setCall(stack, null, null, false);
+            }else{
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.HOME), (EntityPlayerMP) player);
             }
 
+            /*
             if (stack.getTagCompound().hasKey("inventory")) {
                 handler = new ItemStackHandler(1);
                 handler.deserializeNBT(stack.getTagCompound().getCompoundTag("inventory"));
@@ -65,7 +86,7 @@ public class ItemPhone extends Item {
                         getTagCompound(stack).setTag("settings", new PhoneSettings("acsgui").serializeNBT());
                     }
                 }
-            }
+            }*/
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
@@ -103,11 +124,43 @@ public class ItemPhone extends Item {
         return nbt;
     }
 
-    public static void setSimCard(EntityPlayer player, ItemStack stack, int sim) {
+    public static void setCall(ItemStack stack, @Nullable String callSender, @Nullable String callSenderTargetName, boolean unknown) {
         if (!isPhone(stack)) return;
         NBTTagCompound nbt = getTagCompound(stack);
-        nbt.setInteger(SIM_KEY_TAG, sim);
-        sendActionChat(player, "Vous avez injecté la carte sim : " + sim, false);
+        if(callSender == null || callSenderTargetName == null) {
+            nbt.removeTag(CALLER_KEY_TAG);
+            nbt.removeTag(CALLER_TARGETNAME_KEY_TAG);
+            nbt.removeTag(CALL_UNKNOWN_KEY_TAG);
+            return;
+        }
+        nbt.setString(CALLER_KEY_TAG, callSender);
+        nbt.setString(CALLER_TARGETNAME_KEY_TAG, callSenderTargetName);
+        nbt.setBoolean(CALL_UNKNOWN_KEY_TAG, unknown);
+    }
+
+    public static String getCallSender(ItemStack stack) {
+        if (isPhone(stack)) {
+            NBTTagCompound nbt = getTagCompound(stack);
+            return nbt.getString(CALLER_KEY_TAG);
+        }
+        return null;
+    }
+
+    public static String getCallSenderTargetName(ItemStack stack) {
+        if (isPhone(stack)) {
+            NBTTagCompound nbt = getTagCompound(stack);
+            return nbt.getString(CALLER_TARGETNAME_KEY_TAG);
+        }
+        return null;
+    }
+
+
+    public static boolean isUnknown(ItemStack stack) {
+        if (isPhone(stack)) {
+            NBTTagCompound nbt = getTagCompound(stack);
+            return nbt.getBoolean(CALL_UNKNOWN_KEY_TAG);
+        }
+        return false;
     }
 
     public static int getSimCard(ItemStack stack) {

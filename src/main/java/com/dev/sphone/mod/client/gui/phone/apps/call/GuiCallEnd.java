@@ -15,10 +15,12 @@ public class GuiCallEnd extends GuiBase {
 
     private final String s;
     private GuiLabel time;
+    private int tick = 0;
 
     public GuiCallEnd(GuiScreen parent, String s) {
         super(parent);
         this.s = s;
+        tick = 0;
     }
 
     @Override
@@ -37,8 +39,9 @@ public class GuiCallEnd extends GuiBase {
     @Override
     public void tick() {
         super.tick();
+        tick++;
         //wait 2 seconds
-        if (mc.world.getTotalWorldTime() % 80 == 0) {
+        if (tick % 80 == 0) {
             mc.displayGuiScreen(new GuiHome().getGuiScreen());
         }
     }

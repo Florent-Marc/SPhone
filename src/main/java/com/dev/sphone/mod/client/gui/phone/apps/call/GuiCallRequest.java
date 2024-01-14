@@ -8,6 +8,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextComponentString;
@@ -18,13 +19,16 @@ import java.util.List;
 public class GuiCallRequest extends GuiHome {
 
     private final String number;
+    private final String contactTargetName;
     private final Contact contact;
+    private final String receiver;
 
-    public GuiCallRequest(String number, Contact contact) {
+    public GuiCallRequest(String number, String targetName, Contact contact, String receiver) {
         super();
         this.number = number;
+        this.contactTargetName = targetName;
         this.contact = contact;
-        //mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
+        this.receiver = receiver;
     }
 
     @Override
@@ -45,7 +49,7 @@ public class GuiCallRequest extends GuiHome {
         GuiPanel ButtonAccept = new GuiPanel();
         ButtonAccept.setCssClass("button_accept");
         ButtonAccept.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketAcceptRequest(true, this.number));
+            SPhone.network.sendToServer(new PacketAcceptRequest(number, contactTargetName));
             mc.displayGuiScreen(new GuiCall(this.getGuiScreen(), contact.getName() + " " + contact.getLastname()).getGuiScreen());
         });
         getBackground().add(ButtonAccept);
@@ -53,8 +57,9 @@ public class GuiCallRequest extends GuiHome {
         GuiPanel ButtonDecline = new GuiPanel();
         ButtonDecline.setCssClass("button_decline");
         ButtonDecline.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketCallRequest(false,number));
-            mc.displayGuiScreen(new GuiCallEnd(this.getGuiScreen(), number).getGuiScreen());
+            SPhone.network.sendToServer(new PacketCallRequest(false, number));
+            mc.displayGuiScreen(new GuiHome().getGuiScreen());
+            mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
         });
         getBackground().add(ButtonDecline);
     }
