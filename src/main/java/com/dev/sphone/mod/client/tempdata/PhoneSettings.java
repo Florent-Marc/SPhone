@@ -49,4 +49,11 @@ public class PhoneSettings implements INBTSerializable {
             phone.setTagCompound(nbt);
         }
     }
+
+    @Override
+    public String toString() {
+        return "PhoneSettings{" +
+                "background='" + background + '\'' +
+                '}';
+    }
 }

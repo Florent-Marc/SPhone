@@ -37,13 +37,22 @@
 #notes{
     top: 50%;
 }
-
+#photo{
+    top: 60%;
+    background-image: none;
+}
+#photoprev {
+    top: 70%;
+    background-color: transparent;
+    height: 13%;
+    border:none;
+}
 .button_add{
     background-image: url("sphone:textures/ui/icons/add.png");
     width: 50px;
     height: 52px;
     horizontal-position: center;
-    bottom: 25%;
+    bottom: 8%;
 }
 .button_add:hover{
     background-image: url("sphone:textures/ui/icons/add1.png");
@@ -70,5 +79,3 @@
 .delete:hover{
     background-image: url("sphone:textures/ui/icons/delete1.png");
 }
-
-

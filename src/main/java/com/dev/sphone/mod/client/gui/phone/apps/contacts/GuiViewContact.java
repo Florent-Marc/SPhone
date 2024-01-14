@@ -6,11 +6,16 @@ import com.dev.sphone.mod.common.packets.server.PacketGetUniqueConv;
 import com.dev.sphone.mod.common.packets.server.call.PacketJoinCall;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketSendRequestCall;
 import com.dev.sphone.mod.common.phone.Contact;
+import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +60,52 @@ public class GuiViewContact extends GuiBase {
             SPhone.network.sendToServer(new PacketSendRequestCall(contact.getNumero()));
         });
 
-        GuiLabel contactAvatar = new GuiLabel("");
-        contactAvatar.setCssId("view_contact_avatar");
-        String cssCode = "background-image: url(\"sphone:textures/ui/icons/nohead.png\");";
-        contactAvatar.setCssCode("view_contact_avatar", cssCode);
-        getRoot().add(contactAvatar);
+
+
+        if(contact.getPhoto().equals("empty")) {
+            GuiLabel contactAvatar = new GuiLabel("");
+            contactAvatar.setCssId("view_contact_avatar");
+            String cssCode = "background-image: url(\"sphone:textures/ui/icons/nohead.png\");";
+            contactAvatar.setCssCode("view_contact_avatar", cssCode);
+            getRoot().add(contactAvatar);
+        } else {
+            DynamicTexture texture = UtilsClient.base64ToDynamicTexture(contact.getPhoto());
+            GuiLabel screen = new GuiLabel(""){
+                @Override
+                public void drawBackground(int mouseX, int mouseY, float partialTicks) {
+                    super.drawBackground(mouseX, mouseY, partialTicks);
+                    ScaledResolution scaledResolution = new ScaledResolution(mc);
+                    int screenWidth = scaledResolution.getScaledWidth();
+                    int screenHeight = scaledResolution.getScaledHeight();
+
+                    int x = getScreenX() + getWidth() / 2;
+                    int y = getScreenY() + getHeight() / 2;
+
+                    GlStateManager.pushMatrix();
+                    assert texture != null;
+                    GlStateManager.bindTexture(texture.getGlTextureId());
+                    GlStateManager.translate(x, y, 0);
+                    GlStateManager.scale(0.077f, 0.235f, 0.3f);
+                    GL11.glBegin(GL11.GL_QUADS);
+                    GL11.glTexCoord2f(0.0F, 0.0F);
+                    GL11.glVertex3f(-screenWidth, -screenHeight, 0.0F);
+                    GL11.glTexCoord2f(0.0F, 1.0F);
+                    GL11.glVertex3f(-screenWidth, screenHeight, 0.0F);
+
+                    GL11.glTexCoord2f(1.0F, 1.0F);
+                    GL11.glVertex3f(screenWidth, screenHeight, 0.0F);
+                    GL11.glTexCoord2f(1.0F, 0.0F);
+                    GL11.glVertex3f(screenWidth, -screenHeight, 0.0F);
+                    GL11.glEnd();
+                    GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+                    GlStateManager.popMatrix();
+                }
+            };
+            screen.setCssId("view_contact_avatar");
+            getRoot().add(screen);
+        }
+
+
 
         GuiLabel name = new GuiLabel("Nom : " + contact.getName());
         name.setCssId("name");

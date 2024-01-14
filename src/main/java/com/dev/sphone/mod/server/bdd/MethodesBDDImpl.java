@@ -18,21 +18,23 @@ public class MethodesBDDImpl {
 
     static DatabaseType instance;
 
-    public static void init() {
+    public static void init() throws DatabaseException {
         Properties props = new Properties();
         try {
             props.load(new FileReader("bdd.properties"));
+
+            if(props.getProperty("dbtype").equals("mysql")) {
+                instance = new MySQL();
+            }
+            if(props.getProperty("dbtype").equals("sqlite")) {
+                instance = new SQLite();
+            }
         } catch (IOException e) {
+            SPhone.logger.fatal("Can't load bdd.properties file");
             e.printStackTrace();
-            return;
         }
 
-        if(props.getProperty("dbtype").equals("mysql")) {
-            instance = new MySQL();
-        }
-        if(props.getProperty("dbtype").equals("sqlite")) {
-            instance = new SQLite();
-        }
+
     }
 
     public static void checkFile() {
@@ -64,7 +66,7 @@ public class MethodesBDDImpl {
     }
 
     public static void addContact(int sim, Contact contact) {
-        instance.execute("INSERT INTO contact (sim, name, lastname, numero, note) VALUES (?, ?, ?, ?, ?)", sim, contact.getName(), contact.getLastname(), contact.getNumero(), contact.getNotes());
+        instance.execute("INSERT INTO contact (sim, name, lastname, numero, note, photo) VALUES (?, ?, ?, ?, ?, ?)", sim, contact.getName(), contact.getLastname(), contact.getNumero(), contact.getNotes(), contact.getPhoto());
     }
 
     public static void editContact(Contact contact) {
@@ -81,7 +83,7 @@ public class MethodesBDDImpl {
         QueryResult qr = instance.getData("SELECT * FROM contact WHERE sim = ?", sim);
         if (qr != null) {
             for (int i = 0; i < qr.getRowsCount(); i++) {
-                contacts.add(new Contact(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 2), qr.getValue(i, 3), qr.getValue(i, 4), qr.getValue(i, 5)));
+                contacts.add(new Contact(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 2), qr.getValue(i, 3), qr.getValue(i, 4), qr.getValue(i, 5), qr.getValue(i, 6)));
             }
         }
         return contacts;

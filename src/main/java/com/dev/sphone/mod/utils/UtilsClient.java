@@ -9,20 +9,20 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.HttpUtil;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 
@@ -109,7 +109,7 @@ public class UtilsClient {
         folder.mkdir();
         File file = new File("config/sphone/backgrounds.json");
         // if file doesn't exist, create it
-        if(!file.exists()) {
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -166,30 +166,32 @@ public class UtilsClient {
 
 
         String[] backgroundsArray = new String[backgrounds.size()];
-        for(int i = 0; i < backgrounds.size(); i++) {
+        for (int i = 0; i < backgrounds.size(); i++) {
             JsonObject background = backgrounds.get(i).getAsJsonObject();
             backgroundsArray[i] = background.get("id").getAsString();
         }
 
         // make double value : id -> name
-        for(int i = 0; i < backgrounds.size(); i++) {
+        for (int i = 0; i < backgrounds.size(); i++) {
             JsonObject background = backgrounds.get(i).getAsJsonObject();
             backgroundsArray[i] = background.get("id").getAsString() + ":" + background.get("name").getAsString();
         }
         return backgroundsArray;
 
     }
+
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
 
     public static void leaveCamera(boolean returnHome) {
         ClientEventHandler.lastPhoneScreenshot = null;
         ClientEventHandler.isCameraActive = false;
-        if (SPhone.isUsingMod("com.mrcrayfish.obfuscate.Obfuscate")) SPhone.network.sendToServer(new PacketSetAnim(false));
+        if (SPhone.isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
+            SPhone.network.sendToServer(new PacketSetAnim(false));
 
         if (returnHome) ClientEventHandler.mc.displayGuiScreen(new GuiHome().getGuiScreen());
     }
 
-    private static File getTimestampedPNGFileForDirectory(File gameDirectory) {
+    public static File getTimestampedPNGFileForDirectory(File gameDirectory) {
         String s = DATE_FORMAT.format(new Date()).toString();
         int i = 1;
 
@@ -202,6 +204,79 @@ public class UtilsClient {
 
             ++i;
         }
+    }
+
+    public static class InternalDynamicTexture extends DynamicTexture {
+
+        public int width;
+        public int height;
+
+        public InternalDynamicTexture(BufferedImage bufferedImage) {
+            super(bufferedImage);
+            this.width = bufferedImage.getWidth();
+            this.height = bufferedImage.getHeight();
+        }
+
+        public int getWidth() {
+            return width;
+        }
+
+        public int getHeight() {
+            return height;
+        }
+    }
+
+    public static String dynamicTextureToBase64(InternalDynamicTexture dynamicTexture) {
+        BufferedImage bufferedImage = new BufferedImage(dynamicTexture.getWidth(), dynamicTexture.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        bufferedImage.setRGB(0, 0, dynamicTexture.getWidth(), dynamicTexture.getHeight(), dynamicTexture.getTextureData(), 0, dynamicTexture.getWidth());
+
+        // reduce size
+        bufferedImage = scale(bufferedImage, 64, 64);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(bufferedImage, "png", outputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "base64," + Base64.getEncoder().encodeToString(outputStream.toByteArray());
+    }
+
+    public static InternalDynamicTexture base64ToDynamicTexture(String base64) {
+        if (base64.charAt(0) == 'e') return null;
+        String[] base64Split = base64.split(",");
+        if (base64Split.length != 2) return null;
+        if (!base64Split[0].equals("base64")) return null;
+
+        byte[] imageBytes = Base64.getDecoder().decode(base64Split[1]);
+        BufferedImage bufferedImage = null;
+        try {
+            bufferedImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new InternalDynamicTexture(bufferedImage);
+    }
+
+    public static BufferedImage scale(BufferedImage src, int w, int h) {
+        BufferedImage img =
+                new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+        int x, y;
+        int ww = src.getWidth();
+        int hh = src.getHeight();
+        int[] ys = new int[h];
+        for (y = 0; y < h; y++)
+            ys[y] = y * hh / h;
+        for (x = 0; x < w; x++) {
+            int newX = x * ww / w;
+            for (y = 0; y < h; y++) {
+                int col = src.getRGB(newX, ys[y]);
+                img.setRGB(x, y, col);
+            }
+        }
+        return img;
     }
 
 }

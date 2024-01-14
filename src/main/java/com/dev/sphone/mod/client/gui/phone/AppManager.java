@@ -3,6 +3,7 @@ package com.dev.sphone.mod.client.gui.phone;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.api.events.InitAppEvent;
 import com.dev.sphone.mod.client.ClientEventHandler;
+import com.dev.sphone.mod.client.gui.phone.apps.DevGui;
 import com.dev.sphone.mod.client.gui.phone.apps.calculator.GuiCalculator;
 import com.dev.sphone.mod.client.gui.phone.apps.call.GuiMakeCall;
 import com.dev.sphone.mod.client.gui.phone.apps.camera.GuiGallery;
@@ -129,6 +130,19 @@ public class AppManager {
                 false,
                 null
         ));
+
+        if(GuiHome.DEVMODE_LOCAL) {
+            guiSupplier = () -> new DevGui(root).getGuiScreen();
+
+            apps.add(new App(guiSupplier,
+                    new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/devapp.png"),
+                    "Developement",
+                    "0.0",
+                    false,
+                    false,
+                    null
+            ));
+        }
 
 
     }

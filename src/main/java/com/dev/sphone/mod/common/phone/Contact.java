@@ -12,8 +12,18 @@ public class Contact implements ISerializable, ISerializablePacket {
     String lastname;
     String numero;
     String notes;
+    String photo;
 
     public Contact() {
+    }
+
+    public Contact(int id, String name, String lastname, String numero, String notes, String photo) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.numero = numero;
+        this.notes = notes;
+        this.photo = photo;
     }
 
     public Contact(int id, String name, String lastname, String numero, String notes) {
@@ -22,6 +32,7 @@ public class Contact implements ISerializable, ISerializablePacket {
         this.lastname = lastname;
         this.numero = numero;
         this.notes = notes;
+        this.photo = "empty";
     }
 
     public int getId() {
@@ -44,14 +55,42 @@ public class Contact implements ISerializable, ISerializablePacket {
         return notes;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     @Override
     public int getVersion() {
-        return 0;
+        return 1;
     }
 
     @Override
     public Object[] getObjectsToSave() {
-        return new Object[]{id, name, lastname, numero, notes};
+        return new Object[]{id, name, lastname, numero, notes, photo};
     }
 
     @Override
@@ -61,6 +100,7 @@ public class Contact implements ISerializable, ISerializablePacket {
         lastname = (String) objects[2];
         numero = (String) objects[3];
         notes = (String) objects[4];
+        photo = (String) objects[5];
     }
 
     public boolean equals(Contact obj) {

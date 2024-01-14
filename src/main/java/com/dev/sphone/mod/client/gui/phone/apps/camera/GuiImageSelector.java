@@ -25,17 +25,20 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @AppDetails(type = AppType.DEFAULT)
-public class GuiGallery extends GuiBase {
+public class GuiImageSelector extends GuiBase {
 
     List<Integer> glIds = new ArrayList<>();
-    public GuiGallery(GuiScreen parent) {
+    ImageSelectorCallback callback;
+    GuiScreen parent;
+    public GuiImageSelector(GuiScreen parent, ImageSelectorCallback callback) {
         super(parent);
+        this.callback = callback;
+        this.parent = parent;
     }
 
-    public GuiGallery() {
+    public GuiImageSelector() {
         super(new GuiHome().getGuiScreen());
     }
 
@@ -86,7 +89,8 @@ public class GuiGallery extends GuiBase {
             screen.setCssClass("screen");
             int finalJ = j; // multiply by size ? Or 16 ?
             screen.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiShowImage(finalJ).getGuiScreen());
+                callback.onImageSelected(finalJ, texture);
+                Minecraft.getMinecraft().displayGuiScreen(this.parent);
             });
 
             panels.add(screen);

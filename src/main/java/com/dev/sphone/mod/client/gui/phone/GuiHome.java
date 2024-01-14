@@ -2,15 +2,19 @@ package com.dev.sphone.mod.client.gui.phone;
 
 import com.dev.sphone.api.loaders.AppDetails;
 import com.dev.sphone.api.loaders.AppType;
+import com.dev.sphone.mod.client.gui.phone.apps.DevGui;
+import com.dev.sphone.mod.client.gui.phone.apps.contacts.GuiNewContact;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
+import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.cssengine.positionning.Size;
 import fr.aym.acsguis.utils.GuiConstants;
 import fr.aym.acsguis.utils.GuiTextureSprite;
 import com.dev.sphone.SPhone;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,8 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GuiHome extends GuiBase {
+
+    public static boolean DEVMODE_LOCAL = false;
 
     public GuiHome() {
         super();
@@ -27,6 +33,7 @@ public class GuiHome extends GuiBase {
     public void GuiInit() {
         super.GuiInit();
 
+        GuiNewContact.contactInCreation = null; // clear contact in creation because user went back to home.
         AppManager.reloadApps(this.getGuiScreen());
 
         GuiScrollPane appListPanel = new GuiScrollPane();
@@ -101,6 +108,27 @@ public class GuiHome extends GuiBase {
         getBackground().add(appBottomPanel);
     }
 
+    @Override
+    public void keyTyped(char typedChar, int keyCode) {
+        super.keyTyped(typedChar, keyCode);
+        if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_NUMPAD0)) {
+            Thread t = new Thread(() -> {
+                try {
+                    GuiLabel label = new GuiLabel("Developper mode enabled.");
+                    label.setCssCode("a","bottom: 5%;color:red;");
+                    getBackground().add(label);
+                    Thread.sleep(1000);
+                    getBackground().remove(label);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            t.start();
+            DEVMODE_LOCAL = true;
+            AppManager.reloadApps(this.getGuiScreen());
+
+        }
+    }
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));

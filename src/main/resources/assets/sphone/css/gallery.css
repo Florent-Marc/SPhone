@@ -26,5 +26,99 @@
     right: auto;
     padding-top: 0px;
     padding-bottom: 0px;
-    background-color: red;
+    /*background-color: red;*/
+    border-radius: 5px;
+}
+
+.screenlarge {
+    width: auto;
+    height: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    /*background-color: red;*/
+    border-radius: 20%;
+}
+
+.page_display {
+    left: 50%;
+    right: 50%;
+    top: 85%;
+    height: 8%;
+    text-align: center;
+    font-family: "dnx:arial";
+    font-size: 3px;
+    color: white;
+}
+
+.sliderR {
+    z-index: 10;
+    width: 30%;
+    background-color: #003c2e;
+    left: 8%;
+    bottom: 10%;
+}
+
+.sliderR button{
+    width: 20%;
+    background-color: #088f70;
+    background-image: none;
+}
+
+.sliderG {
+    z-index: 10;
+    width: 30%;
+    background-color: #28003c;
+    left: 8%;
+    bottom: 10%;
+}
+
+.sliderG button{
+    width: 20%;
+    background-color: #52088f;
+    background-image: none;
+}
+
+.sliderB {
+    z-index: 10;
+    width: 30%;
+    background-color: #3c3000;
+    left: 8%;
+    bottom: 10%;
+}
+
+
+.sliderB button{
+    width: 20%;
+    background-color: #8f7908;
+    background-image: none;
+}
+
+.save {
+    z-index: 10;
+    width: 30%;
+    background-color: #878787;
+    left: 50%;
+    bottom: 11%;
+    background-image: none;
+}
+
+.blur {
+    z-index: 10;
+    width: 30%;
+    background-color: #878787;
+    left: 50%;
+    bottom: 8%;
+}
+
+.delete {
+    background-image: none;
+    background-image: url("sphone:textures/ui/icons/delete.png");
+    z-index: 10;
+    width: 25px;
+    height: 25px;
+    left: 85%;
+    bottom: 8%;
 }

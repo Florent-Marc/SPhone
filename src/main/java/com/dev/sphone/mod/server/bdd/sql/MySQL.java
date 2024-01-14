@@ -57,6 +57,7 @@ public class MySQL implements DatabaseType {
                 throw new DatabaseException("Database connection is null, Please check is the database is running. (c is null.)");
             }
             s = c.createStatement();
+
             if(s == null){
                 throw new IllegalArgumentException("s is null silly");
             }
@@ -135,6 +136,22 @@ public class MySQL implements DatabaseType {
             throw new DatabaseException("Database connection is null, Please check is the database is running. (instance is null.)");
         }
 
+        DatabaseMetaData metadata = null;
+        try {
+            metadata = c.getMetaData();
+
+            ResultSet resultSet = metadata.getColumns(null, null, "contact", "photo");
+            if (!resultSet.next()) {
+                System.out.println("Column photo doesn't exist in contact table");
+                instance.execute("ALTER TABLE contact ADD photo TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci';"); // after photo update
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+
         instance.execute("CREATE TABLE IF NOT EXISTS `contact` (\n" +
                 "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
                 "\t`sim` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
@@ -142,6 +159,7 @@ public class MySQL implements DatabaseType {
                 "\t`lastname` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
                 "\t`numero` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
                 "\t`note` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
+                "\t`photo` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n"+
                 "\tPRIMARY KEY (`id`) USING BTREE\n" +
                 ")\n" +
                 "COLLATE='utf8mb3_general_ci'\n" +
