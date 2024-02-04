@@ -48,8 +48,6 @@ public class GuiGallery extends GuiBase {
             if (j >= size) {
                 break;
             }
-
-            System.out.println("Loading " + files[j].getName());
             DynamicTexture texture = new DynamicTexture(getImage(files[j]).join());
             glIds.add(texture.getGlTextureId());
 

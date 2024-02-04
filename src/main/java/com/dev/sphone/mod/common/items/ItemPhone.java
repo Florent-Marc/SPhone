@@ -57,7 +57,7 @@ public class ItemPhone extends Item {
             if (getSimCard(stack) == 0) {
                 SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.NOSIM), (EntityPlayerMP) player);
             } else if(senderNum != null && !senderNum.isEmpty()) {
-                List<Contact> contactsReceiver = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(player));
+                List<Contact> contactsReceiver = MethodesBDDImpl.getDatabaseInstance().getContacts(UtilsServer.getSimCard(player));
                 Contact contactReceiver = new Contact(-1, "Unknown", "", senderNum, "");
                 for (Contact cont : contactsReceiver) {
                     if(cont.getNumero().equals(senderNum) && !isUnknown(stack)) {

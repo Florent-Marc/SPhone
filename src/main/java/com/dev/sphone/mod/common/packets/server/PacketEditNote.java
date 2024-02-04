@@ -51,13 +51,13 @@ public class PacketEditNote extends SerializablePacket implements IMessage {
             Note note = (Note) message.getObjectsIn()[0];
             String type = message.type;
             if (type.equals("edit")) {
-                MethodesBDDImpl.editNote(note);
+                MethodesBDDImpl.getDatabaseInstance().editNote(note);
             } else if (type.equals("add")) {
-                MethodesBDDImpl.addNote(sim, note);
+                MethodesBDDImpl.getDatabaseInstance().addNote(sim, note);
             } else if(type.equals("delete")) {
-                MethodesBDDImpl.deleteNote(note);
+                MethodesBDDImpl.getDatabaseInstance().deleteNote(note);
             }
-            SPhone.network.sendTo(new PacketOpenNotes(MethodesBDDImpl.getNotes(sim)), player);
+            SPhone.network.sendTo(new PacketOpenNotes(MethodesBDDImpl.getDatabaseInstance().getNotes(sim)), player);
             return null;
         }
 

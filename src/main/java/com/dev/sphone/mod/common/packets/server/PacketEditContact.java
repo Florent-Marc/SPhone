@@ -51,13 +51,13 @@ public class PacketEditContact extends SerializablePacket implements IMessage {
             Contact contact = (Contact) message.getObjectsIn()[0];
             String type = message.type;
             if (type.equals("edit")) {
-                MethodesBDDImpl.editContact(contact);
+                MethodesBDDImpl.getDatabaseInstance().editContact(contact);
             } else if (type.equals("add")) {
-                MethodesBDDImpl.addContact(sim, contact);
+                MethodesBDDImpl.getDatabaseInstance().addContact(sim, contact);
             } else if(type.equals("delete")) {
-                MethodesBDDImpl.deleteContact(contact);
+                MethodesBDDImpl.getDatabaseInstance().deleteContact(contact);
             }
-            SPhone.network.sendTo(new PacketOpenContacts(MethodesBDDImpl.getContacts(sim)), player);
+            SPhone.network.sendTo(new PacketOpenContacts(MethodesBDDImpl.getDatabaseInstance().getContacts(sim)), player);
             return null;
         }
 

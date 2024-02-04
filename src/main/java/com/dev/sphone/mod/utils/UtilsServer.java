@@ -110,7 +110,7 @@ public class UtilsServer {
             if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemPhone) {
                 int simCard = ItemPhone.getSimCard(itemStack);
                 if (simCard != 0) {
-                    if(MethodesBDDImpl.getNumero(simCard).equals(number)){
+                    if(MethodesBDDImpl.getDatabaseInstance().getNumero(simCard).equals(number)){
                         return itemStack;
                     }
                 }

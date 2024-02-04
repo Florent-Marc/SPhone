@@ -58,10 +58,10 @@ public class PacketSendMessage extends SerializablePacket implements IMessage {
             if (sim == 0) {
                 return null;
             }
-            String sender = String.valueOf(MethodesBDDImpl.getNumero(UtilsServer.getSimCard(player)));
+            String sender = String.valueOf(MethodesBDDImpl.getDatabaseInstance().getNumero(UtilsServer.getSimCard(player)));
             Message message1 = new Message(messageToSend, new Date().getTime(), sender, receiverConv.getSender().getNumero());
             MinecraftForge.EVENT_BUS.post(new MessageEvent.Send(sender, message1));
-            MethodesBDDImpl.addMessage(message1);
+            MethodesBDDImpl.getDatabaseInstance().addMessage(message1);
 
             if(player.getServer() != null) {
                 EntityPlayerMP receiverTarget = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), receiverConv.getSender().getNumero());

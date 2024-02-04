@@ -49,7 +49,7 @@ public class PacketCallResponse implements IMessage {
             EntityPlayer receiver = player.world.getPlayerEntityByName(message.targetName);
 
             if (receiver != null) {
-                String targetNum = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(receiver));
+                String targetNum = MethodesBDDImpl.getDatabaseInstance().getNumero(UtilsServer.getSimCard(receiver));
                 Tuple<EntityPlayerMP, ItemStack> senderTuple = UtilsServer.getPlayerPhone(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), targetNum);
                 if (senderTuple == null) {
                     return null;

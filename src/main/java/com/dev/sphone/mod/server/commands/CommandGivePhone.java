@@ -67,7 +67,7 @@ public class CommandGivePhone extends CommandBase {
         }
 
         if (para.equals("getnumero")) {
-            p.sendMessage(new TextComponentString(Objects.requireNonNull(MethodesBDDImpl.getNumero(UtilsServer.getSimCard(p)))));
+            p.sendMessage(new TextComponentString(Objects.requireNonNull(MethodesBDDImpl.getDatabaseInstance().getNumero(UtilsServer.getSimCard(p)))));
         }
         if (para.equals("nbt")) {
             p.sendMessage(new TextComponentString(p.getHeldItemMainhand().getTagCompound().toString()));

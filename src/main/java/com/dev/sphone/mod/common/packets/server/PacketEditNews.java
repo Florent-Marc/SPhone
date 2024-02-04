@@ -48,11 +48,11 @@ public class PacketEditNews extends SerializablePacket implements IMessage {
             News news = (News) message.getObjectsIn()[0];
             String type = message.type;
             if (type.equals("edit")) {
-                MethodesBDDImpl.editNews(news);
+                MethodesBDDImpl.getDatabaseInstance().editNews(news);
             } else if (type.equals("add")) {
-                MethodesBDDImpl.addNews(news);
+                MethodesBDDImpl.getDatabaseInstance().addNews(news);
             } else if(type.equals("delete")) {
-                MethodesBDDImpl.deleteNews(news);
+                MethodesBDDImpl.getDatabaseInstance().deleteNews(news);
             }
             // Todo : Ouvrir le GUI des News
             return null;

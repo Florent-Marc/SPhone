@@ -1,16 +1,19 @@
 package com.dev.sphone;
 
+import com.dev.sphone.api.events.DatabaseBuildEvent;
 import com.dev.sphone.api.voicemanager.VoiceManager;
 import com.dev.sphone.api.voicemanager.voicechat.VoiceNetwork;
 import com.dev.sphone.mod.client.ClientEventAnim;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.SPhoneTab;
+import com.dev.sphone.mod.client.gui.phone.NotificationManager;
 import com.dev.sphone.mod.common.GuiHandler;
 import com.dev.sphone.mod.common.packets.Network;
 import com.dev.sphone.mod.common.proxy.CommonProxy;
 import com.dev.sphone.mod.common.register.RegisterHandler;
 import com.dev.sphone.mod.common.register.SoundRegister;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
+import com.dev.sphone.mod.server.bdd.sql.MySQL;
 import com.dev.sphone.mod.server.commands.CommandGivePhone;
 import com.dev.sphone.mod.utils.ObfuscateUtils;
 import com.dev.sphone.mod.utils.exceptions.DatabaseException;
@@ -23,6 +26,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
@@ -83,9 +87,16 @@ public class SPhone {
 
             if (isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))
                 MinecraftForge.EVENT_BUS.register(new ClientEventAnim());
+            NotificationManager.init();
         }
         SoundRegister.registerSounds();
         VoiceManager.init(e.getSide());
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @SubscribeEvent
+    public void setupDB(DatabaseBuildEvent.Pre e) {
+        e.addDatabaseType("mysql", MySQL.class);
     }
 
     @Mod.EventHandler
@@ -101,7 +112,6 @@ public class SPhone {
         MethodesBDDImpl.checkFile();
 
         MethodesBDDImpl.init();
-        MethodesBDDImpl.checkTable();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {

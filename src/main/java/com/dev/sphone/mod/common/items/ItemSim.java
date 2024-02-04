@@ -40,13 +40,13 @@ public class ItemSim extends Item {
                 int sim = UtilsServer.getRandomNumber(1000, 9999);
                 int num = UtilsServer.getRandomNumber(10000, 99999);
                 boolean isExist = false;
-                if (MethodesBDDImpl.addSim(sim, String.valueOf(num))) {
+                if (MethodesBDDImpl.getDatabaseInstance().addSim(sim, String.valueOf(num))) {
                     isExist = true;
                 } else {
                     for (int j = 0; j < 50; j++) {
                         sim = UtilsServer.getRandomNumber(1000, 9999);
                         num = UtilsServer.getRandomNumber(10000, 99999);
-                        if (MethodesBDDImpl.addSim(sim, String.valueOf(num))) {
+                        if (MethodesBDDImpl.getDatabaseInstance().addSim(sim, String.valueOf(num))) {
                             isExist = true;
                             break;
                         }

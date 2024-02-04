@@ -50,7 +50,7 @@ public class PacketCallRequest implements IMessage {
         public IMessage onMessage(PacketCallRequest message, MessageContext ctx) {
             EntityPlayerMP player = ctx.getServerHandler().player;
             EntityPlayerMP caller = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.targetNum);
-            String callNumber = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(player));
+            String callNumber = MethodesBDDImpl.getDatabaseInstance().getNumero(UtilsServer.getSimCard(player));
 
             MinecraftForge.EVENT_BUS.post(new CallEvent.LeaveCall(caller, callNumber));
             if (caller != null) {

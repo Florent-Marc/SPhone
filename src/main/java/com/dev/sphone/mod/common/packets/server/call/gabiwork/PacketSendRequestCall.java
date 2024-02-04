@@ -60,7 +60,7 @@ public class PacketSendRequestCall implements IMessage {
             EntityPlayerMP sender = ctx.getServerHandler().player;
 
             boolean isUnknown = false;
-            String senderNum = MethodesBDDImpl.getNumero(UtilsServer.getSimCard(sender));
+            String senderNum = MethodesBDDImpl.getDatabaseInstance().getNumero(UtilsServer.getSimCard(sender));
             String targetNum = message.numberTarget;
 
             if(targetNum.startsWith("#")) {
@@ -78,7 +78,7 @@ public class PacketSendRequestCall implements IMessage {
                 return null;
             }
 
-            String simReceiver = MethodesBDDImpl.getSimFromNum(targetNum);
+            String simReceiver = MethodesBDDImpl.getDatabaseInstance().getSimFromNum(targetNum);
 
             if(simReceiver == null){
                 sender.connection.sendPacket(new SPacketCustomSound("sphone:nonattrib", SoundCategory.MASTER, sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ(), 1f, 1f));
@@ -100,7 +100,7 @@ public class PacketSendRequestCall implements IMessage {
 
             Contact contact = new Contact(-1, "Unknown", "", targetNum, "");
             if(message.contactName.isEmpty()) {
-                List<Contact> contacts = MethodesBDDImpl.getContacts(UtilsServer.getSimCard(sender));
+                List<Contact> contacts = MethodesBDDImpl.getDatabaseInstance().getContacts(UtilsServer.getSimCard(sender));
                 for (Contact cont : contacts) {
                     if (cont.getNumero().equals(targetNum) && !isUnknown) {
                         contact = cont;

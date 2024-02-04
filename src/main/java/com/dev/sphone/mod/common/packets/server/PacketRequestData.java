@@ -50,16 +50,16 @@ public class PacketRequestData implements IMessage {
             if (sim == 0) {
                 return null;
             }
-            if (!MethodesBDDImpl.isSimExist(sim)) {
+            if (!MethodesBDDImpl.getDatabaseInstance().isSimExist(sim)) {
                 return null;
             }
             String request = message.type;
 
             if (request.equals("contacts")) {
-                SPhone.network.sendTo(new PacketOpenContacts(MethodesBDDImpl.getContacts(sim)), player);
+                SPhone.network.sendTo(new PacketOpenContacts(MethodesBDDImpl.getDatabaseInstance().getContacts(sim)), player);
             }
             if (request.equals("notes")) {
-                SPhone.network.sendTo(new PacketOpenNotes(MethodesBDDImpl.getNotes(sim)), player);
+                SPhone.network.sendTo(new PacketOpenNotes(MethodesBDDImpl.getDatabaseInstance().getNotes(sim)), player);
             }
             if(request.equals("weather")){
                 WorldInfo worldInfo = player.world.getWorldInfo();
@@ -67,7 +67,7 @@ public class PacketRequestData implements IMessage {
             }
 
             if(request.equals("conversations")){
-                SPhone.network.sendTo(new PacketOpenListConv(MethodesBDDImpl.getConversations(sim)), player);
+                SPhone.network.sendTo(new PacketOpenListConv(MethodesBDDImpl.getDatabaseInstance().getConversations(sim)), player);
             }
             return null;
         }

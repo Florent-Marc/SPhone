@@ -43,7 +43,7 @@ public class PacketGetUniqueConv extends SerializablePacket implements IMessage 
 
             Contact contact = (Contact) message.getObjectsIn()[0];
 
-            SPhone.network.sendTo(new PacketOpenConvContact(MethodesBDDImpl.getConversations(sim), MethodesBDDImpl.getConversation(sim, contact)), player);
+            SPhone.network.sendTo(new PacketOpenConvContact(MethodesBDDImpl.getDatabaseInstance().getConversations(sim), MethodesBDDImpl.getDatabaseInstance().getConversation(sim, contact)), player);
             
             return null;
         }

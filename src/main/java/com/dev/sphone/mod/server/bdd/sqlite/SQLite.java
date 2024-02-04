@@ -1,6 +1,7 @@
 package com.dev.sphone.mod.server.bdd.sqlite;
 
 import com.dev.sphone.SPhone;
+import com.dev.sphone.mod.common.phone.*;
 import com.dev.sphone.mod.server.bdd.DatabaseType;
 import com.dev.sphone.mod.server.bdd.QueryResult;
 import com.dev.sphone.mod.utils.exceptions.DatabaseException;
@@ -9,7 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
-import java.util.Objects;
+import java.util.List;
 import java.util.Properties;
 
 public class SQLite implements DatabaseType {
@@ -40,17 +41,9 @@ public class SQLite implements DatabaseType {
 
     @Override
     public DatabaseType getInstance() throws DatabaseException {
-        if (c == null) {
-            try {
-                c = DriverManager.getConnection(url);
-            } catch (SQLException e) {
-                throw new DatabaseException("Cannot connect to database.", e);
-            }
-        }
         return this;
     }
 
-    @Override
     public void execute(String query) {
         try {
             getInstance();
@@ -69,7 +62,6 @@ public class SQLite implements DatabaseType {
         }
     }
 
-    @Override
     public void execute(String query, Object... args) {
         try {
             getInstance();
@@ -94,7 +86,6 @@ public class SQLite implements DatabaseType {
         }
     }
 
-    @Override
     public QueryResult getData(String query) {
         try {
             getInstance();
@@ -115,7 +106,6 @@ public class SQLite implements DatabaseType {
         return new QueryResult(s, r);
     }
 
-    @Override
     public QueryResult getData(String query, Object... args) {
         try {
             getInstance();
@@ -144,14 +134,14 @@ public class SQLite implements DatabaseType {
     }
 
     @Override
-    public void checktables() {
+    public void prepapreDatabase() throws DatabaseException {
         DatabaseType instance = null;
         try {
             instance = getInstance();
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
-        instance.execute("CREATE TABLE \"contact\" (\n" +
+        this.execute("CREATE TABLE \"contact\" (\n" +
                 "\t\"id\"\tINTEGER,\n" +
                 "\t\"sim\"\tTEXT,\n" +
                 "\t\"name\"\tTEXT,\n" +
@@ -161,7 +151,7 @@ public class SQLite implements DatabaseType {
                 "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n" +
                 ")");
 
-        instance.execute("CREATE TABLE IF NOT EXISTS `message` (\n" +
+        this.execute("CREATE TABLE IF NOT EXISTS `message` (\n" +
                 "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
                 "\t`sender` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n" +
                 "\t`receiver` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',\n" +
@@ -171,13 +161,13 @@ public class SQLite implements DatabaseType {
                 ")\n" +
                 "ENGINE=InnoDB\n" +
                 ";");
-        instance.execute("CREATE TABLE \"sim\" (\n" +
+        this.execute("CREATE TABLE \"sim\" (\n" +
                 "\t\"id\"\tINTEGER,\n" +
                 "\t\"sim\"\tTEXT,\n" +
                 "\t\"number\"\tTEXT,\n" +
                 "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n" +
                 ")");
-        instance.execute("CREATE TABLE \"notes\" (\n" +
+        this.execute("CREATE TABLE \"notes\" (\n" +
                 "\t\"id\"\tINTEGER,\n" +
                 "\t\"sim\"\tTEXT,\n" +
                 "\t\"name\"\tTEXT,\n" +
@@ -185,7 +175,7 @@ public class SQLite implements DatabaseType {
                 "\t\"date\"\tTEXT,\n" +
                 "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n" +
                 ")");
-        instance.execute("CREATE TABLE \"news_accounts\" (\n" +
+        this.execute("CREATE TABLE \"news_accounts\" (\n" +
                 "\t\"id\"\tINTEGER,\n" +
                 "\t\"sim\"\tTEXT,\n" +
                 "\t\"username\"\tTEXT,\n" +
@@ -193,7 +183,7 @@ public class SQLite implements DatabaseType {
                 "\t\"creation_date\"\tTEXT,\n" +
                 "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n" +
                 ")");
-        instance.execute("CREATE TABLE \"news\" (\n" +
+        this.execute("CREATE TABLE \"news\" (\n" +
                 "\t\"id\"\tINTEGER,\n" +
                 "\t\"title\"\tTEXT,\n" +
                 "\t\"content\"\tTEXT,\n" +
@@ -202,5 +192,120 @@ public class SQLite implements DatabaseType {
                 "\t\"author\"\tTEXT,\n" +
                 "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n" +
                 ")");
+    }
+
+    @Override
+    public void addContact(int sim, Contact contact) {
+
+    }
+
+    @Override
+    public void editContact(Contact contact) {
+
+    }
+
+    @Override
+    public void deleteContact(Contact contact) {
+
+    }
+
+    @Override
+    public List<Contact> getContacts(int sim) {
+        return null;
+    }
+
+    @Override
+    public List<Note> getNotes(int sim) {
+        return null;
+    }
+
+    @Override
+    public void addNote(int sim, Note note) {
+
+    }
+
+    @Override
+    public void editNote(Note note) {
+
+    }
+
+    @Override
+    public void deleteNote(Note note) {
+
+    }
+
+    @Override
+    public void addMessage(Message message) {
+
+    }
+
+    @Override
+    public String getNumero(int sim) {
+        return null;
+    }
+
+    @Override
+    public String getSimFromNum(String num) {
+        return null;
+    }
+
+    @Override
+    public List<Message> getMessages(int sim) {
+        return null;
+    }
+
+    @Override
+    public List<Message> getMessage(int sim, String contactNumber) {
+        return null;
+    }
+
+    @Override
+    public Conversation getConversation(int sim, Contact contact) {
+        return null;
+    }
+
+    @Override
+    public List<Conversation> getConversations(int sim) {
+        return null;
+    }
+
+    @Override
+    public boolean checkNumber(String number) {
+        return false;
+    }
+
+    @Override
+    public boolean checkSim(int sim) {
+        return false;
+    }
+
+    @Override
+    public boolean addSim(int sim, String number) {
+        return false;
+    }
+
+    @Override
+    public void addNews(News news) {
+
+    }
+
+    @Override
+    public void editNews(News news) {
+
+    }
+
+    @Override
+    public void deleteNews(News news) {
+
+    }
+
+    @Override
+    public List<News> getNews() {
+        return null;
+    }
+
+    @Override
+    public boolean isSimExist(int sim) {
+        return false;
     }
 }
