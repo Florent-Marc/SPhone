@@ -4,6 +4,7 @@ import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.items.ItemSim;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import com.dev.sphone.mod.utils.UtilsServer;
+import com.dev.sphone.mod.utils.exceptions.DatabaseException;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -80,6 +81,16 @@ public class CommandGivePhone extends CommandBase {
         }
         if (para.equals("sendmessage")) {
             p.sendMessage(new TextComponentTranslation("sphone.feature.later"));
+        }
+        if (para.equals("debg")) {
+            try {
+                MethodesBDDImpl.getDatabaseInstance().prepapreDatabase();
+                p.sendMessage(new TextComponentString("OK."));
+            } catch (DatabaseException e) {
+                p.sendMessage(new TextComponentString("Internal error."));
+                p.sendMessage(new TextComponentString(e.getMessage()));
+                throw new RuntimeException(e);
+            }
         }
     }
 

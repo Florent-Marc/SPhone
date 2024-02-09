@@ -42,13 +42,13 @@ public class MySQL implements DatabaseType {
 
     @Override
     public DatabaseType getInstance() throws DatabaseException {
-//        if (connection == null) {
-//            try {
-//                connection = DriverManager.getConnection(url, log, pwd);
-//            } catch (SQLException e) {
-//                return null;
-//            }
-//        }
+        if (connection == null) {
+            try {
+                connection = DriverManager.getConnection(url, log, pwd);
+            } catch (SQLException e) {
+                return null;
+            }
+        }
         return this;
     }
 
