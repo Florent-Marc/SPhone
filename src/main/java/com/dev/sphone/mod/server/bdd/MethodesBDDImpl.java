@@ -72,7 +72,7 @@ public class MethodesBDDImpl {
                     return;
                 }
                 FileWriter fw = new FileWriter(f);
-                fw.write("dbtype=mysql");
+                fw.write("dbtype=mysql\n");
                 fw.write("url=jdbc:mysql://127.0.0.1:3306/phone?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true\n");
                 fw.write("user=root\n");
                 fw.write("password=\n");
