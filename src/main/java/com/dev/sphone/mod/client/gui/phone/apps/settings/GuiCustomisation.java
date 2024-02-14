@@ -45,8 +45,13 @@ public class GuiCustomisation extends GuiBase {
         setEnableDebugPanel(true);
 
 
+        String[] backgroundsConfig = new String[0];
 
-        String[] backgroundsConfig = UtilsClient.getBackgrounds();
+        try{
+            backgroundsConfig= UtilsClient.getBackgrounds();
+        } catch (Exception e) {
+            Minecraft.getMinecraft().player.sendChatMessage("Impossible de charger les fonds d'écran");
+        }
 
 
         int index = 0;
