@@ -43,7 +43,7 @@ public class SPhone {
     public static final String MOD_ID = "sphone";
     public static final String MOD_NAME = "SPhone";
     public static final String VERSION = "0.0.1";
-    public static final boolean DEV_MOD = true;
+    public static final boolean DEV_MOD = false;
 
     @SidedProxy(clientSide = "com.dev.sphone.mod.common.proxy.ClientProxy", serverSide = "com.dev.sphone.mod.common.proxy.CommonProxy")
     public static CommonProxy PROXY;
