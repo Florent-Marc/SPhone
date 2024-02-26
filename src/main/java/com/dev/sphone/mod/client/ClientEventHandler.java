@@ -146,10 +146,6 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void onPress(InputEvent.KeyInputEvent event) {
 
-        if (SPhoneKeys.DEBUG_TWO.isPressed()) {
-            ACsGuiApi.asyncLoadThenShowGui("GuiHome", GuiHome::new);
-        }
-
         if(isCameraActive){
             if (Keyboard.getEventKeyState()) {
                 int keycode = Keyboard.getEventKey();
