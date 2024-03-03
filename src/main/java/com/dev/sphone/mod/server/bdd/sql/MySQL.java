@@ -134,7 +134,7 @@ public class MySQL implements DatabaseType {
     public void prepapreDatabase() throws DatabaseException {
         if (this.connection == null) {
             try {
-                this.connection = DriverManager.getConnection(url);
+                this.connection = DriverManager.getConnection(url, log,pwd);
             } catch (SQLException e) {
                 throw new DatabaseException("Cannot connect to database. Used URL : " + url, e);
             }

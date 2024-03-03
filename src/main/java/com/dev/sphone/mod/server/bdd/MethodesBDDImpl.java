@@ -34,11 +34,11 @@ public class MethodesBDDImpl {
 //                DatabaseInstance = new SQLite();
 //            }
 
-            DATABASES_TYPES.put("mysql", MySQL.class);
+            //DATABASES_TYPES.put("mysql", MySQL.class);
             DATABASES_TYPES.put("sqlite", SQLite.class);
 
             DATABASES_TYPES.forEach((name, type) -> {
-                if(props.getProperty("dbtype").equals(name)) {
+                if (props.getProperty("dbtype").equals(name)) {
                     try {
                         DatabaseInstance = type.newInstance();
                     } catch (InstantiationException | IllegalAccessException e) {
@@ -57,8 +57,6 @@ public class MethodesBDDImpl {
             SPhone.logger.fatal("/!\\ SPhone can't connect to database. Logs :  /!\\");
             e.printStackTrace();
         }
-
-
     }
 
     public static void checkFile() {
