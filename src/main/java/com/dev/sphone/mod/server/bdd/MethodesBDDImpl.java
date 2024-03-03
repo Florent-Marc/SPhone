@@ -34,7 +34,7 @@ public class MethodesBDDImpl {
 //                DatabaseInstance = new SQLite();
 //            }
 
-//            DATABASES_TYPES.put("mysql", MySQL.class);
+            DATABASES_TYPES.put("mysql", MySQL.class);
             DATABASES_TYPES.put("sqlite", SQLite.class);
 
             DATABASES_TYPES.forEach((name, type) -> {
