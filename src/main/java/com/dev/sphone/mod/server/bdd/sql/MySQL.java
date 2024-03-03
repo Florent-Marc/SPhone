@@ -146,20 +146,6 @@ public class MySQL implements DatabaseType {
             throw new DatabaseException("Database connection is null, Please check is the database is running. (this is null.)");
         }
 
-        DatabaseMetaData metadata = null;
-        try {
-            metadata = connection.getMetaData();
-
-            ResultSet resultSet = metadata.getColumns(null, null, "contact", "photo");
-            if (!resultSet.next()) {
-                System.out.println("Column photo doesn't exist in contact table");
-                this.execute("ALTER TABLE contact ADD photo TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci';"); // after photo update
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-
         this.execute("CREATE TABLE IF NOT EXISTS `contact` (\n" +
                 "\t`id` INT(10) NOT NULL AUTO_INCREMENT,\n" +
                 "\t`sim` TEXT NULL DEFAULT NULL COLLATE 'utf8mb3_general_ci',\n" +
@@ -232,6 +218,19 @@ public class MySQL implements DatabaseType {
                 "ENGINE=InnoDB\n" +
                 "AUTO_INCREMENT=0\n" +
                 ";\n");
+
+        DatabaseMetaData metadata = null;
+        try {
+            metadata = connection.getMetaData();
+
+            ResultSet resultSet = metadata.getColumns(null, null, "contact", "photo");
+            if (!resultSet.next()) {
+                System.out.println("Column photo doesn't exist in contact table");
+                this.execute("ALTER TABLE contact ADD photo TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci';"); // after photo update
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void addContact(int sim, Contact contact) {
