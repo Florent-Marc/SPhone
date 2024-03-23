@@ -1,5 +1,4 @@
-sphone.meteo.cityname= Archipelle de Baltia
-
+sphone.meteo.cityname=Paris
 
 itemGroup.tab=SPhone
 
@@ -24,7 +23,7 @@ sphone.meteo.types.sun=Soleil
 
 sphone.error.no_phone=You don't have a phone
 sphone.error.no_sim=You don't have a sim in your phone
-sphone.feature.later=Latersphone.notes.remove
+sphone.feature.later=Later
 
 sphone.notes.title=Notes
 sphone.notes.add=Ajouter une note
