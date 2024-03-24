@@ -10,8 +10,9 @@ public class SimRegisterEvent extends Event {
         private EntityPlayer player;
 
         public SimRegisterEvent(EntityPlayer player,String sim, String numero) {
+            this.player = player;
             this.numero = numero;
-
+            this.sim = sim;
         }
 
         public String getNumero() {
