@@ -25,7 +25,6 @@ import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 
 public class ItemPhone extends Item {
 
@@ -171,9 +170,10 @@ public class ItemPhone extends Item {
             handler.deserializeNBT(stack.getTagCompound().getCompoundTag("inventory"));
 
             if(handler.getStackInSlot(0).getItem() == Items.AIR) return 0;
-            if(Objects.requireNonNull(handler.getStackInSlot(0).getTagCompound()).getInteger(ItemSim.SIM_KEY_TAG) == 0) return -1;
+            if (handler.getStackInSlot(0).getTagCompound().getInteger(ItemSim.SIM_KEY_TAG) == 0) return -1;
 
-            return Objects.requireNonNull(handler.getStackInSlot(0).getTagCompound()).getInteger(ItemSim.SIM_KEY_TAG);
+            return handler.getStackInSlot(0).getTagCompound().getInteger(ItemSim.SIM_KEY_TAG);
+
         }
         return 0;
     }
@@ -187,7 +187,7 @@ public class ItemPhone extends Item {
             handler.deserializeNBT(stack.getTagCompound().getCompoundTag("inventory"));
 
             if(handler.getStackInSlot(0).getItem() == Items.AIR) return null;
-            if(Objects.requireNonNull(handler.getStackInSlot(0).getTagCompound()).getInteger(ItemSim.SIM_KEY_TAG) == 0) return null;
+            if (handler.getStackInSlot(0).getItem() instanceof ItemSim) return (ItemSim) handler.getStackInSlot(0).getItem();
 
             return (ItemSim) handler.getStackInSlot(0).getItem();
         }
