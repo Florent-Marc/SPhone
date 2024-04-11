@@ -1,6 +1,8 @@
 package com.dev.sphone.mod.common.packets.client;
 
+import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.gui.phone.apps.message.GuiConvList;
+import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.phone.Conversation;
 import fr.aym.acslib.utils.packetserializer.SerializablePacket;
 import io.netty.buffer.ByteBuf;
@@ -13,6 +15,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PacketOpenListConv extends SerializablePacket implements IMessage {
@@ -38,13 +41,27 @@ public class PacketOpenListConv extends SerializablePacket implements IMessage {
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenListConv message, MessageContext ctx) {
             List<Conversation> conversations = (List<Conversation>) message.getObjectsIn()[0];
-
             IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
             thread.addScheduledTask(new Runnable() {
                 public void run() {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiConvList(conversations).getGuiScreen());
+                    if (conversations.isEmpty()) {
+                        int sim = ItemPhone.getSimCard(Minecraft.getMinecraft().player.getHeldItemMainhand());
+                        if (sim == 0) {
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiConvList(new ArrayList<>()).getGuiScreen());
+                            return;
+                        }else {
+                            List<Conversation> convs = new ArrayList<>();
+                            convs = ClientEventHandler.conversations.get(sim);
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiConvList(convs).getGuiScreen());
+                        }
+                    }else {
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiConvList(conversations).getGuiScreen());
+                        int sim = ItemPhone.getSimCard(Minecraft.getMinecraft().player.getHeldItemMainhand());
+                        ClientEventHandler.conversations.put(sim,conversations);
+                    }
                 }
             });
+
             return null;
         }
     }

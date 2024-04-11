@@ -2,20 +2,26 @@ package com.dev.sphone.mod.common.packets.server;
 
 
 import com.dev.sphone.SPhone;
+import com.dev.sphone.api.events.MessageEvent;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.packets.client.PacketOpenContacts;
 import com.dev.sphone.mod.common.packets.client.PacketOpenListConv;
 import com.dev.sphone.mod.common.packets.client.PacketOpenNotes;
 import com.dev.sphone.mod.common.packets.client.PacketSendWeather;
+import com.dev.sphone.mod.common.phone.Conversation;
 import com.dev.sphone.mod.common.phone.Weather;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.storage.WorldInfo;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PacketRequestData implements IMessage {
 
@@ -65,9 +71,13 @@ public class PacketRequestData implements IMessage {
                 WorldInfo worldInfo = player.world.getWorldInfo();
                 SPhone.network.sendTo(new PacketSendWeather(new Weather(worldInfo.getCleanWeatherTime(), worldInfo.getRainTime(), worldInfo.getThunderTime(), worldInfo.isRaining(), worldInfo.isThundering())), player);
             }
-
+            List<Conversation> c = new ArrayList<>();
             if(request.equals("conversations")){
-                SPhone.network.sendTo(new PacketOpenListConv(MethodesBDDImpl.getDatabaseInstance().getConversations(sim)), player);
+                if (!MinecraftForge.EVENT_BUS.post(new MessageEvent.Load(player, sim))) {
+                    SPhone.network.sendTo(new PacketOpenListConv(MethodesBDDImpl.getDatabaseInstance().getConversations(sim)), player);
+                }else {
+                    SPhone.network.sendTo(new PacketOpenListConv(c), player);
+                }
             }
             return null;
         }

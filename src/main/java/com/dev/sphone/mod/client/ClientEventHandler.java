@@ -1,18 +1,13 @@
 package com.dev.sphone.mod.client;
 
-import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.common.items.ItemPhone;
+import com.dev.sphone.mod.common.phone.Conversation;
 import com.dev.sphone.mod.utils.UtilsClient;
-import fr.aym.acsguis.api.ACsGuiApi;
-import fr.aym.acsguis.component.panel.GuiFrame;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -21,11 +16,15 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class ClientEventHandler {
 
     public static final Minecraft mc = Minecraft.getMinecraft();
+    public static Map<Integer,List<Conversation>> conversations = new HashMap<>();
 
     /*
     @SubscribeEvent
