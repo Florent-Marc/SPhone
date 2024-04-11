@@ -3,17 +3,19 @@ package com.dev.sphone.mod.client.gui.phone.apps.message;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
+import com.dev.sphone.mod.common.phone.Conversation;
 import com.dev.sphone.mod.common.phone.Message;
 import com.dev.sphone.mod.utils.UtilsServer;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import com.dev.sphone.mod.common.phone.Conversation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class GuiConvList extends GuiBase {
@@ -37,10 +39,23 @@ public class GuiConvList extends GuiBase {
         conversations_list.setLayout(new GridLayout(-1, 80, 5, GridLayout.GridDirection.HORIZONTAL, 1));
 
 
-        //trier les conversations par date de dernier message
-        //conv.sort((o1, o2) -> getDate(o2.getLastUpdate()).compareTo(getDate(o1.getLastUpdate())));
 
-        for (Conversation c : conv) {
+        // Trier les conversations par la date du dernier message
+        Collections.sort(conv, new Comparator<Conversation>() {
+            @Override
+            public int compare(Conversation c1, Conversation c2) {
+                Message dernierMessage1 = c1.getLastMessage();
+                Message dernierMessage2 = c2.getLastMessage();
+                return Long.compare(dernierMessage2.getDate(), dernierMessage1.getDate());
+            }
+        });
+
+        List<Conversation> def = new ArrayList<>(conv);
+
+
+
+
+        for (Conversation c : def) {
             List<Message> messages = c.getMessages();
             Message lastMessage = messages.get(messages.size() -1);
             GuiPanel convpanel = new GuiPanel();

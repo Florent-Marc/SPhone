@@ -53,4 +53,8 @@ public class Conversation implements ISerializable, ISerializablePacket {
     public void addMessage(Message message) {
         messages.add(message);
     }
+
+    public Message getLastMessage() {
+        return messages.get(messages.size() - 1);
+    }
 }
