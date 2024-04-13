@@ -50,11 +50,15 @@ public class PacketAcceptRequest implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketAcceptRequest message, MessageContext ctx) {
             EntityPlayerMP target = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.numberTarget);
-            MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(ctx.getServerHandler().player, message.numberTarget));
-            MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(target, message.numberTarget));
-            VoiceManager.voiceManager.addPlayertoCall(ctx.getServerHandler().player, message.numberTarget);
-            VoiceManager.voiceManager.addPlayertoCall(target, message.numberTarget);
-            SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.OPEN_CALL, message.contactName), target);
+            if (MinecraftForge.EVENT_BUS.post(new CallEvent.CreateCall(ctx.getServerHandler().player, message.numberTarget))) {
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.DONT_EXISTS, message.contactName), target);
+            } else {
+                MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(ctx.getServerHandler().player, message.numberTarget));
+                MinecraftForge.EVENT_BUS.post(new CallEvent.JoinCall(target, message.numberTarget));
+                VoiceManager.voiceManager.addPlayertoCall(ctx.getServerHandler().player, message.numberTarget);
+                VoiceManager.voiceManager.addPlayertoCall(target, message.numberTarget);
+                SPhone.network.sendTo(new PacketOpenPhone(PacketOpenPhone.EnumAction.OPEN_CALL, message.contactName), target);
+            }
             return null;
         }
     }

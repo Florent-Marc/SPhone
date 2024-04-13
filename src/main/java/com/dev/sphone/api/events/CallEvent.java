@@ -1,6 +1,7 @@
 package com.dev.sphone.api.events;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class CallEvent extends Event {
@@ -35,6 +36,7 @@ public class CallEvent extends Event {
         }
     }
 
+    @Cancelable
     public static class CreateCall extends CallEvent {
         public CreateCall(EntityPlayer player, String number) {
             super(player, number);
