@@ -101,7 +101,7 @@ public class ItemSim extends Item {
         return 0;
     }
 
-    public void setNumero(EntityPlayer player, ItemStack stack, String s) {
+    public static void setNumero(EntityPlayer player, ItemStack stack, String s) {
         if (!isSIM(stack)) return;
         NBTTagCompound nbt = getTagCompound(stack);
         nbt.setString(NUM_KEY_TAG, s);
