@@ -59,8 +59,6 @@ public class GuiViewContact extends GuiBase {
             SPhone.network.sendToServer(new PacketSendRequestCall(contact.getNumero(), contact.getName() + " " + contact.getLastname()));
         });
 
-
-
         if(contact.getPhoto().equals("empty")) {
             GuiLabel contactAvatar = new GuiLabel("");
             contactAvatar.setCssId("view_contact_avatar");
@@ -103,8 +101,6 @@ public class GuiViewContact extends GuiBase {
             screen.setCssId("view_contact_avatar");
             getRoot().add(screen);
         }
-
-
 
         GuiLabel name = new GuiLabel("Nom : " + contact.getName());
         name.setCssId("name");

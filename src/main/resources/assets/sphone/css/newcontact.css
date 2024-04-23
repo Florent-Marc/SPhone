@@ -63,7 +63,7 @@
     width: 50px;
     height: 52px;
     horizontal-position: center;
-    bottom: 30%;
+    bottom: 20%;
 }
 .edit:hover{
     background-image: url("sphone:textures/ui/icons/edit1.png");
@@ -74,7 +74,7 @@
     width: 50px;
     height: 52px;
     horizontal-position: center;
-    bottom: 20%;
+    bottom: 10%;
 }
 .delete:hover{
     background-image: url("sphone:textures/ui/icons/delete1.png");

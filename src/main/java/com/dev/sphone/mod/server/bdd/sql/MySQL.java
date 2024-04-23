@@ -243,7 +243,7 @@ public class MySQL implements DatabaseType {
 
     public void editContact(Contact contact) {
         try {
-            this.execute("UPDATE contact SET name = ?, lastname = ?, numero = ?, note = ? WHERE id = ?", contact.getName(), contact.getLastname(), contact.getNumero(), contact.getNotes(), contact.getId());
+            this.execute("UPDATE contact SET name = ?, lastname = ?, numero = ?, note = ?, photo = ? WHERE id = ?", contact.getName(), contact.getLastname(), contact.getNumero(), contact.getNotes(), contact.getPhoto(), contact.getId());
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }

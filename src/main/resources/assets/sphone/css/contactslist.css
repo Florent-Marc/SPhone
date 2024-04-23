@@ -46,12 +46,11 @@
 .contact_background:hover {
     background-color: #5a5a5a;
 }
-.contact_avatar {
+#contact_avatar {
     width: 17%;
     height: 80%;
     left: 7%;
     top: 10%;
-    border-radius: 5px;
 }
 #contact_name {
     width: 70%;
