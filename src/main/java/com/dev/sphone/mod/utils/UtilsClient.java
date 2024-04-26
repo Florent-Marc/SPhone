@@ -161,7 +161,8 @@ public class UtilsClient {
             e.printStackTrace();
         }
         // parse json
-        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+        JsonObject jsonObject = JsonParser.parseString(json)
+                .getAsJsonObject();
         JsonArray backgrounds = jsonObject.getAsJsonArray("backgrounds");
 
 
@@ -174,7 +175,9 @@ public class UtilsClient {
         // make double value : id -> name
         for (int i = 0; i < backgrounds.size(); i++) {
             JsonObject background = backgrounds.get(i).getAsJsonObject();
-            backgroundsArray[i] = background.get("id").getAsString() + ":" + background.get("name").getAsString();
+            String id = background.get("id").getAsString();
+            String name = background.get("name").getAsString();
+            backgroundsArray[i] = id + ":" + name;
         }
         return backgroundsArray;
 

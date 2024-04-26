@@ -18,9 +18,16 @@
     height: 90%;
     width: 100%;
     padding-left: 5px;
-    font-family: "dnx:arial";
-    font-size: 3px;
+    font-size: 15px;
     text-align-vertical: top;
+    padding-top: 15px;
+}
+
+#contact_message_image {
+    background-image: none;
+    height: 90%;
+    width: 100%;
+    padding-left: 5px;
     padding-top: 15px;
 }
 
