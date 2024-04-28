@@ -4,6 +4,7 @@ package com.dev.sphone.mod.client.gui.phone.apps.settings;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.tempdata.PhoneSettings;
+import com.dev.sphone.mod.common.packets.server.PacketSetBackground;
 import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
@@ -73,8 +74,7 @@ public class GuiCustomisation extends GuiBase {
             }
             backgroundpanel.addClickListener((mouseX, mouseY, mouseButton) -> {
                 settings.setBackground(id);
-                Minecraft.getMinecraft().player.getHeldItemMainhand().getTagCompound().setTag("settings", settings.serializeNBT());
-                Minecraft.getMinecraft().displayGuiScreen(getRoot().getGui());
+                SPhone.network.sendToServer(new PacketSetBackground(id));
             });
             backgrounds.add(backgroundpanel);
             index++;

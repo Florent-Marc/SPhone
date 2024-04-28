@@ -29,7 +29,7 @@ public class GuiPlusPlusGame extends GuiBase {
     public void GuiInit() {
         super.GuiInit();
 
-        counter = new GuiLabel(I18n.format("sphone.plusplusgame") + " 0");
+        counter = new GuiLabel(I18n.format("sphone.plusplusgame.points") + " 0");
         counter.setCssId("counter");
 //        GuiLabel appTitle = new GuiLabel("Plus Plus Game");
 //        appTitle.setCssId("app_title");
@@ -78,7 +78,7 @@ public class GuiPlusPlusGame extends GuiBase {
             points++;
             backframe.remove(button);
             backframe.getStyle().setBackgroundColor(0xFF000000 + (int) (Math.random() * 0xFFFFFF));
-            counter.setText("Points: " + points);
+            counter.setText(I18n.format("sphone.plusplusgame.points") + " " +  points);
             drawRandomButton(backframe);
         });
 

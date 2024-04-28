@@ -50,6 +50,7 @@ public class Network {
         packetFromServer(PacketQuitCall.ServerHandler.class, PacketQuitCall.class);
 
         packetFromServer(PacketManageApp.ServerHandler.class, PacketManageApp.class);
+        packetFromServer(PacketSetBackground.ServerHandler.class, PacketSetBackground.class);
 
         // Contacts
         //packetFromServer(PacketGetContacts.ServerHandler.class, PacketGetContacts.class);
