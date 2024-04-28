@@ -13,6 +13,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -31,7 +32,7 @@ public class GuiContactsList extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
-        GuiLabel AppTitle = new GuiLabel("Contacts");
+        GuiLabel AppTitle = new GuiLabel(I18n.format("sphone.contacts.title"));
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
 

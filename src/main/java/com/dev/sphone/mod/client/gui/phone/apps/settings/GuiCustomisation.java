@@ -14,6 +14,7 @@ import fr.aym.acsguis.utils.GuiConstants;
 import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class GuiCustomisation extends GuiBase {
         GuiPanel app_container = new GuiPanel();
         app_container.setCssClass("app_container");
 
-        GuiLabel appTitle = new GuiLabel("Paramètres");
+        GuiLabel appTitle = new GuiLabel(I18n.format("sphone.settings.title"));
         appTitle.setCssId("app_title");
 
         GuiScrollPane backgrounds = new GuiScrollPane();
@@ -50,7 +51,7 @@ public class GuiCustomisation extends GuiBase {
         try{
             backgroundsConfig= UtilsClient.getBackgrounds();
         } catch (Exception e) {
-            Minecraft.getMinecraft().player.sendChatMessage("Impossible de charger les fonds d'écran");
+            Minecraft.getMinecraft().player.sendChatMessage(I18n.format("sphone.settings.errorbg"));
         }
 
 

@@ -1,4 +1,3 @@
-
 package com.dev.sphone.mod.client.gui.phone.apps.settings;
 
 import com.dev.sphone.SPhone;
@@ -18,6 +17,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -25,6 +25,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @AppDetails(type = AppType.DEFAULT)
 public class GuiSettingList extends GuiBase {
 
@@ -40,41 +41,42 @@ public class GuiSettingList extends GuiBase {
         GuiPanel app_container = new GuiPanel();
         app_container.setCssClass("app_container");
 
-        GuiLabel appTitle = new GuiLabel("Paramètres");
+        GuiLabel appTitle = new GuiLabel(I18n.format("sphone.settings.title"));
         appTitle.setCssId("app_title");
 
         GuiScrollPane settings_list = new GuiScrollPane();
         settings_list.setCssClass("settings_list");
         settings_list.setLayout(new GridLayout(-1, 80, 1, GridLayout.GridDirection.HORIZONTAL, 1));
 
-        GuiLabel customisation_desc = new GuiLabel("Préfénrences");
+        GuiLabel customisation_desc = new GuiLabel(I18n.format("sphone.settings.preferencies"));
         customisation_desc.setCssClass("settings_element_desc");
         settings_list.add(customisation_desc);
 
-        GuiPanel customisation = getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings/custom.png"), "Customisation");
+        GuiPanel customisation = getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings/custom.png"), I18n.format("sphone.settings.customisation"));
 
-        customisation.addClickListener(
-                (mouseX, mouseY, mouseButton) -> {
-                    System.out.println("a");
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiCustomisation(this.getGuiScreen()).getGuiScreen());
-                }
-        );
+        customisation.addClickListener((mouseX, mouseY, mouseButton) -> {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiCustomisation(this.getGuiScreen()).getGuiScreen());
+        });
 
         settings_list.add(customisation);
 
-        GuiPanel general = getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings/general.png"), "Général");
-        general.addClickListener(
-                (mouseX, mouseY, mouseButton) -> {
-                    System.out.println("b");
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiGeneralSettings(this.getGuiScreen()).getGuiScreen());
-                }
-        );
-
+        GuiPanel general = getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings/general.png"), I18n.format("sphone.settings.general"));
+        general.addClickListener((mouseX, mouseY, mouseButton) -> {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiGeneralSettings(this.getGuiScreen()).getGuiScreen());
+        });
 
 
         settings_list.add(general);
 
-        GuiLabel infos_desc = new GuiLabel("Appareil");
+        GuiPanel appstore = getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/appstore.png"), I18n.format("sphone.settings.applications"));
+        appstore.addClickListener((mouseX, mouseY, mouseButton) -> {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiAppsSettings(this.getGuiScreen()).getGuiScreen());
+        });
+
+
+        settings_list.add(appstore);
+
+        GuiLabel infos_desc = new GuiLabel(I18n.format("sphone.settings.applications"));
         infos_desc.setCssClass("settings_element_desc");
         settings_list.add(customisation_desc);
 
@@ -95,7 +97,7 @@ public class GuiSettingList extends GuiBase {
 
         GuiPanel customisation_icon = new GuiPanel();
         customisation_icon.setCssClass("settings_element_icon");
-        customisation_icon.getStyle().setTexture(new GuiTextureSprite(iconLoc, 0, 0, 0,0));
+        customisation_icon.getStyle().setTexture(new GuiTextureSprite(iconLoc, 0, 0, 0, 0));
 
         customisation.add(customisation_icon);
 
@@ -103,8 +105,6 @@ public class GuiSettingList extends GuiBase {
         GuiLabel customisation_name = new GuiLabel(name);
         customisation_name.setCssClass("settings_element_name");
         customisation.add(customisation_name);
-
-
 
 
         return customisation;

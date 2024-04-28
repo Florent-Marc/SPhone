@@ -9,6 +9,7 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 
@@ -33,7 +34,7 @@ public class GuiWaitCall extends GuiBase {
     public void GuiInit() {
         super.GuiInit();
         getBackground().removeAllChilds();
-        time = new GuiLabel("Appel en cours");
+        time = new GuiLabel(I18n.format("sphone.phone.running"));
         time.setCssId("time");
         getBackground().add(time);
         mc.getSoundHandler().stop("sphone:ringtone", SoundCategory.MASTER);
@@ -60,12 +61,11 @@ public class GuiWaitCall extends GuiBase {
     public void tick() {
         super.tick();
         tick ++;
-        String a = "Appel en cours";
-        String b = "Appel en cours.";
-        String c = "Appel en cours..";
-        String d = "Appel en cours...";
+        String a = I18n.format("sphone.phone.running");
+        String b = I18n.format("sphone.phone.running")+"..";
+        String c = I18n.format("sphone.phone.running")+"..";
+        String d = I18n.format("sphone.phone.running")+"...";
 
-        //tous les 10 ticks
         if (tick % 10 == 0) {
             if (time.getText().equals(a)) {
                 time.setText(b);

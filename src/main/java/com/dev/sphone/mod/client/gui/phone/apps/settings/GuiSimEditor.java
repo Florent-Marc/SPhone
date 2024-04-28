@@ -31,7 +31,7 @@ public class GuiSimEditor extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int x, int y) {
-        this.fontRenderer.drawString("Changement de carte SIM", 8, 6, 4210752);
+        this.fontRenderer.drawString(I18n.format("sphone.sim.title"), 8, 6, 4210752);
         this.fontRenderer.drawString(this.playerInv.hasCustomName() ? this.playerInv.getName() : I18n.format(this.playerInv.getName(), new Object[0]), 8, this.ySize - 96 + 2, 4210752);
     }
 

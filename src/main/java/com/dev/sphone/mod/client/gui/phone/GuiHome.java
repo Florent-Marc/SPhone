@@ -13,6 +13,7 @@ import fr.aym.acsguis.utils.GuiConstants;
 import fr.aym.acsguis.utils.GuiTextureSprite;
 import com.dev.sphone.SPhone;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import net.minecraft.util.text.TextComponentString;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class GuiHome extends GuiBase {
 
@@ -49,6 +51,11 @@ public class GuiHome extends GuiBase {
                 )
         );
 
+        GuiLabel appSelector = new GuiLabel("");
+        appSelector.setCssId("app_selector");
+        appSelector.getStyle().setVisible(false);
+        appListPanel.add(appSelector);
+
         GuiPanel appBottomPanel = new GuiPanel();
         appBottomPanel.setCssClass("app_list_bottom");
 
@@ -66,15 +73,26 @@ public class GuiHome extends GuiBase {
                 )
         );
 
+
+        List<String> appnames = AppManager.getApps().stream().map(AppManager.App::getUniqueName).collect(Collectors.toList());
+        List<String> erroredDownloadedApp = getDownloadedApps(Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND)).stream().filter((app) -> !appnames.contains(app)).collect(Collectors.toList());
+
+        SPhone.logger.warn("Errored downloaded apps: " + erroredDownloadedApp);
         AtomicInteger displayedBottomApps = new AtomicInteger();
         AppManager.getApps().forEach((app) -> {
 
+            if(!app.isDefaultOnPhone()) {
+                if(!getDownloadedApps(Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND)).contains(app.getUniqueName())) {
+                    return;
+                }
+            }
             if (!Objects.isNull(app.getGui())) {
                 if (app.getGui().getClass().isAnnotationPresent(AppDetails.class)) {
 
                     AppDetails[] appType = app.getGui().getClass().getAnnotationsByType(AppDetails.class);
 
                     if(appType.length != 0) {
+
                         if (appType[0].type().equals(AppType.DOWNLOADABLE)) return;
                         if (appType[0].isAlwaysHidden()) return;
                     }
@@ -85,6 +103,11 @@ public class GuiHome extends GuiBase {
             GuiPanel appPanel = new GuiPanel();
             appPanel.setCssClass(app.getDefaultInAppBar() ? "app_bottom" : "app");
             appPanel.getStyle().setTexture(new GuiTextureSprite(app.getIcon()));
+            appPanel.addTickListener(() -> {
+                if(appPanel.isHovered()) {
+                    appSelector.setText(app.getName());
+                }
+            });
             appPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
                 if (app.getGui() != null) {
                     Minecraft.getMinecraft().displayGuiScreen(app.getGui());
@@ -104,6 +127,9 @@ public class GuiHome extends GuiBase {
 
             if (app.getDefaultInAppBar()) displayedBottomApps.getAndIncrement();
         });
+
+
+
 
         getBackground().add(appListPanel);
         getBackground().add(appBottomPanel);

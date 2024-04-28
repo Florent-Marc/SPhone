@@ -2,6 +2,7 @@ package com.dev.sphone.mod.utils;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.ClientEventHandler;
+import com.dev.sphone.mod.client.gui.phone.AppManager;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.common.packets.server.PacketSetAnim;
 import com.google.gson.JsonArray;
@@ -10,7 +11,10 @@ import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.HttpUtil;
+import net.minecraft.util.text.TextComponentString;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -73,6 +77,29 @@ public class UtilsClient {
         File folder = new File("phonescreenshots");
         folder.mkdir();
         return folder.listFiles();
+    }
+
+
+    public static int getAverageColor(BufferedImage img) {
+        int width = img.getWidth();
+        int height = img.getHeight();
+        int size = width * height;
+        int r = 0;
+        int g = 0;
+        int b = 0;
+        int a = 255;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int color = img.getRGB(x, y);
+                r += (color >> 16) & 0xFF;
+                g += (color >> 8) & 0xFF;
+                b += color & 0xFF;
+            }
+        }
+        r /= size;
+        g /= size;
+        b /= size;
+        return (a << 24) | (r << 16) | (g << 8) | b;
     }
 
     public static CompletableFuture<BufferedImage> getLastPhoneImage() {

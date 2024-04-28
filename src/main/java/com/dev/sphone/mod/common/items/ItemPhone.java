@@ -179,7 +179,7 @@ public class ItemPhone extends Item {
     }
 
     //return item sim
-    public static ItemSim getSimCardItem(ItemStack stack) {
+    public static ItemStack getSimCardItem(ItemStack stack) {
         if (isPhone(stack)) {
             if(!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
 
@@ -187,9 +187,9 @@ public class ItemPhone extends Item {
             handler.deserializeNBT(stack.getTagCompound().getCompoundTag("inventory"));
 
             if(handler.getStackInSlot(0).getItem() == Items.AIR) return null;
-            if (handler.getStackInSlot(0).getItem() instanceof ItemSim) return (ItemSim) handler.getStackInSlot(0).getItem();
+            if (handler.getStackInSlot(0).getItem() instanceof ItemSim) return handler.getStackInSlot(0);
 
-            return (ItemSim) handler.getStackInSlot(0).getItem();
+            return handler.getStackInSlot(0);
         }
         return null;
     }

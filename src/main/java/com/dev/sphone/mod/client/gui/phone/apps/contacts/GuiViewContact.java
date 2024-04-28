@@ -13,6 +13,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -102,20 +103,20 @@ public class GuiViewContact extends GuiBase {
             getRoot().add(screen);
         }
 
-        GuiLabel name = new GuiLabel("Nom : " + contact.getName());
+        GuiLabel name = new GuiLabel(I18n.format("sphone.contacts.lastname") + " : " + contact.getName());
         name.setCssId("name");
         getRoot().add(name);
 
-        GuiLabel lastname = new GuiLabel("Prénom : " + (contact.getLastname().isEmpty() ? "Non renseigné" : contact.getLastname()));
+        GuiLabel lastname = new GuiLabel(I18n.format("sphone.contacts.firstname")+ " : " + (contact.getLastname().isEmpty() ? "Non renseigné" : contact.getLastname()));
         lastname.setCssId("lastname");
         getRoot().add(lastname);
 
-        GuiLabel phone = new GuiLabel("Numéro : " + contact.getNumero());
+        GuiLabel phone = new GuiLabel(I18n.format("sphone.contacts.number") + " : " + contact.getNumero());
         phone.setCssId("phone");
         getRoot().add(phone);
 
         if (!contact.getNotes().isEmpty()) {
-            GuiLabel notes = new GuiLabel("Note : " + contact.getNotes());
+            GuiLabel notes = new GuiLabel(I18n.format("sphone.contacts.note") + " : " + contact.getNotes());
             notes.setCssId("notes");
             getRoot().add(notes);
         }

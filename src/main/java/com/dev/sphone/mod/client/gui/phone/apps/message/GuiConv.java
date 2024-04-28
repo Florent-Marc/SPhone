@@ -12,6 +12,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.aym.acsguis.event.listeners.IKeyboardListener;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
@@ -84,10 +85,10 @@ public class GuiConv extends GuiBase {
 
         GuiLabel position = new GuiLabel("❖");
         position.setCssClass("position");
-        position.setHoveringText(Collections.singletonList("Envoyer votre Position"));
+        position.setHoveringText(Collections.singletonList(I18n.format("sphone.message.sendpos")));
         position.addClickListener((x,y,bu) -> {
             BlockPos p = this.mc.player.getPosition();
-            String pos = "Mes coordonnées sont : " + p.getX() + "x " + p.getY() + "y " + p.getZ()+"z" ;
+            String pos = I18n.format("sphone.phone.posmessage") + p.getX() + "x " + p.getY() + "y " + p.getZ()+"z" ;
             conv.addMessage(new Message(pos,  System.currentTimeMillis(), "",conv.getSender().getName()));
             contacts_list.removeAllChilds();
             contacts_list.flushComponentsQueue();

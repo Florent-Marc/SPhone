@@ -11,6 +11,7 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class GuiConvList extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
-        GuiLabel AppTitle = new GuiLabel("Messages");
+        GuiLabel AppTitle = new GuiLabel(I18n.format("sphone.message.title"));
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
 

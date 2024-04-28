@@ -13,7 +13,7 @@
           <option value="build" />
         </list>
       </option>
-      <option name="vmOptions" value="-Xmx512m" />
+      <option name="vmOptions" value="" />
     </ExternalSystemSettings>
     <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
     <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>

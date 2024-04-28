@@ -21,6 +21,8 @@ sphone.meteo.types.clear=Ciel dégagé
 sphone.meteo.types.cloud=Nuageux
 sphone.meteo.types.sun=Soleil
 
+sphone.sim.title=Changement de carte SIM
+
 sphone.error.no_phone=You don't have a phone
 sphone.error.no_sim=You don't have a sim in your phone
 sphone.feature.later=Later
@@ -31,3 +33,32 @@ sphone.notes.edit=Modifier la note
 sphone.notes.newtitle=➜ Titre
 sphone.notes.newcontent=➜ Note
 sphone.notes.remove=Supprimer la note
+
+sphone.appstore.recommended=Nos recommandations
+
+sphone.settings.title=Paramètres
+sphone.settings.preferencies=Préférences
+sphone.settings.customisation=Custumisation
+sphone.settings.general=Général
+sphone.settings.applications=Applications
+sphone.settings.phonenumber=NO de téléphone
+sphone.appstore.usesettings=Utilisez les paramètres pour désinstaller les applications
+sphone.settings.errorbg=Unable to load the background
+
+sphone.plusplusgame.points=Points :
+
+sphone.phone.running=Appel en cours
+sphone.phone.incoming=Appel entrant
+sphone.phone.ended=Appel terminé
+sphone.message.title=Messages
+sphone.message.sendpos=Envoyer ma position
+sphone.message.posmessage=Ma position
+sphone.contacts.title=Contacts
+sphone.contacts.edit=Modifier le contact
+sphone.contacts.firstname=Prénom
+sphone.contacts.lastname=Nom
+sphone.contacts.note=Note
+sphone.contacts.number=Numéro
+sphone.contacts.selectphoto=Choisir une photo
+sphone.contacts.selected=Photo sélectionnée
+sphone.contacts.add=Ajouter un contact

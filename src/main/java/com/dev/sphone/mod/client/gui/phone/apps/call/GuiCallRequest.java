@@ -8,6 +8,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.common.packets.server.call.PacketCallRequest;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -35,7 +36,7 @@ public class GuiCallRequest extends GuiHome {
     public void GuiInit() {
         super.GuiInit();
         getBackground().removeAllChilds();
-        GuiLabel label = new GuiLabel("Appel entrant");
+        GuiLabel label = new GuiLabel(I18n.format("sphone.phone.incoming"));
         label.setCssId("app_title");
         getBackground().add(label);
         GuiLabel numberLabel = new GuiLabel(number);

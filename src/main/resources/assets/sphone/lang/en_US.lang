@@ -21,9 +21,29 @@ sphone.meteo.types.clear=Clear
 sphone.meteo.types.cloud=cloudy
 sphone.meteo.types.sun=Sun
 
+sphone.sim.title=Change SIM Card
+
 sphone.error.no_phone=You don't have a phone
 sphone.error.no_sim=You don't have a sim in your phone
 sphone.feature.later=Later
+
+sphone.phone.running=Call in progress
+sphone.phone.incoming=Incoming call
+sphone.phone.ended=Call ended
+
+sphone.message.title=Messages
+sphone.message.sendpos=Send your position
+sphone.message.posmessage=My coordinates are :
+
+sphone.contacts.title=Contacts
+sphone.contacts.edit=Edit
+sphone.contacts.firstname=First name
+sphone.contacts.lastname=Last name
+sphone.contacts.note=Note
+sphone.contacts.number=Number
+sphone.contacts.selectphoto=Select a photo
+sphone.contacts.selected=Selected photo
+sphone.contacts.add=Add a contact
 
 sphone.notes.title=Notes
 sphone.notes.add=Add a note
@@ -31,3 +51,16 @@ sphone.notes.edit=Edit the note
 sphone.notes.newtitle=➜ Title
 sphone.notes.newcontent=➜ Note
 sphone.notes.remove=Delete
+
+sphone.appstore.recommended=Our recommended apps
+sphone.appstore.usesettings=Use the settings to uninstall apps
+
+sphone.settings.title=Settings
+sphone.settings.preferencies=Preferencies
+sphone.settings.customisation=Customisation
+sphone.settings.general=General
+sphone.settings.applications=Applications
+sphone.settings.phonenumber=Phone number
+sphone.settings.errorbg=Unable to load the background
+
+sphone.plusplusgame.points=Points :

@@ -49,6 +49,8 @@ public class Network {
 
         packetFromServer(PacketQuitCall.ServerHandler.class, PacketQuitCall.class);
 
+        packetFromServer(PacketManageApp.ServerHandler.class, PacketManageApp.class);
+
         // Contacts
         //packetFromServer(PacketGetContacts.ServerHandler.class, PacketGetContacts.class);
         //packetFromServer(PacketUpdateContacts.ServerHandler.class, PacketUpdateContacts.class);

@@ -56,7 +56,7 @@ public class VoiceAddon implements VoicechatPlugin {
                 .setPersistent(persistent)
                 .setType(type)
                 .setPassword(password.toString())
-                .build();
+                 .build();
         GroupMap.put(name, g);
     }
 

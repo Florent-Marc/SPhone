@@ -15,6 +15,7 @@ import fr.aym.acsguis.utils.GuiConstants;
 import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -60,7 +61,7 @@ public class GuiGeneralSettings extends GuiBase {
                     hold.getTagCompound().setTag("inventory", handler.serializeNBT());
                 }
 
-                GuiLabel phoneNumber = new GuiLabel("Numéro de téléphone : " + handler.getStackInSlot(0).getTagCompound().getString("numero"));
+                GuiLabel phoneNumber = new GuiLabel(I18n.format("sphone.settings.phonenumber") + handler.getStackInSlot(0).getTagCompound().getString("numero"));
                 phoneNumber.setCssClass("nbtel");
                 getRoot().add(phoneNumber);
             }

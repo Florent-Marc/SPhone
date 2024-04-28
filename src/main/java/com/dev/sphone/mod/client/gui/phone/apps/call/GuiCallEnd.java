@@ -5,6 +5,7 @@ import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 
@@ -26,7 +27,7 @@ public class GuiCallEnd extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
-        time = new GuiLabel("Appel terminé");
+        time = new GuiLabel(I18n.format("sphone.phone.ended"));
         time.setCssId("time");
         time.setCssCode("color: red;");
         getBackground().add(time);

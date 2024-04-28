@@ -49,3 +49,7 @@
     width: 42px;
 }
 
+#app_selector {
+    z-index: 500;
+}
+

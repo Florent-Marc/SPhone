@@ -83,6 +83,8 @@ public class SPhone {
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/gallery.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/settings.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/nosim.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/appstore.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(SPhone.MOD_ID, "css/plusplusgame.css"));
             MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 
             if (isUsingMod("com.mrcrayfish.obfuscate.Obfuscate"))

@@ -23,6 +23,7 @@
 }
 
 .background {
+    z-index: 100;
 }
 
 #root{
@@ -64,10 +65,10 @@
     height: 9px;
     width: 150px;
     left: 1665px;
-    top: 1019px;
+    top: 1021px;
     background-color: #FFFFFF;
     border-radius: 5px;
-    z-index: 10;
+    z-index: 150;
 }
 
 .home_bar:hover {
@@ -82,3 +83,4 @@
     top: 412px;
     z-index: 10;
 }
+

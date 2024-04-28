@@ -15,6 +15,7 @@ import fr.aym.acsguis.component.textarea.GuiTextField;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.HttpUtil;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
@@ -46,7 +47,7 @@ public class GuiNewContact extends GuiBase {
         }
         add(getRoot());
 
-        GuiLabel AppTitle = new GuiLabel("Ajouter Un Contact");
+        GuiLabel AppTitle = new GuiLabel(I18n.format("sphone.contacts.add"));
         AppTitle.setCssId("app_title");
         getRoot().add(AppTitle);
 
@@ -54,7 +55,7 @@ public class GuiNewContact extends GuiBase {
         name.setCssClass("textarea");
         name.setMaxTextLength(16);
         name.setCssId("nom");
-        name.setHintText("Nom");
+        name.setHintText(I18n.format("sphone.contacts.lastname"));
         name.setText(contactInCreation.getName());
         getRoot().add(name);
 
@@ -62,7 +63,7 @@ public class GuiNewContact extends GuiBase {
         lastName.setCssClass("textarea");
         lastName.setMaxTextLength(16);
         lastName.setCssId("prenom");
-        lastName.setHintText("Prénom");
+        lastName.setHintText(I18n.format("sphone.contacts.firstname"));
         lastName.setText(contactInCreation.getLastname());
 
         getRoot().add(lastName);
@@ -78,18 +79,18 @@ public class GuiNewContact extends GuiBase {
         GuiTextField notes = new GuiTextField();
         notes.setCssClass("textarea");
         notes.setCssId("notes");
-        notes.setHintText("Notes");
+        notes.setHintText(I18n.format("sphone.contacts.note"));
         notes.setText(contactInCreation.getNotes());
         getRoot().add(notes);
 
-        GuiButton selectPhoto = new GuiButton("Sélectionner une photo");
+        GuiButton selectPhoto = new GuiButton(I18n.format("sphone.contacts.selectphoto"));
         selectPhoto.setCssClass("textarea");
         selectPhoto.setCssId("photo");
         selectPhoto.addClickListener((mouseX, mouseY, mouseButton) -> {
             GuiNewContact.contactInCreation = new Contact(-1, name.getText(), lastName.getText(), numero.getText(), notes.getText());
             Minecraft.getMinecraft().displayGuiScreen(new GuiImageSelector(this.getGuiScreen(), (id, texture) -> {
                 GuiNewContact.contactInCreation.setPhoto(id + "");
-                selectPhoto.setText("Photo sélectionnée");
+                selectPhoto.setText(I18n.format("sphone.contacts.selected"));
             }).getGuiScreen());
         });
 

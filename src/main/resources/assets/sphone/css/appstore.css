@@ -1,0 +1,248 @@
+#root {
+    background-color: #F9F9F9;
+
+    z-index: 5;
+}
+
+.background {
+    background-image: url("sphone:textures/ui/background/bartemplate.png");
+}
+
+@font-face {
+    font-family: "dnx:montserrat_hq";
+    src: url("sphone:fonts/montserrat.ttf");
+    font-size: 70px;
+}
+
+.appstore_title {
+    background-color: translucent;
+    font-family: "dnx:montserrat_hq";
+    font-size: 3px;
+    text-align: left;
+    left: 3%;
+    top: 5%;
+    height: 10%;
+    text-shadow: disable;
+    color: black;
+}
+
+.app_list {
+    width: 75%;
+    height: 45%;
+    top: 15%;
+    left: 50%;
+    right: 50%;
+    background-color: transparent;
+}
+
+.app_list_item {
+    width: 92%;
+    height: 95%;
+    top: 50%;
+    bottom: 50%;
+    right: 50%;
+    left: 50%;
+    border-radius: 10px;
+}
+
+.app_list_item_name {
+    background-color: transparent;
+    font-family: "dnx:montserrat";
+    font-size: 2px;
+    text-shadow: disable;
+    width: 80%;
+    height: 10%;
+    left: 0;
+    top: 0;
+
+}
+
+.app_list_item_icon {
+    width: 50px;
+    height: 50px;
+    top: 5%;
+    right: 2%;
+    background-color: transparent;
+}
+
+.app_list_item_shadow {
+    width: auto;
+    height: 100%;
+    top: 0;
+    left: auto;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+.appstore_recommended {
+    background-color: translucent;
+    font-family: "dnx:montserrat";
+    font-size: 3px;
+    text-align: left;
+    left: 5%;
+    top: 67%;
+    height: 10%;
+    text-shadow: disable;
+    color: #504F4F;
+}
+
+.divider {
+    background-color: #ececec;
+    width: 90%;
+    height: 4px;
+    top: 67%;
+    left: 5%;
+    border-radius: 20px;
+}
+
+.bottom_bar {
+    background-color: transparent;
+    width: 75%;
+    height: 10%;
+    bottom: 6px;
+    left: 65%;
+    right: 50%;
+    border-radius: 25px ;
+    z-index: 2;
+}
+
+.icon {
+    width: 35px;
+    height: 40px;
+    left: auto;
+}
+
+.recommanded_app_list {
+    width: 80%;
+    height: 45%;
+    top: 75%;
+    left: 50%;
+    right: 50%;
+    background-color: transparent;
+}
+
+.recommanded_app_list_item {
+    width: 92%;
+    height: auto;
+    top: auto;
+    right: 50%;
+    left: 50%;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+}
+
+.recommanded_app_list_item_name {
+    background-color: transparent;
+    font-family: "dnx:montserrat";
+    font-size: 2px;
+    text-shadow: disable;
+    width: 80%;
+    height: 45%;
+    left: 25%;
+    bottom: 50%;
+    color: #5a5a5a;
+}
+
+.see_app_list {
+    width: 75%;
+    height: 70%;
+    top: 15%;
+    left: 50%;
+    right: 50%;
+    background-color: transparent;
+}
+
+.recommanded_app_list_item_icon {
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    bottom: 50%;
+    left: 2%;
+    background-color: transparent;
+}
+
+.recommanded_app_list_item_get {
+    width: 60px;
+    height: 20px;
+    top: 70%;
+    bottom: 20%;
+    left: 25%;
+    background-color: transparent;
+    background-image: url("sphone:textures/ui/icons/appstore/get.png");
+}
+
+.app_title {
+    background-color: translucent;
+    font-family: "dnx:montserrat";
+    font-size: 3px;
+    text-align: left;
+    left: 25%;
+    top: 10%;
+    height: 10%;
+    text-shadow: disable;
+    color: #504F4F;
+}
+
+.app_display_icon {
+    width: 50px;
+    height: 50px;
+    top: 8%;
+    left: 2%;
+    background-color: transparent;
+}
+
+.app_version {
+    background-color: translucent;
+    font-family: "dnx:montserrat";
+    font-size: 2px;
+    text-align: left;
+    left: 2%;
+    top: 30%;
+    width: 60%;
+    height: 10%;
+    text-shadow: disable;
+    color: #504F4F;
+}
+
+.app_description_text {
+    background-color: translucent;
+    font-family: "dnx:montserrat";
+    font-size: 2px;
+    text-align: left;
+    left: 2%;
+    top: 25%;
+    width: 100%;
+    height: 40%;
+    text-shadow: disable;
+    color: #504F4F;
+}
+
+.app_image_background {
+    background-color: #FFFFFF;
+    width: 80%;
+    height: 60%;
+    top: 45%;
+    left: 25%;
+    border-radius: 10px;
+}
+
+.app_button {
+    width: 50%;
+    height: 5%;
+    top: 85%;
+    left: 50%;
+    right: 50%;
+}
+
+.uninstall {
+    width: 100%;
+    height: 10%;
+    top: 90%;
+    left: 50%;
+    right: 50%;
+    text-align: center;
+    font-family: "dnx:montserrat";
+    font-size: 2px;
+    color: #5a5a5a;
+
+}

@@ -8,6 +8,7 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 
@@ -30,7 +31,7 @@ public class GuiCall extends GuiBase {
     public void GuiInit() {
         super.GuiInit();
         Timestart = System.currentTimeMillis();
-        time = new GuiLabel("Appel terminé");
+        time = new GuiLabel(I18n.format("sphone.phone.ended"));
         time.setCssId("time");
         time.setCssCode("color: red;");
         getBackground().add(time);

@@ -1,10 +1,14 @@
 package com.dev.sphone.mod.client.tempdata;
 
+import com.dev.sphone.mod.client.gui.phone.AppManager;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PhoneSettings implements INBTSerializable {
 

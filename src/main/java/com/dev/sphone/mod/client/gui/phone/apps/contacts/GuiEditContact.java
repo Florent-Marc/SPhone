@@ -12,6 +12,7 @@ import fr.aym.acsguis.component.textarea.GuiTextField;
 import com.dev.sphone.mod.common.phone.Contact;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.HttpUtil;
 import net.minecraft.util.ResourceLocation;
 
@@ -37,7 +38,7 @@ public class GuiEditContact extends GuiBase {
 
         add(getRoot());
 
-        GuiLabel AppTitle = new GuiLabel("Modifier");
+        GuiLabel AppTitle = new GuiLabel(I18n.format("sphone.contacts.edit"));
         AppTitle.setCssId("app_title");
         getRoot().add(AppTitle);
 
@@ -53,7 +54,7 @@ public class GuiEditContact extends GuiBase {
         lastName.setMaxTextLength(16);
         lastName.setCssId("prenom");
         if(contact.getLastname().isEmpty()){
-            lastName.setHintText("Prénom");
+            lastName.setHintText(I18n.format("sphone.contacts.firstname"));
         }else {
             lastName.setText(contact.getLastname());
         }
@@ -70,19 +71,19 @@ public class GuiEditContact extends GuiBase {
         notes.setCssClass("textarea");
         notes.setCssId("notes");
         if(contact.getLastname().isEmpty()){
-            notes.setHintText("Note");
+            notes.setHintText(I18n.format("sphone.contacts.note"));
         }else {
             notes.setText(contact.getNotes());
         }
         getRoot().add(notes);
 
-        GuiButton selectPhoto = new GuiButton("Sélectionner une photo");
+        GuiButton selectPhoto = new GuiButton(I18n.format("sphone.contacts.selectphoto"));
         selectPhoto.setCssClass("textarea");
         selectPhoto.setCssId("photo");
         selectPhoto.addClickListener((mouseX, mouseY, mouseButton) -> {
             Minecraft.getMinecraft().displayGuiScreen(new GuiImageSelector(this.getGuiScreen(), (id, texture) -> {
                 contact.setPhoto(id + "");
-                selectPhoto.setText("Photo sélectionnée");
+                selectPhoto.setText(I18n.format("sphone.contacts.selected"));
             }).getGuiScreen());
         });
         getRoot().add(selectPhoto);

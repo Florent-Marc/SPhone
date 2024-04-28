@@ -1,5 +1,6 @@
 package com.dev.sphone.mod.server.commands;
 
+import com.dev.sphone.mod.client.gui.phone.GuiHome;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.items.ItemSim;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
@@ -8,12 +9,15 @@ import com.dev.sphone.mod.utils.exceptions.DatabaseException;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,7 +46,8 @@ public class CommandGivePhone extends CommandBase {
         } else {
             return;
         }
-        ItemSim sim = item.getSimCardItem(p.getHeldItemMainhand());
+        ItemSim sim = (ItemSim) ItemPhone.getSimCardItem(p.getHeldItemMainhand()).getItem();
+        ItemStack simStack = ItemPhone.getSimCardItem(p.getHeldItemMainhand());
         String para = args[0];
         if (para.equals("setsim")) {
             if (args.length == 2) {
@@ -81,6 +86,24 @@ public class CommandGivePhone extends CommandBase {
         }
         if (para.equals("sendmessage")) {
             p.sendMessage(new TextComponentTranslation("sphone.feature.later"));
+        }
+        if (para.equals("apps")) {
+            p.sendMessage(new TextComponentString(GuiHome.getDownloadedApps(p.getHeldItemMainhand()).toString()));
+        }
+        if(para.equals("addapp")) {
+
+            ItemStack phoneStack = p.getHeldItemMainhand();
+            if(phoneStack.getTagCompound() == null) {
+                phoneStack.setTagCompound(new NBTTagCompound());
+            }
+            NBTTagCompound tag = phoneStack.getTagCompound();
+
+            NBTTagCompound apps = tag.getCompoundTag("apps");
+            apps.setString(args[1], args[2]);
+            tag.setTag("apps", apps);
+            phoneStack.setTagCompound(tag);
+            p.sendMessage(new TextComponentString("OK."));
+
         }
         if (para.equals("debg")) {
             try {

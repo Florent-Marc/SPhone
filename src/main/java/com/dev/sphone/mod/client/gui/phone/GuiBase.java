@@ -4,6 +4,7 @@ import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.ClientEventHandler;
 import com.dev.sphone.mod.client.tempdata.PhoneSettings;
 import com.dev.sphone.mod.common.items.ItemPhone;
+import com.dev.sphone.mod.common.items.ItemSim;
 import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
@@ -14,14 +15,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 public class GuiBase extends GuiFrame {
 
@@ -71,7 +71,7 @@ public class GuiBase extends GuiFrame {
         add(Case);
 
 
-        if(getSettings().getBackground().equals("")) {
+        if (getSettings().getBackground().equals("")) {
             Case.getStyle().setTexture(new GuiTextureSprite(new ResourceLocation(SPhone.MOD_ID, "textures/ui/background/acsgui.png")));
         }
 
@@ -123,7 +123,6 @@ public class GuiBase extends GuiFrame {
         }
 
 
-
     }
 
     public GuiPanel getBackground() {
@@ -158,17 +157,26 @@ public class GuiBase extends GuiFrame {
         isInfosHidden = infosHidden;
     }
 
+    public static List<String> getDownloadedApps(ItemStack stack) {
+        if(!(stack.getItem() instanceof ItemPhone)) {
+            return new ArrayList<>();
+        }
+        NBTTagCompound tag = stack.getTagCompound();
+        if (tag == null) {
+            return new ArrayList<>();
+        }
+        NBTTagCompound apps = tag.getCompoundTag("apps");
+        return new ArrayList<>(apps.getKeySet());
+
+    }
+
     public PhoneSettings getSettings() {
         PhoneSettings settings = new PhoneSettings("acsgui");
         ItemStack stack = Minecraft.getMinecraft().player.getHeldItemMainhand();
-        if (stack != null) {
-            if (stack.getItem() instanceof ItemPhone) {
-
-                settings.deserializeNBT(Objects.requireNonNull(Minecraft.getMinecraft().player.getHeldItemMainhand().getTagCompound()).getCompoundTag("settings"));
-            } else {
-            }
-        } else {
+        if (stack.getItem() instanceof ItemPhone) {
+            settings.deserializeNBT(Objects.requireNonNull(Minecraft.getMinecraft().player.getHeldItemMainhand().getTagCompound()).getCompoundTag("settings"));
         }
+
         return settings;
     }
 
