@@ -16,6 +16,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,9 +124,13 @@ public class GuiConv extends GuiBase {
             GuiLabel labelMessage = new GuiLabel("");
             labelMessage.setMaxTextLength(240);
 
-            labelMessage.setText(c.getMessage());
-
-            labelMessage.setCssId("contact_message");
+            if (isURL(c.getMessage())) {
+                labelMessage.setCssId("contact_message_image");
+                labelMessage.setCssCode("contact_message_image", "background-image: url(\"" + c.getMessage() + "\");");
+            } else {
+                labelMessage.setText(c.getMessage());
+                labelMessage.setCssId("contact_message");
+            }
             messagePanel.add(labelMessage);
 
             if (!c.getSender().equals(conv.getSender().getNumero())) {
@@ -135,12 +141,20 @@ public class GuiConv extends GuiBase {
 
             GuiLabel date = new GuiLabel(getDate(c.getDate()));
             date.setCssId("date");
-            //check si c'est aujourd'hui
             date.setHoveringText(Collections.singletonList(getHour(c.getDate()).toString()));
             messagePanel.add(date);
 
             contacts_list.add(messagePanel);
 
+        }
+    }
+
+    public static boolean isURL(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            return true;
+        } catch (MalformedURLException e) {
+            return false;
         }
     }
 

@@ -191,7 +191,6 @@ public class UtilsClient {
         JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
         JsonArray backgrounds = jsonObject.getAsJsonArray("backgrounds");
 
-
         String[] backgroundsArray = new String[backgrounds.size()];
         for (int i = 0; i < backgrounds.size(); i++) {
             JsonObject background = backgrounds.get(i).getAsJsonObject();
