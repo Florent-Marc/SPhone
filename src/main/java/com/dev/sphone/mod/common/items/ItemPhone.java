@@ -170,6 +170,8 @@ public class ItemPhone extends Item {
             handler.deserializeNBT(stack.getTagCompound().getCompoundTag("inventory"));
 
             if(handler.getStackInSlot(0).getItem() == Items.AIR) return 0;
+            if (!handler.getStackInSlot(0).hasTagCompound()) return 0;
+            if (!handler.getStackInSlot(0).getTagCompound().hasKey(ItemSim.SIM_KEY_TAG)) return 0;
             if (handler.getStackInSlot(0).getTagCompound().getInteger(ItemSim.SIM_KEY_TAG) == 0) return -1;
 
             return handler.getStackInSlot(0).getTagCompound().getInteger(ItemSim.SIM_KEY_TAG);
