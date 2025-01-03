@@ -8,6 +8,7 @@ import com.dev.sphone.mod.common.phone.Contact;
 import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.aym.acsguis.utils.ComponentRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -70,14 +71,14 @@ public class GuiViewContact extends GuiBase {
             DynamicTexture texture = UtilsClient.base64ToDynamicTexture(contact.getPhoto());
             GuiLabel screen = new GuiLabel(""){
                 @Override
-                public void drawBackground(int mouseX, int mouseY, float partialTicks) {
-                    super.drawBackground(mouseX, mouseY, partialTicks);
+                public void drawBackground(int mouseX, int mouseY, float partialTicks, ComponentRenderContext renderContext) {
+                    super.drawBackground(mouseX, mouseY, partialTicks, renderContext);
                     ScaledResolution scaledResolution = new ScaledResolution(mc);
                     int screenWidth = scaledResolution.getScaledWidth();
                     int screenHeight = scaledResolution.getScaledHeight();
 
-                    int x = getScreenX() + getWidth() / 2;
-                    int y = getScreenY() + getHeight() / 2;
+                    float x = getScreenX() + getWidth() / 2;
+                    float y = getScreenY() + getHeight() / 2;
 
                     GlStateManager.pushMatrix();
                     assert texture != null;

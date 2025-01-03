@@ -8,6 +8,7 @@ import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.button.GuiCheckBox;
 import fr.aym.acsguis.component.button.GuiSlider;
 import fr.aym.acsguis.component.panel.GuiPanel;
+import fr.aym.acsguis.utils.ComponentRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -56,8 +57,8 @@ public class GuiShowImage extends GuiBase {
         gid = texture.getGlTextureId();
         GuiPanel screen = new GuiPanel() {
             @Override
-            public void drawBackground(int mouseX, int mouseY, float partialTicks) {
-                super.drawBackground(mouseX, mouseY, partialTicks);
+            public void drawBackground(int mouseX, int mouseY, float partialTicks, ComponentRenderContext renderContext) {
+                super.drawBackground(mouseX, mouseY, partialTicks, renderContext);
                 ScaledResolution scaledResolution = new ScaledResolution(mc);
                 float screenWidth = scaledResolution.getScaledWidth() / 2.1f;
                 float screenHeight = scaledResolution.getScaledHeight() / 1.2f;

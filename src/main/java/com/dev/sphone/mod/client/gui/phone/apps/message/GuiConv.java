@@ -74,7 +74,7 @@ public class GuiConv extends GuiBase {
                 if (i == 28) {
                     if (message.getText().isEmpty()) return;
                     conv.addMessage(new Message(message.getText(),  System.currentTimeMillis(), "",conv.getSender().getName()));
-                    contacts_list.removeAllChilds();
+                    contacts_list.removeAllChildren();
                     contacts_list.flushComponentsQueue();
                     contacts_list.flushRemovedComponents();
                     initMessages(conv, contacts_list);
@@ -92,7 +92,7 @@ public class GuiConv extends GuiBase {
             BlockPos p = this.mc.player.getPosition();
             String pos = I18n.format("sphone.phone.posmessage") + p.getX() + "x " + p.getY() + "y " + p.getZ()+"z" ;
             conv.addMessage(new Message(pos,  System.currentTimeMillis(), "",conv.getSender().getName()));
-            contacts_list.removeAllChilds();
+            contacts_list.removeAllChildren();
             contacts_list.flushComponentsQueue();
             contacts_list.flushRemovedComponents();
             initMessages(conv, contacts_list);
@@ -105,7 +105,7 @@ public class GuiConv extends GuiBase {
         send.addClickListener((mouseX, mouseY, mouseButton) -> {
             if (message.getText().isEmpty()) return;
             conv.addMessage(new Message(message.getText(),  System.currentTimeMillis(), "",conv.getSender().getName()));
-            contacts_list.removeAllChilds();
+            contacts_list.removeAllChildren();
             contacts_list.flushComponentsQueue();
             contacts_list.flushRemovedComponents();
             initMessages(conv, contacts_list);

@@ -33,7 +33,7 @@ public class GuiWaitCall extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
-        getBackground().removeAllChilds();
+        getBackground().removeAllChildren();
         time = new GuiLabel(I18n.format("sphone.phone.running"));
         time.setCssId("time");
         getBackground().add(time);

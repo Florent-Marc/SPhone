@@ -9,6 +9,7 @@ import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.aym.acsguis.utils.ComponentRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -58,14 +59,14 @@ public class GuiImageSelector extends GuiBase {
 
             GuiPanel screen = new GuiPanel(){
                 @Override
-                public void drawBackground(int mouseX, int mouseY, float partialTicks) {
-                    super.drawBackground(mouseX, mouseY, partialTicks);
+                public void drawBackground(int mouseX, int mouseY, float partialTicks, ComponentRenderContext renderContext) {
+                    super.drawBackground(mouseX, mouseY, partialTicks, renderContext);
                     ScaledResolution scaledResolution = new ScaledResolution(mc);
                     int screenWidth = scaledResolution.getScaledWidth();
                     int screenHeight = scaledResolution.getScaledHeight();
 
-                    int x = getScreenX() + getWidth() / 2;
-                    int y = getScreenY() + getHeight() / 2;
+                    float x = getScreenX() + getWidth() / 2;
+                    float y = getScreenY() + getHeight() / 2;
 
                     GlStateManager.pushMatrix();
                     GlStateManager.bindTexture(texture.getGlTextureId());
@@ -113,11 +114,11 @@ public class GuiImageSelector extends GuiBase {
 
         int pages = (int) Math.ceil(size / 16.0);
         final Integer[] selIndex = {0};
-        screens_list.removeAllChilds();
+        screens_list.removeAllChildren();
         loadPage(0).forEach(screens_list::add);
 
         getRoot().addKeyboardListener((c, key) -> {
-            screens_list.removeAllChilds();
+            screens_list.removeAllChildren();
             glIds.forEach(TextureUtil::deleteTexture); // avoid memory leaks, DO IT BEFORE LOADPAGE
             loadPage(selIndex[0]).forEach(screens_list::add);
             System.out.println(key);

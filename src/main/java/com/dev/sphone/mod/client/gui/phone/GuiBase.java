@@ -56,7 +56,7 @@ public class GuiBase extends GuiFrame {
     }
 
     private void init() {
-        this.removeAllChilds();
+        this.removeAllChildren();
         this.flushComponentsQueue();
         this.flushRemovedComponents();
         style.setBackgroundColor(Color.TRANSLUCENT);

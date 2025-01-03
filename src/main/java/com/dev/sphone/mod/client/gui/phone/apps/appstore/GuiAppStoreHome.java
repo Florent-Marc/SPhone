@@ -12,10 +12,7 @@ import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.style.ComponentStyleManager;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.cssengine.positionning.Size;
-import fr.aym.acsguis.utils.CircleBackground;
-import fr.aym.acsguis.utils.GuiConstants;
-import fr.aym.acsguis.utils.GuiTextureSprite;
-import fr.aym.acsguis.utils.IGuiTexture;
+import fr.aym.acsguis.utils.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -85,7 +82,7 @@ public class GuiAppStoreHome extends GuiBase {
             IGuiTexture finalTexture = texture;
             GuiPanel appPanel = new GuiPanel() {
                 @Override
-                public void drawBackground(int mouseX, int mouseY, float partialTicks) {
+                public void drawBackground(int mouseX, int mouseY, float partialTicks, ComponentRenderContext renderContext) {
                     CircleBackground.renderBackground(50, (float) this.getScreenX(), (float) this.getScreenY(), (float) (this.getScreenX() + this.getWidth()), (float) (this.getScreenY() + this.getHeight()), finalBgColor);
 
                     IGuiTexture renderTexture = finalTexture;

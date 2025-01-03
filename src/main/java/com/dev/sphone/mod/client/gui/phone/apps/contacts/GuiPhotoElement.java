@@ -3,6 +3,7 @@ package com.dev.sphone.mod.client.gui.phone.apps.contacts;
 import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.GuiComponent;
 import fr.aym.acsguis.component.panel.GuiPanel;
+import fr.aym.acsguis.utils.ComponentRenderContext;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -40,15 +41,15 @@ public class GuiPhotoElement extends GuiPanel {
     }
 
     @Override
-    public void drawBackground(int mouseX, int mouseY, float partialTicks) {
-        super.drawBackground(mouseX, mouseY, partialTicks);
+    public void drawBackground(int mouseX, int mouseY, float partialTicks, ComponentRenderContext renderContext) {
+        super.drawBackground(mouseX, mouseY, partialTicks, renderContext);
         if(fileid == -1) return;
         ScaledResolution scaledResolution = new ScaledResolution(mc);
         int screenWidth = scaledResolution.getScaledWidth();
         int screenHeight = scaledResolution.getScaledHeight();
 
-        int x = getScreenX() + getWidth() / 2;
-        int y = getScreenY() + getHeight() / 2;
+        float x = getScreenX() + getWidth() / 2;
+        float y = getScreenY() + getHeight() / 2;
 
         GlStateManager.pushMatrix();
         GlStateManager.bindTexture(texture.getGlTextureId());

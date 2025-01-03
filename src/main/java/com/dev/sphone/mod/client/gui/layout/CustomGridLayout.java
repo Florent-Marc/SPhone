@@ -94,27 +94,27 @@ public class CustomGridLayout implements PanelLayout<ComponentStyleManager> {
     }
 
     @Override
-    public int getX(ComponentStyleManager target) {
+    public float getX(ComponentStyleManager target) {
         if (!cache.containsKey(target)) {
             cache.put(target, nextIndex);
             nextIndex++;
         }
-        int elementsPerLine = this.elementsPerLine;
+        float elementsPerLine = this.elementsPerLine;
         if (direction == GridDirection.HORIZONTAL && elementsPerLine == -1) {
             elementsPerLine = target.getParent().getRenderWidth() / getWidth(target);
         }
-        int spacing = this.spacing.computeValue(container.getWidth(), container.getHeight(), container.getWidth());
+        float spacing = this.spacing.computeValue(container.getWidth(), container.getHeight(), container.getWidth());
         return direction == GridDirection.HORIZONTAL ? (getWidth() + spacing) * (cache.get(target) % elementsPerLine) : (getWidth() + spacing) * (cache.get(target) / elementsPerLine);
     }
 
     @Override
-    public int getY(ComponentStyleManager target) {
+    public float getY(ComponentStyleManager target) {
         if (!cache.containsKey(target)) {
             cache.put(target, nextIndex);
             nextIndex++;
         }
 
-        int elementsPerLine = this.elementsPerLine;
+        float elementsPerLine = this.elementsPerLine;
         if (direction == GridDirection.VERTICAL && elementsPerLine == -1) {
             elementsPerLine = target.getParent().getRenderHeight() / getHeight(target);
         }
@@ -128,21 +128,21 @@ public class CustomGridLayout implements PanelLayout<ComponentStyleManager> {
     }
 
     @Override
-    public int getWidth(ComponentStyleManager target) {
+    public float getWidth(ComponentStyleManager target) {
         return getWidth();
     }
 
     @Override
-    public int getHeight(ComponentStyleManager target) {
-        int height = 0;
+    public float getHeight(ComponentStyleManager target) {
+        float height = 0;
 
-        if(((GuiPanel)target.getOwner()).getChildComponents().size() == 0){
+        if(((GuiPanel) target.getOwner()).getChildComponents().isEmpty()){
             ((GuiPanel)target.getOwner()).flushComponentsQueue();
         }
 
         for(Object componentChild : ((GuiPanel)target.getOwner()).getChildComponents()){
             if(componentChild instanceof GuiLabel){
-                int len = 10 + (Math.max(21, ((GuiLabel)componentChild).getText().length()));
+                float len = 10 + (Math.max(21, ((GuiLabel)componentChild).getText().length()));
                 height += len;
             }
         }
@@ -157,7 +157,7 @@ public class CustomGridLayout implements PanelLayout<ComponentStyleManager> {
         nextIndex = 0;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width.computeValue(GuiFrame.resolution.getScaledWidth(), GuiFrame.resolution.getScaledHeight(), container.getWidth());
     }
 

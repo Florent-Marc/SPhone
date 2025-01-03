@@ -60,8 +60,8 @@ public class GuiPlusPlusGame extends GuiBase {
 
     public void drawRandomButton(GuiPanel backframe) {
         GuiPanel button = new GuiPanel();
-        int wmax = backframe.getWidth() - 50;
-        int hmax = backframe.getHeight() - 50;
+        float wmax = backframe.getWidth() - 50;
+        float hmax = backframe.getHeight() - 50;
 
 
         System.out.println("Max size " + wmax + " " + hmax);
