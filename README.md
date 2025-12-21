@@ -10,6 +10,9 @@
 </p>
 
 ----
+## Important note 
+This project is not maintained anymore.
+
 ## About
 Discover the SPhone mod for Minecraft, which adds a virtual phone with elegant interfaces 
 and a functional calling and messaging system. Stay connected with other players, make 
