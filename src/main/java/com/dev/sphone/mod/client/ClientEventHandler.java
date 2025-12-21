@@ -3,6 +3,13 @@ package com.dev.sphone.mod.client;
 import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.phone.Conversation;
 import com.dev.sphone.mod.utils.UtilsClient;
+import com.dev.sphone.SPhone;
+import com.dev.sphone.mod.client.SPhoneKeys;
+import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketToggleGroupMute;
+import de.maxhenkel.voicechat.voice.client.ClientManager;
+import de.maxhenkel.voicechat.voice.client.ClientPlayerStateManager;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -43,6 +50,8 @@ public class ClientEventHandler {
 
 
     public static boolean isCameraActive = false;
+    /** Flag indicating if the current voice chat call microphone is muted. */
+    private static boolean isGroupMuted = false;
 
     private static final ResourceLocation CAMERA_OVERLAY = new ResourceLocation("SPhone", "textures/ui/background/appcam.png");
     private static int framebufferTextureId = -1;
@@ -144,10 +153,20 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onPress(InputEvent.KeyInputEvent event) {
+                if (Keyboard.getEventKeyState()) {
+            int keycode = Keyboard.getEventKey();
 
-        if(isCameraActive){
-            if (Keyboard.getEventKeyState()) {
-                int keycode = Keyboard.getEventKey();
+            if (keycode == SPhoneKeys.TOGGLE_GROUP_MUTE.getKeyCode()) {
+                ClientPlayerStateManager manager = ClientManager.getPlayerStateManager();
+                if (manager.getGroup() != null) {
+                    isGroupMuted = !isGroupMuted;
+                    SPhone.network.sendToServer(new PacketToggleGroupMute(isGroupMuted));
+                    String messageKey = isGroupMuted ? "sphone.voice.muted" : "sphone.voice.unmuted";
+                    mc.player.sendMessage(new TextComponentString(I18n.format(messageKey)));
+                }
+            }
+
+            if (isCameraActive) {
                 if (keycode == Keyboard.KEY_BACK || keycode == Keyboard.KEY_DELETE || keycode == Keyboard.KEY_ESCAPE || keycode == Keyboard.KEY_E) {
                     UtilsClient.leaveCamera(true);
                 }

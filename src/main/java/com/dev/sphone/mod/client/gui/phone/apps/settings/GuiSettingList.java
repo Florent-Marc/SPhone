@@ -5,23 +5,15 @@ import com.dev.sphone.api.loaders.AppDetails;
 import com.dev.sphone.api.loaders.AppType;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.GuiHome;
-import com.dev.sphone.mod.common.items.ItemPhone;
-import com.dev.sphone.mod.utils.UtilsClient;
-import com.dev.sphone.mod.utils.UtilsServer;
-import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
-import fr.aym.acsguis.component.textarea.GuiFloatField;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,43 +45,32 @@ public class GuiSettingList extends GuiBase {
         settings_list.add(customisation_desc);
 
         GuiPanel customisation = getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings/custom.png"), I18n.format("sphone.settings.customisation"));
-
         customisation.addClickListener((mouseX, mouseY, mouseButton) -> {
             Minecraft.getMinecraft().displayGuiScreen(new GuiCustomisation(this.getGuiScreen()).getGuiScreen());
         });
-
         settings_list.add(customisation);
 
         GuiPanel general = getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/settings/general.png"), I18n.format("sphone.settings.general"));
         general.addClickListener((mouseX, mouseY, mouseButton) -> {
             Minecraft.getMinecraft().displayGuiScreen(new GuiGeneralSettings(this.getGuiScreen()).getGuiScreen());
         });
-
-
         settings_list.add(general);
 
         GuiPanel appstore = getGuiElement(new ResourceLocation(SPhone.MOD_ID, "textures/ui/icons/appstore.png"), I18n.format("sphone.settings.applications"));
         appstore.addClickListener((mouseX, mouseY, mouseButton) -> {
             Minecraft.getMinecraft().displayGuiScreen(new GuiAppsSettings(this.getGuiScreen()).getGuiScreen());
         });
-
-
         settings_list.add(appstore);
 
         GuiLabel infos_desc = new GuiLabel(I18n.format("sphone.settings.applications"));
         infos_desc.setCssClass("settings_element_desc");
-        settings_list.add(customisation_desc);
-
-
         settings_list.add(infos_desc);
 
         app_container.add(settings_list);
         app_container.add(appTitle);
 
-
         getRoot().add(app_container);
     }
-
 
     public GuiPanel getGuiElement(ResourceLocation iconLoc, String name) {
         GuiPanel customisation = new GuiPanel();
@@ -97,24 +78,27 @@ public class GuiSettingList extends GuiBase {
 
         GuiPanel customisation_icon = new GuiPanel();
         customisation_icon.setCssClass("settings_element_icon");
-        customisation_icon.getStyle().setTexture(new GuiTextureSprite(iconLoc, 0, 0, 0, 0));
 
+        // CORREÇÃO: use sempre o Customizer para textura!
+        try {
+            customisation_icon.getStyle().getCustomizer().setTexture(new GuiTextureSprite(iconLoc));
+        } catch (Throwable t) {
+            // fallback (opcional, geralmente não é necessário, pois Customizer aceita)
+        }
         customisation.add(customisation_icon);
-
 
         GuiLabel customisation_name = new GuiLabel(name);
         customisation_name.setCssClass("settings_element_name");
         customisation.add(customisation_name);
 
-
         return customisation;
     }
 
+    @Override
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
         styles.add(new ResourceLocation("sphone:css/settings.css"));
         return styles;
     }
-
 }

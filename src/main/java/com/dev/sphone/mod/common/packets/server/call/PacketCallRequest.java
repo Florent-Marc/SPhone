@@ -48,6 +48,9 @@ public class PacketCallRequest implements IMessage {
         @Override
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketCallRequest message, MessageContext ctx) {
+                if (!com.dev.sphone.SPhone.isModLoaded("voicechat")) {
+                return null;
+            }
             EntityPlayerMP player = ctx.getServerHandler().player;
             EntityPlayerMP caller = UtilsServer.getPlayerFromNumber(Objects.requireNonNull(ctx.getServerHandler().player.getServer()), message.targetNum);
             String callNumber = MethodesBDDImpl.getDatabaseInstance().getNumero(UtilsServer.getSimCard(player));

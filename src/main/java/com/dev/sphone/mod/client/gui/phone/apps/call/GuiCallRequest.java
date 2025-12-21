@@ -35,7 +35,7 @@ public class GuiCallRequest extends GuiHome {
     @Override
     public void GuiInit() {
         super.GuiInit();
-        getBackground().removeAllChilds();
+        getBackground().removeAllChildren();
         GuiLabel label = new GuiLabel(I18n.format("sphone.phone.incoming"));
         label.setCssId("app_title");
         getBackground().add(label);

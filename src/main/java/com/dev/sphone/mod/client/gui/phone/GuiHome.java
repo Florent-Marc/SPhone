@@ -1,8 +1,8 @@
 package com.dev.sphone.mod.client.gui.phone;
 
+import com.dev.sphone.SPhone;
 import com.dev.sphone.api.loaders.AppDetails;
 import com.dev.sphone.api.loaders.AppType;
-import com.dev.sphone.mod.client.gui.phone.apps.DevGui;
 import com.dev.sphone.mod.client.gui.phone.apps.contacts.GuiNewContact;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
@@ -11,12 +11,11 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.cssengine.positionning.Size;
 import fr.aym.acsguis.utils.GuiConstants;
 import fr.aym.acsguis.utils.GuiTextureSprite;
-import com.dev.sphone.SPhone;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
-import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +42,9 @@ public class GuiHome extends GuiBase {
         appListPanel.setCssClass("app_list");
         appListPanel.setLayout(
                 new GridLayout(
-                        new Size.SizeValue(50, GuiConstants.ENUM_SIZE.ABSOLUTE),
-                        new Size.SizeValue(50, GuiConstants.ENUM_SIZE.ABSOLUTE),
-                        new Size.SizeValue(0.06f, GuiConstants.ENUM_SIZE.RELATIVE),
+                        new fr.aym.acsguis.cssengine.positionning.Size.SizeValue(50, GuiConstants.ENUM_SIZE.ABSOLUTE),
+                        new fr.aym.acsguis.cssengine.positionning.Size.SizeValue(50, GuiConstants.ENUM_SIZE.ABSOLUTE),
+                        new fr.aym.acsguis.cssengine.positionning.Size.SizeValue(0.06f, GuiConstants.ENUM_SIZE.RELATIVE),
                         GridLayout.GridDirection.HORIZONTAL,
                         4
                 )
@@ -53,7 +52,8 @@ public class GuiHome extends GuiBase {
 
         GuiLabel appSelector = new GuiLabel("");
         appSelector.setCssId("app_selector");
-        appSelector.getStyle().setVisible(false);
+        // CORRIGIDO: visibilidade usando Customizer!
+        appSelector.getStyle().getCustomizer().setVisible(false);
         appListPanel.add(appSelector);
 
         GuiPanel appBottomPanel = new GuiPanel();
@@ -65,14 +65,13 @@ public class GuiHome extends GuiBase {
 
         appBottomPanel.setLayout(
                 new GridLayout(
-                        new Size.SizeValue(40, GuiConstants.ENUM_SIZE.ABSOLUTE),
-                        new Size.SizeValue(40, GuiConstants.ENUM_SIZE.ABSOLUTE),
-                        new Size.SizeValue(0.06f, GuiConstants.ENUM_SIZE.RELATIVE),
+                        new fr.aym.acsguis.cssengine.positionning.Size.SizeValue(40, GuiConstants.ENUM_SIZE.ABSOLUTE),
+                        new fr.aym.acsguis.cssengine.positionning.Size.SizeValue(40, GuiConstants.ENUM_SIZE.ABSOLUTE),
+                        new fr.aym.acsguis.cssengine.positionning.Size.SizeValue(0.06f, GuiConstants.ENUM_SIZE.RELATIVE),
                         GridLayout.GridDirection.HORIZONTAL,
                         4
                 )
         );
-
 
         List<String> appnames = AppManager.getApps().stream().map(AppManager.App::getUniqueName).collect(Collectors.toList());
         List<String> erroredDownloadedApp = getDownloadedApps(Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND)).stream().filter((app) -> !appnames.contains(app)).collect(Collectors.toList());
@@ -88,21 +87,19 @@ public class GuiHome extends GuiBase {
             }
             if (!Objects.isNull(app.getGui())) {
                 if (app.getGui().getClass().isAnnotationPresent(AppDetails.class)) {
-
                     AppDetails[] appType = app.getGui().getClass().getAnnotationsByType(AppDetails.class);
 
                     if(appType.length != 0) {
-
                         if (appType[0].type().equals(AppType.DOWNLOADABLE)) return;
                         if (appType[0].isAlwaysHidden()) return;
                     }
                 }
             }
 
-
             GuiPanel appPanel = new GuiPanel();
             appPanel.setCssClass(app.getDefaultInAppBar() ? "app_bottom" : "app");
-            appPanel.getStyle().setTexture(new GuiTextureSprite(app.getIcon()));
+            // CORRIGIDO: setTexture usando Customizer!
+            appPanel.getStyle().getCustomizer().setTexture(new GuiTextureSprite(app.getIcon()));
             appPanel.addTickListener(() -> {
                 if(appPanel.isHovered()) {
                     appSelector.setText(app.getName());
@@ -124,12 +121,8 @@ public class GuiHome extends GuiBase {
                 SPhone.logger.warn("Too many apps in bottom bar, some will be hidden");
             }
 
-
             if (app.getDefaultInAppBar()) displayedBottomApps.getAndIncrement();
         });
-
-
-
 
         getBackground().add(appListPanel);
         getBackground().add(appBottomPanel);
@@ -141,7 +134,7 @@ public class GuiHome extends GuiBase {
         if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_NUMPAD0)) {
             Thread t = new Thread(() -> {
                 try {
-                    GuiLabel label = new GuiLabel("Developper mode enabled.");
+                    GuiLabel label = new GuiLabel("Developer mode enabled.");
                     label.setCssCode("a","bottom: 5%;color:red;");
                     getBackground().add(label);
                     Thread.sleep(1000);
@@ -153,9 +146,10 @@ public class GuiHome extends GuiBase {
             t.start();
             DEVMODE_LOCAL = true;
             AppManager.reloadApps(this.getGuiScreen());
-
         }
     }
+
+    @Override
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
@@ -163,5 +157,4 @@ public class GuiHome extends GuiBase {
         styles.add(new ResourceLocation("sphone:css/call.css"));
         return styles;
     }
-
 }

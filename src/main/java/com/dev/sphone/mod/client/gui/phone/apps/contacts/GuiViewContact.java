@@ -8,6 +8,8 @@ import com.dev.sphone.mod.common.phone.Contact;
 import com.dev.sphone.mod.utils.UtilsClient;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.aym.acsguis.utils.ComponentRenderContext;
+import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -60,42 +62,48 @@ public class GuiViewContact extends GuiBase {
             SPhone.network.sendToServer(new PacketSendRequestCall(contact.getNumero(), contact.getName() + " " + contact.getLastname()));
         });
 
-        if(contact.getPhoto().equals("empty")) {
+        if (contact.getPhoto().equals("empty")) {
             GuiLabel contactAvatar = new GuiLabel("");
             contactAvatar.setCssId("view_contact_avatar");
-            String cssCode = "background-image: url(\"sphone:textures/ui/icons/nohead.png\");";
-            contactAvatar.setCssCode("view_contact_avatar", cssCode);
+            try {
+                contactAvatar.getStyle().getCustomizer().setTexture(
+                    new GuiTextureSprite(new ResourceLocation("sphone", "textures/ui/icons/nohead.png"))
+                );
+            } catch (Throwable t) {
+                // Fallback ou log caso necessário
+            }
             getRoot().add(contactAvatar);
         } else {
             DynamicTexture texture = UtilsClient.base64ToDynamicTexture(contact.getPhoto());
-            GuiLabel screen = new GuiLabel(""){
+            GuiLabel screen = new GuiLabel("") {
                 @Override
-                public void drawBackground(int mouseX, int mouseY, float partialTicks) {
-                    super.drawBackground(mouseX, mouseY, partialTicks);
+                public void drawBackground(int mouseX, int mouseY, float partialTicks, ComponentRenderContext context) {
+                    super.drawBackground(mouseX, mouseY, partialTicks, context);
                     ScaledResolution scaledResolution = new ScaledResolution(mc);
                     int screenWidth = scaledResolution.getScaledWidth();
                     int screenHeight = scaledResolution.getScaledHeight();
 
-                    int x = getScreenX() + getWidth() / 2;
-                    int y = getScreenY() + getHeight() / 2;
+                    int x = (int) (getScreenX() + getWidth() / 2f);
+                    int y = (int) (getScreenY() + getHeight() / 2f);
 
                     GlStateManager.pushMatrix();
-                    assert texture != null;
-                    GlStateManager.bindTexture(texture.getGlTextureId());
-                    GlStateManager.translate(x, y, 0);
-                    GlStateManager.scale(0.077f, 0.235f, 0.3f);
-                    GL11.glBegin(GL11.GL_QUADS);
-                    GL11.glTexCoord2f(0.0F, 0.0F);
-                    GL11.glVertex3f(-screenWidth, -screenHeight, 0.0F);
-                    GL11.glTexCoord2f(0.0F, 1.0F);
-                    GL11.glVertex3f(-screenWidth, screenHeight, 0.0F);
+                    if (texture != null) {
+                        GlStateManager.bindTexture(texture.getGlTextureId());
+                        GlStateManager.translate(x, y, 0);
+                        GlStateManager.scale(0.077f, 0.235f, 0.3f);
+                        GL11.glBegin(GL11.GL_QUADS);
+                        GL11.glTexCoord2f(0.0F, 0.0F);
+                        GL11.glVertex3f(-screenWidth, -screenHeight, 0.0F);
+                        GL11.glTexCoord2f(0.0F, 1.0F);
+                        GL11.glVertex3f(-screenWidth, screenHeight, 0.0F);
 
-                    GL11.glTexCoord2f(1.0F, 1.0F);
-                    GL11.glVertex3f(screenWidth, screenHeight, 0.0F);
-                    GL11.glTexCoord2f(1.0F, 0.0F);
-                    GL11.glVertex3f(screenWidth, -screenHeight, 0.0F);
-                    GL11.glEnd();
-                    GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+                        GL11.glTexCoord2f(1.0F, 1.0F);
+                        GL11.glVertex3f(screenWidth, screenHeight, 0.0F);
+                        GL11.glTexCoord2f(1.0F, 0.0F);
+                        GL11.glVertex3f(screenWidth, -screenHeight, 0.0F);
+                        GL11.glEnd();
+                        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+                    }
                     GlStateManager.popMatrix();
                 }
             };
@@ -107,7 +115,7 @@ public class GuiViewContact extends GuiBase {
         name.setCssId("name");
         getRoot().add(name);
 
-        GuiLabel lastname = new GuiLabel(I18n.format("sphone.contacts.firstname")+ " : " + (contact.getLastname().isEmpty() ? "Non renseigné" : contact.getLastname()));
+        GuiLabel lastname = new GuiLabel(I18n.format("sphone.contacts.firstname") + " : " + (contact.getLastname().isEmpty() ? "Non renseigné" : contact.getLastname()));
         lastname.setCssId("lastname");
         getRoot().add(lastname);
 
@@ -122,11 +130,11 @@ public class GuiViewContact extends GuiBase {
         }
     }
 
+    @Override
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
         styles.add(new ResourceLocation("sphone:css/contacts.css"));
         return styles;
     }
-
 }

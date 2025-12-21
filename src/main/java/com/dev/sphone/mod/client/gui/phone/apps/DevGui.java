@@ -4,26 +4,24 @@ import com.dev.sphone.mod.client.gui.phone.GuiBase;
 import com.dev.sphone.mod.client.gui.phone.apps.camera.GuiImageSelector;
 import com.dev.sphone.mod.client.gui.phone.apps.camera.GuiShowImage;
 import com.dev.sphone.mod.common.items.ItemPhone;
-import fr.aym.acsguis.component.GuiComponent;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiYesNo;
 import net.minecraft.client.gui.GuiYesNoCallback;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemStackHandler;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.dev.sphone.mod.common.items.ItemSim.SIM_KEY_TAG;
 
 public class DevGui extends GuiBase {
-
 
     public DevGui(GuiScreen parent) {
         super(parent);
@@ -63,10 +61,14 @@ public class DevGui extends GuiBase {
             Minecraft.getMinecraft().displayGuiScreen(new GuiImageSelector(this.getGuiScreen(), (id, texture) -> {
                 GuiLabel label = new GuiLabel("Image " + id);
                 label.setCssCode("c","top: 10px; left: 50px;");
-                label.addClickListener((mouseX1, mouseY1, mouseButton1) -> Minecraft.getMinecraft().displayGuiScreen(new GuiShowImage(id).getGuiScreen()));
+                File[] files = com.dev.sphone.mod.utils.UtilsClient.getAllPhoneScreenshots(); // ADICIONADO
+                label.addClickListener((mouseX1, mouseY1, mouseButton1) ->
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiShowImage(files[id]).getGuiScreen())
+                );
             }).getGuiScreen());
         });
         getBackground().add(imageSelector);
+
         EntityPlayer player = Minecraft.getMinecraft().player;
         if(player.getHeldItemMainhand().getItem() instanceof ItemPhone) {
             ItemStackHandler handler;
@@ -87,8 +89,6 @@ public class DevGui extends GuiBase {
                 simNumber.setCssCode("b","top: 175px; left: 50px;");
                 settings.setCssCode("c","top: 200px; left: 50px;");
 
-
-
                 getBackground().add(phoneNumber);
                 getBackground().add(simNumber);
                 getBackground().add(settings);
@@ -101,5 +101,4 @@ public class DevGui extends GuiBase {
         styles.add(super.getCssStyles().get(0));
         return styles;
     }
-
 }

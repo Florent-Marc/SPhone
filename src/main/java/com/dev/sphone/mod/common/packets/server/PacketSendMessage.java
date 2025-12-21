@@ -53,7 +53,7 @@ public class PacketSendMessage extends SerializablePacket implements IMessage {
         public IMessage onMessage(PacketSendMessage message, MessageContext ctx) {
             EntityPlayer player = ctx.getServerHandler().player;
             String messageToSend = message.message;
-            Conversation receiverConv = (Conversation) message.getObjectsIn()[0];
+            Conversation receiverConv = (Conversation) message.getObjectsIn().get(0);
             int sim = ItemPhone.getSimCard(player.getHeldItemMainhand());
             if (sim == 0) {
                 return null;

@@ -9,6 +9,7 @@ import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.aym.acsguis.utils.ComponentRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -25,12 +26,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @AppDetails(type = AppType.DEFAULT)
 public class GuiGallery extends GuiBase {
 
     List<Integer> glIds = new ArrayList<>();
+
     public GuiGallery(GuiScreen parent) {
         super(parent);
     }
@@ -41,7 +42,6 @@ public class GuiGallery extends GuiBase {
 
     public List<GuiPanel> loadPage(int page) {
         int size = UtilsClient.getAllPhoneScreenshots().length;
-
         File[] files = UtilsClient.getAllPhoneScreenshots();
         List<GuiPanel> panels = new ArrayList<>();
         for (int j = page * 16; j < page * 16 + 16; j++) {
@@ -51,20 +51,20 @@ public class GuiGallery extends GuiBase {
             DynamicTexture texture = new DynamicTexture(getImage(files[j]).join());
             glIds.add(texture.getGlTextureId());
 
-            GuiPanel screen = new GuiPanel(){
+            GuiPanel screen = new GuiPanel() {
                 @Override
-                public void drawBackground(int mouseX, int mouseY, float partialTicks) {
-                    super.drawBackground(mouseX, mouseY, partialTicks);
+                public void drawBackground(int mouseX, int mouseY, float partialTicks, ComponentRenderContext context) {
+                    super.drawBackground(mouseX, mouseY, partialTicks, context);
                     ScaledResolution scaledResolution = new ScaledResolution(mc);
                     int screenWidth = scaledResolution.getScaledWidth();
                     int screenHeight = scaledResolution.getScaledHeight();
 
-                    int x = getScreenX() + getWidth() / 2;
-                    int y = getScreenY() + getHeight() / 2;
+                    int x = (int) (getScreenX() + getWidth() / 2);
+                    int y = (int) (getScreenY() + getHeight() / 2);
 
                     GlStateManager.pushMatrix();
                     GlStateManager.bindTexture(texture.getGlTextureId());
-                    GlStateManager.translate(x, y, 0);
+                    GlStateManager.translate((float) x, (float) y, 0);
                     GlStateManager.scale(0.077f, 0.235f, 0.3f);
                     GL11.glBegin(GL11.GL_QUADS);
                     GL11.glTexCoord2f(0.0F, 0.0F);
@@ -82,10 +82,10 @@ public class GuiGallery extends GuiBase {
                 }
             };
             screen.setCssClass("screen");
-            int finalJ = j; // multiply by size ? Or 16 ?
+            int finalJ = j;
             screen.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiShowImage(finalJ).getGuiScreen());
-            });
+    Minecraft.getMinecraft().displayGuiScreen(new GuiShowImage(files[finalJ]).getGuiScreen());
+});
 
             panels.add(screen);
         }
@@ -107,22 +107,22 @@ public class GuiGallery extends GuiBase {
 
         int pages = (int) Math.ceil(size / 16.0);
         final Integer[] selIndex = {0};
-        screens_list.removeAllChilds();
+        screens_list.removeAllChildren();
         loadPage(0).forEach(screens_list::add);
 
         getRoot().addKeyboardListener((c, key) -> {
-            screens_list.removeAllChilds();
-            glIds.forEach(TextureUtil::deleteTexture); // avoid memory leaks, DO IT BEFORE LOADPAGE
+            screens_list.removeAllChildren();
+            glIds.forEach(TextureUtil::deleteTexture); // avoid memory leaks
+            glIds.clear();
             loadPage(selIndex[0]).forEach(screens_list::add);
-            System.out.println(key);
-            if(key == 203){ // left arrow
+            if (key == 203) { // left arrow
                 selIndex[0]--;
-                if(selIndex[0] < 0){
+                if (selIndex[0] < 0) {
                     selIndex[0] = 0;
                 }
-            }else if(key == 205){ // right arrow
+            } else if (key == 205) { // right arrow
                 selIndex[0]++;
-                if(selIndex[0] >= pages){
+                if (selIndex[0] >= pages) {
                     selIndex[0] = pages - 1;
                 }
             }
@@ -131,8 +131,6 @@ public class GuiGallery extends GuiBase {
 
         getRoot().add(screens_list);
         getRoot().add(pagedisplay);
-
-
     }
 
     @Override
@@ -154,14 +152,15 @@ public class GuiGallery extends GuiBase {
     @Override
     public void guiClose() {
         glIds.forEach(TextureUtil::deleteTexture); // avoid memory leaks
+        glIds.clear();
         super.guiClose();
     }
 
+    @Override
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
         styles.add(new ResourceLocation("sphone:css/gallery.css"));
         return styles;
     }
-
 }

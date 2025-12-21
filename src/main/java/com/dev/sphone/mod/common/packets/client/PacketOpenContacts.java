@@ -38,7 +38,7 @@ public class PacketOpenContacts extends SerializablePacket implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenContacts message, MessageContext ctx) {
-            List<Contact> contactList = (List<Contact>) message.getObjectsIn()[0];
+            List<Contact> contactList = (List<Contact>) message.getObjectsIn().get(0);
             IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
             thread.addScheduledTask(new Runnable() {
                 public void run() {

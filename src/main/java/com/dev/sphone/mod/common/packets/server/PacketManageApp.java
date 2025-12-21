@@ -59,8 +59,8 @@ public class PacketManageApp extends SerializablePacket implements IMessage {
         public IMessage onMessage(PacketManageApp message, MessageContext ctx) {
 
             ItemStack phoneStack = ctx.getServerHandler().player.getHeldItemMainhand();
-            Actions action = (Actions) message.getObjectsIn()[0];
-            String appname = (String) message.getObjectsIn()[1];
+            Actions action = (Actions) message.getObjectsIn().get(0);
+            String appname = (String) message.getObjectsIn().get(1);
             if(phoneStack.getTagCompound() == null) {
                 phoneStack.setTagCompound(new NBTTagCompound());
             }

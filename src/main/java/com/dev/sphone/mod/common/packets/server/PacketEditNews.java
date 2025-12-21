@@ -45,7 +45,7 @@ public class PacketEditNews extends SerializablePacket implements IMessage {
                 return null;
             }
 
-            News news = (News) message.getObjectsIn()[0];
+            News news = (News) message.getObjectsIn().get(0);
             String type = message.type;
             if (type.equals("edit")) {
                 MethodesBDDImpl.getDatabaseInstance().editNews(news);

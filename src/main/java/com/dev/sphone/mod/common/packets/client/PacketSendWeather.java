@@ -36,7 +36,7 @@ public class PacketSendWeather extends SerializablePacket implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketSendWeather message, MessageContext ctx) {
-            Weather weather = (Weather) message.getObjectsIn()[0];
+            Weather weather = (Weather) message.getObjectsIn().get(0);
             IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
             thread.addScheduledTask(new Runnable() {
                 public void run() {

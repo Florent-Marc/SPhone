@@ -12,6 +12,7 @@ sphone.error.desc=Une erreur est survenue.
 sphone.error.unregistred=Votre carte SIM n'est pas enregistrée.
 sphone.error.notinserted=Votre carte SIM n'est pas insérée.
 
+sphone.meteo.title=Météo
 sphone.meteo.prevs=Prévisions météologiques
 sphone.meteo.types.thunder=Orage
 sphone.meteo.types.rain=Pluie
@@ -45,11 +46,18 @@ sphone.settings.phonenumber=NO de téléphone
 sphone.appstore.usesettings=Utilisez les paramètres pour désinstaller les applications
 sphone.settings.errorbg=Unable to load the background
 
-sphone.plusplusgame.points=Points :
+sphone.radio.muted=Radio muet
+sphone.radio.active=Radio actif
+sphone.subtitle.radio_on=§aRadio allumé
+sphone.subtitle.radio_off=§cRadio éteint
+sphone.subtitle.radio_ping=§eBip radio
+sphone.voice.muted=Micro du groupe coupé
+sphone.voice.unmuted=Micro du groupe réactivé
 
 sphone.phone.running=Appel en cours
 sphone.phone.incoming=Appel entrant
 sphone.phone.ended=Appel terminé
+sphone.phone.title=Téléphone
 sphone.message.title=Messages
 sphone.message.sendpos=Envoyer ma position
 sphone.message.posmessage=Ma position
@@ -62,3 +70,17 @@ sphone.contacts.number=Numéro
 sphone.contacts.selectphoto=Choisir une photo
 sphone.contacts.selected=Photo sélectionnée
 sphone.contacts.add=Ajouter un contact
+
+sphone.bank.hello=Bonjour client !
+sphone.bank.balance=Solde
+sphone.bank.transfer=Transférer
+sphone.bank.title=Banque
+
+sphone.quickpay.title=Paiement Rapide
+sphone.quickpay.recipient=Destinataire
+sphone.quickpay.amount=Montant
+sphone.quickpay.send=Envoyer
+sphone.calculator.title=Calculatrice
+sphone.camera.title=Appareil photo
+sphone.gallery.title=Galerie
+sphone.dev.title=Développement

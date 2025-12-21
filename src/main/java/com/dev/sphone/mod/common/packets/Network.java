@@ -12,18 +12,23 @@ import com.dev.sphone.mod.common.packets.server.call.PacketCallResponse;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketAcceptRequest;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketQuitCall;
 import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketSendRequestCall;
+import com.dev.sphone.mod.common.packets.server.call.gabiwork.PacketToggleGroupMute;
+import com.dev.sphone.mod.common.packets.server.HandlerTuneRadio;
+import com.dev.sphone.mod.common.packets.client.PacketTuneRadio;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class Network {
 
-    static int id = -1;
+    static int id = 0; // ID deve iniciar em 0 para evitar conflito!
+
     public static void init(){
         SPhone.network = NetworkRegistry.INSTANCE.newSimpleChannel("sphone");
         // Global
         packetFromClient(PacketOpenPhone.Handler.class, PacketOpenPhone.class);
         packetFromClient(PacketOpenNotes.Handler.class, PacketOpenNotes.class);
         packetFromClient(PacketSendWeather.Handler.class, PacketSendWeather.class);
+        packetFromClient(PacketSendBank.Handler.class, PacketSendBank.class);
         packetFromClient(PacketOpenListConv.Handler.class, PacketOpenListConv.class);
         packetFromClient(PacketOpenContacts.Handler.class, PacketOpenContacts.class);
         packetFromClient(PacketOpenConvContact.Handler.class, PacketOpenConvContact.class);
@@ -48,14 +53,21 @@ public class Network {
         packetFromServer(PacketAcceptRequest.ServerHandler.class, PacketAcceptRequest.class);
 
         packetFromServer(PacketQuitCall.ServerHandler.class, PacketQuitCall.class);
+        packetFromServer(PacketToggleGroupMute.ServerHandler.class, PacketToggleGroupMute.class);
 
         packetFromServer(PacketManageApp.ServerHandler.class, PacketManageApp.class);
         packetFromServer(PacketSetBackground.ServerHandler.class, PacketSetBackground.class);
 
-        // Contacts
+        // --- RADIO ---
+        // Adicione este registro para o rádio funcionar!
+        packetFromServer(com.dev.sphone.mod.common.packets.server.HandlerTuneRadio.class,
+                         com.dev.sphone.mod.common.packets.client.PacketTuneRadio.class);
+        packetFromServer(com.dev.sphone.mod.common.packets.server.radio.PacketRadioMuteToggle.Handler.class,
+                         com.dev.sphone.mod.common.packets.server.radio.PacketRadioMuteToggle.class);
+
+        // Contacts (descomentado se for usar)
         //packetFromServer(PacketGetContacts.ServerHandler.class, PacketGetContacts.class);
         //packetFromServer(PacketUpdateContacts.ServerHandler.class, PacketUpdateContacts.class);
-
     }
 
     public static void packetFromClient(Class handler, Class packet) {

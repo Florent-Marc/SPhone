@@ -36,6 +36,9 @@ public class PacketQuitCall implements IMessage {
         @Override
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketQuitCall message, MessageContext ctx) {
+                if (!com.dev.sphone.SPhone.isModLoaded("voicechat")) {
+                return null;
+            }
             EntityPlayerMP player = ctx.getServerHandler().player;
             VoiceAddon.removeFromActualGroup(player);
             return null;

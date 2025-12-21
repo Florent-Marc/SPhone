@@ -38,8 +38,8 @@ public class PacketOpenConvContact extends SerializablePacket implements IMessag
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenConvContact message, MessageContext ctx) {
-            List<Conversation> convList = (List<Conversation>) message.getObjectsIn()[0];
-            Conversation conv = (Conversation) message.getObjectsIn()[1];
+            List<Conversation> convList = (List<Conversation>) message.getObjectsIn().get(0);
+            Conversation conv = (Conversation) message.getObjectsIn().get(1);
             IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
             thread.addScheduledTask(new Runnable() {
                 public void run() {

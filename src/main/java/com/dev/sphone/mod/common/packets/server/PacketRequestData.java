@@ -8,6 +8,7 @@ import com.dev.sphone.mod.common.packets.client.PacketOpenContacts;
 import com.dev.sphone.mod.common.packets.client.PacketOpenListConv;
 import com.dev.sphone.mod.common.packets.client.PacketOpenNotes;
 import com.dev.sphone.mod.common.packets.client.PacketSendWeather;
+import com.dev.sphone.mod.common.packets.client.PacketSendBank;
 import com.dev.sphone.mod.common.phone.Conversation;
 import com.dev.sphone.mod.common.phone.Weather;
 import com.dev.sphone.mod.server.bdd.MethodesBDDImpl;
@@ -70,6 +71,9 @@ public class PacketRequestData implements IMessage {
             if(request.equals("weather")){
                 WorldInfo worldInfo = player.world.getWorldInfo();
                 SPhone.network.sendTo(new PacketSendWeather(new Weather(worldInfo.getCleanWeatherTime(), worldInfo.getRainTime(), worldInfo.getThunderTime(), worldInfo.isRaining(), worldInfo.isThundering())), player);
+            }
+            if(request.equals("bank")){
+                SPhone.network.sendTo(new PacketSendBank(), player);
             }
             List<Conversation> c = new ArrayList<>();
             if(request.equals("conversations")){

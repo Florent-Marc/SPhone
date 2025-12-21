@@ -1,0 +1,61 @@
+#root {
+    background-image: url("sphone:textures/ui/background/enderbank.png");
+}
+
+#app_title {
+    font-size: 5px;
+    left: 15%;
+    top: 15%;
+    width: 70%;
+    height: auto;
+    font-family: "dnx:montserratlow";
+    color: #ffffff;
+    z-index: 2;
+    text-align: center;
+}
+
+.input_receiver {
+    width: 80%;
+    height: 7%;
+    top: 25%;
+    font-family: "dnx:montserratlow";
+    left: 10%;
+    background-color: #329b5e;
+    color: #ffffff;
+    border-radius: 15px;
+    font-size: 3px;
+    padding-left: 5px;
+    z-index: 2;
+}
+
+.input_amount {
+    width: 80%;
+    height: 7%;
+    top: 38%;
+    left: 10%;
+    font-family: "dnx:montserratlow";
+    background-color: #39af6a;
+    color: #ffffff;
+    font-size: 3px;
+    padding-left: 5px;
+    z-index: 2;
+    border-radius: 15px;
+}
+
+#send_button {
+    width: 60%;
+    height: 10%;
+    top: 55%;
+    left: 20%;
+    font-family: "dnx:montserratlow";
+    background-color: #00ff73;
+    color: #ffffff;
+    text-align: center;
+    font-size: 4px;
+    border-radius: 15px;
+    z-index: 2;
+}
+
+#send_button:hover {
+    background-color: #8fffc2;
+}

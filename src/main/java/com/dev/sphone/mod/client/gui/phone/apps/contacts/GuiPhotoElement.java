@@ -1,11 +1,10 @@
 package com.dev.sphone.mod.client.gui.phone.apps.contacts;
 
 import com.dev.sphone.mod.utils.UtilsClient;
-import fr.aym.acsguis.component.GuiComponent;
 import fr.aym.acsguis.component.panel.GuiPanel;
+import fr.aym.acsguis.utils.ComponentRenderContext;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.HttpUtil;
 import org.lwjgl.opengl.GL11;
 
@@ -22,16 +21,20 @@ public class GuiPhotoElement extends GuiPanel {
     public GuiPhotoElement(int fileid) {
         this.fileid = fileid;
         File[] files = UtilsClient.getAllPhoneScreenshots();
-        this.texture = new UtilsClient.InternalDynamicTexture(getImage(files[fileid]).join());
+        if (fileid >= 0 && fileid < files.length) {
+            this.texture = new UtilsClient.InternalDynamicTexture(getImage(files[fileid]).join());
+        }
     }
 
     public GuiPhotoElement(String photo) {
-        if(Objects.equals(photo, "empty")) {
+        if (Objects.equals(photo, "empty")) {
             this.fileid = -1;
         } else {
             this.fileid = Integer.parseInt(photo);
             File[] files = UtilsClient.getAllPhoneScreenshots();
-            this.texture = new UtilsClient.InternalDynamicTexture(getImage(files[fileid]).join());
+            if (fileid >= 0 && fileid < files.length) {
+                this.texture = new UtilsClient.InternalDynamicTexture(getImage(files[fileid]).join());
+            }
         }
     }
 
@@ -40,15 +43,16 @@ public class GuiPhotoElement extends GuiPanel {
     }
 
     @Override
-    public void drawBackground(int mouseX, int mouseY, float partialTicks) {
-        super.drawBackground(mouseX, mouseY, partialTicks);
-        if(fileid == -1) return;
+    public void drawBackground(int mouseX, int mouseY, float partialTicks, ComponentRenderContext context) {
+        super.drawBackground(mouseX, mouseY, partialTicks, context);
+        if (fileid == -1 || texture == null) return;
+
         ScaledResolution scaledResolution = new ScaledResolution(mc);
         int screenWidth = scaledResolution.getScaledWidth();
         int screenHeight = scaledResolution.getScaledHeight();
 
-        int x = getScreenX() + getWidth() / 2;
-        int y = getScreenY() + getHeight() / 2;
+        int x = (int) (getScreenX() + getWidth() / 2f);
+        int y = (int) (getScreenY() + getHeight() / 2f);
 
         GlStateManager.pushMatrix();
         GlStateManager.bindTexture(texture.getGlTextureId());
@@ -79,5 +83,4 @@ public class GuiPhotoElement extends GuiPanel {
             return null;
         }, HttpUtil.DOWNLOADER_EXECUTOR);
     }
-
 }

@@ -12,7 +12,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +29,9 @@ public class GuiWeather extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
-        style.setBackgroundColor(Color.TRANSLUCENT);
+
+        // Fundo transparente usando Customizer!
+        getStyleCustomizer().setBackgroundColor(0x00000000);
 
         add(getRoot());
 
@@ -49,18 +50,19 @@ public class GuiWeather extends GuiBase {
 
         GuiPanel weatherIcon = new GuiPanel();
         weatherIcon.setCssId("weatherIcon");
-        weatherIcon.getStyle().setTexture(new GuiTextureSprite(new ResourceLocation("sphone:textures/ui/icons/weather/"+getTypeFormat(weatherType)+".png")));
+        // Usa Customizer para o ícone!
+        weatherIcon.getStyle().getCustomizer().setTexture(
+            new GuiTextureSprite(new ResourceLocation("sphone:textures/ui/icons/weather/" + getTypeFormat(weatherType) + ".png"))
+        );
         getRoot().add(weatherIcon);
 
         GuiLabel weatherLabel = new GuiLabel(I18n.format("sphone.meteo.types." + weatherType));
         weatherLabel.setCssId("weatherLabel");
         getRoot().add(weatherLabel);
 
-
         GuiLabel forecastLabel = new GuiLabel(I18n.format("sphone.meteo.prevs"));
         forecastLabel.setCssId("forecastLabel");
         getRoot().add(forecastLabel);
-
 
         GuiLabel forecastTimeLabel = new GuiLabel(forecastTime);
         forecastTimeLabel.setCssId("forecastTimeLabel");
@@ -68,18 +70,17 @@ public class GuiWeather extends GuiBase {
 
         GuiPanel forecastIcon = new GuiPanel();
         forecastIcon.setCssId("forecastIcon");
-        forecastIcon.getStyle().setTexture(new GuiTextureSprite(new ResourceLocation("sphone:textures/ui/icons/weather/"+getTypeFormat(forecastType)+".png")));
+        forecastIcon.getStyle().getCustomizer().setTexture(
+            new GuiTextureSprite(new ResourceLocation("sphone:textures/ui/icons/weather/" + getTypeFormat(forecastType) + ".png"))
+        );
         getRoot().add(forecastIcon);
-
 
         GuiLabel forecastName = new GuiLabel(I18n.format("sphone.meteo.types." + forecastType));
         forecastName.setCssId("forecastName");
         getRoot().add(forecastName);
-
-        this.add(getRoot());
     }
 
-    public String getTypeFormat(String weatherType){
+    public String getTypeFormat(String weatherType) {
         switch (weatherType) {
             case "sunny":
             case "sun":
@@ -103,32 +104,31 @@ public class GuiWeather extends GuiBase {
         int thunderTime = weather.getThunderTime();
         boolean isRaining = weather.isRaining();
         boolean isThundering = weather.isThundering();
-        System.out.println(clearTime + " / " + rainTime + " / " + thunderTime + " / " + isRaining + " / " + isThundering);
         String current;
         String after;
         String afterTime;
-        if(isRaining){
-            if(isThundering){
+        if (isRaining) {
+            if (isThundering) {
                 current = "thunder";
-                if(rainTime < thunderTime) {
+                if (rainTime < thunderTime) {
                     after = "sun";
                     afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
-                }else{
+                } else {
                     after = "rain";
                     afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, thunderTime / 20);
                 }
-            }else{
+            } else {
                 current = "rain";
-                if(thunderTime > rainTime) {
+                if (thunderTime > rainTime) {
                     after = "sun";
                     afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
-                }else{
+                } else {
                     after = "thunder";
                     afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, thunderTime / 20);
                 }
             }
-        }else{
-            if(clearTime != 0) {
+        } else {
+            if (clearTime != 0) {
                 if (clearTime / (20 * 60) <= 10) {
                     current = "clear";
                     after = "rain";
@@ -138,19 +138,19 @@ public class GuiWeather extends GuiBase {
                     after = "rain";
                     afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, clearTime / 20);
                 }
-            }else{
-                if(rainTime < thunderTime){
-                    if(rainTime / (20*60) <= 10) {
+            } else {
+                if (rainTime < thunderTime) {
+                    if (rainTime / (20 * 60) <= 10) {
                         current = "clear";
-                    }else{
+                    } else {
                         current = "sunny";
                     }
                     after = "rain";
                     afterTime = UtilsServer.getCurrentDateFormat("HH:mm", TimeUnit.SECONDS, rainTime / 20);
-                }else{
-                    if(thunderTime / (20*60) <= 10) {
+                } else {
+                    if (thunderTime / (20 * 60) <= 10) {
                         current = "clear";
-                    }else{
+                    } else {
                         current = "sunny";
                     }
                     after = "thunder";
@@ -161,12 +161,11 @@ public class GuiWeather extends GuiBase {
         return new String[]{current, after, afterTime};
     }
 
+    @Override
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
         styles.add(new ResourceLocation("sphone:css/weather.css"));
         return styles;
     }
-
-
 }

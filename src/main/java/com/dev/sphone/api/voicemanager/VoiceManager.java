@@ -18,12 +18,14 @@ public class VoiceManager {
 
     public static void init(Side side) {
 
-        if(SPhone.isUsingMod("de.maxhenkel.voicechat.ForgeVoicechatMod"))
+        if (SPhone.isModLoaded("voicechat")) {
             voiceManager = new VoiceNetwork();
-        else {
-            SPhone.logger.error("VoiceManager : VoiceChat mod is missing, please install it.");
-
+        } else {
+            SPhone.logger.error("VoiceManager : VoiceChat mod is missing, disabling voice features.");
+            voiceManager = new com.dev.sphone.api.voicemanager.modularvoicechat.ModularVoiceChatAddon();
         }
-        voiceManager.initAddon();
+        if (voiceManager != null) {
+            voiceManager.initAddon();
+        }
     }
 }

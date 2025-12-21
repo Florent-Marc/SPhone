@@ -38,13 +38,14 @@ public class GuiCallEnd extends GuiBase {
     }
 
     @Override
-    public void tick() {
+    public boolean tick() {
         super.tick();
         tick++;
         //wait 2 seconds
         if (tick % 80 == 0) {
             mc.displayGuiScreen(new GuiHome().getGuiScreen());
         }
+        return true; // ou false, dependendo do que o método deve sinalizar
     }
 
     @Override

@@ -30,12 +30,14 @@ repositories {
         url = "https://minecraft.curseforge.com/api/maven/"
     }
 
-    maven {
-        url('http://maven.dynamx.fr/artifactory/DynamXRepo/')
-    }
-    maven {
-        url 'https://maven.dynamx.fr/artifactory/' + 'ACsGuisRepo/'
-    }
+maven {
+    name = "DynamX Repo"
+    url = "https://maven.dynamx.fr/artifactory/DynamXRepo/"
+}
+maven {
+    name = "ACsGuis Repo"
+    url = "https://maven.dynamx.fr/artifactory/ACsGuisRepo/"
+}
     maven {
         url 'https://www.cursemaven.com/'
     }
@@ -91,7 +93,9 @@ minecraft {
     sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 
-    dependencies {
+dependencies {
+    implementation 'fr.dynamx:DynamX:4.1.0-dev62'
+    implementation 'fr.aym.acsguis:ACsGuis:1.4.1-beta'
 
         shadow 'com.google.code.gson:gson:2.10.1'
         testCompile group: 'junit', name: 'junit', version: '4.12'
@@ -99,6 +103,7 @@ minecraft {
         shadow group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
         shadow group: 'org.xerial', name: 'sqlite-jdbc', version: '3.7.2'
 
+        implementation group: 'uk.me.berndporr', name: 'iirj', version: '1.7'
         compile fileTree(dir: 'libs', include: '*.jar')
     }
 

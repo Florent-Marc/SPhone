@@ -2,6 +2,7 @@ package com.dev.sphone.mod.common.phone;
 
 import fr.aym.acslib.utils.nbtserializer.ISerializable;
 import fr.aym.acslib.utils.packetserializer.ISerializablePacket;
+import fr.aym.acslib.utils.DeserializedData;
 
 public class News implements ISerializable, ISerializablePacket {
 
@@ -21,34 +22,15 @@ public class News implements ISerializable, ISerializablePacket {
         this.author = author;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public long getDate() {
-        return date;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
+    public int getId() { return id; }
+    public String getTitle() { return title; }
+    public String getContent() { return content; }
+    public String getImage() { return image; }
+    public long getDate() { return date; }
+    public String getAuthor() { return author; }
 
     @Override
-    public int getVersion() {
-        return 0;
-    }
+    public int getVersion() { return 0; }
 
     @Override
     public Object[] getObjectsToSave() {
@@ -56,12 +38,12 @@ public class News implements ISerializable, ISerializablePacket {
     }
 
     @Override
-    public void populateWithSavedObjects(Object[] objects) {
-        id = (int) objects[0];
-        title = (String) objects[1];
-        content = (String) objects[2];
-        image = (String) objects[3];
-        date = (long) objects[4];
-        author = (String) objects[5];
+    public void populateWithSavedObjects(DeserializedData data) {
+        id = (int) data.next();
+        title = (String) data.next();
+        content = (String) data.next();
+        image = (String) data.next();
+        date = (long) data.next();
+        author = (String) data.next();
     }
 }

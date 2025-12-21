@@ -41,7 +41,7 @@ public class PacketGetUniqueConv extends SerializablePacket implements IMessage 
                 return null;
             }
 
-            Contact contact = (Contact) message.getObjectsIn()[0];
+            Contact contact = (Contact) message.getObjectsIn().get(0);
 
             SPhone.network.sendTo(new PacketOpenConvContact(MethodesBDDImpl.getDatabaseInstance().getConversations(sim), MethodesBDDImpl.getDatabaseInstance().getConversation(sim, contact)), player);
             

@@ -40,7 +40,7 @@ public class PacketOpenListConv extends SerializablePacket implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenListConv message, MessageContext ctx) {
-            List<Conversation> conversations = (List<Conversation>) message.getObjectsIn()[0];
+            List<Conversation> conversations = (List<Conversation>) message.getObjectsIn().get(0);
             IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
             thread.addScheduledTask(new Runnable() {
                 public void run() {

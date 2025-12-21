@@ -22,5 +22,21 @@
   "call": {
     "subtitle": "sphone.subtitle.call",
     "sounds": [ "sphone:call" ]
+  },
+  "sintonizando": {
+    "subtitle": "sphone.subtitle.sintonizando",
+    "sounds": [ "sphone:sintonizando" ]
+  },
+  "radio_on": {
+    "subtitle": "sphone.subtitle.radio_on",
+    "sounds": [ "sphone:radio_on" ]
+  },
+  "radio_off": {
+    "subtitle": "sphone.subtitle.radio_off",
+    "sounds": [ "sphone:radio_off" ]
+  },
+  "radio_ping": {
+    "subtitle": "sphone.subtitle.radio_ping",
+    "sounds": [ "sphone:radio_ping" ]
   }
 }

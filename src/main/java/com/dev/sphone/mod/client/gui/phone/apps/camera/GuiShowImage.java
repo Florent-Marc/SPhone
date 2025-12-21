@@ -8,6 +8,7 @@ import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.button.GuiCheckBox;
 import fr.aym.acsguis.component.button.GuiSlider;
 import fr.aym.acsguis.component.panel.GuiPanel;
+import fr.aym.acsguis.utils.ComponentRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -29,16 +30,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @AppDetails(type = AppType.DEFAULT)
 public class GuiShowImage extends GuiBase {
 
-    public GuiShowImage(GuiScreen parent) {
-        super(parent);
-    }
+    private final File imageFile;
+    private Integer gid;
+    private UtilsClient.InternalDynamicTexture texture;
 
-    Integer id;
-    Integer gid;
-
-    public GuiShowImage(Integer id) {
+    public GuiShowImage(File imageFile) {
         super(new GuiGallery().getGuiScreen());
-        this.id = id;
+        this.imageFile = imageFile;
     }
 
     @Override
@@ -51,13 +49,15 @@ public class GuiShowImage extends GuiBase {
         AtomicBoolean isBlurred = new AtomicBoolean(false);
 
         add(this.getRoot());
-        File[] files = UtilsClient.getAllPhoneScreenshots();
-        UtilsClient.InternalDynamicTexture texture = new UtilsClient.InternalDynamicTexture(getImage(files[id]).join());
+
+        if (imageFile == null) return;
+        texture = new UtilsClient.InternalDynamicTexture(getImage(imageFile).join());
         gid = texture.getGlTextureId();
+
         GuiPanel screen = new GuiPanel() {
             @Override
-            public void drawBackground(int mouseX, int mouseY, float partialTicks) {
-                super.drawBackground(mouseX, mouseY, partialTicks);
+            public void drawBackground(int mouseX, int mouseY, float partialTicks, ComponentRenderContext context) {
+    super.drawBackground(mouseX, mouseY, partialTicks, context);
                 ScaledResolution scaledResolution = new ScaledResolution(mc);
                 float screenWidth = scaledResolution.getScaledWidth() / 2.1f;
                 float screenHeight = scaledResolution.getScaledHeight() / 1.2f;
@@ -83,7 +83,6 @@ public class GuiShowImage extends GuiBase {
                 GL11.glEnd();
                 GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
                 GlStateManager.popMatrix();
-
             }
         };
         screen.setCssClass("screenlarge");
@@ -131,8 +130,9 @@ public class GuiShowImage extends GuiBase {
         GuiPanel delete = new GuiPanel();
         delete.setCssClass("delete");
         delete.addClickListener((mouseX, mouseY, mouseButton) -> {
-            File file = files[id];
-            file.delete();
+            if (imageFile != null) {
+                imageFile.delete();
+            }
             Minecraft.getMinecraft().displayGuiScreen(new GuiGallery().getGuiScreen());
         });
         getRoot().add(delete);
@@ -140,12 +140,12 @@ public class GuiShowImage extends GuiBase {
         GuiButton save = new GuiButton("Save");
         save.setCssClass("save");
         save.addClickListener((mouseX, mouseY, mouseButton) -> {
-            if(editR[0] == 0 && editG[0] == 0 && editB[0] == 0 && !isBlurred.get()) {
+            if (editR[0] == 0 && editG[0] == 0 && editB[0] == 0 && !isBlurred.get()) {
                 Minecraft.getMinecraft().displayGuiScreen(new GuiGallery().getGuiScreen());
                 Minecraft.getMinecraft().player.sendMessage(new TextComponentString("No changes were made to the image."));
                 return;
             }
-            BufferedImage image = new BufferedImage(texture.getWidth(), texture.getHeight(), BufferedImage.TYPE_INT_RGB); // Arrêter de lire ici.
+            BufferedImage image = new BufferedImage(texture.getWidth(), texture.getHeight(), BufferedImage.TYPE_INT_RGB);
             for (int y = 0; y < texture.getHeight(); y++) {
                 for (int x = 0; x < texture.getWidth(); x++) {
                     int rgb = texture.getTextureData()[x + y * texture.getWidth()];
@@ -166,14 +166,8 @@ public class GuiShowImage extends GuiBase {
                     BufferedImage image2 = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
                     for (int y = 0; y < image.getHeight(); y++) {
                         for (int x = 0; x < image.getWidth(); x++) {
-
                             int rgb;
-
-                            int r2 = 0;
-                            int g2 = 0;
-                            int b2 = 0;
-                            int count = 0;
-
+                            int r2 = 0, g2 = 0, b2 = 0, count = 0;
                             for (int y2 = -3; y2 <= 3; y2++) {
                                 for (int x2 = -3; x2 <= 3; x2++) {
                                     if (x + x2 < 0 || x + x2 >= image.getWidth() || y + y2 < 0 || y + y2 >= image.getHeight()) {
@@ -186,11 +180,9 @@ public class GuiShowImage extends GuiBase {
                                     count++;
                                 }
                             }
-
                             r2 /= count;
                             g2 /= count;
                             b2 /= count;
-
                             rgb = (r2 << 16) | (g2 << 8) | b2;
                             image2.setRGB(x, y, rgb);
                         }
@@ -207,13 +199,9 @@ public class GuiShowImage extends GuiBase {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
             Minecraft.getMinecraft().displayGuiScreen(new GuiGallery().getGuiScreen());
         });
         getRoot().add(save);
-
-
     }
 
     @Override
@@ -234,7 +222,8 @@ public class GuiShowImage extends GuiBase {
 
     @Override
     public void guiClose() {
-        TextureUtil.deleteTexture(gid);
+        if (gid != null)
+            TextureUtil.deleteTexture(gid);
         super.guiClose();
     }
 
@@ -244,5 +233,4 @@ public class GuiShowImage extends GuiBase {
         styles.add(new ResourceLocation("sphone:css/gallery.css"));
         return styles;
     }
-
 }

@@ -46,34 +46,46 @@ public class GuiEditContact extends GuiBase {
         name.setCssClass("textarea");
         name.setMaxTextLength(16);
         name.setCssId("nom");
-        name.setText(contact.getName());
+        String contactName = contact.getName();
+        if (contactName != null && !contactName.isEmpty()) {
+            name.setText(contactName);
+        } else {
+            name.setHintText(I18n.format("sphone.contacts.name"));
+        }
         getRoot().add(name);
 
         GuiTextField lastName = new GuiTextField();
         lastName.setCssClass("textarea");
         lastName.setMaxTextLength(16);
         lastName.setCssId("prenom");
-        if(contact.getLastname().isEmpty()){
+        String contactLastname = contact.getLastname();
+        if (contactLastname != null && !contactLastname.isEmpty()) {
+            lastName.setText(contactLastname);
+        } else {
             lastName.setHintText(I18n.format("sphone.contacts.firstname"));
-        }else {
-            lastName.setText(contact.getLastname());
         }
         getRoot().add(lastName);
 
         GuiTextField numero = new GuiTextField();
         numero.setCssClass("textarea");
         numero.setCssId("numero");
-        numero.setText(contact.getNumero());
+        String contactNumero = contact.getNumero();
+        if (contactNumero != null && !contactNumero.isEmpty()) {
+            numero.setText(contactNumero);
+        } else {
+            numero.setHintText(I18n.format("sphone.contacts.number"));
+        }
         //numero.setRegexPattern(Pattern.compile("^-?\\d+$"));
         getRoot().add(numero);
 
         GuiTextField notes = new GuiTextField();
         notes.setCssClass("textarea");
         notes.setCssId("notes");
-        if(contact.getLastname().isEmpty()){
+        String contactNotes = contact.getNotes();
+        if (contactNotes != null && !contactNotes.isEmpty()) {
+            notes.setText(contactNotes);
+        } else {
             notes.setHintText(I18n.format("sphone.contacts.note"));
-        }else {
-            notes.setText(contact.getNotes());
         }
         getRoot().add(notes);
 
@@ -92,19 +104,40 @@ public class GuiEditContact extends GuiBase {
         buttonEdit.setCssClass("edit");
         buttonEdit.addClickListener((mouseX, mouseY, mouseButton) -> {
             File[] files = UtilsClient.getAllPhoneScreenshots();
-            String photoToB64= "empty";
-            if(!contact.getPhoto().equals("empty")) {
-                UtilsClient.InternalDynamicTexture texture = new UtilsClient.InternalDynamicTexture(getImage(files[Integer.parseInt(contact.getPhoto())]).join());
-                photoToB64 = UtilsClient.dynamicTextureToBase64(texture);
+            String photoToB64 = "empty";
+            String photoId = contact.getPhoto();
+            if (photoId != null && !photoId.equals("empty")) {
+                try {
+                    int idx = Integer.parseInt(photoId);
+                    if (idx >= 0 && idx < files.length) {
+                        UtilsClient.InternalDynamicTexture texture = new UtilsClient.InternalDynamicTexture(getImage(files[idx]).join());
+                        photoToB64 = UtilsClient.dynamicTextureToBase64(texture);
+                    }
+                } catch (Exception ignored) {}
             }
-            SPhone.network.sendToServer(new PacketEditContact(new Contact(contact.getId(), name.getText(), lastName.getText(), numero.getText(), notes.getText(), photoToB64), "edit"));
+            SPhone.network.sendToServer(new PacketEditContact(
+                    new Contact(
+                            contact.getId(),
+                            name.getText(),
+                            lastName.getText(),
+                            numero.getText(),
+                            notes.getText(),
+                            photoToB64
+                    ), "edit"));
         });
         getRoot().add(buttonEdit);
 
         GuiPanel buttonDel = new GuiPanel();
         buttonDel.setCssClass("delete");
         buttonDel.addClickListener((mouseX, mouseY, mouseButton) -> {
-            SPhone.network.sendToServer(new PacketEditContact(new Contact(contact.getId(), name.getText(), lastName.getText(), numero.getText(), notes.getText()), "delete"));
+            SPhone.network.sendToServer(new PacketEditContact(
+                    new Contact(
+                            contact.getId(),
+                            name.getText(),
+                            lastName.getText(),
+                            numero.getText(),
+                            notes.getText()
+                    ), "delete"));
         });
         getRoot().add(buttonDel);
     }

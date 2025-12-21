@@ -111,8 +111,9 @@ public class GuiMakeCall extends GuiBase {
     }
 
     @Override
-    public void tick() {
+    public boolean tick() {
         super.tick();
+        return true; // ou false, dependendo do que o método deve sinalizar
     }
 
     @Override

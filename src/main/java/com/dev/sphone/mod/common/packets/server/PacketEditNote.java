@@ -48,7 +48,7 @@ public class PacketEditNote extends SerializablePacket implements IMessage {
                 return null;
             }
 
-            Note note = (Note) message.getObjectsIn()[0];
+            Note note = (Note) message.getObjectsIn().get(0);
             String type = message.type;
             if (type.equals("edit")) {
                 MethodesBDDImpl.getDatabaseInstance().editNote(note);

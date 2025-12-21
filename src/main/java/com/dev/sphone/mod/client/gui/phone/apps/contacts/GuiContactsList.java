@@ -1,4 +1,3 @@
-
 package com.dev.sphone.mod.client.gui.phone.apps.contacts;
 
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
@@ -7,6 +6,8 @@ import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.aym.acsguis.utils.ComponentRenderContext;
+import fr.aym.acsguis.utils.GuiTextureSprite;
 import com.dev.sphone.mod.common.phone.Contact;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -32,6 +33,7 @@ public class GuiContactsList extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
+
         GuiLabel AppTitle = new GuiLabel(I18n.format("sphone.contacts.title"));
         AppTitle.setCssId("app_title");
         getBackground().add(AppTitle);
@@ -48,35 +50,43 @@ public class GuiContactsList extends GuiBase {
         contacts_list.setLayout(new GridLayout(-1, 60, 5, GridLayout.GridDirection.HORIZONTAL, 1));
 
         for (Contact contact : contacts) {
-
             GuiPanel contactPanel = new GuiPanel();
             contactPanel.setCssClass("contact_background");
             contactPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
                 Minecraft.getMinecraft().displayGuiScreen(new GuiViewContact(this.getGuiScreen(), contact).getGuiScreen());
             });
 
-            if(contact.getPhoto().equals("empty")) {
+            if (contact.getPhoto().equals("empty")) {
                 GuiLabel contactAvatar = new GuiLabel("");
                 contactAvatar.setCssId("contact_avatar");
-                String cssCode = "background-image: url(\"sphone:textures/ui/icons/nohead.png\");";
-                contactAvatar.setCssCode("contact_avatar", cssCode);
+
+                // CORRIGIDO: setTexture usando Customizer!
+                try {
+                    contactAvatar.getStyle().getCustomizer().setTexture(
+                        new GuiTextureSprite(new ResourceLocation("sphone", "textures/ui/icons/nohead.png"))
+                    );
+                } catch (Throwable t) {
+                    // fallback ou log
+                }
+
                 contactPanel.add(contactAvatar);
             } else {
                 DynamicTexture texture = UtilsClient.base64ToDynamicTexture(contact.getPhoto());
-                GuiLabel screen = new GuiLabel(""){
+                GuiLabel screen = new GuiLabel("") {
                     @Override
-                    public void drawBackground(int mouseX, int mouseY, float partialTicks) {
-                        super.drawBackground(mouseX, mouseY, partialTicks);
+                    public void drawBackground(int mouseX, int mouseY, float partialTicks, ComponentRenderContext context) {
+                        super.drawBackground(mouseX, mouseY, partialTicks, context);
                         ScaledResolution scaledResolution = new ScaledResolution(mc);
                         int screenWidth = scaledResolution.getScaledWidth();
                         int screenHeight = scaledResolution.getScaledHeight();
 
-                        int x = getScreenX() + getWidth() / 2;
-                        int y = getScreenY() + getHeight() / 2;
+                        int x = (int) (getScreenX() + getWidth() / 2f);
+                        int y = (int) (getScreenY() + getHeight() / 2f);
 
                         GlStateManager.pushMatrix();
-                        assert texture != null;
-                        GlStateManager.bindTexture(texture.getGlTextureId());
+                        if (texture != null) {
+                            GlStateManager.bindTexture(texture.getGlTextureId());
+                        }
                         GlStateManager.translate(x, y, 0);
                         GlStateManager.scale(0.077f, 0.235f, 0.3f);
                         GL11.glBegin(GL11.GL_QUADS);
@@ -108,11 +118,11 @@ public class GuiContactsList extends GuiBase {
         getBackground().add(contacts_list);
     }
 
+    @Override
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
         styles.add(new ResourceLocation("sphone:css/contactslist.css"));
         return styles;
     }
-
 }

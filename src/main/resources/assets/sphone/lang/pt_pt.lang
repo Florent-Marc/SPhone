@@ -1,0 +1,88 @@
+sphone.meteo.cityname=Alta Vista - TF
+
+itemGroup.tab=SPhone
+
+item.sim_card.name=Cartão SIM
+item.phone.name=SPhone 1
+item.radio.name=Radio
+
+sphone.timeformat=HH:mm
+
+sphone.error.sim=Erro no Cartão SIM
+sphone.error.desc=Ocorreu um erro
+sphone.error.unregistred=O seu SIM não está registado
+sphone.error.notinserted=O seu SIM não está inserido
+
+sphone.meteo.title=Meteorologia
+sphone.meteo.prevs=Previsão Meteorológica
+sphone.meteo.types.thunder=Trovoada
+sphone.meteo.types.rain=Chuva
+sphone.meteo.types.sunny=Sol
+sphone.meteo.types.snow=Neve
+sphone.meteo.types.clear=Limpo
+sphone.meteo.types.cloud=Encoberto
+sphone.meteo.types.sun=Sol
+
+sphone.sim.title=Trocar Cartão SIM
+
+sphone.error.no_phone=Não tem um telemóvel
+sphone.error.no_sim=O seu telemóvel não tem um SIM
+sphone.feature.later=Mais tarde
+
+sphone.phone.running=Chamada em curso
+sphone.phone.incoming=Chamada a receber
+sphone.phone.ended=Chamada terminada
+sphone.phone.title=Telefone
+
+sphone.message.title=Mensagens
+sphone.message.sendpos=Enviar a sua localização
+sphone.message.posmessage=As minhas coordenadas são:
+
+sphone.contacts.title=Contactos
+sphone.contacts.edit=Editar
+sphone.contacts.firstname=Nome
+sphone.contacts.lastname=Apelido
+sphone.contacts.note=Nota
+sphone.contacts.number=Número
+sphone.contacts.selectphoto=Selecionar uma foto
+sphone.contacts.selected=Foto selecionada
+sphone.contacts.add=Adicionar contacto
+
+sphone.notes.title=Notas
+sphone.notes.add=Adicionar nota
+sphone.notes.edit=Editar nota
+sphone.notes.newtitle=➜ Título
+sphone.notes.newcontent=➜ Nota
+sphone.notes.remove=Eliminar
+
+sphone.appstore.recommended=As nossas apps recomendadas
+sphone.appstore.usesettings=Use as definições para desinstalar apps
+sphone.appstore.title=Loja de Apps
+
+sphone.settings.title=Definições
+sphone.settings.preferencies=Preferências
+sphone.settings.customisation=Personalização
+sphone.settings.general=Geral
+sphone.settings.applications=Aplicações
+sphone.settings.phonenumber=Número de telemóvel
+sphone.settings.errorbg=Não foi possível carregar o fundo
+
+sphone.radio.muted=Rádio mutado
+sphone.radio.active=Rádio ativo
+sphone.subtitle.radio_on=§aRádio ligado
+sphone.subtitle.radio_off=§cRádio desligado
+sphone.subtitle.radio_ping=§eBip do rádio
+
+sphone.bank.hello=Olá cliente!
+sphone.bank.balance=Saldo
+sphone.bank.transfer=Transferir
+sphone.bank.title=Banco
+
+sphone.quickpay.title=Pagamento Rápido
+sphone.quickpay.recipient=Destinatário
+sphone.quickpay.amount=Quantia
+sphone.quickpay.send=Enviar
+sphone.calculator.title=Calculadora
+sphone.camera.title=Câmara
+sphone.gallery.title=Galeria
+sphone.dev.title=Desenvolvimento

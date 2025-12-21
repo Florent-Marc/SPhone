@@ -4,6 +4,7 @@ itemGroup.tab=SPhone
 
 item.sim_card.name=SIM Card
 item.phone.name=SPhone 1
+item.radio.name=Radio
 
 sphone.timeformat=HH:mm
 
@@ -12,6 +13,7 @@ sphone.error.desc=An error has occured
 sphone.error.unregistred=Your SIM is not registred
 sphone.error.notinserted=Your SIM is not inserted
 
+sphone.meteo.title=Weather
 sphone.meteo.prevs=Meteorological previsions
 sphone.meteo.types.thunder=Thunderstorm
 sphone.meteo.types.rain=Rain
@@ -30,6 +32,7 @@ sphone.feature.later=Later
 sphone.phone.running=Call in progress
 sphone.phone.incoming=Incoming call
 sphone.phone.ended=Call ended
+sphone.phone.title=Phone
 
 sphone.message.title=Messages
 sphone.message.sendpos=Send your position
@@ -52,8 +55,13 @@ sphone.notes.newtitle=➜ Title
 sphone.notes.newcontent=➜ Note
 sphone.notes.remove=Delete
 
+sphone.bank.add=Para confirmar clique ➜
+sphone.bank.newReceiver=➜ Destinatário
+sphone.bank.newAmount=➜ Quanto deseja enviar?
+
 sphone.appstore.recommended=Our recommended apps
 sphone.appstore.usesettings=Use the settings to uninstall apps
+sphone.appstore.title=App Store
 
 sphone.settings.title=Settings
 sphone.settings.preferencies=Preferencies
@@ -63,4 +71,24 @@ sphone.settings.applications=Applications
 sphone.settings.phonenumber=Phone number
 sphone.settings.errorbg=Unable to load the background
 
-sphone.plusplusgame.points=Points :
+sphone.radio.muted=Radio muted
+sphone.radio.active=Radio active
+sphone.subtitle.radio_on=§aRadio on
+sphone.subtitle.radio_off=§cRadio off
+sphone.subtitle.radio_ping=§eRadio ping
+sphone.voice.muted=Group voice muted
+sphone.voice.unmuted=Group voice unmuted
+
+sphone.bank.hello=Hello client!
+sphone.bank.balance=Balance
+sphone.bank.transfer=Transfer
+sphone.bank.title=Bank
+
+sphone.quickpay.title=Quick Pay
+sphone.quickpay.recipient=Recipient
+sphone.quickpay.amount=Amount
+sphone.quickpay.send=Send
+sphone.calculator.title=Calculator
+sphone.camera.title=Camera
+sphone.gallery.title=Gallery
+sphone.dev.title=Development

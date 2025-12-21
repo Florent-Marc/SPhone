@@ -1,11 +1,8 @@
-
 package com.dev.sphone.mod.client.gui.phone.apps.settings;
 
 import com.dev.sphone.SPhone;
 import com.dev.sphone.mod.client.gui.phone.AppManager;
 import com.dev.sphone.mod.client.gui.phone.GuiBase;
-import com.dev.sphone.mod.client.tempdata.PhoneSettings;
-import com.dev.sphone.mod.common.items.ItemPhone;
 import com.dev.sphone.mod.common.packets.server.PacketManageApp;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.panel.GuiPanel;
@@ -15,14 +12,10 @@ import fr.aym.acsguis.utils.GuiTextureSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GuiAppsSettings extends GuiBase {
 
@@ -50,7 +43,7 @@ public class GuiAppsSettings extends GuiBase {
 
         getDownloadedApps(Minecraft.getMinecraft().player.getHeldItemMainhand()).forEach(app -> {
             AppManager.App app1 = AppManager.getApps().stream().filter(app2 -> app2.getUniqueName().equals(app)).findFirst().orElse(null);
-            assert app1 != null;
+            if (app1 == null) return; // Evita NPE se app não for encontrado
             GuiPanel customisation = getGuiElement(app1.getIcon(), app1.getName());
 
             customisation.addClickListener((mouseX, mouseY, mouseButton) -> {
@@ -61,12 +54,9 @@ public class GuiAppsSettings extends GuiBase {
             settings_list.add(customisation);
         });
 
-
-
         app_container.add(settings_list);
         app_container.add(appTitle);
         app_container.add(customisation_desc);
-
 
         getRoot().add(app_container);
     }
@@ -77,24 +67,22 @@ public class GuiAppsSettings extends GuiBase {
 
         GuiPanel customisation_icon = new GuiPanel();
         customisation_icon.setCssClass("settings_element_icon");
-        customisation_icon.getStyle().setTexture(new GuiTextureSprite(iconLoc, 0, 0, 0, 0));
-
+        // CORRIGIDO: use o Customizer para setar a textura:
+        customisation_icon.getStyle().getCustomizer().setTexture(new GuiTextureSprite(iconLoc));
         customisation.add(customisation_icon);
-
 
         GuiLabel customisation_name = new GuiLabel(name);
         customisation_name.setCssClass("settings_element_name");
         customisation.add(customisation_name);
 
-
         return customisation;
     }
 
+    @Override
     public List<ResourceLocation> getCssStyles() {
         List<ResourceLocation> styles = new ArrayList<>();
         styles.add(super.getCssStyles().get(0));
         styles.add(new ResourceLocation("sphone:css/settings.css"));
         return styles;
     }
-
 }

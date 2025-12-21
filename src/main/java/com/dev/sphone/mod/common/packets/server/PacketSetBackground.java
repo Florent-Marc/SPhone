@@ -46,7 +46,7 @@ public class PacketSetBackground extends SerializablePacket implements IMessage 
             if (stack.getItem() instanceof ItemPhone) {
                 settings.deserializeNBT(Objects.requireNonNull(ctx.getServerHandler().player.getHeldItemMainhand().getTagCompound()).getCompoundTag("settings"));
             }
-            settings.setBackground((String) message.getObjectsIn()[0]);
+            settings.setBackground((String) message.getObjectsIn().get(0));
             Objects.requireNonNull(ctx.getServerHandler().player.getHeldItemMainhand().getTagCompound()).setTag("settings", settings.serializeNBT());
 
             return null;

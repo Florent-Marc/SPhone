@@ -63,13 +63,14 @@ public class GuiCall extends GuiBase {
     }
 
     @Override
-    public void tick() {
+    public boolean tick() {
         super.tick();
         long time = System.currentTimeMillis() - Timestart;
         long seconds = time / 1000;
         long minutes = seconds / 60;
         seconds = seconds % 60;
         this.time.setText(String.format("%02d:%02d", minutes, seconds));
+        return true; // ou false, dependendo do que o método deve sinalizar
     }
 
     @Override

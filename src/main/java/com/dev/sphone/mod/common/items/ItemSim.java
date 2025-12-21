@@ -90,7 +90,7 @@ public class ItemSim extends Item {
         if (!isSIM(stack)) return;
         NBTTagCompound nbt = getTagCompound(stack);
         nbt.setInteger(SIM_KEY_TAG, sim);
-        UtilsServer.sendActionChat(player, "Vous avez injecté la carte sim : " + sim, false);
+        UtilsServer.sendActionChat(player, "Você inseriu o Chip : " + sim, false);
     }
 
     public static int getSimCard(ItemStack stack) {
@@ -105,7 +105,7 @@ public class ItemSim extends Item {
         if (!isSIM(stack)) return;
         NBTTagCompound nbt = getTagCompound(stack);
         nbt.setString(NUM_KEY_TAG, s);
-        UtilsServer.sendActionChat(player, "Vous avez injecté le numéro : " + s, false);
+        UtilsServer.sendActionChat(player, "Guarde o numero do seu chip : " + s, false);
     }
 
     public static String getNumero(ItemStack stack) {

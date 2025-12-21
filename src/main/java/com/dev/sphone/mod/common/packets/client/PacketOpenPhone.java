@@ -101,7 +101,7 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
                             mc.displayGuiScreen(new GuiWaitCall(new GuiHome().getGuiScreen(), message.content, message.receiver).getGuiScreen());
                             break;
                         case RECEIVE_CALL:
-                            mc.displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0], message.receiver).getGuiScreen());
+                            mc.displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn().get(0), message.receiver).getGuiScreen());
                             break;
                         case CLOSED_SENDER:
                             if(mc.currentScreen instanceof GuiFrame.APIGuiScreen && ((GuiFrame.APIGuiScreen)mc.currentScreen).getFrame() instanceof GuiCallRequest){
@@ -110,7 +110,7 @@ public class PacketOpenPhone extends SerializablePacket implements IMessage {
                             break;
                         case SEND_CALL:
                             if(mc.currentScreen instanceof GuiFrame.APIGuiScreen && ((GuiFrame.APIGuiScreen)mc.currentScreen).getFrame() instanceof GuiBase){
-                                mc.displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn()[0], message.receiver).getGuiScreen());
+                                mc.displayGuiScreen(new GuiCallRequest(message.content, message.contactTargetName, (Contact) message.getObjectsIn().get(0), message.receiver).getGuiScreen());
                             }else{
 
                             }

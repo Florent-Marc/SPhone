@@ -1,69 +1,32 @@
 package com.dev.sphone.mod.client.gui.layout;
 
-import fr.aym.acsguis.component.layout.BorderedGridLayout;
 import fr.aym.acsguis.component.layout.PanelLayout;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
-import fr.aym.acsguis.component.style.ComponentStyleManager;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.cssengine.parsing.core.objects.CssValue;
 import fr.aym.acsguis.cssengine.positionning.Size.SizeValue;
 import fr.aym.acsguis.utils.GuiConstants;
+import fr.aym.acsguis.component.style.InternalComponentStyle;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * A simple grid layout
- *
- * @see BorderedGridLayout
  */
-public class CustomGridLayout implements PanelLayout<ComponentStyleManager> {
-    private final Map<ComponentStyleManager, Integer> cache = new HashMap<>();
-    private final Map<ComponentStyleManager, Integer> cacheY = new HashMap<>();
-    private int nextIndex;
-    private int totalHeight;
+public class CustomGridLayout implements PanelLayout<InternalComponentStyle> {
+    private final Map<InternalComponentStyle, Float> cache = new HashMap<>();
+    private final Map<InternalComponentStyle, Float> cacheY = new HashMap<>();
+    private float nextIndex;
+    private float totalHeight;
 
     private final SizeValue width, height, spacing;
     private final GridDirection direction;
-    private final int elementsPerLine;
+    private final float elementsPerLine;
     private GuiPanel container;
 
-    /**
-     * @param width           Tile width, in pixels
-     * @param height          Tile height, in pixels
-     * @param spacing         Space between tiles, in all directions, in pixels
-     * @param direction       Primary direction of the alignment (direction of a "line")
-     * @param elementsPerLine Number of elements on each "lines", use -1 to automatically fill the lines
-     */
-    public CustomGridLayout(int width, int height, int spacing, GridDirection direction, int elementsPerLine) {
-        this(new SizeValue(width, GuiConstants.ENUM_SIZE.ABSOLUTE), new SizeValue(height, GuiConstants.ENUM_SIZE.ABSOLUTE), new SizeValue(spacing, GuiConstants.ENUM_SIZE.ABSOLUTE), direction, elementsPerLine);
-        // Retro-compatibility (-1 was 100%)
-        if(width == -1)
-            this.width.setRelative(1, CssValue.Unit.RELATIVE_INT);
-        if(height == -1)
-            this.height.setRelative(1, CssValue.Unit.RELATIVE_INT);
-    }
-
-    /**
-     * @param width           Tile width, relative between 0 and 1 (0.5 = 50%)
-     * @param height          Tile height, relative between 0 and 1 (0.5 = 50%)
-     * @param spacing         Space between tiles, in all directions, relative between 0 and 1 (0.5 = 50%)
-     * @param direction       Primary direction of the alignment (direction of a "line")
-     * @param elementsPerLine Number of elements on each "lines", use -1 to automatically fill the lines
-     */
-    public CustomGridLayout(float width, float height, float spacing, GridDirection direction, int elementsPerLine) {
-        this(new SizeValue(width, GuiConstants.ENUM_SIZE.RELATIVE), new SizeValue(height, GuiConstants.ENUM_SIZE.RELATIVE), new SizeValue(spacing, GuiConstants.ENUM_SIZE.RELATIVE), direction, elementsPerLine);
-    }
-
-    /**
-     * @param width           Tile width
-     * @param height          Tile height
-     * @param spacing         Space between tiles, in all directions
-     * @param direction       Primary direction of the alignment (direction of a "line")
-     * @param elementsPerLine Number of elements on each "lines", use -1 to automatically fill the lines
-     */
-    public CustomGridLayout(SizeValue width, SizeValue height, SizeValue spacing, GridDirection direction, int elementsPerLine) {
+    public CustomGridLayout(SizeValue width, SizeValue height, SizeValue spacing, GridDirection direction, float elementsPerLine) {
         this.width = width;
         this.height = height;
         this.spacing = spacing;
@@ -71,82 +34,83 @@ public class CustomGridLayout implements PanelLayout<ComponentStyleManager> {
         this.elementsPerLine = elementsPerLine;
     }
 
-    /**
-     * Creates a simple column layout with one element per line
-     *
-     * @param height  Element height, in pixels
-     * @param spacing Space between elements, in pixels
-     * @return A new column layout
-     */
-    public static CustomGridLayout columnLayout(int height, int spacing) {
-        return new CustomGridLayout(new SizeValue(1, GuiConstants.ENUM_SIZE.RELATIVE), new SizeValue(height, GuiConstants.ENUM_SIZE.ABSOLUTE), new SizeValue(spacing, GuiConstants.ENUM_SIZE.ABSOLUTE), GridDirection.HORIZONTAL, 1);
+    public CustomGridLayout(float width, float height, float spacing, GridDirection direction, float elementsPerLine) {
+        this(
+            new SizeValue(width, GuiConstants.ENUM_SIZE.ABSOLUTE),
+            new SizeValue(height, GuiConstants.ENUM_SIZE.ABSOLUTE),
+            new SizeValue(spacing, GuiConstants.ENUM_SIZE.ABSOLUTE),
+            direction,
+            elementsPerLine
+        );
+        if (width == -1)
+            this.width.setRelative(1, CssValue.Unit.RELATIVE_TO_PARENT);
+        if (height == -1)
+            this.height.setRelative(1, CssValue.Unit.RELATIVE_TO_PARENT);
     }
 
-    /**
-     * Creates a simple column layout with one element per line
-     *
-     * @param height  Element height, relative between 0 and 1 (0.5 = 50%)
-     * @param spacing Space between elements, relative between 0 and 1 (0.5 = 50%)
-     * @return A new column layout
-     */
     public static CustomGridLayout columnLayout(float height, float spacing) {
-        return new CustomGridLayout(new SizeValue(1, GuiConstants.ENUM_SIZE.RELATIVE), new SizeValue(height, GuiConstants.ENUM_SIZE.RELATIVE), new SizeValue(spacing, GuiConstants.ENUM_SIZE.RELATIVE), GridDirection.HORIZONTAL, 1);
+        return new CustomGridLayout(
+            new SizeValue(1, GuiConstants.ENUM_SIZE.RELATIVE),
+            new SizeValue(height, GuiConstants.ENUM_SIZE.ABSOLUTE),
+            new SizeValue(spacing, GuiConstants.ENUM_SIZE.ABSOLUTE),
+            GridDirection.HORIZONTAL,
+            1
+        );
     }
 
     @Override
-    public int getX(ComponentStyleManager target) {
+    public float getX(InternalComponentStyle target) {
         if (!cache.containsKey(target)) {
-            cache.put(target, nextIndex);
-            nextIndex++;
+            cache.put(target, nextIndex++);
         }
-        int elementsPerLine = this.elementsPerLine;
-        if (direction == GridDirection.HORIZONTAL && elementsPerLine == -1) {
-            elementsPerLine = target.getParent().getRenderWidth() / getWidth(target);
+        float elements = this.elementsPerLine;
+        if (direction == GridDirection.HORIZONTAL && elements == -1) {
+            elements = container.getWidth() / getWidth();
         }
-        int spacing = this.spacing.computeValue(container.getWidth(), container.getHeight(), container.getWidth());
-        return direction == GridDirection.HORIZONTAL ? (getWidth() + spacing) * (cache.get(target) % elementsPerLine) : (getWidth() + spacing) * (cache.get(target) / elementsPerLine);
+        float spacingVal = spacing.computeValue(container.getWidth(), container.getHeight(), container.getWidth());
+        return direction == GridDirection.HORIZONTAL ?
+            (getWidth() + spacingVal) * (cache.get(target) % elements) :
+            (getWidth() + spacingVal) * (cache.get(target) / elements);
     }
 
     @Override
-    public int getY(ComponentStyleManager target) {
+    public float getY(InternalComponentStyle target) {
         if (!cache.containsKey(target)) {
-            cache.put(target, nextIndex);
-            nextIndex++;
+            cache.put(target, nextIndex++);
         }
-
-        int elementsPerLine = this.elementsPerLine;
-        if (direction == GridDirection.VERTICAL && elementsPerLine == -1) {
-            elementsPerLine = target.getParent().getRenderHeight() / getHeight(target);
+        float elements = this.elementsPerLine;
+        if (direction == GridDirection.VERTICAL && elements == -1) {
+            elements = container.getHeight() / getHeight(target);
         }
-
-        if(!cacheY.containsKey(target)) {
+        if (!cacheY.containsKey(target)) {
             cacheY.put(target, totalHeight);
             totalHeight += getHeight(target) + 5;
         }
-
         return cacheY.get(target);
     }
 
     @Override
-    public int getWidth(ComponentStyleManager target) {
+    public float getWidth(InternalComponentStyle target) {
         return getWidth();
     }
 
     @Override
-    public int getHeight(ComponentStyleManager target) {
-        int height = 0;
-
-        if(((GuiPanel)target.getOwner()).getChildComponents().size() == 0){
-            ((GuiPanel)target.getOwner()).flushComponentsQueue();
-        }
-
-        for(Object componentChild : ((GuiPanel)target.getOwner()).getChildComponents()){
-            if(componentChild instanceof GuiLabel){
-                int len = 10 + (Math.max(21, ((GuiLabel)componentChild).getText().length()));
-                height += len;
+    public float getHeight(InternalComponentStyle target) {
+        float h = 0;
+        if (target.getOwner() instanceof GuiPanel) {
+            GuiPanel panel = (GuiPanel) target.getOwner();
+            if (panel.getChildComponents().isEmpty()) {
+                panel.flushComponentsQueue();
+            }
+            for (Object child : panel.getChildComponents()) {
+                if (child instanceof GuiLabel) {
+                    GuiLabel label = (GuiLabel) child;
+                    float len = 10 + Math.max(21, label.getText().length());
+                    h += len;
+                }
             }
         }
-        return height;
+        return h;
     }
 
     @Override
@@ -157,8 +121,14 @@ public class CustomGridLayout implements PanelLayout<ComponentStyleManager> {
         nextIndex = 0;
     }
 
-    public int getWidth() {
-        return width.computeValue(GuiFrame.resolution.getScaledWidth(), GuiFrame.resolution.getScaledHeight(), container.getWidth());
+    public float getWidth() {
+        if (container == null) return 0;
+        GuiFrame frame = container.getGui().getFrame();
+        return width.computeValue(
+            frame.getResolution().getScaledWidth(),
+            frame.getResolution().getScaledHeight(),
+            container.getWidth()
+        );
     }
 
     @Override
@@ -166,6 +136,11 @@ public class CustomGridLayout implements PanelLayout<ComponentStyleManager> {
         if (this.container != null)
             throw new IllegalArgumentException("Layout already used in " + this.container);
         this.container = container;
+    }
+
+    @Override
+    public void onChildSizeChange(InternalComponentStyle child) {
+        // Implement if needed
     }
 
     public enum GridDirection {

@@ -48,7 +48,7 @@ public class PacketEditContact extends SerializablePacket implements IMessage {
                 return null;
             }
 
-            Contact contact = (Contact) message.getObjectsIn()[0];
+            Contact contact = (Contact) message.getObjectsIn().get(0);
             String type = message.type;
             if (type.equals("edit")) {
                 MethodesBDDImpl.getDatabaseInstance().editContact(contact);

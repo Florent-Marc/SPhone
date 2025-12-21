@@ -33,7 +33,7 @@ public class GuiWaitCall extends GuiBase {
     @Override
     public void GuiInit() {
         super.GuiInit();
-        getBackground().removeAllChilds();
+        getBackground().removeAllChildren();
         time = new GuiLabel(I18n.format("sphone.phone.running"));
         time.setCssId("time");
         getBackground().add(time);
@@ -58,7 +58,7 @@ public class GuiWaitCall extends GuiBase {
     }
 
     @Override
-    public void tick() {
+    public boolean tick() {
         super.tick();
         tick ++;
         String a = I18n.format("sphone.phone.running");
@@ -80,7 +80,7 @@ public class GuiWaitCall extends GuiBase {
         if (tick % 45*3 == 0) {
             mc.player.playSound(SoundRegister.CALL, 1, 1);
         }
-
+        return true; // ou false, dependendo do que o método deve sinalizar
     }
 
     @Override

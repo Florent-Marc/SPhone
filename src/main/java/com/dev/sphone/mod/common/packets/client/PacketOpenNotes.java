@@ -38,7 +38,7 @@ public class PacketOpenNotes extends SerializablePacket implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenNotes message, MessageContext ctx) {
-            List<Note> noteList = (List<Note>) message.getObjectsIn()[0];
+            List<Note> noteList = (List<Note>) message.getObjectsIn().get(0);
             IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
             thread.addScheduledTask(new Runnable() {
                 public void run() {
